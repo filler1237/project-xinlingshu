@@ -1,0 +1,12 @@
+<!--pages/mine/mine.wxml-->
+<view class="container1">
+  
+</view>
+<view class="container2"> 
+  <button style="width:80vw" class="butt">我的信息</button>
+  <button style="width:80vw" class="butt">我的预约</button>
+</view>
+
+
+
+

@@ -1,0 +1,13 @@
+/* pages/mine/mine.wxss */
+.container1{
+  border: 50rpx solid rgb(255, 255, 255);
+  display: flex;
+  background-color: rgb(88, 80, 80);
+  width: 650rpx;
+  height: 350rpx;
+  border-radius: 15rpx;
+}
+.butt{
+  margin: 15rpx;
+  background-color: lightblue;
+}
