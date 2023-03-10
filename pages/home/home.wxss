@@ -1,1 +1,104 @@
 /* pages/home/home.wxss */
+.lunbotu{
+  height: 240px;
+  text-align: center;
+  line-height: 100%;
+  justify-content: center;
+  
+}
+.taball2{
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.taball1{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+  margin-bottom: 0;
+}
+.testtab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+  display: flex;
+}
+.testimg{
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+}
+.seatab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+  display: flex;
+}
+.consultimg{
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+}
+.consulttab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+  display: flex;
+}
+.seaimg{
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+}
+.lighttab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+  display: flex;
+}
+.lightimg{
+  width: 120rpx;
+  height: 120rpx;
+   display: flex;
+}
+.readtab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+}
+.readimg{
+  width: 120rpx;
+  height: 120rpx;
+}
+.shoptab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+}
+.shopimg{
+  width: 120rpx;
+  height: 120rpx;
+}
+.talktab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+}
+.talkimg{
+  width: 120rpx;
+  height: 120rpx;
+}
+.chemicaltab[plain]{
+  height: 120rpx;
+  border: none;
+  padding: 0;
+}
+.chemicalimg{
+  width: 120rpx;
+  height: 120rpx;
+}
+/* .text1{
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+} */
