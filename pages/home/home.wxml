@@ -17,7 +17,7 @@
   <image class="consultimg" src="../home/resourse/consult.png" />
   </button>
   <button style="width:120rpx" class="seatab" plain="true" bindtap="click1">
-  <image class="seaimg" src="../home/resourse/heart sea.png" />
+  <image class="seaimg" src="../home/resourse/heartsea.png" />
   </button>
   <button style="width:120rpx" class="talktab" plain="true" bindtap="click1">
   <image class="talkimg" src="../home/resourse/talk.png" />
