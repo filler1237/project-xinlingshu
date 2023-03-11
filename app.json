@@ -4,6 +4,10 @@
     "pages/mine/mine",
     "pages/sushuo/sushuo",
     "pages/logs/logs",
+    "pages/mine/booked/booked",
+    "pages/mine/evaluate/evaluate",
+    "pages/mine/contact/contact",
+    "pages/mine/setting/setting",
     "pages/index/index"
   ],
   "window":{

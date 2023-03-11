@@ -14,6 +14,11 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: {
+      nickName: "Hi，游客",
+      username: "点击去登录",
+      avatarUrl: "/assets/avatar.png"
+    },
+    token: "",
   }
 })

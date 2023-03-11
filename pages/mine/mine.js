@@ -1,11 +1,13 @@
 // pages/mine/mine.js
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    userInfo:{},
+    isLogin:false
   },
 
   /**
@@ -19,14 +21,30 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
+    let userInfo = wx.getStorageSync('userInfo');
+    let isLogin = wx.getStorageSync('isLogin');
+    // 页面显示
+    if (userInfo && isLogin) {
+      this.setData({
+        userInfo: userInfo,
+        isLogin: isLogin
+      });
+    } else {
+      // 未登录信息
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        isLogin: isLogin
+      });
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    wx.setNavigationBarTitle({
+      title: 'SZTU心灵树',
+    })
   },
 
   /**
