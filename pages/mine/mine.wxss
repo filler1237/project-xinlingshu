@@ -1,13 +1,109 @@
-/* pages/mine/mine.wxss */
-.container1{
-  border: 50rpx solid rgb(255, 255, 255);
+/* pages/home/home.wxss */
+.profile-info {
+  margin: 10rpx;
+  height: 280rpx;
   display: flex;
-  background-color: rgb(88, 80, 80);
-  width: 650rpx;
-  height: 350rpx;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 32rpx;
+  background: #333;
+  width: 700rpx;
   border-radius: 15rpx;
 }
-.butt{
+
+.profile-info .avatar {
+  height: 148rpx;
+  width: 148rpx;
+  border-radius: 50%;
+}
+
+.profile-info .info {
+  flex: 1;
+  height: 85rpx;
+  padding-left: 31.25rpx;
+}
+
+.profile-info .name {
+  display: block;
+  color: #fff;
+  font-size: 37.5rpx;
+}
+
+.profile-info .level {
+  display: block;
+  color: #7f7f7f;
+  font-size: 30rpx;
+}
+
+.order-wrap {
   margin: 15rpx;
-  background-color: lightblue;
+  height: 240rpx;
+  width: 720rpx;
+  border: 1rpx solid #804d4d;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90rpx;
+  padding: 0 30rpx;
+}
+
+.order-header .right {
+  display: flex;
+  align-items: center;
+}
+
+.order-header .txt {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.order-header .all {
+  color: #666;
+  font-size: 25rpx;
+  margin-right: 10rpx;
+}
+
+.order-header .arrow {
+  width: 13rpx;
+  height: 25rpx;
+}
+
+.order-icon {
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.order-icon .icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 120rpx;
+}
+
+.icon-wrap .icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.icon-wrap .txt {
+  color: #666;
+  font-size: 25rpx;
+}
+
+.icon-wrap .num {
+  color: #333;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
 }
