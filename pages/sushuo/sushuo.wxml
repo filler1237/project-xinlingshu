@@ -1,2 +1,13 @@
 <!--pages/sushuo/sushuo.wxml-->
-<text>pages/sushuo/sushuo.wxml</text>
+<view class="container1">
+    <image class="img" src="/assets/sushuo.jpeg" mode="aspectFit"></image>
+</view>
+
+<view class="flex-wrp" style="flex-direction: row;">
+    <button bindtap="gotoXIE" style="line-height: 60px;">写</button>
+    <button bindtap="gotoDA" style="line-height: 60px;">答</button>
+</view>
+
+<view class="container2">
+    <text>为下一个春天的开篇 种下一树的铺垫</text>
+</view>

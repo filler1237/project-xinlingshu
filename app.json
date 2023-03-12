@@ -3,6 +3,8 @@
     "pages/home/home",
     "pages/mine/mine",
     "pages/sushuo/sushuo",
+    "pages/sushuo/XIE/XIE",
+    "pages/sushuo/DA/DA",
     "pages/logs/logs",
     "pages/mine/booked/booked",
     "pages/mine/evaluate/evaluate",

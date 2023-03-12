@@ -7,6 +7,16 @@ Page({
   data: {
 
   },
+  gotoXIE (){
+      wx.navigateTo({
+        url: '/pages/sushuo/XIE/XIE'
+      })
+  },
+  gotoDA (){
+    wx.navigateTo({
+      url: '/pages/sushuo/DA/DA'
+    })
+},
 
   /**
    * 生命周期函数--监听页面加载
