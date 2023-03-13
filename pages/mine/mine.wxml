@@ -20,6 +20,10 @@
           <image class="icon" src="/assets/comment.png"></image>
         <text class="txt">待评价</text>
       </navigator>
+      <navigator class="icon-wrap" id="2" url="/pages/mine/record/record">
+          <image class="icon" src="/assets/笔记，记录.png"></image>
+        <text class="txt">测评记录</text>
+      </navigator>
     </view>
   </view>
 
@@ -28,6 +32,10 @@
       <text class="txt">我的服务</text>
     </view>
     <view class="order-icon">
+      <navigator class="icon-wrap" url="/pages/mine/list/list">
+          <image class="icon wx" src="/assets/列表.png"></image>
+          <text class="txt">咨询师列表</text>
+      </navigator>
       <navigator class="icon-wrap" url="/pages/mine/contact/contact">
           <image class="icon wx" src="/assets/service.png"></image>
           <text class="txt">联系客服</text>

@@ -7,7 +7,9 @@
     "pages/mine/booked/booked",
     "pages/mine/evaluate/evaluate",
     "pages/mine/contact/contact",
+    "pages/mine/list/list",
     "pages/mine/setting/setting",
+    "pages/mine/record/record",
     "pages/index/index"
   ],
   "window":{
