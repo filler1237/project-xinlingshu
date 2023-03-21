@@ -1,2 +1,46 @@
-<!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<!-- 轮播图 -->
+<swiper class="lunbotu" indicator-dots indicator-color="white" indicator-active-color="gray" autoplay interval="3000" circular>
+  <swiper-item>
+    <image src="../home/resourse/1.jpg" mode="heightFix"/>
+  </swiper-item> 
+  <swiper-item>
+    <image src="../home/resourse/2.jpg" mode="heightFix"/>
+  </swiper-item>  <swiper-item>
+    <image src="../home/resourse/3.jpg" mode="heightFix"/>
+  </swiper-item> 
+</swiper>
+<view class="taball1">
+  <button style="width:120rpx" class="testtab" plain="true" bindtap="click1">
+  <image class="testimg" src="../home/resourse/test.png" />
+  </button>
+  <button style="width:120rpx" class="consulttab" plain="true" bindtap="click1">
+  <image class="consultimg" src="../home/resourse/consult.png" />
+  </button>
+  <button style="width:120rpx" class="seatab" plain="true" bindtap="click1">
+  <image class="seaimg" src="../home/resourse/heartsea.png" />
+  </button>
+  <button style="width:120rpx" class="talktab" plain="true" bindtap="click1">
+  <image class="talkimg" src="../home/resourse/talk.png" />
+  </button>
+  </view>
+  <text class="text1" space="ensp">
+  心理测评   心理咨询   心海漂流   即时倾诉
+  </text>
+  <view class="taball2">
+  <button style="width:120rpx" class="readtab" plain="true" bindtap="click1">
+  <image class="readimg" src="../home/resourse/read.png" />
+  </button>
+  <button style="width:120rpx" class="lighttab" plain="true" bindtap="click1">
+  <image class="lightimg" src="../home/resourse/light.png" />
+  </button>
+  <button style="width:120rpx" class="shoptab" plain="true" bindtap="click1">
+  <image class="shopimg" src="../home/resourse/shop.png" />
+  </button>
+  <button style="width:120rpx" class="chemicaltab" plain="true" bindtap="click1">
+  <image class="chemicalimg" src="../home/resourse/chemical.png" />
+  </button>
+</view>
+<text class="text2" space="ensp">
+  文章阅读   正念冥想   解忧商城   解忧实验室
+  </text>
+
