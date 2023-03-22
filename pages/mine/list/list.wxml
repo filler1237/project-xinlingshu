@@ -1,7 +1,7 @@
 <!--pages/mine/list/list.wxml-->
 <view class="order-wrap">
   <view class="picture">
-    <image src="/assets/avatar.png" mode=""/>
+    <image src="/assets/avatar.jpg" mode=""/>
   </view>
   <view class="info"> 
     <text class="title">姓名：王贞贞</text>
@@ -13,7 +13,7 @@
 
 <view class="order-wrap">
   <view class="picture">
-    <image src="/assets/avatar.png" mode=""/>
+    <image src="/assets/avatar.jpg" mode=""/>
   </view>
   <view class="info"> 
     <text class="title">姓名：李亚玲</text>
@@ -25,7 +25,7 @@
 
 <view class="order-wrap">
   <view class="picture">
-    <image src="/assets/avatar.png" mode=""/>
+    <image src="/assets/avatar.jpg" mode=""/>
   </view>
   <view class="info"> 
     <text class="title">姓名：姚双雁</text>

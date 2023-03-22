@@ -13,15 +13,15 @@
     </view>
     <view class="order-icon">
       <navigator class="icon-wrap" id="1" url="/pages/mine/booked/booked">
-          <image class="icon" src="/assets/pay.png"></image>
+          <image class="icon" src="/assets/pay.jpg"></image>
         <text class="txt">已预约</text>
       </navigator>
       <navigator class="icon-wrap" id="2" url="/pages/mine/evaluate/evaluate">
-          <image class="icon" src="/assets/comment.png"></image>
+          <image class="icon" src="/assets/comment.jpg"></image>
         <text class="txt">待评价</text>
       </navigator>
       <navigator class="icon-wrap" id="2" url="/pages/mine/record/record">
-          <image class="icon" src="/assets/笔记，记录.png"></image>
+          <image class="icon" src="/assets/笔记，记录.jpg"></image>
         <text class="txt">测评记录</text>
       </navigator>
     </view>
@@ -33,15 +33,15 @@
     </view>
     <view class="order-icon">
       <navigator class="icon-wrap" url="/pages/mine/list/list">
-          <image class="icon wx" src="/assets/列表.png"></image>
+          <image class="icon wx" src="/assets/列表.jpg"></image>
           <text class="txt">咨询师列表</text>
       </navigator>
       <navigator class="icon-wrap" url="/pages/mine/contact/contact">
-          <image class="icon wx" src="/assets/service.png"></image>
+          <image class="icon wx" src="/assets/service.jpg"></image>
           <text class="txt">联系客服</text>
       </navigator>
       <navigator class="icon-wrap" url="/pages/mine/setting/setting">
-        <image class="icon" src="/assets/setting.png"></image>
+        <image class="icon" src="/assets/setting.jpg"></image>
         <text class="txt">设置</text>
       </navigator>
     </view>

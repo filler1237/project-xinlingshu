@@ -11,36 +11,36 @@
 </swiper>
 <view class="taball1">
   <button style="width:120rpx" class="testtab" plain="true" bindtap="click1">
-  <image class="testimg" src="../home/resourse/test.png" />
+  <image class="testimg" src="../home/resourse/test.jpg" />
   </button>
-  <button style="width:120rpx" class="consulttab" plain="true" bindtap="click1">
-  <image class="consultimg" src="../home/resourse/consult.png" />
+  <button style="width:120rpx" class="consulttab" plain="true" bindtap="click2">
+  <image class="consultimg" src="../home/resourse/consult.jpg" />
   </button>
-  <button style="width:120rpx" class="seatab" plain="true" bindtap="click1">
-  <image class="seaimg" src="../home/resourse/heartsea.png" />
+  <button style="width:120rpx" class="seatab" plain="true" bindtap="click3">
+  <image class="seaimg" src="../home/resourse/heartsea.jpg" />
   </button>
-  <button style="width:120rpx" class="talktab" plain="true" bindtap="click1">
-  <image class="talkimg" src="../home/resourse/talk.png" />
+  <button style="width:120rpx" class="talktab" plain="true" bindtap="click4">
+  <image class="talkimg" src="../home/resourse/talk.jpg" />
   </button>
   </view>
   <text class="text1" space="ensp">
-  心理测评   心理咨询   心海漂流   即时倾诉
+心理测评   心理咨询   心海漂流   即时倾诉
   </text>
   <view class="taball2">
-  <button style="width:120rpx" class="readtab" plain="true" bindtap="click1">
-  <image class="readimg" src="../home/resourse/read.png" />
+  <button style="width:120rpx" class="readtab" plain="true" bindtap="click5">
+  <image class="readimg" src="../home/resourse/read.jpg" />
   </button>
-  <button style="width:120rpx" class="lighttab" plain="true" bindtap="click1">
-  <image class="lightimg" src="../home/resourse/light.png" />
+  <button style="width:120rpx" class="lighttab" plain="true" bindtap="click6">
+  <image class="lightimg" src="../home/resourse/light.jpg" />
   </button>
-  <button style="width:120rpx" class="shoptab" plain="true" bindtap="click1">
-  <image class="shopimg" src="../home/resourse/shop.png" />
+  <button style="width:120rpx" class="shoptab" plain="true" bindtap="click7">
+  <image class="shopimg" src="../home/resourse/shop.jpg" />
   </button>
-  <button style="width:120rpx" class="chemicaltab" plain="true" bindtap="click1">
-  <image class="chemicalimg" src="../home/resourse/chemical.png" />
+  <button style="width:120rpx" class="chemicaltab" plain="true" bindtap="click8">
+  <image class="chemicalimg" src="../home/resourse/chemical.jpg" />
   </button>
 </view>
 <text class="text2" space="ensp">
-  文章阅读   正念冥想   解忧商城   解忧实验室
+文章阅读    正念冥想   解忧商城  解忧实验室
   </text>
 
