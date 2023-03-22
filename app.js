@@ -1,4 +1,4 @@
-// app.js
+// zrx的app.js
 App({
   onLaunch() {
     // 展示本地存储能力
@@ -13,12 +13,14 @@ App({
       }
     })
   },
+  
   globalData: {
     userInfo: {
       nickName: "Hi，游客",
       username: "点击去登录",
-      avatarUrl: "/assets/avatar.png"
+      avatarUrl: "/assets/avatar.jpg"
     },
     token: "",
   }
 })
+wx.cloud.init({})

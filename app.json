@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/home/home",
     "pages/mine/mine",
     "pages/sushuo/sushuo",
@@ -12,27 +12,37 @@
     "pages/mine/list/list",
     "pages/mine/setting/setting",
     "pages/mine/record/record",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/home/function/1/1",
+    "pages/home/function/2/2",
+    "pages/home/function/3/3",
+    "pages/home/function/4/4",
+    "pages/home/function/5/5",
+    "pages/home/function/6/6",
+    "pages/home/function/7/7",
+    "pages/home/function/8/8"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "list": [{
-      "pagePath": "pages/sushuo/sushuo",
-      "text": "诉说"
-    },
-    {
-      "pagePath": "pages/home/home",
-      "text": "主页"
-    },{
-      "pagePath": "pages/mine/mine",
-      "text": "我的"
-    }
-  ]
+    "list": [
+      {
+        "pagePath": "pages/sushuo/sushuo",
+        "text": "诉说"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
   },
   "lazyCodeLoading": "requiredComponents",
   "style": "v2",
