@@ -21,7 +21,7 @@
         <text class="txt">待评价</text>
       </navigator>
       <navigator class="icon-wrap" id="2" url="/pages/mine/record/record">
-          <image class="icon" src="/assets/笔记，记录.jpg"></image>
+          <image class="icon" src="/assets/note.jpg"></image>
         <text class="txt">测评记录</text>
       </navigator>
     </view>
@@ -33,7 +33,7 @@
     </view>
     <view class="order-icon">
       <navigator class="icon-wrap" url="/pages/mine/list/list">
-          <image class="icon wx" src="/assets/列表.jpg"></image>
+          <image class="icon wx" src="/assets/list.jpg"></image>
           <text class="txt">咨询师列表</text>
       </navigator>
       <navigator class="icon-wrap" url="/pages/mine/contact/contact">
