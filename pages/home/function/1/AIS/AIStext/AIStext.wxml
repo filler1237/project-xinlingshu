@@ -1,0 +1,46 @@
+<!--pages/home/function/1/AIS/AIStext/AIStext.wxml-->
+<view class="container1">
+  <view >{{QUESTION}}</view>
+</view>
+<view bindtap="ANS">
+  <view class="select flex">
+    <view class="item" url="">
+      <block >
+        <label class="select" bindtap="ANSA">
+          <view hover-class="pick" >{{OPA}}</view>
+        </label> 
+      </block>
+    </view> 
+  </view>
+  <view class="select flex">
+    <view class="item" >
+      <block >
+        <label class="select" >
+          <view hover-class="pick" bindtap="ANSB">{{OPB}}</view>
+        </label> 
+      </block>
+    </view> 
+  </view>
+  <view class="select flex">
+    <view class="item" >
+      <block >
+        <label class="select" >
+          <view hover-class="pick" bindtap="ANSC">{{OPC}}</view>
+        </label> 
+      </block>
+    </view> 
+  </view>
+  <view class="select flex">
+    <view class="item" >
+      <block >
+        <label class="select" >
+          <view hover-class="pick" bindtap="ANSD">{{OPD}}</view>
+        </label> 
+      </block>
+    </view> 
+  </view>
+  
+</view>
+
+
+<view class="tips"  bindtap="BACK">上一题</view>

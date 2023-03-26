@@ -34,7 +34,7 @@ click3:function(options){
  },
  click6:function(options){
   wx.navigateTo({
-    url: '../home/function/6/6.wxml',
+    url: '../home/function/6/6',
   })
  },
  click7:function(options){

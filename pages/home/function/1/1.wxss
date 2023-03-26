@@ -1,1 +1,20 @@
 /* pages/home/function/1/1.wxss */
+.Gotest{
+  height: 100%;
+  width: 95%;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  border: 0.5rpx solid #5a599c;
+  justify-content: center;
+  box-sizing: content-box;
+  padding: 30rpx 20rpx;
+  border-radius: 15rpx; 
+}
+.textname{
+  font-size: 40rpx;
+}
+.testblock{
+    height:120%
+}
