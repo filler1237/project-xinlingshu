@@ -10,6 +10,22 @@
   </swiper-item> 
 </swiper>
 <view class="taball1">
+      <!-- <navigator class="taball" style="width:120rpx" url="../home/function/1/1">
+        <image class="imgall" src="../home/resourse/test.jpg"></image>
+        <text class="txt">心理测评</text>
+      </navigator>
+      <navigator class="taball" style="width:120rpx" url="../home/function/2/2">
+        <image class="imgall" src="../home/resourse/consult.jpg"></image>
+        <text class="txt">心理咨询</text>
+      </navigator>   
+      <navigator class="taball" style="width:120rpx" url="../home/function/3/3">
+        <image class="imgall" src="../home/resourse/heartsea.jpg"></image>
+        <text class="txt">心海漂流</text>
+      </navigator>
+      <navigator class="taball" style="width:120rpx" url="../home/function/4/4">
+        <image class="imgall" src="../home/resourse/talk.jpg"></image>
+        <text class="txt">即时倾诉</text>
+      </navigator> -->
   <button style="width:120rpx" class="testtab" plain="true" bindtap="click1">
   <image class="testimg" src="../home/resourse/test.jpg" />
   </button>
@@ -21,11 +37,11 @@
   </button>
   <button style="width:120rpx" class="talktab" plain="true" bindtap="click4">
   <image class="talkimg" src="../home/resourse/talk.jpg" />
-  </button>
+  </button> 
   </view>
-  <text class="text1" space="ensp">
-心理测评   心理咨询   心海漂流   即时倾诉
-  </text>
+   <text class="text1" space="ensp">
+心理测评   心理咨询   心海漂流   即时倾诉 
+  </text> 
   <view class="taball2">
   <button style="width:120rpx" class="readtab" plain="true" bindtap="click5">
   <image class="readimg" src="../home/resourse/read.jpg" />
@@ -38,9 +54,9 @@
   </button>
   <button style="width:120rpx" class="chemicaltab" plain="true" bindtap="click8">
   <image class="chemicalimg" src="../home/resourse/chemical.jpg" />
-  </button>
+  </button> 
 </view>
-<text class="text2" space="ensp">
+ <text class="text2" space="ensp">
 文章阅读    正念冥想   解忧商城  解忧实验室
-  </text>
+  </text> 
 
