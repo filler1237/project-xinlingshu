@@ -1,2 +1,26 @@
 <!--pages/home/function/1/1.wxml-->
-<text>pages/home/function/1/1.wxml</text>
+<view class="testblock" >
+  <view class="Gotest">
+    <navigator url="/pages/home/function/1/SDS/SDS" open-type="navigate" >
+      <text class="textname">抑郁自评量表（SDS）</text>
+    </navigator>
+  </view>
+</view>
+
+<view class="Gotest" >
+   <navigator url="/pages/home/function/1/SAS/SAS" open-type="navigate" >
+    <text class="textname">焦虑自评量表（SAS）</text>
+  </navigator>
+</view>
+
+<view class="Gotest" >
+  <navigator url="/pages/home/function/1/AIS/AIS" open-type="navigate" >
+    <text class="textname">阿森斯失眠量表（AIS）</text>
+  </navigator>
+</view>
+
+<view class="Gotest" >
+  <navigator url="/pages/home/function/1/GHQ/GHQ" open-type="navigate" >
+    <text class="textname">一般健康问卷（GHQ-12）</text>
+  </navigator>
+</view>

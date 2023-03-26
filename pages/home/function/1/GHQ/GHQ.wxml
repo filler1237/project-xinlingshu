@@ -1,0 +1,14 @@
+<!--pages/home/function/1/GHQ/GHQ.wxml-->
+<view class="name">
+  <text class="textname">阿森斯失眠量表（AIS）</text>
+</view>
+
+<view class="containerSDS">
+  <text>GHQ</text>
+</view>
+
+<view class="name">
+  <text class="tips">请根据最近一个月的实际感觉,选择较符合的选项</text>
+</view>
+
+<button bindtap="Gotext">开始测试</button>
