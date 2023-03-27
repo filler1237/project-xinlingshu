@@ -1,7 +1,7 @@
 /* pages/home/function/1/1.wxss */
 .Gotest{
   height: 100%;
-  width: 95%;
+  width: 94%;
   text-align: center;
   align-items: center;
   align-content: center;
@@ -11,10 +11,12 @@
   box-sizing: content-box;
   padding: 30rpx 20rpx;
   border-radius: 15rpx; 
+  margin-top: 15rpx;
 }
 .textname{
   font-size: 40rpx;
 }
 .testblock{
-    height:120%
+    padding-top: 30%;
+    
 }
