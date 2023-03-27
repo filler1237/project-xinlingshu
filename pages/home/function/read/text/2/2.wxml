@@ -1,2 +1,3 @@
-<!--pages/home/function/read/text/2/2.wxml-->
-<text>pages/home/function/read/text/2/2.wxml</text>
+<text class="text1" space="ensp">
+           此处省略一万字……
+</text>

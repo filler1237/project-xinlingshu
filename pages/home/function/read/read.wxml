@@ -10,7 +10,7 @@
     </view>
   </button>
 </view>
-<view wx:if="{{shift}}">
+<view class="zl" wx:if="{{shift}}">
   <navigator url="./text/1/1" class="zhuanlan">
     <view class="text1">
       心理咨询师如何帮助人成长：支持、探索与修复
@@ -22,7 +22,7 @@
     </view>
   </navigator>
 </view>
-<view hidden="{{shift}}">
+<view class="zl" hidden="{{shift}}">
   <navigator url="./video/1/1" class="zhuanlan">
     <view class="text1">
       视频1
