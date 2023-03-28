@@ -1,0 +1,4 @@
+<!--pages/home/function/1/AIS/result/result.wxml-->
+
+  <view class="container">{{advise}}</view>
+  

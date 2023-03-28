@@ -1,0 +1,71 @@
+<!--pages/home/function/1/SDS/SDStext/SDStext.wxml-->
+
+<view class="question">
+  1、我觉得闷闷不乐，情绪低沉
+</view>
+
+<radio-group bindchange="serviceValChange">
+        <view class="select flex">
+          <block wx:for="{{options}}">
+            <view class=" item">
+              <label class="checkbox {{item.checked?'pick':''}}">
+                <radio value="{{item.value}}" checked="{{item.checked}}" hidden="false" />{{item.level}}
+              </label>
+            </view>
+          </block>
+        </view>
+</radio-group>
+
+<view class="question">
+  2、我觉得一天中早晨最好
+</view>
+<view class="question">
+  3、一阵阵哭出来或觉得想哭
+</view>
+<view class="question">
+  4、我晚上睡眠不好
+</view>
+<view class="question">
+  5、我吃得跟平常一样多
+</view>
+<view class="question">
+  6、我与异性密切接触时和以往一样感到愉快
+</view>
+<view class="question">
+  7、我发觉我的体重在下降
+</view>
+<view class="question">
+  8、我有便秘的苦恼
+</view>
+<view class="question">
+  9、心跳比平常快
+</view>
+<view class="question">
+  10、我无缘无故地感到疲乏
+</view>
+<view class="question">
+  11、我的头脑和平常一样清楚
+</view>
+<view class="question">
+  12、我觉得经常做的事情并没有困难
+</view>
+<view class="question">
+  13、我觉得不安而平静不下来
+</view>
+<view class="question">
+  16、我觉得做出决定是容易的
+</view>
+<view class="question">
+  17、我觉得自己是个有用的人，有人需要我
+</view>
+<view class="question">
+  18、我的生活过得很有意思
+</view>
+<view class="question">
+  19、我认为如果我死了，别人会生活得更好
+</view>
+<view class="question">
+  20、平常感兴趣的事我仍然感兴趣
+</view>
+
+<button bindtap="Goresult">我填好了</button>
