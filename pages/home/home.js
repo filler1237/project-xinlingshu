@@ -29,7 +29,7 @@ click3:function(options){
  },
  click5:function(options){
   wx.navigateTo({
-    url: '../home/function/5/5',
+    url: '../home/function/read/read',
   })
  },
  click6:function(options){

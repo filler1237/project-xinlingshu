@@ -25,10 +25,17 @@
     "pages/home/function/2/2",
     "pages/home/function/3/3",
     "pages/home/function/4/4",
-    "pages/home/function/5/5",
     "pages/home/function/6/6",
     "pages/home/function/7/7",
-    "pages/home/function/8/8"
+    "pages/home/function/8/8",
+    "pages/home/function/read/read",
+    "pages/home/function/5/5",
+    "pages/home/function/read/text/text",
+    "pages/home/function/read/video/video",
+    "pages/home/function/read/text/1/1",
+    "pages/home/function/read/text/2/2",
+    "pages/home/function/read/video/1/1",
+    "pages/home/function/read/video/2/2"
   ],
   "window": {
     "backgroundTextStyle": "light",
