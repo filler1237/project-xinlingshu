@@ -33,11 +33,11 @@
     </view>
     <view class="order-icon">
       <navigator class="icon-wrap" url="/pages/mine/list/list">
-          <image class="icon wx" src="/assets/list.jpg"></image>
+          <image class="icon" src="/assets/list.jpg"></image>
           <text class="txt">咨询师列表</text>
       </navigator>
       <navigator class="icon-wrap" url="/pages/mine/contact/contact">
-          <image class="icon wx" src="/assets/service.jpg"></image>
+          <image class="icon" src="/assets/service.jpg"></image>
           <text class="txt">联系客服</text>
       </navigator>
       <navigator class="icon-wrap" url="/pages/mine/setting/setting">
@@ -48,3 +48,11 @@
   </view>
 
 </view>
+
+
+  <van-button icon="https://img.yzcdn.cn/vant/logo.png" open-type="contact" type="primary" size="small" plain hairline class="btn">联系我们</van-button>
+
+
+
+
+<!-- <van-button icon="https://img.yzcdn.cn/vant/logo.png" open-type="contact" type="primary" size="small" plain hairline class="btn">联系我们</van-button> -->

@@ -1,5 +1,5 @@
 // pages/mine/mine.js
-var app = getApp();
+const app = getApp();
 Page({
 
   /**
@@ -7,7 +7,38 @@ Page({
    */
   data: {
     userInfo:{},
-    isLogin:false
+    isLogin:false,
+    id:null
+  },
+  toLogin(){
+    if(!this.data.id){
+      var that = this
+    wx.getUserProfile({
+      desc: '用于完善信息',
+      success(res){
+        console.log(res)
+        var user=res.userInfo
+        app.globalData.userInfo.id=1
+        app.globalData.userInfo=user
+        app.globalData.userInfo.isLogin=true
+        console.log(app.globalData)
+        console.log(that.data.userInfo.id)
+        that.setData({
+          userInfo:user,
+          id:1
+        })
+        wx.showToast({
+          title: '登录成功',
+        })
+      }
+    })
+    }
+    else
+    {
+      wx.navigateTo({
+      url: '/pages/auth/usercenter/usercenter'
+    })
+  }
   },
 
   /**

@@ -1,0 +1,53 @@
+/* pages/auth/usercenter/usercenter.wxss */
+/* .wrap{
+  margin-top: 20rpx;
+  text-align: center;
+} */
+.avatar-wrapper{
+  height: 300rpx;
+  width: 300rpx;
+  
+}
+.btn{
+  margin-top: 500rpx;
+}
+.txt{
+  text-align: center;
+  margin-top: 50rpx;
+}
+.small{
+  height: 55rpx;
+  width: 55rpx;
+}
+
+.van-wrap{
+  margin: 50rpx;
+  height: 350rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 32rpx;
+  border: 1rpx solid #929292;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+}
+
+.van-wrap_1{
+  margin: 50rpx;
+  height: 450rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 32rpx;
+  border: 1rpx solid #929292;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+}
+
+.img{
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 50%;
+}

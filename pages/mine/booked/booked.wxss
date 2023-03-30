@@ -1,1 +1,31 @@
 /* pages/mine/booked/booked.wxss */
+.all{
+  margin: 15rpx;
+  height: 140rpx;
+  width: 720rpx;
+  border: 1rpx solid #504e4e;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+}
+
+.first{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10rpx;
+}
+
+.second{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10rpx;
+}
+
+.condition{
+  color: green;
+}
+
+.condition1{
+  color: red;
+}

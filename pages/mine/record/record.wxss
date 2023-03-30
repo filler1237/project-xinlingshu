@@ -1,1 +1,9 @@
 /* pages/mine/record/record.wxss */
+.wrap{
+  margin: 15rpx;
+  height: 240rpx;
+  width: 720rpx;
+  border: 1rpx solid black;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+}

@@ -1,14 +1,26 @@
 {
+<<<<<<< Updated upstream
   "name": "xls",
+=======
+  "name": "test2",
+>>>>>>> Stashed changes
   "version": "1.0.0",
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+<<<<<<< Updated upstream
   "author": "",
   "license": "ISC",
   "dependencies": {
     "weui-miniprogram": "^1.2.7"
+=======
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vant-weapp": "^0.5.29"
+>>>>>>> Stashed changes
   }
 }

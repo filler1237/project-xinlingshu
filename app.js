@@ -18,7 +18,8 @@ App({
     userInfo: {
       nickName: "Hi，游客",
       username: "点击去登录",
-      avatarUrl: "/assets/avatar.jpg"
+      id:null,
+      avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
     },
     AISquestion:[
       {"question":"入睡时间（关灯后到睡着的时间）","option":{"A":"没问题","B":"轻微延迟", "C":"显著延迟","D":"延迟严重或没有睡觉"}},

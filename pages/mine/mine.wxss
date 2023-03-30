@@ -1,15 +1,17 @@
 /* pages/home/home.wxss */
 .profile-info {
-  margin: 10rpx;
+  margin: 15rpx;
   height: 280rpx;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
   padding-left: 32rpx;
-  background: #333;
-  width: 700rpx;
+  background: #91c789;
+  width: 690rpx;
+  border: 1rpx solid #804d4d;
   border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
 }
 
 .profile-info .avatar {
@@ -106,4 +108,11 @@
   font-size: 30rpx;
   font-weight: bold;
   margin-bottom: 10rpx;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+  color: black;
+  /* text-align: center; */
 }

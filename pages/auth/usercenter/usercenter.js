@@ -1,0 +1,121 @@
+// pages/auth/usercenter/usercenter.js
+const app=getApp();
+const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    nickName:'游客',
+    avatarUrl:defaultAvatarUrl,
+    value: ''
+  },
+  onChange(event) {
+    // event.detail 为当前输入的值
+    console.log(event.detail);
+  },
+  
+  onChooseAvatar(e) {
+    console.log(e)
+    const { avatarUrl } = e.detail 
+    this.setData({
+      avatarUrl,
+    })
+    app.globalData.userInfo=e.detail
+  },
+  onChangesign(e){
+    console.log(e)
+  },
+  // onChangename(e){
+  //   console.log(e)
+  //   const { nickName } = e.detail 
+  //   this.setData({
+  //     nickName,
+  //   })
+  //   app.globalData.userInfo=e.detail
+  // },
+  formsubmit(e){
+    const nickName = e.detail.value.nickname
+    console.log("nickName", nickName)
+    // do something
+  },
+  login(){
+    var that = this
+    wx.getUserProfile({
+      desc: '用于完善信息',
+      success(res){
+        console.log(res)
+        var user=res.userInfo
+        app.globalData.userInfo=user
+        app.globalData.userInfo.isLogin=true
+        console.log(app.globalData)
+        that.setData({
+          userInfo:user
+        })
+        wx.showToast({
+          title: '登录成功',
+        })
+      }
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+
+  onLoad(options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+    wx.setNavigationBarTitle({
+      title: '个人中心',
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+    this.avatarUrl=app.globalData.userInfo.avatarUrl
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
+})

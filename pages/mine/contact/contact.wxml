@@ -1,2 +1,2 @@
 <!--pages/mine/contact/contact.wxml-->
-<text>pages/mine/contact/contact.wxml</text>
+<button open-type="contact">联系客服</button>

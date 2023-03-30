@@ -12,6 +12,8 @@
     "pages/mine/list/list",
     "pages/mine/setting/setting",
     "pages/mine/record/record",
+    "pages/auth/usercenter/usercenter",
+    "pages/mine/usercenter/usercenter",
     "pages/index/index",
     "pages/home/function/1/1",
     "pages/home/function/1/SDS/SDS",
@@ -35,14 +37,17 @@
     "pages/home/function/read/text/1/1",
     "pages/home/function/read/text/2/2",
     "pages/home/function/read/video/1/1",
-    "pages/home/function/read/video/2/2"
+    "pages/home/function/read/video/2/2",
+    "pages/home/test/test"
   ],
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },
+
   "tabBar": {
     "list": [
       {
@@ -58,6 +63,13 @@
         "text": "我的"
       }
     ]
+  },
+  
+  "usingComponents": {
+    "van-button": "/miniprogram_npm/vant-weapp/button/index",
+    "van-field": "/miniprogram_npm/vant-weapp/field/index",
+    "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index"
+
   },
   "lazyCodeLoading": "requiredComponents",
   "style": "v2",
