@@ -1,0 +1,10 @@
+<!--pages/home/function/1/SAS/SAS.wxml-->
+<view class="buttontype">
+  <button>没有/很少时间</button>
+  <button>少部分时间</button>
+</view>
+
+<view class="buttontype">
+  <button>相当多时间</button>
+  <button hover-class="tap">绝大部分/全部时间</button>
+</view>

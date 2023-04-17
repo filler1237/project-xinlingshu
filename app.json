@@ -3,8 +3,6 @@
     "pages/home/home",
     "pages/mine/mine",
     "pages/sushuo/sushuo",
-    "pages/sushuo/XIE/XIE",
-    "pages/sushuo/DA/DA",
     "pages/logs/logs",
     "pages/mine/booked/booked",
     "pages/mine/evaluate/evaluate",
@@ -41,6 +39,62 @@
     "pages/home/test/test"
   ],
 
+
+  "subPackages": [
+    {
+      "root": "home",
+      "name": "home",
+      "pages": [
+        "pages/home/function/test/test",
+        "pages/home/function/test/SDS/SDS",
+        "pages/home/function/test/SDS/result/result",
+        "pages/home/function/test/SDS/SDStext/SDStext",
+        "pages/home/function/test/SAS/SAS",
+        "pages/home/function/test/AIS/AIS",
+        "pages/home/function/test/AIS/AIStext/AIStext",
+        "pages/home/function/test/AIS/result/result",
+        "pages/home/function/test/GHQ/GHQ",
+        "pages/home/function/consult/consult",
+        "pages/home/function/read/read",
+        "pages/home/function/read/text/text",
+        "pages/home/function/read/video/video",
+        "pages/home/function/read/text/test/test",
+        "pages/home/function/read/text/2/2",
+        "pages/home/function/read/video/test/test",
+        "pages/home/function/read/video/2/2",
+        "pages/home/function/card/card",
+        "pages/home/function/social/social"
+      ]
+    },
+    {
+      "root": "sushuo",
+      "name": "sushuo",
+      "pages": [
+        "pages/sushuo/XIE/XIE",
+        "pages/sushuo/DA/DA"
+      ]
+    },
+    {
+      "root": "mine",
+      "name": "mine",
+      "pages": [
+        "pages/mine/mine",
+        "pages/mine/booked/booked",
+        "pages/mine/evaluate/evaluate",
+        "pages/mine/contact/contact",
+        "pages/mine/list/list",
+        "pages/mine/setting/setting",
+        "pages/mine/mycomment/mycomment"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home/home":{
+      "network": "all",
+      "packages": ["home","sushuo","mine"]
+    }
+  },
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -68,8 +122,9 @@
   "usingComponents": {
     "van-button": "/miniprogram_npm/vant-weapp/button/index",
     "van-field": "/miniprogram_npm/vant-weapp/field/index",
-    "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index"
-
+    "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index",
+    "van-tabbar": "/miniprogram_npm/vant-weapp/tabbar/index",
+    "van-tabbar-item": "/miniprogram_npm/vant-weapp/tabbar-item/index"
   },
   "lazyCodeLoading": "requiredComponents",
   "style": "v2",

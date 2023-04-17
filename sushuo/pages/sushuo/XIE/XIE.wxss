@@ -1,0 +1,29 @@
+/* pages/sushuo/XIE/XIE.wxss */
+page{
+  background-color: #91c789;
+}
+
+.inputbox{
+  height: 900rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 70rpx 20rpx;
+  box-sizing: border-box;
+  border-radius: 15rpx;
+  background-color: #fff5e0;
+}
+
+textarea{
+  padding: 30rpx;
+}
+
+.buttonbox{
+  height: 100%;
+  justify-content: space-between;
+}
+
+button{
+  background-color: #ff8474;
+}

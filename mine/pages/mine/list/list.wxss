@@ -1,0 +1,30 @@
+
+/* pages/mine/list/list.wxss */
+.order-wrap {
+  display: flex;
+  margin: 15rpx;
+  height: 280rpx;
+  width: 720rpx;
+  border: 1rpx solid #804d4d;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+  margin: 15rpx;
+}
+
+.picture image{
+  width: 200rpx;
+  height: 200rpx;
+  margin: 15rpx;
+  padding-top: 25rpx;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  margin-left: 15rpx;
+  margin-top: 15rpx;
+}
+
+.title{
+  font-weight: bold;
+}

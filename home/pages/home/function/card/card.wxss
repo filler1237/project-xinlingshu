@@ -1,0 +1,28 @@
+.text{
+  text-align: center;
+  margin-top: 20%;
+  font-size: 50rpx;
+  font-weight: 100;
+}
+.board{
+  margin-top: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.rows{
+  margin-bottom:5rpx ;
+  padding:0rpx;
+  text-algin:center;
+  flex-direction:row;
+  display:flex;
+}
+.cols{
+  margin: 5rpx;
+}
+.card{
+   width:  215rpx;
+   height: 320rpx;
+   padding:1rpx;
+   magrin: 0.5rpx;
+}
+page{background: url('../../images/sushuo.jpg') center top; }

@@ -8,7 +8,12 @@ Page({
   data: {
     userInfo:{},
     isLogin:false,
-    id:null
+    id:null,
+    wenzhang:[],
+      message:[],
+      pinglunguode:[],
+      ban:false,
+      isadmin:false
   },
   toLogin(){
     if(!this.data.id){

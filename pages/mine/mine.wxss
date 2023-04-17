@@ -1,4 +1,12 @@
 /* pages/home/home.wxss */
+.ucenter{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-info {
   margin: 15rpx;
   height: 280rpx;
@@ -8,8 +16,12 @@
   justify-content: flex-start;
   padding-left: 32rpx;
   background: #91c789;
+
   width: 690rpx;
   border: 1rpx solid #804d4d;
+
+  width: 650rpx;
+
   border-radius: 15rpx;
   box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
 }
@@ -39,12 +51,12 @@
 }
 
 .order-wrap {
-  margin: 15rpx;
   height: 240rpx;
   width: 720rpx;
   border: 1rpx solid #804d4d;
   border-radius: 15rpx;
   box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
+  margin-top: 50rpx;
 }
 
 .order-header {

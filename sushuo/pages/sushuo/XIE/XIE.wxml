@@ -1,0 +1,9 @@
+<!--pages/sushuo/XIE/XIE.wxml-->
+<view class="inputbox">
+  
+  <textarea placeholder="这是一个属于你的树洞" auto-focus="true"/>
+</view>
+
+<view>
+  <button >给树洞</button>
+</view>

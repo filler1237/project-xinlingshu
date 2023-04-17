@@ -19,7 +19,12 @@ App({
       nickName: "Hi，游客",
       username: "点击去登录",
       id:null,
-      avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
+      avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+      wenzhang:[],
+      message:[],
+      pinglunguode:[],
+      ban:false,
+      isadmin:false
     },
     AISquestion:[
       {"question":"入睡时间（关灯后到睡着的时间）","option":{"A":"没问题","B":"轻微延迟", "C":"显著延迟","D":"延迟严重或没有睡觉"}},
@@ -34,4 +39,7 @@ App({
     token: "",
   },
 })
-wx.cloud.init({})
+wx.cloud.init({
+  env:'tuxls-4gadsqlb8cd8de9e'
+})
+

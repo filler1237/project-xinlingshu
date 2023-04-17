@@ -1,12 +1,6 @@
 // pages/home/function/1/SDS/SDS.js
 Page({
-  
-  //进入测试
-  Gotext(){
-    wx.navigateTo({
-      url: '/pages/home/function/1/SDS/SDStext/SDStext',
-    })
-  },
+
   /**
    * 页面的初始数据
    */

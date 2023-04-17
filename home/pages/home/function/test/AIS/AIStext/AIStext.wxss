@@ -1,0 +1,57 @@
+/* pages/home/function/1/AIS/AIStext/AIStext.wxss */
+
+.container1 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100rpx 50rpx;
+  box-sizing: border-box;
+} 
+
+.question{
+  text-align: center;
+  padding: 10rpx 3rpx;
+  font-size: 35rpx;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  
+}
+.flex .item{
+  flex: 100;
+  display:flex;
+  justify-content: center;
+}
+ 
+.select {
+  padding: 10px 10px;
+  
+
+}
+ 
+.select label {
+  border: 1px solid #dbc98c;
+  color: #db858f;
+  background-color: #fefef5;
+  padding: 6px 7px;
+  font-size: 16px;
+  border-radius: 4px;
+  width: 300rpx;
+  text-align: center;
+}
+ 
+.select .pick {
+  background: #30432d;
+}
+
+/*提示语*/
+.tips{
+  font-size: 25rpx;
+  color: rgb(141, 190, 190);
+  text-align: center;
+  align-content: center;
+}

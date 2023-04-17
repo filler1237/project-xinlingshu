@@ -1,0 +1,38 @@
+/* pages/mine/record/record.wxss */
+.title{
+  font-size: 60rpx;
+  margin: 20rpx;
+}
+
+.max{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recordbox{
+  height: 200rpx;
+  width: 720rpx;
+  display: flex;
+  flex-direction: row;
+  border-radius: 15rpx;
+  margin: 10rpx;
+}
+
+.imgbox{
+  height: 180rpx; 
+  width: 180rpx;
+  margin: 10rpx;
+}
+.img{
+  height: 100%;
+  width: 100%;
+  border-radius: 15%;
+}
+
+.textbox{
+  height: 180rpx;
+  width: 500rpx;
+  display: flex;
+  flex-direction: column;
+}

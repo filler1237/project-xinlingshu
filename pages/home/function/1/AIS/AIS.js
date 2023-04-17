@@ -1,10 +1,6 @@
 // pages/home/function/1/AIS/AIS.js
 Page({
-  Gotext(){
-    wx.navigateTo({
-      url: '/pages/home/function/1/AIS/AIStext/AIStext',
-    })
-  },
+
   /**
    * 页面的初始数据
    */

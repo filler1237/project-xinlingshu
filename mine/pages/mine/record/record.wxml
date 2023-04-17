@@ -1,0 +1,64 @@
+<!--pages/mine/record/record.wxml-->
+<view class="title">
+  测评记录
+</view >
+
+<view class="max">
+  <view class="recordbox" style="background-color: #ccdcb4;">
+    <view class="imgbox">
+      <image class="img" src="/assets/record1.jpg" mode="aspectFill"/>
+    </view>
+    <view class="textbox">
+      <text style="font-size: 25rpx;">2023/04/01</text>
+      <text style="font-size: 40rpx;">抑郁自评量表（SDS）</text>
+      <text style="font-size: 30rpx;">您的自测结果为有轻微至轻度抑郁，建议您保持心情舒畅和健康的...</text>
+    </view>
+  </view>
+
+  <view class="recordbox" style="background-color: #bac6e1;">
+    <view class="imgbox">
+      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+    </view>
+    <view class="textbox">
+      <text style="font-size: 25rpx;">2023/04/01</text>
+      <text style="font-size: 40rpx;">抑郁自评量表（SDS）</text>
+      <text style="font-size: 30rpx;">您的自测结果为有轻微至轻度抑郁，建议您保持心情舒畅和健康的...</text>
+    </view>
+  </view>
+
+  <view class="recordbox" style="background-color: #98b86a;">
+    <view class="imgbox">
+      <image class="img" src="/assets/record1.jpg" mode="aspectFill"/>
+    </view>
+    <view class="textbox">
+      <text style="font-size: 25rpx;">2023/04/01</text>
+      <text style="font-size: 40rpx;">抑郁自评量表（SDS）</text>
+      <text style="font-size: 30rpx;">您的自测结果为有轻微至轻度抑郁，建议您保持心情舒畅和健康的...</text>
+    </view>
+  </view>
+
+  <view class="recordbox" style="background-color: #f4cbb2;">
+    <view class="imgbox">
+      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+    </view>
+    <view class="textbox">
+      <text style="font-size: 25rpx;">2023/04/01</text>
+      <text style="font-size: 40rpx;">抑郁自评量表（SDS）</text>
+      <text style="font-size: 30rpx;">您的自测结果为有轻微至轻度抑郁，建议您保持心情舒畅和健康的...</text>
+    </view>
+  </view>
+
+  <view class="recordbox" style="background-color: #fefef5;">
+    <view class="imgbox">
+      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+    </view>
+    <view class="textbox">
+      <text style="font-size: 25rpx;">2023/04/01</text>
+      <text style="font-size: 40rpx;">抑郁自评量表（SDS）</text>
+      <text style="font-size: 30rpx;">您的自测结果为有轻微至轻度抑郁，建议您保持心情舒畅和健康的...</text>
+    </view>
+  </view>
+
+
+
+</view>

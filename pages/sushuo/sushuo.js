@@ -9,12 +9,12 @@ Page({
   },
   gotoXIE (){
       wx.navigateTo({
-        url: '/pages/sushuo/XIE/XIE'
+        url: '../../sushuo/pages/sushuo/XIE/XIE'
       })
   },
   gotoDA (){
     wx.navigateTo({
-      url: '/pages/sushuo/DA/DA'
+      url: '../../sushuo/pages/sushuo/DA/DA'
     })
 },
 

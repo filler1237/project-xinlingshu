@@ -1,37 +1,12 @@
 // pages/home/function/1/SDS/SDStext/SDStext.js
 Page({
 
-  Goresult(){
-    wx.navigateTo({
-      url: '/pages/home/function/1/SDS/result/result',
-    })
-  },
-
   /**
    * 页面的初始数据
    */
   data: {
-        options: [
-            { level: '没有或很少时间', value: '0', checked: false },
-            { level: '少部分时间', value: '1', checked: false },
-            { level: '相当多时间', value: '2', checked: false },
-            { level: '绝大部分或全部时间', value: '3', checked: false },
-          ],
-      },
-      serviceValChange: function (e) {
-        var options = this.data.options;
-        var checkArr = e.detail.value;
-        for (var i = 0; i < options.length; i++) {
-          if (checkArr.indexOf(i + "") != -1) {
-            options[i].checked = true;
-          } else {
-            options[i].checked = false;
-          }
-        }
-        this.setData({
-          options: options
-        })
-    },
+
+  },
 
   /**
    * 生命周期函数--监听页面加载

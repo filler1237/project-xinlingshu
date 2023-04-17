@@ -1,0 +1,15 @@
+<view class="text">
+  提升我的复原力
+</view>
+<view class="">
+  <view class="board" >
+    <view class="rows" wx:for="{{cards}}" wx:for-index="idx" wx:for-item="row">
+        <view wx:for="{{row}}" class="cols"   wx:for-index="idy"  wx:for-item="card" > 
+            <view  class="" data-ix="{{idx}}"  data-iy="{{idy}}"  bindtap="onTap" >
+                <image class="card" style="display:{{card.state == 0 ? 'none' : 'block'}}" mode="scaleToFill" src= "{{card.src}}" data-card="{{card}}" bindtap="preview"></image>
+                <image class="card back" style="display:{{card.state != 0 ? 'none' : 'block'}}" mode="scaleToFill" src= "{{backImage}}" ></image>
+            </view>
+        </view>
+    </view>
+    </view>
+</view>
