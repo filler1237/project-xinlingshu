@@ -7,11 +7,31 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   }
+    // })
+    // this.userInfo={
+    //   ban:false,
+    //   msgnb:[0,0],
+    //   _openid:"",
+    //   _id:"",
+    //   wenzhang:[],
+    //   message:[],
+    //   pinglunguode:[],
+    //   userinfo:{
+    //     avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+    //     userName:"匿名用户",
+    //     nickName: "Hi，游客",
+    //     username: "点击去登录",
+    //     anonymous:"",
+    //     isVIP:false,
+    //     login:"未知",
+    //   },
+      
+    // }
+    
   },
   
   globalData: {
@@ -39,6 +59,7 @@ App({
     token: "",
   },
 })
+
 wx.cloud.init({
   env:'tuxls-4gadsqlb8cd8de9e'
 })
