@@ -1,9 +1,4 @@
-
-
-<!-- 轮播图 -->
-<swiper class="lunbotu" indicator-dots indicator-color="white" indicator-active-color="gray" autoplay interval="3000" circular>
-
- <swiper class="tips" indicator-dots indicator-color="#ff8474" indicator-active-color="gray" autoplay interval="3000" circular>
+<swiper class="tips" indicator-dots indicator-color="#ff8474" indicator-active-color="gray" autoplay interval="3000" circular>
   <swiper-item>
     <view class="tital">
       <text class="tip">情话对着左耳说更有效</text>
@@ -12,7 +7,6 @@
       <text>美国萨姆休斯敦州立大学研究人员的一项最新研究发现，对着爱人的左耳甜言蜜语更能俘获她们的芳心。这是因为人的左耳由右脑控制。而在人脑分工中，右脑半球负责感性直观思维，对情感类体验更为敏锐。</text>
      </view>
   </swiper-item> 
-
   <swiper-item>
     <view class="tital">
       <text class="tip">人用右耳听的话比用左耳记得更牢</text>
@@ -30,7 +24,6 @@
      </view>
   </swiper-item> 
 </swiper>
-</swiper>
 <view class="button1">
   <navigator class="mbutton" url="../../home/pages/home/function/social/social" style="width:30%">
   <image src="./resourse/social2.png" style="width: 60rpx;"/>
@@ -45,15 +38,6 @@
   <text class="txt1">塔罗牌</text>
   </navigator>
 </view>
-
- <text class="text2" space="ensp">
-文章阅读    正念冥想   解忧商城  解忧实验室
-  </text> 
-
-
-
-
-
 <view class="button2">
   <navigator class="bbutton1" url="../../home/pages/home/function/consult/consult" style="width:45%">
   <text class="txt2" >心理咨询</text>
@@ -63,6 +47,5 @@
 </navigator> 
 </view>
 <view class="jitang">
-  <image src="./resourse/jitang3.jpg" mode="heightFix"/>
+  <image src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/detail/jitang3.jpg" mode="heightFix"/>
 </view>
-

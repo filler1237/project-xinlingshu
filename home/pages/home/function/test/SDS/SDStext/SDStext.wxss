@@ -1,34 +1,44 @@
 /* pages/home/function/1/SDS/SDStext/SDStext.wxss */
+.quesbox{
+  width: 100%;
+  height: 1200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100rpx 50rpx;
+  box-sizing: border-box;
+}
 .question{
   text-align: center;
-  padding: 10rpx 3rpx;
-  font-size: 35rpx;
+  padding: 20rpx 3rpx;
+  font-size: 45rpx;
+  font-weight: bold;
 }
 
 .flex{
   display: flex;
   flex-direction: column;
-  
 }
+
 .flex .item{
   flex: 100;
   display:flex;
   justify-content: center;
+  padding: 7rpx;
 }
  
 .select {
   padding: 15px 10px;
   background: rgb(255, 255, 255);
-
 }
  
 .select label {
   border: 1px solid #dbc98c;
   color: #db858f;
-  padding: 6px 7px;
-  font-size: 12px;
-  border-radius: 4px;
-  width: 300rpx;
+  padding: 15px 7px;
+  font-size: 17px;
+  border-radius: 15px;
+  width: 450rpx;
   text-align: center;
 }
  

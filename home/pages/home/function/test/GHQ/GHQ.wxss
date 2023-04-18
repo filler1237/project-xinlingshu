@@ -1,2 +1,30 @@
 /* pages/home/function/1/GHQ/GHQ.wxss */
 /*标题字体*/
+.textname{
+  font-size: 40rpx;
+  align-items: center;
+}
+
+/*提示语*/
+.tips{
+  font-size: 25rpx;
+  color: rgb(141, 190, 190);
+}
+
+/*量表简介*/
+.containerSDS {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100rpx 45rpx;
+  box-sizing: border-box;
+} 
+
+/*字框*/
+.name{
+  align-items: center;
+  text-align: center;
+  padding: 50rpx 50rpx;
+}

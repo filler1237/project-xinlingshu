@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 10%;
 }
 
 .profile-info {
@@ -16,12 +17,9 @@
   justify-content: flex-start;
   padding-left: 32rpx;
   background: #91c789;
-
   width: 690rpx;
   border: 1rpx solid #804d4d;
-
   width: 650rpx;
-
   border-radius: 15rpx;
   box-shadow: 1rpx 1rpx 15rpx rgb(77, 75, 75);
 }
@@ -108,11 +106,19 @@
   width: 48rpx;
   height: 48rpx;
   margin-bottom: 10rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
 }
 
 .icon-wrap .txt {
   color: #666;
   font-size: 25rpx;
+  width: 130rpx;
+  display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .icon-wrap .num {

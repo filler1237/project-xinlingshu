@@ -4,42 +4,9 @@
     "pages/mine/mine",
     "pages/sushuo/sushuo",
     "pages/logs/logs",
-    "pages/mine/booked/booked",
-    "pages/mine/evaluate/evaluate",
-    "pages/mine/contact/contact",
-    "pages/mine/list/list",
-    "pages/mine/setting/setting",
-    "pages/mine/record/record",
     "pages/auth/usercenter/usercenter",
-    "pages/mine/usercenter/usercenter",
-    "pages/index/index",
-    "pages/home/function/1/1",
-    "pages/home/function/1/SDS/SDS",
-    "pages/home/function/1/SDS/result/result",
-    "pages/home/function/1/SDS/SDStext/SDStext",
-    "pages/home/function/1/SAS/SAS",
-    "pages/home/function/1/AIS/AIS",
-    "pages/home/function/1/AIS/AIStext/AIStext",
-    "pages/home/function/1/AIS/result/result",
-    "pages/home/function/1/GHQ/GHQ",
-    "pages/home/function/2/2",
-    "pages/home/function/3/3",
-    "pages/home/function/4/4",
-    "pages/home/function/6/6",
-    "pages/home/function/7/7",
-    "pages/home/function/8/8",
-    "pages/home/function/read/read",
-    "pages/home/function/5/5",
-    "pages/home/function/read/text/text",
-    "pages/home/function/read/video/video",
-    "pages/home/function/read/text/1/1",
-    "pages/home/function/read/text/2/2",
-    "pages/home/function/read/video/1/1",
-    "pages/home/function/read/video/2/2",
-    "pages/home/test/test"
+    "pages/index/index"
   ],
-
-
   "subPackages": [
     {
       "root": "home",
@@ -56,14 +23,12 @@
         "pages/home/function/test/GHQ/GHQ",
         "pages/home/function/consult/consult",
         "pages/home/function/read/read",
-        "pages/home/function/read/text/text",
-        "pages/home/function/read/video/video",
-        "pages/home/function/read/text/test/test",
         "pages/home/function/read/text/2/2",
-        "pages/home/function/read/video/test/test",
         "pages/home/function/read/video/2/2",
         "pages/home/function/card/card",
-        "pages/home/function/social/social"
+        "pages/home/function/social/social",
+        "pages/home/function/read/video/1/1",
+        "pages/home/function/read/text/1/1"
       ]
     },
     {
@@ -78,7 +43,6 @@
       "root": "mine",
       "name": "mine",
       "pages": [
-        "pages/mine/mine",
         "pages/mine/booked/booked",
         "pages/mine/evaluate/evaluate",
         "pages/mine/contact/contact",
@@ -89,19 +53,21 @@
     }
   ],
   "preloadRule": {
-    "pages/home/home":{
+    "pages/home/home": {
       "network": "all",
-      "packages": ["home","sushuo","mine"]
+      "packages": [
+        "home",
+        "sushuo",
+        "mine"
+      ]
     }
   },
-
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },
-
   "tabBar": {
     "list": [
       {
@@ -118,7 +84,6 @@
       }
     ]
   },
-  
   "usingComponents": {
     "van-button": "/miniprogram_npm/vant-weapp/button/index",
     "van-field": "/miniprogram_npm/vant-weapp/field/index",

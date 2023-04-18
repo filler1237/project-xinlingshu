@@ -1,10 +1,11 @@
 <!--pages/home/function/1/GHQ/GHQ.wxml-->
 <view class="name">
-  <text class="textname">阿森斯失眠量表（AIS）</text>
+  <text class="textname">一般健康问卷 （ GHQ-20 ）</text>
 </view>
 
 <view class="containerSDS">
-  <text>GHQ</text>
+  <text>一般健康问卷 GHQ-20 （ General Health Questionnaire ）
+原为 Goldberg 编制，后由清华大学教育研究所李虹博士等人修订。共20个项目，含 GHQ-自我肯定（9 个项目），GHQ-忧郁量表（6 个项目），GHQ-焦虑量表（5个项目）3 个分量表。忧郁量表和焦虑量表得分越高，表明忧郁和焦虑程度越强 ，自我肯定分量表得分越高，自我肯定程度越强 ；将自我肯定分量表记分进行反向转换与忧郁、焦虑量表分合成，形成身心问题总分，总分越高，身心健康水平越低。</text>
 </view>
 
 <view class="name">

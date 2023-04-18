@@ -1,2 +1,14 @@
-<!--pages/home/function/read/video/2/2.wxml-->
-<text>pages/home/function/read/video/2/2.wxml</text>
+
+<!--先静后动，先样式再数据-->
+<view class="detail-container">
+ <video style="width: auto;" src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/detail/【动画短片】获奖感人短片《小绳子 Cuerdas》 - 1.【动画短片】获奖感人短片《小绳子 Cuerdas》(Av38386312,P1).mp4"/>
+  <text class="title">心里装着爱，悲伤也可以变为力量</text>
+  <view class="tool">
+    <view class="horizon"></view>
+  </view>
+  <text class="detail">《小绳子》的故事是根据真实事件改编而来。故事灵感来自导演兼编剧PedroSolísGarcía的女儿亚历杭德拉和小儿子尼古拉斯。尼古拉斯出生时由于缺氧而患有严重的脑瘫，他不能自己吃饭，不能走路也不能说话，他就像《小绳子》中的小男孩。作为姐姐的亚历杭德拉始终带着爱与弟弟一起玩耍，成为弟弟最大的激励。
+  
+    这个短片故事很简单，却让人感动。玛莉亚点亮了男孩整个世界，男孩用生命教会了玛莉亚爱和守护。
+
+温暖人心的力量不是仅仅让人落泪的，更加重要的是我们要懂得，心里装着爱，悲伤也可以成为力量的~</text>
+</view>

@@ -1,10 +1,14 @@
 <!--pages/home/function/1/SAS/SAS.wxml-->
-<view class="buttontype">
-  <button>没有/很少时间</button>
-  <button>少部分时间</button>
+<view class="name">
+  <text class="textname">焦虑自评量表（SAS）</text>
 </view>
 
-<view class="buttontype">
-  <button>相当多时间</button>
-  <button hover-class="tap">绝大部分/全部时间</button>
+<view class="containerSDS">
+  <text>   焦虑自评量表 （ Self 一Rating Anxiety Seale , SAS ） 由 Zung于1971年编制, 从量表构造的形式到具体评定办法 , 都与抑郁自评量表 （ SDS ） 十分相似 , 它也是一个含有20个项目 , 分为4级评分的自评量表 , 用于评出焦虑病人的主观感受。</text>
 </view>
+
+<view class="name">
+  <text class="tips">请根据最近一周的实际感觉,选择较符合的选项</text>
+</view>
+
+<button bindtap="Gotext">开始测试</button>

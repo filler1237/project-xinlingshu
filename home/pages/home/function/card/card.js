@@ -9,7 +9,7 @@ var allCard = ['card1',
   'card8',
   'card9',
   'card10'];
-var backCardImage = "../images/background1.jpg"
+var backCardImage = "../images/background4.jpg"
 Page({
   data: {
     clickNum:0,      // 点击次数 

@@ -1,6 +1,0 @@
-<!--pages/mine/record/record.wxml-->
-<view class="wrap">
-  <view>
-    <image src="" mode=""/>
-  </view>
-</view>
