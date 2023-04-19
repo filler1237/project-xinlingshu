@@ -1,4 +1,1 @@
 /* pages/home/function/1/AIS/result/result.wxss */
-page{
-    background-color: rgb(200, 218, 218);
-}

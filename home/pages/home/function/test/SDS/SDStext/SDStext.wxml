@@ -1,32 +1,43 @@
 <!--pages/home/function/1/SDS/SDStext/SDStext.wxml-->
-<view class="quesbox">
 
-  <swiper style="height: 80%;" bindchange="QueChange" current="{{id}}">
-    <block wx:for="{{QUESTION}}">
-      <swiper-item style="height: fit-content;">
+<view class="tips" style="color: #30432d;" wx:if="{{id<=19}}">
+    {{id+1}}/20
+</view>
+
+<view class="quesbox" wx:if="{{id<=19}}">
+
+<swiper style="height: 80%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{QUESTION}}" >
+    <swiper-item style="height:fit-content;">
         
-      
-        <view class="question">
-          {{item.question}}
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
         </view>
-    
-        <radio-group bindchange="serviceValChange">
-        <view class="select flex">
-          <block wx:for="{{options}}">
-            <view class=" item " bindtap="NextQ">
-              <label class="checkbox {{item.checked?'pick':''}}">
-                <radio value="{{item.value}}" checked="{{item.checked}}" hidden="false" />{{item.level}}
-              </label>
+      </view>
+
+      <view wx:if="{{id != 0}}">
+            <view class="tips" bindtap="LastQ">
+                上一题
             </view>
-          </block>
-        </view>
-        </radio-group>
-</swiper-item>  
-</block> 
-  </swiper>
+      </view>
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+</view>
+
+<view class="quesbox"  >
+   <view wx:if="{{id==20}}" class="result" bindtap="Goresult">
+    查看结果</view> 
 </view>
 
 
-
-
-<button form-type="submit" bindtap="Goresult">我填好了</button>

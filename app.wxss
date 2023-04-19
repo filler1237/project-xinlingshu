@@ -8,3 +8,111 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+/**test.wxss**/
+.quesbox{
+  width: 100%;
+  height: 1200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100rpx 50rpx;
+  box-sizing: border-box;
+}
+.question{
+  text-align: center;
+  padding: 20rpx 3rpx;
+  font-size: 45rpx;
+  font-weight: bold;
+}
+
+.flex{
+  display: flex;
+}
+
+.flex .item{
+  flex: 100;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7rpx;
+  flex-direction: column;
+}
+ 
+.select {
+  padding: 15px 10px;
+  background: rgb(255, 255, 255);
+  flex-direction: column;
+}
+ 
+.select label {
+  border: 1px solid #dbc98c;
+  color: #db858f;
+  padding: 15px 7px;
+  margin: 10rpx;
+  font-size: 17px;
+  border-radius: 15px;
+  width: 450rpx;
+  text-align: center;
+}
+ 
+.select .pick {
+  background: #30432d;
+}
+
+.tips{
+  font-size: 25rpx;
+  color: rgb(141, 190, 190);
+  text-align: center;
+  margin: 20rpx;
+}
+
+.result{
+  border: 1px solid #db858f;
+  color: #30432d;
+  padding: 15px 7px;
+  margin: 10rpx;
+  border-radius: 15px;
+  font-size: 30px;
+  text-align: center;
+  justify-content: center;
+}
+
+
+/**result**/
+.box{
+  width: 100%;
+  height: 1200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100rpx 50rpx;
+  box-sizing: border-box; 
+}
+
+.title{
+  font-size: 50rpx;
+  font-weight: bolder;
+  margin: 20rpx;
+  text-align: center
+}
+
+.resultword{
+  font-size: 35rpx;
+  margin: 20rpx;
+  text-align: center;
+}
+
+.back{
+  color: #30432d;
+  font-size: 30rpx;
+  text-align: center;
+  margin: 10rpx;
+}
+
+.tips{
+font-size: 25rpx;
+color: rgb(141, 190, 190);
+text-align: center;
+margin: 20rpx;
+}

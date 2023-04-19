@@ -1,6 +1,10 @@
 // pages/home/function/1/SAS/SAS.js
 Page({
-
+  Gotest(){
+    wx.navigateTo({
+      url: '/home/pages/home/function/test/SAS/SAStext/SAStext',
+    })
+  },
   /**
    * 页面的初始数据
    */

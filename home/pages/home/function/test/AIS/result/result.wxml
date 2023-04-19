@@ -1,4 +1,7 @@
 <!--pages/home/function/1/AIS/result/result.wxml-->
 
-  <view class="container">{{advise}}</view>
+  <view class="box" style="font-size: 40rpx;">
+    <text>你的测评得分是:{{sum}}</text>
+    <text>{{advise}}</text>
+ </view>
   
