@@ -29,7 +29,6 @@ Page({
         shejiao: 0
       },
       max: 10,
-  gap: 10,
   Level: 1,  },
   //登录函数
   toLogin(){
@@ -207,9 +206,9 @@ Page({
   
     // 判断是否需要更新 max 属性
     if (fuyuanli.shengli >= fuyuanli.max && fuyuanli.xinli >= fuyuanli.max && fuyuanli.qingxu >= fuyuanli.max && fuyuanli.shejiao >= fuyuanli.max) {
-      const newMax = fuyuanli.max + gap;
-      const newGap = gap + 5;
-      const newLevel = Level + 1;
+      const newMax = fuyuanli.max + fuyuanli.gap;
+      const newGap = fuyuanli.gap + 5;
+      const newLevel = fuyuanli.Level + 1;
       this.setData({
         'fuyuanli.max': newMax,
         'fuyuanli.gap': newGap,
