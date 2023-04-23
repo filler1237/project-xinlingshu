@@ -73,18 +73,25 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
+    
     "list": [
       {
         "pagePath": "pages/sushuo/sushuo",
-        "text": "诉说"
+        "text": "诉说",
+        "iconPath": "/assets/果树_fruiter-2.png",
+        "selectedIconPath": "/assets/果树_fruiter.png"
       },
       {
         "pagePath": "pages/home/home",
-        "text": "主页"
+        "text": "主页",
+        "iconPath": "/assets/首页_home-two-2.png",
+        "selectedIconPath": "/assets/首页_home-two.png"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "/assets/我的_me-2.png",
+        "selectedIconPath": "/assets/我的_me.png"
       }
     ]
   },
