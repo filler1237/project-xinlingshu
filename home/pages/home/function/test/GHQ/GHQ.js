@@ -1,6 +1,10 @@
 // pages/home/function/1/GHQ/GHQ.js
 Page({
-
+  Gotext(){
+    wx.navigateTo({
+      url: '/home/pages/home/function/test/GHQ/GHQtext/GHQtext',
+    })
+  },
   /**
    * 页面的初始数据
    */

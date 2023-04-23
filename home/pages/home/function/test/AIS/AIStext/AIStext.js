@@ -1,68 +1,92 @@
 // pages/home/function/1/AIS/AIStext/AIStext.js
-const app=getApp()
 Page({
+  Goresult(){
+    wx.redirectTo({
+        url: '/home/pages/home/function/test/AIS/result/result?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C+'&D='+this.data.D+'&sum' + this.data.sum,
+      })
+  },
+  QueChange: function(q){
+    this.setData({
+      id : this.data.id
+    })
+    
+  },
 
+  LastQ:function( ){
+    if (this.data.id > 0 ){
+      this.setData({
+        id : this.data.id - 1 
+      })
+    }
+  },
+
+  OpA:function(){
+    if (this.data.id <= 7){
+        this.setData({
+          id : this.data.id + 1 
+        })
+      }
+      this.setData({
+        A:this.data.A + 0
+    })
+  },
+  OpB:function(){
+    if (this.data.id <= 7){
+        this.setData({
+          id : this.data.id + 1 
+        })
+      }
+      this.setData({
+        B:this.data.B + 1
+    })
+  },
+  OpC:function(){
+    if (this.data.id <= 7){
+        this.setData({
+          id : this.data.id + 1 
+        })
+      }
+      this.setData({
+        C:this.data.C + 2
+    })
+  },
+  OpD:function(){
+    if (this.data.id <= 7){
+        this.setData({
+          id : this.data.id + 1 
+        })
+      }
+      this.setData({
+        D:this.data.D + 3
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
-     QUESTION:app.globalData.AISquestion[0].question,
-     OPA:app.globalData.AISquestion[0].option.A,
-     OPB:app.globalData.AISquestion[0].option.B,
-     OPC:app.globalData.AISquestion[0].option.C,
-     OPD:app.globalData.AISquestion[0].option.D,
+     OptionA:'不符合',
+     OptionB:'不太符合',
+     OptionC:'比较符合',
+     OptionD:'完全符合',
      A:0,
      B:0,
      C:0,
      D:0,
+     id:0,
      sum:0,
-     index:0,
-     index:0,
+
+     AISquestion:[
+      {question:"入睡时间很长（关灯后到睡着的时间）"},
+      {question:"夜间苏醒频繁"},
+      {question:"比期望的时间早醒"},
+      {question:"总睡眠时间不足"},
+      {question:"总睡眠质量差（无论睡多长)"},
+      {question:"白天情绪低落"},
+      {question:"白天身体功能低下（体力或精神：如记忆力、认知力和注意力等）"},
+      {question:"白天思睡"}
+    ],
   },
-  BACK(){
-    wx.navigateBack()
-  },
-  ANS:function(){
-       this.setData({
-         index: this.data.index + 1,
-      })
-      if (this.data.index == 8) {
-        wx.redirectTo({
-          url: '../../AIS/result/result?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C+'&D='+this.data.D+'&sum' + this.data.sum,
-        }),
-        this.setData({
-            index: this.data.index - 1,
-        })
-      }
-      this.setData({
-        QUESTION:app.globalData.AISquestion[this.data.index].question,
-        OPA:app.globalData.AISquestion[this.data.index].option.A,
-        OPB:app.globalData.AISquestion[this.data.index].option.B,
-        OPC:app.globalData.AISquestion[this.data.index].option.C,
-        OPD:app.globalData.AISquestion[this.data.index].option.D,
-      })
-      
-     },
-     ANSA:function(){
-      this.setData({
-        A :this.data.A+0,
-      })
-     },
-     ANSB:function(){
-      this.setData({
-        B :this.data.B+1,
-      })
-     },
-     ANSC:function(){
-      this.setData({
-        C :this.data.C+2,
-      })
-     },
-     ANSD:function(){
-      this.setData({
-        D :this.data.D+3,
-      })
-     },
+  
   /**
    * 生命周期函数--监听页面加载
    */

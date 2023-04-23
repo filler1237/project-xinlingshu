@@ -1,45 +1,42 @@
-<!--pages/home/function/1/AIS/AIStext/AIStext.wxml-->
-<view class="container1">
-  <view style="font-size: 50rpx;margin: 10%;">{{QUESTION}}</view>
+
+<view class="tips" style="color: #30432d;" wx:if="{{id<=19}}">
+    {{id+1}}/8
 </view>
-<view bindtap="ANS">
-  <view class="select flex">
-    <view class="item" url="">
-      <block >
-        <label class="select" bindtap="ANSA">
-          <view hover-class="pick" >{{OPA}}</view>
-        </label> 
-      </block>
-    </view> 
-  </view>
-  <view class="select flex">
-    <view class="item" >
-      <block >
-        <label class="select" >
-          <view hover-class="pick" bindtap="ANSB">{{OPB}}</view>
-        </label> 
-      </block>
-    </view> 
-  </view>
-  <view class="select flex">
-    <view class="item" >
-      <block >
-        <label class="select" >
-          <view hover-class="pick" bindtap="ANSC">{{OPC}}</view>
-        </label> 
-      </block>
-    </view> 
-  </view>
-  <view class="select flex">
-    <view class="item" >
-      <block >
-        <label class="select" >
-          <view hover-class="pick" bindtap="ANSD">{{OPD}}</view>
-        </label> 
-      </block>
-    </view> 
-  </view>  
+
+<view class="quesbox" wx:if="{{id<=7}}">
+
+<swiper style="height: 80%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{AISquestion}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
+        </view>
+      </view>
+
+      <view wx:if="{{id != 0}}">
+            <view class="tips" bindtap="LastQ">
+                上一题
+            </view>
+      </view>
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+</view>
+
+<view class="quesbox"  >
+   <view wx:if="{{id==8}}" class="result" bindtap="Goresult">
+    查看结果</view> 
 </view>
 
 
-<view class="tips"  bindtap="BACK">上一题</view>

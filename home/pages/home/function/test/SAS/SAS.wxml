@@ -11,4 +11,4 @@
   <text class="tips">请根据最近一周的实际感觉,选择较符合的选项</text>
 </view>
 
-<button bindtap="Gotext">开始测试</button>
+<button bindtap="Gotest">开始测试</button>
