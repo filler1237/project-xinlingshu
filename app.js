@@ -1,4 +1,8 @@
-// zrx的app.js
+wx.cloud.init({
+  env:'tuxls-4gadsqlb8cd8de9e',
+  traceUser: true
+});
+
 App({
   onLaunch() {
     // 展示本地存储能力
@@ -44,8 +48,16 @@ App({
       message:[],
       pinglunguode:[],
       ban:false,
-      isadmin:false
-    },
+      isadmin:false,
+      fuyuanli: {
+        max: 100,
+        gap: 10,
+        Level: 1,
+        shengli: 0,
+        xinli: 0,
+        qingxu: 0,
+        shejiao: 0
+      }    },
     AISquestion:[
       {"question":"入睡时间（关灯后到睡着的时间）","option":{"A":"没问题","B":"轻微延迟", "C":"显著延迟","D":"延迟严重或没有睡觉"}},
       {"question":"夜间苏醒","option":{"A":"没问题","B":"轻微影响", "C":"显著影响","D":"严重影响或没有睡觉"}},
@@ -60,7 +72,4 @@ App({
   },
 })
 
-wx.cloud.init({
-  env:'tuxls-4gadsqlb8cd8de9e'
-})
 

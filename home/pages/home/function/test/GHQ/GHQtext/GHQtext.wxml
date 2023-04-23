@@ -1,0 +1,39 @@
+<!--home/pages/home/function/test/GHQ/GHQtext/GHQtext.wxml-->
+<view class="tips" style="color: #30432d;" wx:if="{{id<=19}}">
+    {{id+1}}/20
+</view>
+
+<view class="quesbox" wx:if="{{id<=19}}">
+
+<swiper style="height: 80%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{GHQQuestion}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA" >{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+        </view>
+      </view>
+
+      <view wx:if="{{id != 0}}">
+            <view class="tips" bindtap="LastQ">
+                上一题
+            </view>
+      </view>
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+</view>
+
+<view class="quesbox"  >
+   <view wx:if="{{id==20}}" class="result" bindtap="Goresult">
+    查看结果</view> 
+</view>
+

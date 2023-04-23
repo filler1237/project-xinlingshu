@@ -1,0 +1,60 @@
+<!--home/pages/home/function/test/SAS/result/result.wxml-->
+
+<view wx:if="{{advise == 1}}">
+  <view class="box">
+    <view class="title">
+      您没有焦虑症状
+    </view>
+    <view class="resultword">
+        <text style="text-indent: 10rpx;">
+            你是一个心态不错的人，身心都比较放松，相信在这样的状态下，你的好运就要到来了哦。</text>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{advise == 2}}">
+  <view class="box">
+    <view class="title">
+        您可能有轻度焦虑症状
+    </view>
+    <view class="resultword">
+        <text style="text-indent: 10rpx;">
+            基本上你能处理好各种的压力，但是也有可能会被突如其来的坏消息打到，让情绪产生扰动，要相信自己的能力。</text>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{advise == 3}}">
+  <view class="box">
+    <view class="title">
+        您可能有中度焦虑症状
+    </view>
+    <view class="resultword">
+        <text style="text-indent: 10rpx;">
+            你自己也感觉到了吧，焦虑的情绪无时无刻如影随形跟着你，慢慢吞噬你，迫使大脑超负荷运转的不是别人，正是你自己。</text>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{advise == 4}}">
+  <view class="box">
+    <view class="title">
+        您可能有重度焦虑症状
+    </view>
+    <view class="resultword">
+        <text style="text-indent: 10rpx;">
+            焦虑已经严重影响到你的生活了，持久性焦虑情绪和植物神经活动障碍的脑机能失调，赶紧自救吧！</text>
+    </view>
+  </view>
+</view>
+
+<view style="display: flex; justify-content: center; flex-direction: column;">
+    <view class="back" bindtap="BackTo">
+        返回
+    </view>
+    <view class="tips" bindtap="OneMore">
+        再测一次
+    </view>
+</view>
+
+
