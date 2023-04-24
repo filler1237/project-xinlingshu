@@ -1,18 +1,5 @@
 <view class="thispage"> 
-
-  <view class="title">
-  <button class="Button" style="width:240rpx" bindtap="shift1">
-    <view class="text">
-           文章
-    </view>
-  </button>
-  <button class="Button" style="width:240rpx" bindtap="shift2">
-    <view class="text">
-      视频
-    </view>
-  </button>
-</view>
-<view class="zl" wx:if="{{shift}}">
+<view class="zl">
   <navigator url="./text/1/1" class="zhuanlan">
     <view class="text1">
       内疚式教育：为什么父母的爱，总让我有负罪感？
@@ -24,18 +11,6 @@
     </view>
   </navigator>
 </view>
-<view class="zl" hidden="{{shift}}">
-  <navigator url="./video/1/1" class="zhuanlan">
-    <view class="text1">
-      借我十五分钟，请你看一部叫做《精神分裂症》的动画
-    </view>
-  </navigator>
-  <navigator url="./video/2/2" class="zhuanlan">
-    <view class="text1">
-      心里装着爱，悲伤也可以变为力量
-    </view>
-  </navigator>
-  </view>
   <view class="background">
   <image src="../../../../../assets/tree1.png" mode="widthFix" style="position: absolute; left: 0; right: 0; margin: 0 auto;"/>
 </view> 

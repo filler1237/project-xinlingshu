@@ -40,9 +40,12 @@ App({
   
   globalData: {
     userInfo: {
+      isLogin:false,
       nickName: "Hi，游客",
       username: "点击去登录",
-      id:null,
+      _id:"",
+      id:"",
+      _openid:"",
       avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
       wenzhang:[],
       message:[],

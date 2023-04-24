@@ -1,9 +1,22 @@
 <!--pages/sushuo/XIE/XIE.wxml-->
-<view class="inputbox">
-  
-  <textarea placeholder="这是一个属于你的树洞" auto-focus="true"/>
-</view>
+<form bindsubmit="tijiao">
+<!--提交文本内容-->
+  <view>
 
-<view>
-  <button >给树洞</button>
-</view>
+    <!-- <textarea placeholder="这是一个属于你的树洞" bindtap="tell" auto-focus="true"/> -->
+    <view class="wd-list" style="padding:20rpx;">
+      <textarea name="wbnr" placeholder="这是一个属于你的树洞" bindinput="tell" value='{{wbnr}}' style="width:100%;color:#080100;" maxlength="-1" />
+      <view class="zs" style="display:flex;flex-direction:row-reverse;margin-right:15rpx">
+        <text class="sy" style="font-size:85%;color:#656565">{{sy}}</text>
+      </view>
+    </view>
+  </view>
+
+
+
+  <!--提交按钮-->
+  <view>
+    <button form-type="submit">给树洞</button>
+  </view>
+
+</form>

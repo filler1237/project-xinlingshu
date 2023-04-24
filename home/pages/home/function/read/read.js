@@ -5,7 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    shift:true
   },
 
   /**
@@ -62,15 +61,5 @@ Page({
    */
   onShareAppMessage() {
 
-  },
-  shift1:function(){
-    this.setData({
-      shift:true
-    })
-  },
-  shift2:function(){
-    this.setData({
-      shift:false
-    })
-  } 
+  }
 })

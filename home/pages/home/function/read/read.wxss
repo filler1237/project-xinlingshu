@@ -3,31 +3,6 @@
   top: 25%;
   z-index: -99;
 }
-.title{
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
-  margin-top: 20%;
-  position: relative;
-}
-.Button{
-  height:70rpx;
-  width: 90%;
-  text-align: center;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  border: 0.5rpx solid #91c789;
-  justify-content: center;
-  box-sizing: content-box;
-  border-radius: 15rpx; 
-  position: relative;
-  display: flex;
-}
-.Button .text{
-  margin-bottom: 20%;
-}
 .zl{
   padding-top: 100rpx;
   display: flex;
@@ -47,7 +22,7 @@
   box-sizing: content-box;
   padding: 30rpx 20rpx;
   border-radius: 15rpx; 
-  margin-top: 15rpx;
+  margin-top: 25rpx;
   position: relative;
 }
 .text{

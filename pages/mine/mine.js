@@ -1,5 +1,3 @@
-
-const cloud = require('../../utils/cloud.js')
 const app = getApp();
 const db = wx.cloud.database();
 Page({
@@ -10,10 +8,12 @@ Page({
   data: {
     avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
     nickName: "Hi，游客,点击去登录吧！",
-    username:'',
+    // username: "点击去登录",
     userInfo:{},
     isLogin:false,
-    id:null,
+    id:"",
+    _id:"",
+    _openid:"",
     wenzhang:[],
       message:[],
       pinglunguode:[],
@@ -29,7 +29,10 @@ Page({
         shejiao: 0
       },
       max: 10,
-  Level: 1,  },
+      Level: 1,  
+      isadmin:false,
+      qingsu:[],},
+
   //登录函数
   toLogin(){
     if(this.data.isLogin){
@@ -51,6 +54,10 @@ Page({
           avatarUrl:res.userInfo.avatarUrl,
           nickName:res.userInfo.nickName
         })
+        app.globalData.userInfo.nickName=this.nickName
+        console.log("nickName=",app.globalData.userInfo.nickName)
+        app.globalData.userInfo.isLogin=true
+        console.log("isLogin=",app.globalData.userInfo.isLogin)
         //去自己家数据库进行查询,看一下当前用户的最新数据
         this.login()
       }
@@ -62,7 +69,7 @@ Page({
   login() {
     const db = wx.cloud.database();
     db.collection('users').where({
-      _openid: this.data.userInfo.openid // 查询条件为当前用户的 openId
+      _openid: this.data.userInfo._openid // 查询条件为当前用户的 openId
     }).get().then(res => {
       console.log('查询当前用户', res);
       if (res.data.length === 0) { // 没有查到用户
@@ -94,6 +101,8 @@ Page({
       data:this.data,
       success:(res)=>{
         console.log('注册用户',res) //执行成功后打印
+        app.globalData.userInfo._id=res._id
+        // console.log("全局id：",app.globalData.userInfo._id)
       }
     })
   },
