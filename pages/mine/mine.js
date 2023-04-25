@@ -64,47 +64,27 @@ Page({
     });
   },
 
-  login() {
-    const userInfo = this.data.userInfo;
-    wx.cloud.callFunction({
-      name: 'login',
-      success: res => {
-        const openid = res.result.openid;
-        this.setData({ openid });
-        db.collection('users').where({
-          openid: openid,
-        }).get().then(res => {
-          console.log('查询当前用户', res);
-          if (res.data.length === 0) {
-            // 没有查到用户，执行注册业务
-            try {
-              this.regist();
-            } catch (err) {
-              console.error('注册用户失败', err);
-            }
-          } else {
-// 查到了用户
-const userInfo = res.data[0]; // 拿到数据库里面数据
-this.setData({ userInfo }); // 直接更新到 data，这样页面就更新了
-const { shengli, xinli, qingxu, shejiao, max, gap, Level } = userInfo.fuyuanli; // 获取用户信息中的各个值
-this.setData({
-  'fuyuanli.shengli': shengli,
-  'fuyuanli.qingxu': qingxu,
-  'fuyuanli.xinli': xinli,
-  'fuyuanli.shejiao': shejiao,
-  'fuyuanli.max': max, // 将 max 的值更新到页面中
-  'fuyuanli.gap': gap,
-  'fuyuanli.Level': Level
-});
-          }
-        }).catch(err => {
-          console.error('查询用户信息失败', err);
-        });
-      },
-      fail: err => {
-        console.error('调用云函数失败', err);
-      }
-    });
+  login: function () {
+    const that = this;
+    cloud.login().then(res => {
+      that.setData({
+        userInfo: res,
+        openid: res.openid,
+        isLogin: true
+      })
+      // 查询用户信息
+      db.collection('user').where({
+        openid: that.data.openid
+      }).get().then(res => {
+        if (res.data.length) {
+          const user = res.data[0];
+          that.setData({
+            username: user.username,
+            fuyuanli: user.fuyuanli // 从数据库中获取福源力
+          })
+        }
+      })
+    })
   },
 
   regist() {
@@ -125,12 +105,7 @@ this.setData({
   },
 
   onLoad(options) {
-    wx.login({
-      timeout: 0,
-      success: (result) => {},
-      fail: (res) => {},
-      complete: (res) => {},
-    });
+    this.login()
   },
 
   onReady() {
