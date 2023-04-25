@@ -6,7 +6,7 @@
 <view class="max">
   <view class="recordbox" style="background-color: #ccdcb4;">
     <view class="imgbox">
-      <image class="img" src="/assets/record1.jpg" mode="aspectFill"/>
+      <image class="img" src="{{record1}}" mode="aspectFill"/>
     </view>
     <view class="textbox">
       <text style="font-size: 25rpx;">2023/04/01</text>
@@ -17,7 +17,7 @@
 
   <view class="recordbox" style="background-color: #bac6e1;">
     <view class="imgbox">
-      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+      <image class="img" src="{{record2}}" mode="aspectFill"/>
     </view>
     <view class="textbox">
       <text style="font-size: 25rpx;">2023/04/01</text>
@@ -28,7 +28,7 @@
 
   <view class="recordbox" style="background-color: #98b86a;">
     <view class="imgbox">
-      <image class="img" src="/assets/record1.jpg" mode="aspectFill"/>
+      <image class="img" src="{{record1}}" mode="aspectFill"/>
     </view>
     <view class="textbox">
       <text style="font-size: 25rpx;">2023/04/01</text>
@@ -39,7 +39,7 @@
 
   <view class="recordbox" style="background-color: #f4cbb2;">
     <view class="imgbox">
-      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+      <image class="img" src="{{record2}}" mode="aspectFill"/>
     </view>
     <view class="textbox">
       <text style="font-size: 25rpx;">2023/04/01</text>
@@ -50,7 +50,7 @@
 
   <view class="recordbox" style="background-color: #fefef5;">
     <view class="imgbox">
-      <image class="img" src="/assets/record2.jpg" mode="aspectFill"/>
+      <image class="img" src="{{record2}}" mode="aspectFill"/>
     </view>
     <view class="textbox">
       <text style="font-size: 25rpx;">2023/04/01</text>

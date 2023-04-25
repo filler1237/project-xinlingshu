@@ -1,4 +1,4 @@
-<swiper class="tips" indicator-dots indicator-color="#ff8474" indicator-active-color="gray" autoplay interval="3000" circular>
+<swiper class="tips" indicator-dots indicator-color="#ff8474" indicator-active-color="gray" autoplay interval="4000" circular>
   <swiper-item>
     <view class="tital">
       <text class="tip">情话对着左耳说更有效</text>
@@ -47,5 +47,5 @@
 </navigator> 
 </view>
 <view class="jitang">
-  <image src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/detail/jitang3.jpg" mode="heightFix"/>
+  <image src="/assets/主页.jpeg" mode="heightFix"/>
 </view>

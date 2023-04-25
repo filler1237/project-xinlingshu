@@ -1,2 +1,1 @@
-<!--pages/mine/contact/contact.wxml-->
-<text>联系客服</text>
+<button open-type="contact">联系我们</button>

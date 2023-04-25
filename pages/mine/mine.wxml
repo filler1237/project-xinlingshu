@@ -19,7 +19,7 @@
           <image class="icon" src="/assets/comment.png"></image>
         <text class="txt">待评价</text>
       </navigator>
-      <navigator class="icon-wrap" id="2" url="../../mine/pages/mine/record/record">
+      <navigator class="icon-wrap" id="2" url="/mine/pages/mine/record/record">
           <image class="icon" src="/assets/note.png"></image>
         <text class="txt">测评记录</text>
       </navigator>

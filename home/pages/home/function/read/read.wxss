@@ -4,7 +4,7 @@
   z-index: -99;
 }
 .zl{
-  padding-top: 100rpx;
+  margin-top: 100rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,7 @@
 }
 .zhuanlan{
   height: 100%;
-  width: 90%;
+  width: 94%;
   text-align: left;
   align-items: center;
   align-content: center;
@@ -20,7 +20,7 @@
   border: 0.5rpx solid #91c789;
   justify-content: center;
   box-sizing: content-box;
-  padding: 30rpx 20rpx;
+  padding: 30rpx 10rpx;
   border-radius: 15rpx; 
   margin-top: 25rpx;
   position: relative;

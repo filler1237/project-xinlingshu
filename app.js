@@ -39,6 +39,15 @@ App({
   },
   
   globalData: {
+    fuyuanli: {
+      max: 100,
+      gap: 10,
+      Level: 1,
+      shengli: 0,
+      xinli: 0,
+      qingxu: 0,
+      shejiao: 0
+    },
     userInfo: {
       isLogin:false,
       nickName: "Hi，游客",

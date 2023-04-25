@@ -5,9 +5,9 @@ page{
   text-align: center;
   line-height: 100%;
   justify-content: center;
-  width: 99%;
+  width: 720rpx;
   height:230rpx;
-  border: 5rpx solid #ff8474;
+  border: 3rpx solid #36474F;
   display: flex;  
   flex-direction: row;
   align-items: center;
@@ -15,15 +15,16 @@ page{
   border-radius: 30rpx;
 }
 .tital{
-  margin-top: 10rpx;
+  margin-top: 20rpx;
+  font-size: 40rpx;
   text-align: center;
   font-family: "Microsoft Yahei";
   color: #36474F;
 }
 .ttxt{
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   padding-left: 20rpx;
-  padding-right: 10rpx;
+  padding-right: 20rpx;
   text-align: left;
   text-align-last: left;
   font-family: "Microsoft Yahei";
@@ -34,7 +35,7 @@ page{
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-top: 50rpx;
+  margin-top: 40rpx;
 }
 .mbutton{
   height:90%;
@@ -53,7 +54,7 @@ page{
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-top: 50rpx;
+  margin-top: 40rpx;
 }
 .bbutton1{
   height:95%;
@@ -95,7 +96,7 @@ page{
   display: flex;  
   flex-direction: row;
   align-items: center;
-  margin-top: 20rpx;
+  margin-top: 18rpx;
 }
 .jitang image{
   border-radius: 30rpx;

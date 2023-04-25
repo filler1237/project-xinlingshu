@@ -30,7 +30,7 @@
 
   <van-field
     value="{{ value }}"
-    label="用户名"
+    label="昵称"
     placeholder="请输入用户名"
     bind:change="onChange"
   />
@@ -40,6 +40,9 @@
     label="个性签名"
     bind:change="onChangesign"
   />
+  
+  
+  
 </van-cell-group>
 
 <van-cell-group class="van-wrap_1">
