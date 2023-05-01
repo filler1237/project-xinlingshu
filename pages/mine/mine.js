@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+      avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
     nickName: "Hi,游客,点击去登录吧!",
     username:'',
     userInfo:{},
@@ -31,9 +31,7 @@ Page({
       xinli: 0,
       qingxu: 0,
       shejiao: 0
-      }, },
-    //登录函数
-//登录 函数
+    }, },
   //登录函数
   toLogin() {
     if (this.data.isLogin) {
@@ -47,7 +45,6 @@ Page({
       success: (res) => {
         console.log('获取用户信息', res);
 
-        // 登录成功，将用户数据存入data，更新UI
         this.setData({
           isLogin: true,
           userInfo: res.userInfo,
@@ -55,7 +52,6 @@ Page({
           nickName: res.userInfo.nickName
         });
 
-        // 去自己家数据库进行查询，看一下当前用户的最新数据
         this.login();
       },
       fail: (err) => {
@@ -64,48 +60,47 @@ Page({
     });
   },
 
-  login: function () {
-    const that = this;
-    cloud.login().then(res => {
-      that.setData({
-        userInfo: res,
-        openid: res.openid,
-        isLogin: true
-      })
-      // 查询用户信息
-      db.collection('user').where({
-        openid: that.data.openid
-      }).get().then(res => {
-        if (res.data.length) {
-          const user = res.data[0];
-          that.setData({
-            username: user.username,
-            fuyuanli: user.fuyuanli // 从数据库中获取福源力
-          })
-        }
-      })
-    })
-  },
-
-  regist() {
-    const userInfo = this.data.userInfo;
-    db.collection('users').add({
-      data: {
-        userInfo: userInfo,
-        data: this.data,
-        openid: this.data.openid
-      },
-      success: (res) => {
-        console.log('注册用户', res);
-      },
-      fail: (err) => {
-        console.error('注册用户失败', err);
+  login() {
+    const db = wx.cloud.database();
+    db.collection('users').where({
+      openid: this.data.userInfo.openid 
+    }).get().then(res => {
+      console.log('查询当前用户', res);
+      if (res.data.length === 0) { // 没有查到用户,执行注册业务
+        this.regist(); 
+      } else { 
+        const userInfo = res.data[0]; 
+        this.setData({ userInfo });
       }
+    }).catch(err => {
+      console.error('查询用户信息失败', err);
     });
   },
+  
+  // 注册业务  
+  regist(){
+    let db = wx.cloud.database() 
+    db.collection('users').add({  
+      userInfo:this.data.userInfo,
+      data:this.data,
+      success:(res)=>{  
+        console.log('注册用户',res) 
+        // 将新注册用户的 _id 存入全局数据
+        app.globalData.userInfo._id=res._id  
+      }
+    })
+  },
+  
 
-  onLoad(options) {
-    this.login()
+  onLoad: function () {
+    const openid = wx.getStorageSync('openid');
+    if (openid) {
+      this.setData({
+        openid: openid,
+        isLogin: true,
+      });
+      this.login(openid);
+    }
   },
 
   onReady() {
@@ -115,13 +110,10 @@ Page({
       this.setData({
         userInfo: userInfo,
         isLogin: isLogin,
+        nickName: userInfo.nickName,
         avatarUrl: userInfo.avatarUrl
       });
-    } else {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        isLogin: isLogin
-      });
+      this.login();
     }
   },
 
@@ -193,7 +185,8 @@ Page({
   },
   
   updateAttribute(attributeName, callback) {
-    const { fuyuanli, gap, Level } = this.data;
+      // 使用当前登录用户的 _id
+  const { fuyuanli, gap, Level } = this.data.userInfo;
     const attributeValue = fuyuanli[attributeName] + 1;
     fuyuanli[attributeName] = attributeValue;
   
