@@ -66,4 +66,10 @@
     label="专业"
     bind:change="onChange"
   />
+
+  <van-field
+    value=""
+    label="学号"
+    bind:change="onChange"
+  />
 </van-cell-group>
