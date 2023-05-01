@@ -3,18 +3,40 @@ const app=getApp();
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
-
+  
+  ChangeImage:function(){
+    var that = this;
+    wx.chooseMedia({
+      count:1,
+      mediaType: ['image'],
+      success:function(res){
+        var avatar = res.tempFilePaths;
+        that.setData({
+          ImageSrc: avatar,
+          upAvatar:true
+          })
+      }
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
     nickName:'游客',
     avatarUrl:defaultAvatarUrl,
-    value: ''
+    value: '',
+    ImageSrc:"/assets/默认头像.jpeg",
+    NickName:"请输入昵称"
   },
+  
   onChange(event) {
     // event.detail 为当前输入的值
     console.log(event.detail);
+    const self = this
+            const value = event.detail.value
+            if (value) {
+                wx.setStorageSync('NickName', value)
+            } 
   },
   
   onChooseAvatar(e) {
@@ -82,6 +104,14 @@ Page({
    */
   onShow() {
     this.avatarUrl=app.globalData.userInfo.avatarUrl
+
+    const self = this
+            let userText = wx.getStorageSync('NickName')
+            if (userText) {
+                self.data.inputText = NickName
+                self.setData(self.data)
+            }
+    
   },
 
   /**

@@ -1,75 +1,69 @@
 <!--pages/auth/usercenter/usercenter.wxml-->
-<!--头像选择-->
-<!-- <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-  <image class="avatar" src="{{avatarUrl}}"></image>
-</button>  -->
+<view class="touxiangbox">
+  <view bindtap="ChangeImage">
+    <image class="touxiang" src="{{ImageSrc}}" mode="widthFix"/>
+  </view>
+  <view style="color: #91c789;">
+    点击更换头像
+  </view>
+</view>
 
-  <!-- <view>
-    <text class="txt">昵称：{{userInfo.nickName}}</text>
-  </view> -->
-<!-- <input type="nickname" class="txt" open-type="rename" bind:rename="onChangename" placeholder="请输入昵称"/> -->
-
-<!--自定义名字-->
-<!-- <form bindsubmit="formsubmit">
-    <input class="txt" type="nickname" placeholder="请输入昵称" name="nickname" /> -->
-    <!-- <button form-type="submit" type="primary">提交</button> -->
-  <!-- </form> -->
-
-  <!--登录按钮-->
-<!-- <button wx:if="isLogin==null" bindtap="login" class="btn" type="primary">登录</button> -->
-
-<van-cell-group class="van-wrap">
-  <van-field 
-  label="头像"
-  disabled
-  size="large"
-  right-icon="{{avatarUrl}}"
-  right-icon-class="img"
-  bind:click-icon="onChooseAvatar"
-  />
+<van-cell-group >
 
   <van-field
-    value="{{ value }}"
+    v-model="{{ Nickname }}"
     label="昵称"
-    placeholder="请输入用户名"
+    name = "昵称"
+    placeholder="请输入昵称"
     bind:change="onChange"
   />
+
   <van-field
     value="{{ sign }}"
     placeholder="填写"
     label="个性签名"
-    bind:change="onChangesign"
-  />
-  
-  
-  
-</van-cell-group>
-
-<van-cell-group class="van-wrap_1">
-  <van-field 
-  label="学校"
-  value="深圳技术大学"
-  disabled
+    bind:change="onChange"
   />
   <van-field
     value=""
-    disabled
+    label="性别"
+    bind:change="onChange"
+  />
+  
+  <van-field
+    v-model="{{ PhoneNumber }}"
+    label="电话号码"
+    name = "电话号码"
+    placeholder="请输入手机号"
+    bind:change="onChange"
+  />
+  
+</van-cell-group>
+
+<view style="margin-top: 50rpx;">
+  
+</view>
+<van-cell-group >
+  <van-field 
+  label="学校"
+  value="深圳技术大学"
+  readonly
+  />
+  <van-field
+    value=""
     label="年级"
     bind:change="onChange"
   />
 
   <van-field
     value=""
-    disabled
     label="学院"
-    border="{{ false }}"
     bind:change="onChange"
   />
+  
   <van-field
     value=""
-    disabled
-    label="性别"
-    border="{{ false }}"
+    label="专业"
     bind:change="onChange"
   />
 </van-cell-group>

@@ -30,7 +30,7 @@ Page({
       shengli: 0,
       xinli: 0,
       qingxu: 0,
-      shejiao: 0
+      shejiao: 0,
       }, },
     //登录函数
 //登录 函数
