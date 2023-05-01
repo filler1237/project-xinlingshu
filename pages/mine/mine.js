@@ -49,9 +49,13 @@ Page({
           isLogin: true,
           userInfo: res.userInfo,
           avatarUrl: res.userInfo.avatarUrl,
-          nickName: res.userInfo.nickName
+          nickName: res.userInfo.nickName,
+          id:res._id
         });
-
+        app.globalData.userInfo.nickName=this.nickName
+        console.log("nickName=",app.globalData.userInfo.nickName)
+        app.globalData.userInfo.isLogin=true
+        console.log("isLogin=",app.globalData.userInfo.isLogin)
         this.login();
       },
       fail: (err) => {
@@ -71,6 +75,15 @@ Page({
       } else { 
         const userInfo = res.data[0]; 
         this.setData({ userInfo });
+        // 获取fuyuanli数据
+        db.collection('users').doc(userInfo._id).get().then(res => {
+          console.log('获取福缘力数据', res);
+          const fuyuanli = res.data.fuyuanli;
+          // 更新本地数据
+          this.setData({ fuyuanli });
+        }).catch(err => {
+          console.error('获取福缘力数据失败', err);
+        });
       }
     }).catch(err => {
       console.error('查询用户信息失败', err);

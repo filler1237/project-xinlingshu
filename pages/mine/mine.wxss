@@ -70,12 +70,15 @@ background-color: rgb(247, 237, 103);
   flex: 1;
   height: 85rpx;
   padding-left: 31.25rpx;
+  white-space: nowrap;
 }
 
 .profile-info .name {
   display: block;
   color: #fff;
   font-size: 37.5rpx;
+  width: auto;
+  display: inline-block;
 }
 
 .profile-info .level {

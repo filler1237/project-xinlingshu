@@ -1,8 +1,8 @@
 <view class="ucenter">
   <view class="profile-info" wx:if="isLogin==false">
     <image class="avatar" src="{{avatarUrl}}" bindtap="toLogin"></image>
-    <view class="info" bindtap="toLogin">
-      <text class="name">{{nickName}}</text>
+    <view class="info">
+      <text class="name" bindtap="toLogin">{{nickName}}</text>
       <!-- <text class="name" wx:if="isLogin!=true">{{username}}</text> -->
     </view>
   </view>
