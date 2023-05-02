@@ -72,7 +72,6 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    
     "list": [
       {
         "pagePath": "pages/sushuo/sushuo",
