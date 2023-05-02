@@ -1,42 +1,42 @@
-// pages/sushuo/XIE/XIE.js
-const app=getApp()
-const db = wx.cloud.database()
+const app=getApp() //获取小程序实例
+const db = wx.cloud.database() //获取云数据库实例
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    niming:false,
-    imgs: [],
-    Imgs:[],
-    fileID:[],
-    wbnr:"",
-    index:[0,0],
-    Cheight:800,
-    Cwidth:800,
-    pixe:0,
-    imginfo:{}
+    niming:false, //是否匿名
+    imgs: [], //上传的图片
+    Imgs:[], //云存储中的图片
+    fileID:[], //上传的图片的fileID
+    wbnr:"", //文本内容
+    index:[0,0], //选择器的索引
+    Cheight:800, //图片高度
+    Cwidth:800, //图片宽度
+    pixe:0, //设备像素比
+    imginfo:{} //图片信息
   },
-  async tijiao(e){
-    wx.getSystemInfo({
+
+  async tijiao(e){ //提交按钮点击事件
+    wx.getSystemInfo({ //获取设备信息
       success: (result) => {
         console.log("result!!!!:",result)
         this.setData({
-          pixe:result.pixelRatio
+          pixe:result.pixelRatio //获取设备像素比
         })
       },
     })
     console.log(e.detail.value)
     //若未登录，直接到登录页面
-    if(app.globalData.userInfo.isLogin!=true){
+    if(app.globalData.userInfo.isLogin!=true){ //判断是否已登录
       wx.switchTab({
-        url: '/pages/mine/mine'
+        url: '/pages/mine/mine' //跳转到个人中心页面
       })
       return
     }
     //检测账号是否被封
-    var ban=app.globalData.userInfo.ban
+    var ban=app.globalData.userInfo.ban //判断账号是否被封
     if(ban==true){
       wx.showToast({
         title: '账号被封！',
@@ -45,30 +45,30 @@ Page({
       })
       return
     }
-      //console.log(e.detail.value)//bankuai/zilei/niming2匿名内容/niming1是否匿名/wbnr/
-      var biaodan=e.detail.value//整个表单数据
-      var text=biaodan.wbnr//临时text。文本内容
-      console.log("表单：",e)
-      // var text=biaodan//临时text。文本内容
-      var length=e.detail.cursor
-      if(length==0){
-        wx.showToast({
-          title: '再多说点吧！',
-          icon: 'none',
-          duration: 800,
-        })
-        return//这个return返回，停止继续执行
-      }
-      var _this=this
-      wx.showModal({
-        title: '提示',
-        content: '我已经写好啦！',
-        showCancel:true,
-        confirmText:'是',
-        confirmColor:'#000000',
-        cancelText:'否',
-        cancelColor:'#000000',
-        success (res) {
+    //console.log(e.detail.value)//bankuai/zilei/niming2匿名内容/niming1是否匿名/wbnr/
+    var biaodan=e.detail.value//整个表单数据
+    var text=biaodan.wbnr//临时text。文本内容
+    console.log("表单：",e)
+    // var text=biaodan//临时text。文本内容
+    var length=e.detail.cursor //获取文本长度
+    if(length==0){ //判断文本是否为空
+      wx.showToast({
+        title: '再多说点吧！',
+        icon: 'none',
+        duration: 800,
+      })
+      return//这个return返回，停止继续执行
+    }
+    var _this=this
+    wx.showModal({ //弹出模态框
+      title: '提示',
+      content: '我已经写好啦！',
+      showCancel:true,
+      confirmText:'是',
+      confirmColor:'#000000',
+      cancelText:'否',
+      cancelColor:'#000000',
+      success (res) {
         if (res.confirm) {
           console.log('用户点击确定')
           _this.tijiao2(biaodan)
@@ -77,9 +77,10 @@ Page({
           //console.log('用户点击取消')
           return false
         }
-        }
-      })
+      }
+    })
   },
+  
 
   async tijiao2(biaodan){
     console.log("表单：",biaodan)
@@ -88,23 +89,7 @@ Page({
       title: '准备发送...',
       mask:true
     })
-
-    // if(text.length>0){
-    //   var checkOk = await this.checkStr(text);
-    // }else{
-    //   var checkOk = true
-    // }
-    // //开始审核文本
-    // if(!checkOk){ 
-    //   wx.hideLoading({}),//审核不通过隐藏
-    //   wx.showToast({
-    //     title: '文本含有违法违规内容',
-    //     icon: 'none',
-    //     duration: 5000,
-    //   })
-    //   return//这个return返回，停止继续执行
-    // }
-
+  
     var that=this//用that表当前外部对象
     console.log("楼主id::::",app.globalData.userInfo._id)
     var ss_xx={
@@ -115,72 +100,70 @@ Page({
     }
     //console.log(ss_xx)
     //纯文本发帖！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-      that.post(ss_xx)
+    that.post(ss_xx)
   },
-//真正的上传说说
+// 发布说说的函数
 post(ss_xx){
-    
-  //loading发布中
+
+  // 显示loading
   wx.showLoading({
-    title: '即将完成...',
-    mask:true
+  title: '即将完成...',
+  mask:true
   })
   console.log("传过来",ss_xx)
   //var sjk=ss_xx.bankuai.toString()+"0"//@@@转成字符串@@@
-  //添加说说记录
+  // 添加说说记录到数据库
   db.collection('ss').add({
+  data:{
+  ss_xx,
+  time:ss_xx.firsttime
+  }
+  }).then((res)=>{
+  console.log("res_id=",res._id)//拿到id
+  console.log("ss_xx=",ss_xx)
+    //ss发送成功了
+// 成功发布说说后，设置app跳转到首页后要刷新
+app.shuaxin=true
+wx.hideLoading({})//隐藏loading
+// 跳转到个人中心页面
+wx.switchTab({url:'/pages/mine/mine'})
+var id=res._id
+var jl={
+  "time":ss_xx.firsttime,
+  "nr":ss_xx.nr,
+  "id":id,
+  "weigui":false
+}
+
+var wenzhang=[]
+// 获取之前的文章加到wenzhang
+db.collection("users").doc(app.globalData.userInfo._id).get().then((res)=>{
+  wenzhang=res.data.wenzhang
+  //console.log("取回的",wenzhang)
+  wenzhang.push(jl)
+  //记录到自己users里
+  db.collection("users").doc(app.globalData.userInfo._id).update({
     data:{
-      ss_xx,
-      time:ss_xx.firsttime
+      wenzhang:wenzhang
     }
   }).then((res)=>{
-    console.log("res_id=",res._id)//拿到id
-    console.log("ss_xx=",ss_xx)
-
-    //ss发送成功了
-    //设置app跳转到首页后要刷新
-    app.shuaxin=true
-    wx.hideLoading({})//发布成功隐藏
-    //app跳转到首页
-    wx.switchTab({url:'/pages/mine/mine'})
-    var id=res._id
-    var jl={
-      "time":ss_xx.firsttime,
-      "nr":ss_xx.nr,
-      "id":id,
-      "weigui":false
-    }
-    
-    var wenzhang=[]
-    //获取之前的文章加到wenzhang
-    db.collection("users").doc(app.globalData.userInfo._id).get().then((res)=>{
-      wenzhang=res.data.wenzhang
-      //console.log("取回的",wenzhang)
-      wenzhang.push(jl)
-      //记录到自己users里
-      db.collection("users").doc(app.globalData.userInfo._id).update({
-        data:{
-          wenzhang:wenzhang
-        }
-      }).then((res)=>{
-       
-        //进行全局数据我的本地储存
-        app.globalData.userInfo.wenzhang=wenzhang
-        this.setData({
-          wbnr:""
-        })
-        
-      })
+   
+    //进行全局数据我的本地储存
+    app.globalData.userInfo.wenzhang=wenzhang
+    this.setData({
+      wbnr:""
     })
+    
+  })
+})
   })
 },
-
-
+// 输入框输入内容时调用的函数
   tell(e){
-    console.log(e)
-    this.setData({
-      wbnr:e.detail.value,
-    })
+  console.log(e)
+  this.setData({
+  wbnr:e.detail.value,
+  })
   },
   /**
    * 生命周期函数--监听页面加载
