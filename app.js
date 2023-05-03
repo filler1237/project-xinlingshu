@@ -69,7 +69,8 @@ App({
         xinli: 0,
         qingxu: 0,
         shejiao: 0
-      }    },
+      }    
+    },
     
     token: "",
   },

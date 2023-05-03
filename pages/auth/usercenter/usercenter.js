@@ -24,19 +24,50 @@ Page({
   data: {
     nickName:'游客',
     avatarUrl:defaultAvatarUrl,
-    value: '',
     ImageSrc:"/assets/默认头像.jpeg",
-    NickName:"请输入昵称"
+    Namevalue: "",
+    Sign:"",
+    PhoneNumber:"",
+    School:"深圳技术大学",
+    StuNum:"",
+    SchoolP:"",
+    Project:"",
+    Class:""
+
   },
   
-  onChange(event) {
+  bindSubmit:function(res){
+    console.log(res)
+
+    var Namevalue = res.detail.value.Namevalue
+    var Sign = res.detail.value.Sign
+    var PhoneNumber = res.detail.value.PhoneNumber
+
+    db.collection("put_list").add({
+      data: {
+        "Namevalue" : Namevalue,
+        "Sign":Sign,
+        "PhoneNumber":PhoneNumber
+      },
+      success: function(res){
+        console.log(res)
+        wx.hideLoading()
+      }
+    })
+  },
+
+  onChange:function(event) {
     // event.detail 为当前输入的值
     console.log(event.detail);
-    const self = this
-            const value = event.detail.value
-            if (value) {
-                wx.setStorageSync('NickName', value)
-            } 
+    this.setData({
+      Namevalue : event.detail.value
+    })
+    if(this.data.value){
+      wx.setStorage({
+        key : 'Namevalue', 
+        data : this.data.Namevalue
+      })
+    }
   },
   
   onChooseAvatar(e) {
@@ -47,9 +78,7 @@ Page({
     })
     app.globalData.userInfo=e.detail
   },
-  onChangesign(e){
-    console.log(e)
-  },
+  
   // onChangename(e){
   //   console.log(e)
   //   const { nickName } = e.detail 
