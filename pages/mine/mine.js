@@ -77,12 +77,12 @@ Page({
         this.setData({ userInfo });
         // 获取fuyuanli数据
         db.collection('users').doc(userInfo._id).get().then(res => {
-          console.log('获取福缘力数据', res);
+          console.log('获取复原力数据', res);
           const fuyuanli = res.data.fuyuanli;
           // 更新本地数据
           this.setData({ fuyuanli });
         }).catch(err => {
-          console.error('获取福缘力数据失败', err);
+          console.error('获取复原力数据失败', err);
         });
       }
     }).catch(err => {

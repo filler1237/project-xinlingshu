@@ -3,19 +3,101 @@ const app=getApp();
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
-
+  
+  ChangeImage:function(){
+    var that = this;
+    wx.chooseMedia({
+      count:1,
+      mediaType: ['image'],
+      success:function(res){
+        var avatar = res.tempFiles.tempFilePath;
+        wx.setStorageSync('ImageSrc', avatar)
+      }
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
     nickName:'游客',
     avatarUrl:defaultAvatarUrl,
-    value: ''
+    ImageSrc:"/assets/默认头像.jpeg",
+    Namevalue: "",
+    Sign:"",
+    PhoneNumber:"",
+    School:"深圳技术大学",
+    StuNum:"",
+    SchoolP:"",
+    Project:"",
+    Class:""
+
   },
-  onChange(event) {
-    // event.detail 为当前输入的值
-    console.log(event.detail);
+  
+  NameChange:function(res){
+    var Name = res.detail
+    try{
+      wx.setStorageSync('Namevalue', Name)
+      console.log('写入Name成功')
+    }catch(e){
+      console.log('写入Name发生错误')
+    }
   },
+  SignChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Sign', temp)
+      console.log('写入Sign成功')
+    }catch(e){
+      console.log('写入Sign发生错误')
+    }
+  },
+  PNChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('PN', temp)
+      console.log('写入PN成功')
+    }catch(e){
+      console.log('写入PN发生错误')
+    }
+  },
+  STUNChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('StuNum', temp)
+      console.log('写入STUN成功')
+    }catch(e){
+      console.log('写入STUN发生错误')
+    }
+  },
+  SPChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('SchoolP', temp)
+      console.log('写入SP成功')
+    }catch(e){
+      console.log('写入SP发生错误')
+    }
+  },
+  PJChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Project', temp)
+      console.log('写入PJ成功')
+    }catch(e){
+      console.log('写入PJ发生错误')
+    }
+  },
+  ClassChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Class', temp)
+      console.log('写入Class成功')
+    }catch(e){
+      console.log('写入Class发生错误')
+    }
+  },
+
+  
   
   onChooseAvatar(e) {
     console.log(e)
@@ -25,9 +107,7 @@ Page({
     })
     app.globalData.userInfo=e.detail
   },
-  onChangesign(e){
-    console.log(e)
-  },
+  
   // onChangename(e){
   //   console.log(e)
   //   const { nickName } = e.detail 
@@ -65,6 +145,54 @@ Page({
    */
 
   onLoad(options) {
+    var name = wx.getStorageSync('Namevalue')
+    var sign = wx.getStorageSync('Sign')
+    var PN = wx.getStorageSync('PhoneNumber')
+    var stu = wx.getStorageSync('StuNum')
+    var SP = wx.getStorageSync('SchoolP')
+    var PJ = wx.getStorageSync('Project')
+    var clas = wx.getStorageSync('Class')
+    var IS = wx.getStorageSync('ImageSrc')
+    if(IS){
+      this.setData({
+        ImageSrc : IS
+      })
+    }
+    if(name){
+      this.setData({
+        Namevalue : name.value
+      })
+    }
+    if(sign){
+      this.setData({
+        Sign : sign.value
+      })
+    }
+    if(PN){
+      this.setData({
+        PhoneNumber : PN.value
+      })
+    }
+    if(stu){
+      this.setData({
+        StuNum : stu.value
+      })
+    }
+    if(SP){
+      this.setData({
+        SchoolP : SP.value
+      })
+    }
+    if(PJ){
+      this.setData({
+        Project : PJ.value
+      })
+    }
+    if(clas){
+      this.setData({
+        Class : clas.value
+      })
+    }
 
   },
 
@@ -82,6 +210,14 @@ Page({
    */
   onShow() {
     this.avatarUrl=app.globalData.userInfo.avatarUrl
+
+    const self = this
+            let userText = wx.getStorageSync('NickName')
+            if (userText) {
+                self.data.inputText = NickName
+                self.setData(self.data)
+            }
+    
   },
 
   /**
