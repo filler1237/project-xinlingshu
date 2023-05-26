@@ -1,50 +1,53 @@
-
-const cloud = require('../../utils/cloud.js')
-const app = getApp();
-const db = wx.cloud.database();
+// 引入云开发模块和全局变量
+const cloud = require('../../utils/cloud.js') // 引入自定义的云开发模块
+const app = getApp(); // 获取全局对象
+// 引入云数据库
+const db = wx.cloud.database(); // 获取云数据库对象
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  // 页面初始化数据
   data: {
+      // 初始化用户头像、昵称
       avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
-    nickName: "Hi,游客,点击去登录吧!",
-    username:'',
-    userInfo:{},
-    openid:"",
-    isLogin:false,
-    _id:"",
-    id:"",
-    wenzhang:[],
-    message:[],
-    pinglunguode:[],
-    ban:false,
-    isadmin:false,
-    max: 10,
-    Level: 1,
-    fuyuanli: {
+      nickName: "Hi,游客,点击去登录吧!",
+      username:'',
+      userInfo:{},
+      openid:"",
+      isLogin:false,
+      _id:"",
+      id:"",
+      wenzhang:[],
+      message:[],
+      pinglunguode:[],
+      ban:false,
+      isadmin:false,
       max: 10,
-      gap: 10,
       Level: 1,
-      shengli: 0,
-      xinli: 0,
-      qingxu: 0,
-      shejiao: 0
-    }, },
-  //登录函数
+      fuyuanli: {
+        max: 10,
+        gap: 10,
+        Level: 1,
+        shengli: 0,
+        xinli: 0,
+        qingxu: 0,
+        shejiao: 0
+      },
+  },
+  // 登录函数
   toLogin() {
+    // 判断用户是否已登录
     if (this.data.isLogin) {
+      // 如果已登录，跳转到用户中心页面
       wx.navigateTo({
         url: '/pages/auth/usercenter/usercenter',
       });
       return;
     }
+    // 如果未登录，获取用户信息
     wx.getUserProfile({
       desc: '获取用户信息用于维护会员权益',
       success: (res) => {
         console.log('获取用户信息', res);
-
+        // 将获取到的用户信息存入页面数据中
         this.setData({
           isLogin: true,
           userInfo: res.userInfo,
@@ -52,10 +55,12 @@ Page({
           nickName: res.userInfo.nickName,
           id:res._id
         });
+        // 将用户信息存入全局数据中
         app.globalData.userInfo.nickName=this.nickName
         console.log("nickName=",app.globalData.userInfo.nickName)
         app.globalData.userInfo.isLogin=true
         console.log("isLogin=",app.globalData.userInfo.isLogin)
+        // 执行登录函数
         this.login();
       },
       fail: (err) => {
@@ -64,15 +69,18 @@ Page({
     });
   },
 
+  // 登录函数
   login() {
+    //// 获取云数据库对象
     const db = wx.cloud.database();
+    // 查询当前用户是否已注册
     db.collection('users').where({
       openid: this.data.userInfo.openid 
     }).get().then(res => {
       console.log('查询当前用户', res);
-      if (res.data.length === 0) { // 没有查到用户,执行注册业务
+      if (res.data.length === 0) { // 如果没有查到用户，执行注册业务
         this.regist(); 
-      } else { 
+      } else { // 如果查到用户，获取用户信息和复原力数据
         const userInfo = res.data[0]; 
         this.setData({ userInfo });
         // 获取fuyuanli数据
@@ -93,6 +101,7 @@ Page({
   // 注册业务  
   regist(){
     let db = wx.cloud.database() 
+    // 将用户信息和页面数据存入云数据库
     db.collection('users').add({  
       userInfo:this.data.userInfo,
       data:this.data,
@@ -104,28 +113,35 @@ Page({
     })
   },
   
-
+  // 页面加载时执行的函数
   onLoad: function () {
+    // 获取本地存储的 openid
     const openid = wx.getStorageSync('openid');
     if (openid) {
+      // 如果本地存储中存在 openid，将其存入页面数据中
       this.setData({
         openid: openid,
         isLogin: true,
       });
+      // 执行登录函数
       this.login(openid);
     }
   },
 
+  // 页面初次渲染完成时执行的函数
   onReady() {
+    // 从本地存储中获取用户信息和登录状态
     let userInfo = wx.getStorageSync('userInfo');
     let isLogin = wx.getStorageSync('isLogin');
     if (userInfo && isLogin) {
+      // 如果本地存储中存在用户信息和登录状态，将其存入页面数据中
       this.setData({
         userInfo: userInfo,
         isLogin: isLogin,
         nickName: userInfo.nickName,
         avatarUrl: userInfo.avatarUrl
       });
+      // 执行登录函数
       this.login();
     }
   },
@@ -134,7 +150,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    wx.setNavigationBarTitle({
+    // 设置页面标题
+wx.setNavigationBarTitle({
       title: 'SZTU心灵树',
     })
   },
@@ -173,36 +190,45 @@ Page({
   onShareAppMessage() {
 
   },
+  
+  // 增加生理值
   addSL() {
+    // 更新生理值属性并保存到云数据库
     this.updateAttribute("shengli", () => {
       this.saveToCloud();
     });
   },
   
+  // 增加心理值
   addXL() {
+    // 更新心理值属性并保存到云数据库
     this.updateAttribute("xinli", () => {
       this.saveToCloud();
     });
   },
   
+  // 增加情绪值
   addQX() {
+    // 更新情绪值属性并保存到云数据库
     this.updateAttribute("qingxu", () => {
       this.saveToCloud();
     });
   },
   
+  // 增加社交值
   addSJ() {
+    // 更新社交值属性并保存到云数据库
     this.updateAttribute("shejiao", () => {
       this.saveToCloud();
     });
   },
   
+  // 更新属性值函数
   updateAttribute(attributeName, callback) {
       // 使用当前登录用户的 _id
   const { fuyuanli, gap, Level } = this.data.userInfo;
     const attributeValue = fuyuanli[attributeName] + 1;
     fuyuanli[attributeName] = attributeValue;
-  
     // 判断是否需要更新 max 属性
     if (fuyuanli.shengli >= fuyuanli.max && fuyuanli.xinli >= fuyuanli.max && fuyuanli.qingxu >= fuyuanli.max && fuyuanli.shejiao >= fuyuanli.max) {
       const newMax = fuyuanli.max + fuyuanli.gap;

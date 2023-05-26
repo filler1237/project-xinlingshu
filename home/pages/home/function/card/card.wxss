@@ -12,7 +12,7 @@
 .rows{
   margin-bottom:5rpx ;
   padding:0rpx;
-  text-algin:center;
+  text-align:center;
   flex-direction:row;
   display:flex;
 }
@@ -23,6 +23,5 @@
    width:  215rpx;
    height: 320rpx;
    padding:1rpx;
-   magrin: 0.5rpx;
+   margin: 0.5rpx;
 }
-page{background: url('../../images/sushuo.jpg') center top; }
