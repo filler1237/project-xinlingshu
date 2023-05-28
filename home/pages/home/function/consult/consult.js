@@ -108,29 +108,29 @@ onDateChange: function(e) {
   this.setData({
     selectedDateIndex: e.detail.value
   });
-
-  // 调用 getAvailableTimeSlots 云函数,传入选定的教师和日期
-
   wx.cloud.callFunction({
     name: 'getAvailableTimeSlots',
     data: {
       teacherId: this.data.teacherIndex,
-      date: this.data.dateList[e.detail.value]
-    },
-    fail: err => {
-      console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
-      if (err) return
-    },
-    success: res => {
-      console.log(res.result);
-      if (Array.isArray(res.result.data)) {
-        this.setData({
-         hourList: res.result.data.map(slot => slot.startTime),
-        });
-      } else {
-        console.error('getAvailableTimeSlots 返回的结果不是数组对象');
-      }
+      date: this.data.dateList[e.detail.value  ]
+  },
+  fail: err => {
+    console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
+    if (err) return
+  },
+  success: res => {
+    console.log(res.result);
+    if (Array.isArray(res.result.data)) {
+      this.setData({
+        hourList: res.result.data.map(slot => slot.startTime),
+        formData: res.result.formData // 将 formData 存储在页面的 data 对象中
+      });
+  
+      console.log(this.data.formData); // 在此处添加打印语句
+    } else {
+      console.error('getAvailableTimeSlots 返回的结果不是数组对象');
     }
+  }
   });
 },
 // 时间选择器改变时触发

@@ -113,10 +113,21 @@ async function main(event) {
       // 返回查询结果
       const availableTimeSlots = res.data[0].timeSlots.filter(timeSlot => timeSlot.status === 'available')
       const data = availableTimeSlots.length > 0 ? availableTimeSlots.map(timeSlot => timeSlot.startTime) : []
+
+      // 将记录的 id 存储到 formData 列表中
+      const recordId = res.data[0]._id
+      const formData = {
+        teacherId: teacherId,
+        date: date,
+        timeSlot: availableTimeSlots[0],
+        recordId: recordId
+      }
+
       return {
         code: 0,
-        data: availableTimeSlots
-      }
+        data: availableTimeSlots,
+        formData: formData
+}
     }
   } catch (err) {
     // 打印错误信息
