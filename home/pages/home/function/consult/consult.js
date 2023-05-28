@@ -5,13 +5,8 @@ Page({
   data: {
     showTopTips: false, // 是否显示顶部提示
     userInfo: [], // 用户信息
-    dateIndex: -1, // 选择的日期索引
     hourIndex: -1, // 选择的时间索引
     teacherIndex: -1, // 选择的咨询师索引
-    hourItem: {}, // 选择的时间信息
-    dataSchedule: {}, // 预约时间信息
-    date_available: [], // 可选日期列表
-    hour_available: [], // 可选时间列表
     length: 0, // 文本框输入的字符数
     formData: {}, // 表单数据
     // 咨询师列表
@@ -44,7 +39,7 @@ bindTeacherChange: function (e) {  // 绑定老师选择器的change事件处理
   const db = wx.cloud.database();
   this.setData({  // 更新页面数据
     teacherIndex: e.detail.value,  // 更新老师选择器的选中项
-    dateIndex: -1,  // 重置日期选择器的选中项
+    selectedDateIndex: -1,  // 重置日期选择器的选中项
     hourIndex: -1,  // 重置时间选择器的选中项
   //  [`formData.teacher`]: teacher[e.detail.value],  // 更新表单数据中的老师字段
   });
@@ -115,10 +110,11 @@ onDateChange: function(e) {
   });
 
   // 调用 getAvailableTimeSlots 云函数,传入选定的教师和日期
+
   wx.cloud.callFunction({
     name: 'getAvailableTimeSlots',
     data: {
-      teacherId: this.data.teacherList[this.data.teacherIndex]._id,
+      teacherId: this.data.teacherIndex,
       date: this.data.dateList[e.detail.value]
     },
     fail: err => {
@@ -127,14 +123,16 @@ onDateChange: function(e) {
     },
     success: res => {
       console.log(res.result);
-      // 在页面数据中更新可用时间段
-      this.setData({
-        hourList: res.result.data.map(slot => new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
-      });
+      if (Array.isArray(res.result.data)) {
+        this.setData({
+         hourList: res.result.data.map(slot => slot.startTime),
+        });
+      } else {
+        console.error('getAvailableTimeSlots 返回的结果不是数组对象');
+      }
     }
   });
 },
-
 // 时间选择器改变时触发
 onHourChange: function(e) {
 // 将选择的时间索引设置到页面数据中
@@ -143,35 +141,59 @@ onHourChange: function(e) {
 });
 },
 submitForm() {
-//若未登录，直接到登录页面
-if(app.globalData.userInfo.isLogin!=true){ //判断是否已登录
-  wx.switchTab({
-  url: '/pages/mine/mine' //跳转到个人中心页面
-})
-return
-}
-// 获取表单数据
-var formdata = this.data.formData;
-// 保存 this 的值，以便在回调函数中使用
-var that = this;
-// 调用组件内的 validate 方法进行表单验证
-this.selectComponent("#form").validate((valid, errors) => {
-  if (!valid) { // 如果表单校验不通过
-// 获取第一个错误信息的键名
-    const firstError = Object.keys(errors);
-    if (firstError.length) {
-// 将错误信息保存到 data 中
-      this.setData({
-      error: errors[firstError[0]].message,
-    });
+  // 若未登录，直接到登录页面
+  if (app.globalData.userInfo.isLogin != true) { // 判断是否已登录
+    wx.switchTab({
+      url: '/pages/mine/mine' // 跳转到个人中心页面
+    })
+    return
   }
-  } else { // 如果表单校验通过
-// 如果 detail 字段为空，则将其默认为 "未填写"
+  // 获取表单数据
+  var formdata = this.data.formData;
+  // 保存 this 的值，以便在回调函数中使用
+  var that = this;
+  // 调用组件内的 validate 方法进行表单验证
+  this.selectComponent("#form").validate((valid, errors) => {
+    if (!valid) { // 如果表单校验不通过
+      // 获取第一个错误信息的键名
+      const firstError = Object.keys(errors);
+      if (firstError.length) {
+        // 将错误信息保存到 data 中
+        this.setData({
+          error: errors[firstError[0]].message,
+        });
+      }
+    } else { // 如果表单校验通过
+      // 如果 detail 字段为空，则将其默认为 "未填写"
       if (that.data.formData.detail == "" || that.data.formData.detail == null) {
         hat.data.formData.detail = "未填写";
       }
+      // 调用云函数更新可预约时间段状态
+      wx.cloud.callFunction({
+        name: 'updateAvailability',
+        data: {
+          availabilityId: that.data.dataSchedule._id, // 可预约时间段记录的 ID
+          timeSlotIndex: that.data.hourIndex, // 选择的时间索引
+          status: 'expired' // 更新的状态
+        },
+        success: res => {
+          console.log(res.result);
+          // 更新成功后，跳转到预约成功页面
+          wx.redirectTo({
+            url: '/pages/appointment/success/success'
+          });
+        },
+        fail: err => {
+          console.error('[云函数] [updateAvailability] 调用失败', err);
+          // 更新失败时，显示错误提示
+          wx.showToast({
+            title: '预约失败',
+            icon: 'none'
+          });
+        }
+      });
     }
- });
+  });
 },
 /**
 * 用户点击右上角分享
