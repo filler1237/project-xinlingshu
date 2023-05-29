@@ -92,6 +92,35 @@ Page({
       console.log('写入Class发生错误')
     }
   },
+  SPChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('SchoolP', temp)
+      console.log('写入SP成功')
+    }catch(e){
+      console.log('写入SP发生错误')
+    }
+  },
+  PJChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Project', temp)
+      console.log('写入PJ成功')
+    }catch(e){
+      console.log('写入PJ发生错误')
+    }
+  },
+  ClassChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Class', temp)
+      console.log('写入Class成功')
+    }catch(e){
+      console.log('写入Class发生错误')
+    }
+  },
+
+  
   
   onChooseAvatar(e) { // 点击更改头像时触发的函数
     console.log(e)
@@ -189,8 +218,8 @@ Page({
     this.avatarUrl=app.globalData.userInfo.avatarUrl // 获取全局变量中存储的用户头像 URL
 
     const self = this
-    let userText = wx.getStorageSync('NickName') // 获取```
-    this.data.inputText = NickName // 将姓名存入页面的 inputText 数据
+    let userText = wx.getStorageSync('nickName') // 获取```
+    this.data.inputText = nickName // 将姓名存入页面的 inputText 数据
     self.setData(self.data) // 更新页面数据
   },
 

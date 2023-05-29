@@ -1,11 +1,28 @@
 // pages/home/function/1/SDS/SDStext/SDStext.js
+<<<<<<< HEAD
+=======
+var SumArr = new Array()
+var Sum = 0
+Page({
+>>>>>>> test
 
 Page({
   // 跳转到结果页面
   Goresult(){
+    for(var i=0; i < 20; i++)
+    {
+        console.log("ans.i:",this.data.SumArr[i])
+        Sum += this.data.SumArr[i]
+        console.log("soa:" ,Sum)
+    }
     wx.redirectTo({
+<<<<<<< HEAD
       url: '/home/pages/home/function/test/SDS/result/result?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C+'&D='+this.data.D+'&sum' + this.data.sum,
     })
+=======
+        url: '/home/pages/home/function/test/SDS/result/result?Sum=' + Sum,
+      })
+>>>>>>> test
   },
 
   // 切换问题
@@ -35,6 +52,7 @@ Page({
     }
     // 根据题号判断是加4分还是加1分
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
+<<<<<<< HEAD
       this.setData({
         A:this.data.A + 4
       })
@@ -44,6 +62,14 @@ Page({
         A:this.data.A + 1
       })
     }   
+=======
+      this.data.SumArr[this.data.id-1] = 4
+    }
+    else{
+      this.data.SumArr[this.data.id-1] = 1
+    }
+    
+>>>>>>> test
   },
 
   // 点击选项B
@@ -56,6 +82,7 @@ Page({
     }
     // 根据题号判断是加3分还是加2分
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
+<<<<<<< HEAD
       this.setData({
         B:this.data.B + 3
       })
@@ -64,6 +91,12 @@ Page({
       this.setData({
         B:this.data.B + 2
       })
+=======
+      this.data.SumArr[this.data.id-1] = 3
+    }
+    else{
+      this.data.SumArr[this.data.id-1] = 2
+>>>>>>> test
     }
   },
 
@@ -77,6 +110,7 @@ Page({
     }
     // 根据题号判断是加2分还是加3分
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
+<<<<<<< HEAD
       this.setData({
         C:this.data.C + 2
       })
@@ -85,6 +119,12 @@ Page({
       this.setData({
         C:this.data.C + 3
       })
+=======
+      this.data.SumArr[this.data.id-1] = 2
+    }
+    else{
+      this.data.SumArr[this.data.id-1] = 3
+>>>>>>> test
     }
   },
 
@@ -98,6 +138,7 @@ Page({
     }
     // 根据题号判断是加1分还是加4分
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
+<<<<<<< HEAD
       this.setData({
         D:this.data.D + 1
       })
@@ -106,6 +147,12 @@ Page({
       this.setData({
         D:this.data.D + 4
       })
+=======
+      this.data.SumArr[this.data.id-1] = 1
+    }
+    else{
+      this.data.SumArr[this.data.id-1] = 4
+>>>>>>> test
     }
   },
 
@@ -115,12 +162,16 @@ Page({
   data: {
     // 当前题号
     id:0,
+<<<<<<< HEAD
     // 四个选项对应的得分
     A:0,
     B:0,
     C:0,
     D:0,
     // 总分
+=======
+    SumArr:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+>>>>>>> test
     Sum:0,
     // 四个选项的文本描述
     OptionA:'没有或很少时间',

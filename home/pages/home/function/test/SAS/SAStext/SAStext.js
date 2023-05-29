@@ -1,8 +1,16 @@
 // home/pages/home/function/test/SAS/SAStext/SDStext.js
+var SumArr = new Array()
+var Sum = 0
 Page({
   Goresult(){
+    for(var i=0; i < 20; i++)
+    {
+        console.log("ans.i:",this.data.SumArr[i])
+        Sum += this.data.SumArr[i]
+        console.log("soa:" ,Sum)
+    }
       wx.redirectTo({
-          url: '/home/pages/home/function/test/SAS/SASresult/SASresult?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C+'&D='+this.data.D+'&sum' + this.data.sum,
+          url: '/home/pages/home/function/test/SAS/SASresult/SASresult?Sum=' + Sum,
         })
     },
     QueChange: function(q){
@@ -24,14 +32,10 @@ Page({
     OpA:function(){
       
       if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-          this.setData({
-              A:this.data.A + 4
-            })
+        this.data.SumArr[this.data.id] = 4
       }
       else{
-          this.setData({
-              A:this.data.A + 1
-          })
+        this.data.SumArr[this.data.id] = 1
       }
       if (this.data.id <= 19){
         this.setData({
@@ -43,14 +47,10 @@ Page({
     OpB:function(){
       
       if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-          this.setData({
-              B:this.data.B + 3
-            })
+        this.data.SumArr[this.data.id] = 3
       }
       else{
-          this.setData({
-              B:this.data.B + 2
-          })
+        this.data.SumArr[this.data.id] = 2
       }
       if (this.data.id < 20){
         this.setData({
@@ -62,14 +62,10 @@ Page({
     OpC:function(){
       
       if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-          this.setData({
-              C:this.data.C + 2
-            })
+        this.data.SumArr[this.data.id] = 2
       }
       else{
-          this.setData({
-              C:this.data.C + 3
-          })
+        this.data.SumArr[this.data.id] = 3
       }
       if (this.data.id < 20){
         this.setData({
@@ -81,14 +77,10 @@ Page({
     OpD:function(){
       
       if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18 ){
-          this.setData({
-              D:this.data.D + 1
-            })
+        this.data.SumArr[this.data.id] = 1
       }
       else{
-          this.setData({
-              D:this.data.D + 4
-          })
+        this.data.SumArr[this.data.id] = 4
       }
       if (this.data.id <= 19){
         this.setData({
@@ -101,10 +93,7 @@ Page({
  */
 data: {
   id:0,
-  A:0,
-  B:0,
-  C:0,
-  D:0,
+  SumArr:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   Sum:0,
   OptionA:'没有或很少时间',
   OptionB:'少部分时间',

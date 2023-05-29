@@ -1,11 +1,11 @@
 
-<view class="tips" style="color: #30432d;" wx:if="{{id<=19}}">
+<view class="tips" style="color: #30432d;" wx:if="{{id<=7}}">
     {{id+1}}/8
 </view>
 
 <view class="quesbox" wx:if="{{id<=7}}">
 
-<swiper style="height: 80%;" current="{{id}}" bindchange="QueChange" >
+<swiper style="height: 85%;" current="{{id}}" bindchange="QueChange" >
   <block wx:for="{{AISquestion}}" >
     <swiper-item style="height:fit-content;">
         
@@ -34,8 +34,8 @@
 </swiper>
 </view>
 
-<view class="quesbox"  >
-   <view wx:if="{{id==8}}" class="result" bindtap="Goresult">
+<view wx:if="{{id==8}}" class="quesbox"  >
+   <view  class="result" bindtap="Goresult">
     查看结果</view> 
 </view>
 

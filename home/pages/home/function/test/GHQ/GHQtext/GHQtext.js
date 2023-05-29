@@ -1,8 +1,22 @@
 // home/pages/home/function/test/GHQ/GHQtext/GHQtext.js
+var AnsA = new Array()
+var AnsB = new Array()
+var AnsC = new Array()
+var A = 0, B = 0, C = 0
 Page({
   Goresult(){
+    for(var i=0; i < 20; i++)
+    {
+        console.log("ans.i:",this.data.AnsA[i])
+        A += this.data.AnsA[i]
+        B += this.data.AnsB[i]
+        C += this.data.AnsC[i]
+        console.log("soa:" ,A)
+        console.log("sob:" ,B)
+        console.log("soc:" ,C)
+    }
       wx.redirectTo({
-          url: '/home/pages/home/function/test/GHQ/GHQresult/GHQresult?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C + '&sum' + this.data.sum,
+          url: '/home/pages/home/function/test/GHQ/GHQresult/GHQresult?A=' + A + '&B=' + B + '&C=' + C ,
         })
     },
     QueChange: function(q){
@@ -24,29 +38,24 @@ Page({
     OpA:function(){
       
       if(this.data.id ==6 ){
-          this.setData({
-              A:this.data.A + 0
-          })
-      }
-      else if(this.data.id ==9){
-          this.setData({
-              B:this.data.B + 1
-          })
+        this.data.AnsA[this.data.id] = 0
+        this.data.AnsB[this.data.id] = 0
+        this.data.AnsC[this.data.id] = 0
       }
       else if(this.data.id <=8 && this.data.id !=6){
-          this.setData({
-              A:this.data.A + 1
-            })
+        this.data.AnsA[this.data.id] = 1
+        this.data.AnsB[this.data.id] = 0
+        this.data.AnsC[this.data.id] = 0
       }
-      else if(this.data.id >8 && this.data.id <=14 && this.data.id !=9){
-          this.setData({
-              B:this.data.B + 1
-          })
+      else if(this.data.id >8 && this.data.id <=14 && this.data.id ==9){
+        this.data.AnsA[this.data.id] = 0
+        this.data.AnsB[this.data.id] = 1
+        this.data.AnsC[this.data.id] = 0
       }
       else{
-          this.setData({
-              C:this.data.C + 1
-          })
+        this.data.AnsA[this.data.id] = 0
+        this.data.AnsB[this.data.id] = 0
+        this.data.AnsC[this.data.id] = 1
       }
       if (this.data.id <= 19){
         this.setData({
@@ -55,31 +64,20 @@ Page({
       }
     },
     OpB:function(){
-      
       if(this.data.id ==6 ){
-          this.setData({
-              A:this.data.A + 1
-          })
+        this.data.AnsA[this.data.id] = 1
+        this.data.AnsB[this.data.id] = 0
+        this.data.AnsC[this.data.id] = 0
       }
       else if(this.data.id ==9){
-          this.setData({
-              B:this.data.B + 1
-          })
-      }
-      else if(this.data.id <=8 && this.data.id !=6){
-          this.setData({
-              A:this.data.A + 0
-            })
-      }
-      else if(this.data.id >8 && this.data.id <=14 && this.data.id !=9){
-          this.setData({
-              B:this.data.B + 0
-          })
+        this.data.AnsA[this.data.id] = 0
+        this.data.AnsB[this.data.id] = 1
+        this.data.AnsC[this.data.id] = 0
       }
       else{
-          this.setData({
-              C:this.data.C + 0
-          })
+        this.data.AnsA[this.data.id] = 0
+        this.data.AnsB[this.data.id] = 0
+        this.data.AnsC[this.data.id] = 0
       }
       if (this.data.id < 20){
         this.setData({
@@ -97,7 +95,9 @@ data: {
   A:0,
   B:0,
   C:0,
-  Sum:0,
+  AnsA : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  AnsB : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  AnsC : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   OptionA:'是的',
   OptionB:'不是的',
   
