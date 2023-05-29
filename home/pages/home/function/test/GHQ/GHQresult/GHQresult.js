@@ -16,7 +16,6 @@ Page({
 * 页面的初始数据
 */
 data: {
-sum:0,
 A:0,
 B:0,
 C:0,
@@ -31,8 +30,6 @@ this.setData({
     A: options.A - 0,
     B: options.B - 0,
     C: options.C - 0,
-    sum:options.sum - 0,
-    
   })
   
   

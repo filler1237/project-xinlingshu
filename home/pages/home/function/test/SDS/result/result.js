@@ -12,13 +12,13 @@ Page({
   },
   Advise:function(){
     
-    if(this.data.sum<42){
+    if(this.data.Sum<42){
       return 1
-    }else if(this.data.sum >= 42 && this.data.sum <= 49){
+    }else if(this.data.Sum >= 42 && this.data.Sum <= 49){
       return 2
-    }else if(this.data.sum >= 50 && this.data.sum <= 57){
+    }else if(this.data.Sum >= 50 && this.data.Sum <= 57){
       return 3
-    }else if(this.data.sum >= 58){
+    }else if(this.data.Sum >= 58){
       return 4
     }
 
@@ -27,10 +27,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sum:0,
-    A:0,
-    B:0,
-    D:0,
+    Sum:0,
     advise:'unknow',
   },
 
@@ -38,15 +35,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log("Sum is:" , options.Sum)
     this.setData({
-      A: options.A - 0,
-      B: options.B - 0,
-      C: options.C - 0,
-      D: options.D - 0,
-      sum:options.sum - 0,
+      Sum : options.Sum
     })
     this.setData({
-      sum: this.data.A + this.data.B + this.data.C + this.data.D
+      Sum: this.data.Sum
     })
     this.setData({
         

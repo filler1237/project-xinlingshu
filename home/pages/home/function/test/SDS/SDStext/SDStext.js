@@ -1,9 +1,17 @@
 // pages/home/function/1/SDS/SDStext/SDStext.js
+var SumArr = new Array()
+var Sum = 0
 Page({
 
   Goresult(){
+    for(var i=0; i < 20; i++)
+    {
+        console.log("ans.i:",this.data.SumArr[i])
+        Sum += this.data.SumArr[i]
+        console.log("soa:" ,Sum)
+    }
     wx.redirectTo({
-        url: '/home/pages/home/function/test/SDS/result/result?A=' + this.data.A + '&B=' + this.data.B + '&C=' + this.data.C+'&D='+this.data.D+'&sum' + this.data.sum,
+        url: '/home/pages/home/function/test/SDS/result/result?Sum=' + Sum,
       })
   },
   QueChange: function(q){
@@ -30,14 +38,10 @@ Page({
       }
 
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
-        this.setData({
-            A:this.data.A + 4
-          })
+      this.data.SumArr[this.data.id-1] = 4
     }
     else{
-        this.setData({
-            A:this.data.A + 1
-        })
+      this.data.SumArr[this.data.id-1] = 1
     }
     
   },
@@ -48,14 +52,10 @@ Page({
         })
       }
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
-        this.setData({
-            B:this.data.B + 3
-          })
+      this.data.SumArr[this.data.id-1] = 3
     }
     else{
-        this.setData({
-            B:this.data.B + 2
-        })
+      this.data.SumArr[this.data.id-1] = 2
     }
   },
   OpC:function(){
@@ -65,14 +65,10 @@ Page({
         })
       }
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
-        this.setData({
-            C:this.data.C + 2
-          })
+      this.data.SumArr[this.data.id-1] = 2
     }
     else{
-        this.setData({
-            C:this.data.C + 3
-        })
+      this.data.SumArr[this.data.id-1] = 3
     }
   },
   OpD:function(){
@@ -82,14 +78,10 @@ Page({
         })
       }
     if(this.data.id == 1||this.data.id == 4||this.data.id == 5||this.data.id == 10||this.data.id == 11||this.data.id == 13||this.data.id == 15||this.data.id == 16||this.data.id == 17||this.data.id == 19){
-        this.setData({
-            D:this.data.D + 1
-          })
+      this.data.SumArr[this.data.id-1] = 1
     }
     else{
-        this.setData({
-            D:this.data.D + 4
-        })
+      this.data.SumArr[this.data.id-1] = 4
     }
   },
   
@@ -98,10 +90,7 @@ Page({
    */
   data: {
     id:0,
-    A:0,
-    B:0,
-    C:0,
-    D:0,
+    SumArr:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     Sum:0,
     OptionA:'没有或很少时间',
     OptionB:'少部分时间',

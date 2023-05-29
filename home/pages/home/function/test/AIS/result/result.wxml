@@ -1,7 +1,16 @@
 <!--pages/home/function/1/AIS/result/result.wxml-->
 
   <view class="box" style="font-size: 40rpx;">
-    <text>你的测评得分是:{{sum}}</text>
+    <text>你的测评得分是:{{SUMofANS}}</text>
     <text>{{advise}}</text>
  </view>
+
+ <view style="display: flex; justify-content: center; flex-direction: column;">
+    <view class="back" bindtap="BackTo">
+        返回
+    </view>
+    <view class="tips" bindtap="OneMore">
+        再测一次
+    </view>
+</view>
   
