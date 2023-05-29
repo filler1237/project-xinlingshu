@@ -115,12 +115,12 @@ async function main(event) {
       const data = availableTimeSlots.length > 0 ? availableTimeSlots.map(timeSlot => timeSlot.startTime) : []
 
       // 将记录的 id 存储到 formData 列表中
-      const recordId = res.data[0]._id
+      const availabilityId = res.data[0]._id
       const formData = {
         teacherId: teacherId,
         date: date,
         timeSlot: availableTimeSlots[0],
-        recordId: recordId
+        availabilityId: availabilityId
       }
 
       return {

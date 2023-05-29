@@ -135,10 +135,34 @@ onDateChange: function(e) {
 },
 // 时间选择器改变时触发
 onHourChange: function(e) {
-// 将选择的时间索引设置到页面数据中
+  // 将选择的时间索引设置到页面数据中
   this.setData({
-  hourIndex: e.detail.value
-});
+    hourIndex: e.detail.value
+  });
+
+  // 调用云函数查询时间段索引
+  wx.cloud.callFunction({
+    name: 'getAvailabilityIndex',
+    data: {
+      availabilityId: this.data.formData.availabilityId,
+      startTime: this.data.hourList[this.data.hourIndex]
+    },
+    success: res => {
+      console.log(res.result);
+      // 将查找到的时间段索引保存到 formData 中
+      this.setData({
+        [`formData.timeSlotIndex`]: res.result.index
+      });
+    },
+    fail: err => {
+      console.error('[云函数] [getAvailabilityIndex] 调用失败', err);
+      // 查询失败时，显示错误提示
+      wx.showToast({
+        title: '查询时间段索引失败',
+        icon: 'none'
+      });
+    }
+  });
 },
 submitForm() {
   // 若未登录，直接到登录页面
