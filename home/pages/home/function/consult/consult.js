@@ -8,7 +8,20 @@ Page({
     hourIndex: -1, // 选择的时间索引
     teacherIndex: -1, // 选择的咨询师索引
     length: 0, // 文本框输入的字符数
-    formData: {}, // 表单数据
+    availabilityId: '' ,
+    formData: {
+      timeSlotIndex: -1,
+      timeSlot: '',
+      teacherId:-1, 
+      userId:0,
+      date:0, 
+      startTime:0, 
+      endTime:0, 
+      availabilityId:0, 
+      timeSlotIndex:0, 
+      status:0, 
+      detail:0
+    },// 表单数据
     // 咨询师列表
     teacherList: ['王贞贞', '姚双雁', '李亚玲'],
     selectedDateIndex: -1,
@@ -122,11 +135,14 @@ onDateChange: function(e) {
     console.log(res.result);
     if (Array.isArray(res.result.data)) {
       this.setData({
-        hourList: res.result.data.map(slot => slot.startTime),
-        formData: res.result.formData // 将 formData 存储在页面的 data 对象中
+        hourList: res.result.data,
+        formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
       });
   
-      console.log(this.data.formData); // 在此处添加打印语句
+      this.setData({
+        [`formData.availabilityId`]: res.result.formData.availabilityId
+      });
+      console.log(this.data.formData); 
     } else {
       console.error('getAvailableTimeSlots 返回的结果不是数组对象');
     }
@@ -142,7 +158,7 @@ onHourChange: function(e) {
 
   // 调用云函数查询时间段索引
   wx.cloud.callFunction({
-    name: 'getAvailabilityIndex',
+    name: 'getTimeIndex',
     data: {
       availabilityId: this.data.formData.availabilityId,
       startTime: this.data.hourList[this.data.hourIndex]
@@ -153,6 +169,7 @@ onHourChange: function(e) {
       this.setData({
         [`formData.timeSlotIndex`]: res.result.index
       });
+      console.log(this.data.formData)
     },
     fail: err => {
       console.error('[云函数] [getAvailabilityIndex] 调用失败', err);
@@ -165,17 +182,21 @@ onHourChange: function(e) {
   });
 },
 submitForm() {
-  // 若未登录，直接到登录页面
-  if (app.globalData.userInfo.isLogin != true) { // 判断是否已登录
+  // 若未登录,直接到登录页面
+  if (app.globalData.userInfo.isLogin != true) {
     wx.switchTab({
-      url: '/pages/mine/mine' // 跳转到个人中心页面
-    })
-    return
+      url: '/pages/mine/mine'
+    });
+    return;
   }
+
   // 获取表单数据
   var formdata = this.data.formData;
-  // 保存 this 的值，以便在回调函数中使用
-  var that = this;
+  formdata.detail = this.data.formData.detail; // 添加文本内容到formData
+  
+  // 保存 this 的值,以便在回调函数中使用
+  var that = this;  
+
   // 调用组件内的 validate 方法进行表单验证
   this.selectComponent("#form").validate((valid, errors) => {
     if (!valid) { // 如果表单校验不通过
@@ -188,34 +209,56 @@ submitForm() {
         });
       }
     } else { // 如果表单校验通过
-      // 如果 detail 字段为空，则将其默认为 "未填写"
-      if (that.data.formData.detail == "" || that.data.formData.detail == null) {
-        hat.data.formData.detail = "未填写";
+      // 如果 detail 字段为空,则将其默认为 "未填写"
+      if (!that.data.formData.detail) {
+        wx.showToast({
+          title: '请输入文本内容',
+          icon: 'none',
+        });
+        return false;
       }
-      // 调用云函数更新可预约时间段状态
-      wx.cloud.callFunction({
-        name: 'updateAvailability',
-        data: {
-          availabilityId: that.data.dataSchedule._id, // 可预约时间段记录的 ID
-          timeSlotIndex: that.data.hourIndex, // 选择的时间索引
-          status: 'expired' // 更新的状态
-        },
-        success: res => {
-          console.log(res.result);
-          // 更新成功后，跳转到预约成功页面
-          wx.redirectTo({
-            url: '/pages/appointment/success/success'
-          });
-        },
-        fail: err => {
-          console.error('[云函数] [updateAvailability] 调用失败', err);
-          // 更新失败时，显示错误提示
-          wx.showToast({
-            title: '预约失败',
-            icon: 'none'
-          });
-        }
-      });
+
+      // 判断老师选择器、日期选择器和时间选择器的当前选择的索引是否为-1,以及表单输入框是否有输入
+      if (that.data.teacherIndex !== -1 && that.data.selectedDateIndex !== -1 && that.data.hourIndex !== -1 && that.data.formData.detail) {
+        
+
+        // 调用云函数更新可预约时间段状态
+        wx.cloud.callFunction({
+          name: 'createAppointment',   //这里要调用createAppointment云函数
+          data: {
+            availabilityId: this.data.formData.availabilityId,
+            startTime: this.data.hourList[this.data.hourIndex],
+            teacherId: this.data.formData.teacherId,
+            userId: app.globalData.userInfo.openid,
+            date: this.data.formData.date,
+            startTime: this.data.formData.timeSlot.startTime,
+            endTime: this.data.formData.timeSlot.endTime, 
+            timeSlotIndex: this.data.formData.timeSlotIndex, 
+            status: this.data.formData.timeSlot.status,
+            detail: this.data.formData.detail
+          },
+          success: res => {
+            console.log(res.result);
+            wx.showToast({
+              title: '预约成功',
+              icon: '',
+            });
+          },
+          fail: err => {
+            console.error('[云函数] [createAppointmen] 调用失败', err);
+            // 更新失败时,显示错误提示
+            wx.showToast({
+              title: '预约失败',
+              icon: 'none',
+            });
+          },
+        });
+      } else { // 如果老师选择器、日期选择器和时间选择器的当前选择的索引为-1,或表单输入框为空
+        wx.showToast({
+          title: '请选择老师、日期和时间,且输入框不能为空',
+          icon: 'none',
+        });
+      }
     }
   });
 },

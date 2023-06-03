@@ -1,31 +1,25 @@
-// home/pages/home/function/test/SAS/SASresult/SASresult.js
-
+// 定义小程序页面对象
 Page({
+
   // 返回测试首页
   BackTo(){
+    // 跳转到测试首页
     wx.reLaunch({
       url: '/home/pages/home/function/test/test',
     })
   },
+
   // 再测一次
   OneMore(){
+    // 跳转到SDS测试页面
     wx.reLaunch({
       url: '/home/pages/home/function/test/SDS/SDS',
     })
   },
+
   // 根据总分判断建议类型
   Advise:function(){
-<<<<<<< HEAD
-    if(this.data.sum<42){
-      return 1 // 轻度焦虑
-    }else if(this.data.sum >= 42 && this.data.sum <= 49){
-      return 2 // 中度焦虑
-    }else if(this.data.sum >= 50 && this.data.sum <= 57){
-      return 3 // 中重度焦虑
-    }else if(this.data.sum >= 58){
-      return 4 // 重度焦虑
-=======
-    
+    // 判断总分所属的建议类型
     if(this.data.Sum<42){
       return 1
     }else if(this.data.Sum >= 42 && this.data.Sum <= 49){
@@ -34,34 +28,24 @@ Page({
       return 3
     }else if(this.data.Sum >= 58){
       return 4
->>>>>>> test
     }
   },
+
   /**
    * 页面的初始数据
    */
   data: {
-<<<<<<< HEAD
-    sum:0, // 总分
-    A:0, // 选项A得分
-    B:0, // 选项B得分
-    D:0, // 选项D得分
-    advise:'unknown', // 建议类型
-=======
-    Sum:0,
-    advise:'unknow',
->>>>>>> test
+    Sum:0,      // 总分
+    advise:'unknow',   // 建议类型
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-<<<<<<< HEAD
-    // 从上一个页面获取数据
-=======
+    // 打印总分
     console.log("Sum is:" , options.Sum)
->>>>>>> test
+    // 从上一个页面传给总分参数，更新总分data
     this.setData({
       Sum : options.Sum
     })

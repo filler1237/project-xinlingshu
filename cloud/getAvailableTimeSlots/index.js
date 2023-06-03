@@ -2,6 +2,7 @@
 const cloud = require('wx-server-sdk')
 // 初始化云函数
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+
 // 定义默认的开始时间、结束时间和间隔
 const DEFAULT_START_TIME = '09:00:00'
 const DEFAULT_END_TIME = '18:00:00'
@@ -11,39 +12,23 @@ const DEFAULT_INTERVAL = 60 // 1 小时
 async function main(event) {
   // 获取云数据库实例
   const db = cloud.database()
-  // 如果 teacherId 为 -1，直接返回空的时间段列表
- if (event.teacherId === -1) {
-    return {
-      code: 0,
-      data: []
-    }
-  }
-
-  // 获取 Availability 集合的引用 
-  const availabilityCollection = db.collection('Availability')
-
-  // 获取请求事件中的 teacherId 和 date
-  const { teacherId, date } = event
 
   try {
-    // 开始一个事务
-    const transaction = await db.startTransaction()
-
-    // 根据 teacherId 和 date 查询对应的可预约时间段记录
-    const res = await transaction.collection('Availability')
+    // 查询是否存在对应的时间段记录
+    const res = await db.collection('Availability')
       .where({
-        teacherId,
-        date
+        teacherId: event.teacherId,
+        date: event.date
       })
       .get()
 
-    // 如果查询结果为空或没有可预约的时间段，则创建时间段
-    if (!res.data || res.data.length === 0 || !res.data[0].timeSlots || res.data[0].timeSlots.length === 0) {
+    if (res.data.length === 0) {
+      // 如果不存在时间段记录，则创建新的时间段记录
       const timeSlots = []
 
       // 使用默认的开始时间、结束时间和间隔
-      const startTime = new Date(`${date} ${DEFAULT_START_TIME}`)
-      const endTime = new Date(`${date} ${DEFAULT_END_TIME}`)
+      const startTime = new Date(`${event.date} ${DEFAULT_START_TIME}`)
+      const endTime = new Date(`${event.date} ${DEFAULT_END_TIME}`)
       const interval = DEFAULT_INTERVAL
 
       // 循环生成时间段记录
@@ -59,81 +44,85 @@ async function main(event) {
         }
         current = new Date(current.getTime() + interval * 60 * 1000);
       }
-      
+
       if (timeSlots.length === 0) {
         // 如果未生成任何时间段，则返回错误响应
         return {
           code: -1,
-          msg: '无可预约时间段'
+          msg: '无可预约时间段',
+          data: []
         }
       }
 
       // 添加日期和时间段记录
-      const result = await transaction.collection('Availability').add({
+      const result = await db.collection('Availability').add({
         data: {
-          teacherId,
-          date,
+          teacherId: event.teacherId,
+          date: event.date,
           timeSlots
         }
       })
 
-      // 查询新添加的记录
-      const newRes = await transaction.collection('Availability')
-        .doc(result._id)
-        .get()
+      // 将记录的 id 存储到 formData 列表中
+      const formData = {
+        teacherId: event.teacherId,
+        date: event.date,
+        timeSlot: timeSlots[0],
+        availabilityId: result._id
+      }
 
-      // 提交事务
-      await transaction.commit()
-
-      // 返回查询结果
+      // 返回结果
       return {
         code: 0,
-        data: timeSlots
+        data: timeSlots,
+        formData: formData
       }
     } else {
-      // 更新过期的时间段状态为不可预约
-      const currentTime = new Date()
-      const updateTimes = res.data[0].timeSlots.map(timeSlot => {
-        if (new Date(timeSlot.endTime) < currentTime) {
-          return { ...timeSlot, status: 'expired' } // 将过期的时间段状态更新为不可预约
+      // 如果存在时间段记录，则更新已过期的时间段状态，并返回所有状态为 available 的时间段
+      const availability = res.data[0]
+      const timeSlots = availability.timeSlots.map(timeSlot => {
+        if (new Date(timeSlot.endTime) < new Date(Date.now())) {
+          if (timeSlot.status !== 'expired') { // 添加检查，确保已过期的时间段状态不会被更新为可预约的状态
+            return { ...timeSlot, status: 'expired' } // 将过期的时间段状态更新为不可预约
+          } else {
+            return timeSlot
+          }
         } else {
           return timeSlot
         }
       })
+
       // 更新时间段状态
-      await transaction.collection('Availability')
-        .doc(res.data[0]._id)
+      await db.collection('Availability')
+        .doc(availability._id)
         .update({
           data: {
-            timeSlots: updateTimes
+            timeSlots: timeSlots
           }
         })
-      // 提交事务
-      await transaction.commit()
-      // 返回查询结果
-      const availableTimeSlots = res.data[0].timeSlots.filter(timeSlot => timeSlot.status === 'available')
+
+      // 过滤出状态为 available 的时间段
+      const availableTimeSlots = timeSlots.filter(timeSlot => timeSlot.status === 'available')
       const data = availableTimeSlots.length > 0 ? availableTimeSlots.map(timeSlot => timeSlot.startTime) : []
 
       // 将记录的 id 存储到 formData 列表中
-      const availabilityId = res.data[0]._id
-      const formData = {
-        teacherId: teacherId,
-        date: date,
+      const formData= {
+        teacherId: event.teacherId,
+        date: event.date,
         timeSlot: availableTimeSlots[0],
-        availabilityId: availabilityId
+        availabilityId: availability._id
       }
 
+      // 返回结果
       return {
         code: 0,
-        data: availableTimeSlots,
+        data: data,
         formData: formData
-}
+      }
     }
-  } catch (err) {
-    // 打印错误信息
-    console.log(err)
-
-    // 返回错误信息
+  } catch (e) {
+    console.error(e)
+    // 返回错误响应
     return {
       code: -1,
       msg: '查询可预约时间段失败'
