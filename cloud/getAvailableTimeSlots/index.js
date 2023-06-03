@@ -78,7 +78,7 @@ async function main(event) {
         formData: formData
       }
     } else {
-      // 如果存在时间段记录，则更新已过期的时间段状态，并返回所有状态为 available 的时间段
+      // 如果存在时间段记录，则更新已过期的时间段状态
       const availability = res.data[0]
       const timeSlots = availability.timeSlots.map(timeSlot => {
         if (new Date(timeSlot.endTime) < new Date(Date.now())) {
@@ -116,7 +116,7 @@ async function main(event) {
       // 返回结果
       return {
         code: 0,
-        data: data,
+        data: availableTimeSlots,
         formData: formData
       }
     }

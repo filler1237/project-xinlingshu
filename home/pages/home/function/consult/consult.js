@@ -135,7 +135,7 @@ onDateChange: function(e) {
     console.log(res.result);
     if (Array.isArray(res.result.data)) {
       this.setData({
-        hourList: res.result.data,
+        hourList: res.result.data.map(slot => slot.startTime),
         formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
       });
   
@@ -143,6 +143,7 @@ onDateChange: function(e) {
         [`formData.availabilityId`]: res.result.formData.availabilityId
       });
       console.log(this.data.formData); 
+      console.log(this.data.hourList); 
     } else {
       console.error('getAvailableTimeSlots 返回的结果不是数组对象');
     }
