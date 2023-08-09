@@ -56,3 +56,15 @@
   </view>
 
 </view>
+
+<view class="max">
+<view wx:for="{{ Appointments }}" wx:key="index" class="bookbox" style="background-color: #98b86a;">
+  <view class="timetable">
+    <view class="datasize">{{ item.date }}  {{ item.startTime }}</view>
+    <view class="{{ item.status === '已结束' ? 'state2' : 'state1' }}">{{ item.status }}</view>
+  </view>
+  <view class="teacher">{{ item.teacher }}老师</view>
+  <view class="detail">{{ item.detail }}</view>
+  <view class="spacer"></view>
+</view>
+</view>

@@ -23,8 +23,8 @@
 
       <mp-cells title="请简述目前遇到的困难和希望得到的帮助">
         <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="">
-          <textarea date-field="detail" class="weui-textarea" placeholder="请输入文本（不多于140字）" style="height: 5em" bindinput="textareaInput" />
-          <view class="weui-textarea-counter">{{length}}/140</view>
+          <textarea date-field="detail" class="weui-textarea" placeholder="请输入文本（不多于140字）" style="height: 5em" bindinput="textareaInput"></textarea>
+          <view class="weui-textarea-counter">{{formData.length}}/140</view>
         </mp-cell>
       </mp-cells>
     </mp-form>

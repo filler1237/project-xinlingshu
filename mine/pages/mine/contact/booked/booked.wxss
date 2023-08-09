@@ -1,0 +1,54 @@
+/* pages/mine/booked/booked.wxss */
+.title{
+  font-size: 60rpx;
+  margin: 20rpx;
+}
+
+.max{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookbox{
+  height: 300rpx;
+  width: 720rpx;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15rpx;
+  margin: 10rpx;
+  align-items: center;
+
+}
+
+.timetable{
+  width :700rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.datasize{
+  font-size: 40rpx;
+  margin: 20rpx;
+}
+
+.state1{
+  font-size: 30rpx;
+  margin: 20rpx;
+  color: green;
+}
+
+.state2{
+  font-size: 30rpx;
+  margin: 20rpx;
+  color: red;
+}
+
+.teacher{
+  font-size: 35rpx;
+}
+
+.detail{
+  margin: 10rpx;
+}

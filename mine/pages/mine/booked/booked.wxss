@@ -10,17 +10,19 @@
   align-items: center;
 }
 
-.bookbox{
-  height: 300rpx;
+.bookbox {
+  height: auto;
   width: 720rpx;
   display: flex;
   flex-direction: column;
   border-radius: 15rpx;
   margin: 10rpx;
   align-items: center;
-
+  overflow: hidden; /* 避免内容溢出 */
 }
-
+.spacer {
+  height: 20rpx; /* 设置占位符的高度为10rpx */
+}
 .timetable{
   width :700rpx;
   display: flex;

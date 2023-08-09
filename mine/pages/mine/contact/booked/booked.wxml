@@ -1,0 +1,58 @@
+<!--pages/mine/booked/booked.wxml-->
+<view class="title">
+  预约记录
+</view>
+
+<view class="max">
+  <view class="bookbox" style="background-color: #98b86a;">
+    <view class="timetable">
+      <view class="datasize">
+        2023/04/02 15:30
+      </view>
+      <view class="state1"> 
+        进行中
+      </view>
+    </view>
+    <view class="teacher">
+      王贞贞老师
+    </view>
+    <view class="detail">
+      请您提前15分钟至心理园等候，如有紧急情况请致电 2746 1234。更多信息请点击查看。
+    </view>
+  </view>
+
+  <view class="bookbox" style="background-color: #ccdcb4;">
+    <view class="timetable">
+      <view class="datasize">
+        2023/03/21 10:30
+      </view>
+      <view class="state2"> 
+        已结束
+      </view>
+    </view>
+    <view class="teacher">
+      李亚玲老师
+    </view>
+    <view class="detail">
+      李老师留言：多喝热水，景田怡宝农夫山泉哇哈哈。当我们... 更多信息请点击查看。
+    </view>
+  </view>
+
+  <view class="bookbox" style="background-color: #ccdcb4;">
+    <view class="timetable">
+      <view class="datasize">
+        2023/03/21 10:30
+      </view>
+      <view class="state2"> 
+        已结束
+      </view>
+    </view>
+    <view class="teacher">
+      李亚玲老师
+    </view>
+    <view class="detail">
+      李老师留言：多喝热水，景田怡宝农夫山泉哇哈哈。当我们... 更多信息请点击查看。
+    </view>
+  </view>
+
+</view>

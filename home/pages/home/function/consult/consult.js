@@ -4,11 +4,18 @@ const cloud = wx.cloud.init(); // 初始化云开发
 Page({
   data: {
     showTopTips: false, // 是否显示顶部提示
-    userInfo: [], // 用户信息
+    // userInfo: {
+    //   openid,
+    //   nickName,
+    //   sex,
+    //   age,
+    //   class:0
+    // }, // 用户信息
     hourIndex: -1, // 选择的时间索引
     teacherIndex: -1, // 选择的咨询师索引
     length: 0, // 文本框输入的字符数
     availabilityId: '' ,
+    availabilitySlot:[],
     formData: {
       timeSlotIndex: -1,
       timeSlot: '',
@@ -20,7 +27,8 @@ Page({
       availabilityId:0, 
       timeSlotIndex:0, 
       status:0, 
-      detail:0
+      detail:0,
+      length: 0, // 添加一个名为 length 的字段
     },// 表单数据
     // 咨询师列表
     teacherList: ['王贞贞', '姚双雁', '李亚玲'],
@@ -41,12 +49,16 @@ this.setData({
   });
   },
    
-textareaInput: function (e) { // 定义一个名为 textareaInput 的函数，传入一个事件对象 e
-    this.setData({ // 更新数据
-      length: e.detail.value.length, // 将 length 的值设为输入框中的字符数
-     [`formData.detail`]: e.detail.value, // 将 formData.detail 的值设为输入框中的值
-     });
-   },
+  textareaInput: function (e) {
+    const { value } = e.detail; // 使用对象解构语法获取输入框的值
+    const length = value.length; // 获取输入框中的字符数
+    this.setData({
+      [`formData.detail`]: value, // 更新 formData.detail 的值
+      [`formData.length`]: length, // 更新 formData.length 的值
+      detail: value, // 更新 detail 的值
+      length: length, // 更新 length 的值
+    });
+  },
 bindTeacherChange: function (e) {  // 绑定老师选择器的change事件处理函数
   var that = this;  // 缓存this指针
   const db = wx.cloud.database();
@@ -125,7 +137,7 @@ onDateChange: function(e) {
     name: 'getAvailableTimeSlots',
     data: {
       teacherId: this.data.teacherIndex,
-      date: this.data.dateList[e.detail.value  ]
+      date: this.data.dateList[e.detail.value]
   },
   fail: err => {
     console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
@@ -135,6 +147,7 @@ onDateChange: function(e) {
     console.log(res.result);
     if (Array.isArray(res.result.data)) {
       this.setData({
+        availabilitySlot:res.result.data,
         hourList: res.result.data.map(slot => slot.startTime),
         formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
       });
@@ -168,7 +181,8 @@ onHourChange: function(e) {
       console.log(res.result);
       // 将查找到的时间段索引保存到 formData 中
       this.setData({
-        [`formData.timeSlotIndex`]: res.result.index
+        [`formData.timeSlotIndex`]: res.result.index,
+        [`formData.timeSlot`]: this.data.availabilitySlot[this.data.hourIndex]
       });
       console.log(this.data.formData)
     },
@@ -194,74 +208,55 @@ submitForm() {
   // 获取表单数据
   var formdata = this.data.formData;
   formdata.detail = this.data.formData.detail; // 添加文本内容到formData
-  
+  formdata.length = this.data.formData.length; // 添加文本内容到formData
   // 保存 this 的值,以便在回调函数中使用
   var that = this;  
 
-  // 调用组件内的 validate 方法进行表单验证
-  this.selectComponent("#form").validate((valid, errors) => {
-    if (!valid) { // 如果表单校验不通过
-      // 获取第一个错误信息的键名
-      const firstError = Object.keys(errors);
-      if (firstError.length) {
-        // 将错误信息保存到 data 中
+  // 判断老师选择器、日期选择器和时间选择器的当前选择的索引是否为-1,以及表单输入框是否有输入
+  if (that.data.teacherIndex !== -1 && that.data.selectedDateIndex !== -1 && that.data.hourIndex !== -1 && this.data.formData.length) {      
+    // 调用云函数更新可预约时间段状态
+    wx.cloud.callFunction({
+      name: 'createAppointment',   //这里要调用createAppointment云函数
+      data: {
+        availabilityId: this.data.formData.availabilityId,
+        startTime: this.data.hourList[this.data.hourIndex],
+        teacherId: this.data.formData.teacherId,
+        openid: app.globalData.userInfo.openid,
+        date: this.data.formData.date,
+        startTime: this.data.formData.timeSlot.startTime,
+        endTime: this.data.formData.timeSlot.endTime, 
+        timeSlotIndex: this.data.formData.timeSlotIndex, 
+        status: this.data.formData.timeSlot.status,
+        detail: this.data.formData.detail,
+        teacher:this.data.teacherList[this.data.formData.teacherId]
+      },
+      success: res => {
+        console.log(res.result);
         this.setData({
-          error: errors[firstError[0]].message,
-        });
-      }
-    } else { // 如果表单校验通过
-      // 如果 detail 字段为空,则将其默认为 "未填写"
-      if (!that.data.formData.detail) {
+          teacherIndex: -1,  // 更新老师选择器的选中项
+          selectedDateIndex: -1,  // 重置日期选择器的选中项
+          hourIndex: -1,  // 重置时间选择器的选中项
+        })
         wx.showToast({
-          title: '请输入文本内容',
+          title: '预约成功',
+          icon: '',
+        });
+      },
+      fail: err => {
+        console.error('[云函数] [createAppointmen] 调用失败', err);
+        // 更新失败时,显示错误提示
+        wx.showToast({
+          title: '预约失败',
           icon: 'none',
         });
-        return false;
-      }
-
-      // 判断老师选择器、日期选择器和时间选择器的当前选择的索引是否为-1,以及表单输入框是否有输入
-      if (that.data.teacherIndex !== -1 && that.data.selectedDateIndex !== -1 && that.data.hourIndex !== -1 && that.data.formData.detail) {
-        
-
-        // 调用云函数更新可预约时间段状态
-        wx.cloud.callFunction({
-          name: 'createAppointment',   //这里要调用createAppointment云函数
-          data: {
-            availabilityId: this.data.formData.availabilityId,
-            startTime: this.data.hourList[this.data.hourIndex],
-            teacherId: this.data.formData.teacherId,
-            userId: app.globalData.userInfo.openid,
-            date: this.data.formData.date,
-            startTime: this.data.formData.timeSlot.startTime,
-            endTime: this.data.formData.timeSlot.endTime, 
-            timeSlotIndex: this.data.formData.timeSlotIndex, 
-            status: this.data.formData.timeSlot.status,
-            detail: this.data.formData.detail
-          },
-          success: res => {
-            console.log(res.result);
-            wx.showToast({
-              title: '预约成功',
-              icon: '',
-            });
-          },
-          fail: err => {
-            console.error('[云函数] [createAppointmen] 调用失败', err);
-            // 更新失败时,显示错误提示
-            wx.showToast({
-              title: '预约失败',
-              icon: 'none',
-            });
-          },
-        });
-      } else { // 如果老师选择器、日期选择器和时间选择器的当前选择的索引为-1,或表单输入框为空
-        wx.showToast({
-          title: '请选择老师、日期和时间,且输入框不能为空',
-          icon: 'none',
-        });
-      }
-    }
-  });
+      },
+    });
+  } else { // 如果老师选择器、日期选择器和时间选择器的当前选择的索引为-1,或表单输入框为空
+    wx.showToast({
+      title: '请选择老师、日期和时间,且输入框不能为空',
+      icon: 'none',
+    });
+  }
 },
 /**
 * 用户点击右上角分享

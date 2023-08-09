@@ -69,9 +69,7 @@ Page({
     });
   },
 
-  // 登录函数
   login() {
-    //// 获取云数据库对象
     const db = wx.cloud.database();
     // 查询当前用户是否已注册
     db.collection('users').where({
@@ -87,6 +85,8 @@ Page({
         db.collection('users').doc(userInfo._id).get().then(res => {
           console.log('获取复原力数据', res);
           const fuyuanli = res.data.fuyuanli;
+          app.globalData.userInfo.openid = res.data._openid; // 将获取到的 openid 存入全局变量
+          console.log(app.globalData.userInfo.openid)
           // 更新本地数据
           this.setData({ fuyuanli });
         }).catch(err => {
@@ -96,6 +96,21 @@ Page({
     }).catch(err => {
       console.error('查询用户信息失败', err);
     });
+  },
+
+  // 页面加载时执行的函数
+  onLoad: function () {
+    // 从本地存储中获取 openid
+    const openid = wx.getStorageSync('openid');
+    if (openid) {
+      // 如果本地存储中存在 openid，将其存入页面数据中
+      this.setData({
+        openid: openid,
+        isLogin: true,
+      });
+      // 执行登录函数
+      this.login(openid);
+    }
   },
   
   // 注册业务  
@@ -113,20 +128,6 @@ Page({
     })
   },
   
-  // 页面加载时执行的函数
-  onLoad: function () {
-    // 获取本地存储的 openid
-    const openid = wx.getStorageSync('openid');
-    if (openid) {
-      // 如果本地存储中存在 openid，将其存入页面数据中
-      this.setData({
-        openid: openid,
-        isLogin: true,
-      });
-      // 执行登录函数
-      this.login(openid);
-    }
-  },
 
   // 页面初次渲染完成时执行的函数
   onReady() {

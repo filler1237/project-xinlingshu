@@ -27,7 +27,7 @@ App({
       username: "点击去登录",
       _id:"",
       id:"",
-      openid:"",
+      openid:"", // 添加 openid 属性
       avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
       wenzhang:[],
       message:[],
@@ -44,7 +44,6 @@ App({
         shejiao: 0
       }    
     },
-    
     token: "",
   },
 })
