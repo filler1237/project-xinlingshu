@@ -99,31 +99,28 @@ Page({
   },
 
   // 页面加载时执行的函数
-  onLoad: function () {
-    // 从本地存储中获取 openid
-    const openid = wx.getStorageSync('openid');
-    if (openid) {
-      // 如果本地存储中存在 openid，将其存入页面数据中
-      this.setData({
-        openid: openid,
-        isLogin: true,
-      });
-      // 执行登录函数
-      this.login(openid);
-    }
+  onLoad: function() {
+    wx.cloud.callFunction({
+      name: 'login',
+      complete: res => {
+        // 将返回的 openid 保存到本地存储
+        wx.setStorageSync('openid', res.result.openid) 
+        this.setData({
+          openid: res.result.openid
+        })
+      }
+    })
   },
   
   // 注册业务  
-  regist(){
-    let db = wx.cloud.database() 
-    // 将用户信息和页面数据存入云数据库
-    db.collection('users').add({  
-      userInfo:this.data.userInfo,
-      data:this.data,
-      success:(res)=>{  
-        console.log('注册用户',res) 
-        // 将新注册用户的 _id 存入全局数据
-        app.globalData.userInfo._id=res._id  
+  regist() {
+    const userInfo = this.data.userInfo
+    
+    wx.setStorageSync('userInfo', userInfo)
+  
+    db.collection('users').add({
+      data: {
+        userInfo  
       }
     })
   },
@@ -151,12 +148,42 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    // 设置页面标题
-wx.setNavigationBarTitle({
+
+  },
+  onShow() {
+    const openid = wx.getStorageSync('openid')
+    const userInfo = wx.getStorageSync('userInfo')
+    const isLogin = wx.getStorageSync('isLogin')
+
+    if (isLogin && userInfo) {
+      this.setData({isLogin, userInfo})
+      return 
+    }
+
+    if (openid) {
+      // 使用本地的 openid 查询云数据库
+      wx.cloud.database().collection('users')
+        .where({
+          openid  
+        })
+        .get()
+        .then(res => {
+          if (res.data.length > 0) {
+            const userInfo = res.data[0]
+
+            // 保存到本地存储
+            wx.setStorageSync('userInfo', userInfo)
+            wx.setStorageSync('isLogin', true)
+
+            this.setData({userInfo, isLogin: true})
+          }
+        })  
+    }
+        // 设置页面标题
+    wx.setNavigationBarTitle({
       title: 'SZTU心灵树',
     })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
