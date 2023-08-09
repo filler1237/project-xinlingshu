@@ -15,7 +15,7 @@ Page({
    */
   onLoad(options) {
     const { openid } = options;
-    const today = new Date().toISOString().split('T')[0]; // 获取当前日期，格式为YYYY-MM-DD
+    const now = new Date(); // 获取当前时间
     db.collection('Appointments').where({
       openid: openid
     }).get().then(res => {
@@ -27,13 +27,15 @@ Page({
         // 查询到一条记录的情况
         const appointment = res.data[0];
         console.log('查询到一条记录', appointment);
-        const status = appointment.date < today ? '已结束' : '进行中'; // 判断预约状态
+        const appointmentDate = new Date(appointment.date);
+        const status = appointmentDate < now ? '已结束' : '进行中'; // 判断预约状态
         this.setData({ Appointments: [{ ...appointment, status }] });
       } else {
         // 查询到多条记录的情况
         console.log('查询到多条记录', res.data);
         const appointments = res.data.map(appointment => {
-          const status = appointment.date < today ? '已结束' : '进行中'; // 判断预约状态
+          const appointmentDate = new Date(appointment.date);
+          const status = appointmentDate < now ? '已结束' : '进行中'; // 判断预约状态
           return { ...appointment, status };
         });
         this.setData({ Appointments: appointments });

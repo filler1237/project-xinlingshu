@@ -20,6 +20,14 @@
   align-items: center;
   overflow: hidden; /* 避免内容溢出 */
 }
+
+.bookbox.active {
+  background-color: #98b86a; /* 进行中的背景颜色 */
+}
+
+.bookbox.inactive {
+  background-color: #ccdcb4; /* 已结束的背景颜色 */
+}
 .spacer {
   height: 20rpx; /* 设置占位符的高度为10rpx */
 }
