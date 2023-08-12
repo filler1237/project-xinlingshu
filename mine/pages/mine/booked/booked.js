@@ -8,6 +8,7 @@ Page({
    */
   data: {
     Appointments: [],
+    booklist:false,
   },
 
   /**
@@ -34,7 +35,9 @@ Page({
           console.log('查询到一条记录', appointment);
           const appointmentTimestamp = new Date(appointment.date + ' ' + appointment.endTime).getTime();
           const status = appointmentTimestamp < now.getTime() ? '已结束' : '进行中'; // 判断预约状态
-          this.setData({ Appointments: [{ ...appointment, status }] });
+          this.setData({ Appointments: [{ ...appointment, status }] ,
+            booklist:true
+          });
         } else {
           // 查询到多条记录的情况
           console.log('查询到多条记录', res.data);
@@ -44,7 +47,9 @@ Page({
             return { ...appointment, status, appointmentTimestamp };
           });
           appointments.sort((a, b) => b.appointmentTimestamp - a.appointmentTimestamp); // 按照时间戳降序排列
-          this.setData({ Appointments: appointments });
+          this.setData({ Appointments: appointments ,
+          booklist:true
+          });
         }
       });
   },

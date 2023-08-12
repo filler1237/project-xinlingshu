@@ -133,34 +133,38 @@ onDateChange: function(e) {
   this.setData({
     selectedDateIndex: e.detail.value
   });
+
+  const currentTime = new Date().toISOString(); // 获取当前日期和时间的字符串表示
+
   wx.cloud.callFunction({
     name: 'getAvailableTimeSlots',
     data: {
       teacherId: this.data.teacherIndex,
-      date: this.data.dateList[e.detail.value]
-  },
-  fail: err => {
-    console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
-    if (err) return
-  },
-  success: res => {
-    console.log(res.result);
-    if (Array.isArray(res.result.data)) {
-      this.setData({
-        availabilitySlot:res.result.data,
-        hourList: res.result.data.map(slot => slot.startTime),
-        formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
-      });
-  
-      this.setData({
-        [`formData.availabilityId`]: res.result.formData.availabilityId
-      });
-      console.log(this.data.formData); 
-      console.log(this.data.hourList); 
-    } else {
-      console.error('getAvailableTimeSlots 返回的结果不是数组对象');
+      date: this.data.dateList[e.detail.value],
+      currentTime: currentTime, // 传递当前日期和时间
+    },
+    fail: err => {
+      console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
+      if (err) return;
+    },
+    success: res => {
+      console.log(res.result);
+      if (Array.isArray(res.result.data)) {
+        this.setData({
+          availabilitySlot: res.result.data,
+          hourList: res.result.data.map(slot => slot.startTime),
+          formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
+        });
+
+        this.setData({
+          [`formData.availabilityId`]: res.result.formData.availabilityId
+        });
+        console.log(this.data.formData); 
+        console.log(this.data.hourList); 
+      } else {
+        console.error('getAvailableTimeSlots 返回的结果不是数组对象');
+      }
     }
-  }
   });
 },
 // 时间选择器改变时触发

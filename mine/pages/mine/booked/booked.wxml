@@ -1,3 +1,6 @@
+<view hidden="{{booklist}}" class="notBook">
+  还没有预约哦QAQ
+</view>
 <view class="max">
   <view wx:for="{{ Appointments }}" wx:key="index" class="bookbox" style="{{ item.status === '已结束' ? 'background-color: #ccdcb4' : 'background-color: #98b86a' }}">
     <view class="timetable">

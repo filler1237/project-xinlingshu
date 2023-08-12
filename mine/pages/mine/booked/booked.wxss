@@ -62,3 +62,13 @@
 .detail{
   margin: 10rpx;
 }
+.notBook{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 70%;
+  background-color: #98b86a;
+  height: 20%;
+  font-size:50rpx;
+}

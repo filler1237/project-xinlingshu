@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const db = cloud.database()
 
   // 从 event 中获取需要的字段
-  const { teacherId, openid, date, startTime, endTime, availabilityId, timeSlotIndex, status, detail,teacher } = event
+  const { teacherId, openid, date, startTime, endTime, availabilityId, timeSlotIndex, status, detail, teacher } = event
 
   try {
     // 添加预约信息到 appointment 集合中
@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
       // 更新可用时间段信息
       const updateResult = await db.collection('Availability').doc(availabilityId).update({
         data: {
-          [`timeSlots.${timeSlotIndex}.status`]: 'expired',
+          [`timeSlots.${timeSlotIndex}.status`]: 'unavailable',
           [`timeSlots.${timeSlotIndex}.updatetime`]: new Date(),
         }
       })
