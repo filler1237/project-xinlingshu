@@ -6,32 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    age: 15,
-    newage: 20,
-  },
-
-  addAge() {
-    db.collection('Train').add({
-      data: {
-        feedback:"",
-      }
-    }).then((res) => {
-      console.log(res);
-    });
-  },
-
-  changeAge() {
-    db.collection('Appointments').doc('0375964d64e9b2ae028f286842e4fc91').get().then((res) => {
-      console.log(res);
-      // 在获取到最新数据后执行更新操作
-      db.collection('Appointments').doc('0375964d64e9b2ae028f286842e4fc91').update({
-        data: {
-          "feedback": "Hello"
-        }
-      }).then((res) => {
-        console.log(res);
-      });
-    });
   },
 
   /**

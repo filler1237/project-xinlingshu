@@ -1,2 +1,1 @@
-<button bind:tap="addAge">添加年龄</button>
-<button bind:tap="changeAge">修改年龄</button>
+<button>这是一个社区</button>

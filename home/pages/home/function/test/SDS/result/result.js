@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-// 定义小程序页面对象
-=======
 // home/pages/home/function/test/SAS/SASresult/SASresult.js
 /**
    * 云开发——测评记录
@@ -8,7 +5,6 @@
 const db = wx.cloud.database()
 const SCALES = db.collection('Scales')
 
->>>>>>> test
 Page({
 
   // 返回测试首页
@@ -41,11 +37,7 @@ Page({
 
   // 根据总分判断建议类型
   Advise:function(){
-<<<<<<< HEAD
-    // 判断总分所属的建议类型
-=======
     
->>>>>>> test
     if(this.data.Sum<42){
       return 1
     }else if(this.data.Sum >= 42 && this.data.Sum <= 49){
@@ -61,10 +53,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-<<<<<<< HEAD
-    Sum:0,      // 总分
-    advise:'unknow',   // 建议类型
-=======
     Sum:0,
     advise:'unknow',
     resulT :'unknow',
@@ -74,20 +62,13 @@ Page({
       "你近期或受情绪困扰较大，已较大影响日常生活；且你日常的思维模式或构成形成抑郁情绪的高风险。你目前处于一种高忧虑的状态中。你总是感到悲观、难过、伤心、焦虑，对自己的生活失去了信心，开始怀疑生活的意义。这样的忧虑状态使你徘徊在抑郁的边缘，增大你的抑郁风险，你现在需要想方设法去摆脱这种忧虑状态，如果有必要，你可能需要寻找专业人士的帮助。请及时调整自己的心态或寻求他人帮助 。要完全找回之前的快乐可能没那么快，但是你可以控制抑郁情绪，通过增加社会支持、改变自身想法、增强体魄和健康应对等方法，慢慢治愈抑郁症。",
       "你近期或受情绪困扰较大，已较大影响日常生活；且你日常的思维模式或构成形成抑郁情绪的高风险。你目前处于一种高忧虑的状态中。你总是感到悲观、难过、伤心、焦虑，对自己的生活失去了信心，开始怀疑生活的意义。这样的忧虑状态使你徘徊在抑郁的边缘，增大你的抑郁风险，你现在需要想方设法去摆脱这种忧虑状态，如果有必要，你可能需要寻找专业人士的帮助。"
     ]
->>>>>>> test
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-<<<<<<< HEAD
-    // 打印总分
     console.log("Sum is:" , options.Sum)
-    // 从上一个页面传给总分参数，更新总分data
-=======
-    console.log("Sum is:" , options.Sum)
->>>>>>> test
     this.setData({
       Sum : options.Sum
     })
@@ -95,17 +76,11 @@ Page({
     this.setData({
       Sum: this.data.Sum
     })
-<<<<<<< HEAD
-    // 判断建议类型
-    this.setData({
-      advise:this.Advise(),
-=======
     this.setData({  
       advise : this.Advise(),
     })
     this.setData({  
       resulT : this.data.result[this.data.advise-1],
->>>>>>> test
     })
     console.log(this.Advise())
   },
