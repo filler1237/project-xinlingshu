@@ -14,6 +14,35 @@ Page({
       }
     })
   },
+  SPChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('SchoolP', temp)
+      console.log('写入SP成功')
+    }catch(e){
+      console.log('写入SP发生错误')
+    }
+  },
+  PJChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Project', temp)
+      console.log('写入PJ成功')
+    }catch(e){
+      console.log('写入PJ发生错误')
+    }
+  },
+  ClassChange:function(res){
+    var temp = res.detail
+    try{
+      wx.setStorageSync('Class', temp)
+      console.log('写入Class成功')
+    }catch(e){
+      console.log('写入Class发生错误')
+    }
+  },
+
+  
   
   data: { // 页面的初始数据
     nickName:'游客', // 昵称
@@ -131,7 +160,15 @@ Page({
     app.globalData.userInfo=e.detail
   },
   
-  formsubmit(e){ // 表单提交时触发的函数
+  // onChangename(e){
+  //   console.log(e)
+  //   const { nickName } = e.detail 
+  //   this.setData({
+  //     nickName,
+  //   })
+  //   app.globalData.userInfo=e.detail
+  // },
+  formsubmit(e){
     const nickName = e.detail.value.nickname
     console.log("nickName", nickName)
     // do something

@@ -8,7 +8,7 @@
   </view>
   <view class="order-wrap">
     <view class="order-header">
-      <text class="txt">我的订单</text>
+      <text class="txt">我的记录</text>
     </view>
     <view class="order-icon">
       <navigator class="icon-wrap" id="1" url="../../mine/pages/mine/booked/booked">
