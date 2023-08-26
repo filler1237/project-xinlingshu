@@ -1,2 +1,17 @@
-<!--pages/mine/evaluate/evaluate.wxml-->
-<text>pages/mine/evaluate/evaluate.wxml</text>
+<view hidden="{{evaluateList}}" class="notEvaluatelist">
+  还没有预约哦QAQ
+</view>
+
+<view class="max">
+  <view wx:for="{{ Appointments }}" wx:key="index" class="bookbox" style="{{ item.status === '已结束' ? 'background-color: #ccdcb4' : 'background-color: #98b86a' }}">
+    <navigator url="./evaluatepage/evaluatepage?id={{item._id}}">
+      <view class="timetable">
+        <view class="datasize">{{ item.date }}  {{ item.startTime }}</view>
+        <view class="{{ item.status === '已结束' ? 'state2' : 'state1' }}">{{ item.status }}</view>
+      </view>
+      <view class="teacher">{{ item.teacher }}老师</view>
+      <view class="detail">{{ item.detail }}</view>
+      <view class="spacer"></view>
+    </navigator>
+  </view>
+</view>

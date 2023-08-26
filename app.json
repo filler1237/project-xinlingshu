@@ -52,7 +52,8 @@
         "pages/mine/list/list",
         "pages/mine/setting/setting",
         "pages/mine/mycomment/mycomment",
-        "pages/mine/record/record"
+        "pages/mine/record/record",
+        "pages/mine/evaluate/evaluatepage/evaluatepage"
       ]
     }
   ],

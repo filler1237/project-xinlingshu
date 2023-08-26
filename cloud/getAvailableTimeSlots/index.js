@@ -100,7 +100,7 @@ async function main(event) {
         console.log('endTime:', endTime);
         console.log('currentTime:', currentTime);
 
-        if (endTime <= currentTime) {
+        if (startTime <= currentTime) {
           // 将过期的时间段状态更新为不可预约
           console.log('Updating time slot:', timeSlot);
           return { ...timeSlot, status: 'unavailable' };

@@ -22,6 +22,10 @@ exports.main = async (event, context) => {
         createTime: new Date(),
         detail,
         teacher,
+        complete:"进行中",
+        evaluate:"0",
+        score:"0",
+        feedback:"",
       }
     })
 
