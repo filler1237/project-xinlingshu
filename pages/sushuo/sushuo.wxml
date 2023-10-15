@@ -1,28 +1,45 @@
-
-<view class="container1">
-    <image class="img" src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/sushuo1.jpg" mode="aspectFit"></image>
+<!--pages/speak/speak.wxml-->
+<view class="TreeBack">
+  <view class="TreeBack">
+    <image src="/image/TreeBack.jpg" mode="widthFix" class="Back"/>
+    <image src="/image/CePing.png" mode="widthFix" class="Tree"/>
+  </view>
 </view>
 
-<view class="container2">
-    <text>为下一个春天的开篇 种下一树的铺垫</text>
-</view>
 
-<view class="flex-wrp" style="flex-direction: row;">
-    <view bindtap="gotoXIE" class="button1" style="line-height: 60rpx;">
-      <view class="imagebox">
-        <image class="img" src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/qingsu.jpg" mode="aspectFit"/>
+<view class="ChoiceBox">
+  <view class="QingSu" bindtap="gotoXIE">
+    <view class="Choice" style="background: #93DF5D;">
+      <view class="Pic">
+        <image src="/image/QingSu.png" mode="widthFix" class="Pic" style="width: 220rpx; top: -50rpx;"/>
+        <image src="/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="bottom: -135rpx; left: 24rpx;"/>
       </view>
-      <view class="wordsbox"> 
-        倾诉
+      <view class="BoxCon">
+        <image src="/image/QingSu-con.png" mode="widthFix"/>
+      </view>
+      <view class="FontBox">
+        <text class="Font">倾诉</text>
+        <text class="Font_s">—————————</text>
+        <text class="Font_s">TALK WITH ME</text>
       </view>
     </view>
-    <view bindtap="gotoDA" class="button2" style="line-height: 60rpx;">
-      <view class="imagebox">
-        <image class="img" src="cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/qingtan.jpg" mode="aspectFit"/>
+    
+  </view>
+
+  <view class="QingTan" bindtap="gotoDA">
+    <view class="Choice"> 
+      <view class="Pic">
+        <image src="/image/QingTan.png" mode="widthFix" class="Pic" style="left: 2rpx;"/>
+        <image src="/image/QingTan-reflection.png" mode="widthFix" class="Pic" style="bottom: -140rpx; left: 5rpx;"/>
       </view>
-      <view class="wordsbox"> 
-        倾谈
+      <view class="BoxCon">
+        <image src="/image/QingTan-con.png" mode="widthFix"/>
+      </view>
+      <view class="FontBox">
+        <text class="Font">倾谈</text>
+        <text class="Font_s">—————————</text>
+        <text class="Font_s">TALK WITH ME</text>
       </view>
     </view>
+  </view>
 </view>
-
