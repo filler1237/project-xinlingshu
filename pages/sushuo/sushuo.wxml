@@ -12,7 +12,7 @@
     <view class="Choice" style="background: #93DF5D;">
       <view class="Pic">
         <image src="/image/QingSu.png" mode="widthFix" class="Pic" style="width: 220rpx; top: -50rpx;"/>
-        <image src="/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="bottom: -135rpx; left: 24rpx;"/>
+        <image src="/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="top: -85rpx; left: 24rpx;"/>
       </view>
       <view class="BoxCon">
         <image src="/image/QingSu-con.png" mode="widthFix"/>
@@ -30,7 +30,7 @@
     <view class="Choice"> 
       <view class="Pic">
         <image src="/image/QingTan.png" mode="widthFix" class="Pic" style="left: 2rpx;"/>
-        <image src="/image/QingTan-reflection.png" mode="widthFix" class="Pic" style="bottom: -140rpx; left: 5rpx;"/>
+        <image src="/image/QingTan-reflection.png" mode="widthFix" class="Pic" style="top: -70rpx; left: 5rpx;"/>
       </view>
       <view class="BoxCon">
         <image src="/image/QingTan-con.png" mode="widthFix"/>

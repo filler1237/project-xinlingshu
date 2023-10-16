@@ -36,14 +36,15 @@
   font-weight: 400;
   font-size: 16rpx;
   line-height: normal;
-  letter-spacing: 60rpx;
+  letter-spacing: 0rpx;
   text-align: center;
 }
 .FontBox{
-  width: 296rpx;
-  height: 310rpx;
+  width: 276rpx;
+  height: 300rpx;
   display: flex;
-  padding: 20rpx;
+  padding-right: 20rpx;
+  /* padding: 20rpx; */
   justify-content: flex-end;
   align-items: flex-end;
   flex-direction: column;
