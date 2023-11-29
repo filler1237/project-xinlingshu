@@ -14,7 +14,7 @@ Page({
   },
   gotoDA (){
     wx.navigateTo({
-      url: '../../sushuo/pages/sushuo/DA/DA'
+      url: ''
     })
 },
 

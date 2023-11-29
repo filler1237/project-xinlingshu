@@ -1,5 +1,5 @@
 const app=getApp(); // 获取小程序实例
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0' // 默认头像的 URL
+const defaultAvatarUrl = 'https://i.postimg.cc/qqWgStbK/a.jpg' // 默认头像的 URL
 
 Page({
   
@@ -12,6 +12,16 @@ Page({
         var avatar = res.tempFiles.tempFilePath; // 获取选择的图片
         wx.setStorageSync('ImageSrc', avatar) // 将图片路径存入缓存
       }
+    })
+  },
+  onBackTap: function(e) {
+    var pages = getCurrentPages();                       //获取当前页面
+    var prePage = pages[pages.length - 2];               //获取上一页面
+    prePage.setData({
+      'search.page': 1                                   //给上一页面的变量赋值
+    })
+    wx.navigateBack({                                    //返回上一页面
+      delta: 1,
     })
   },
   SPChange:function(res){

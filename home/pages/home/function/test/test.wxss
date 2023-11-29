@@ -1,27 +1,65 @@
 /* pages/home/function/1/1.wxss */
-.Gotest{
-  height: 100%;
-  width: 650rpx;
+/* pages/mine/mine.wxss */
+page{
+  background-color: #FFFFF5;
+}
+.contentsPages {
+  box-sizing: border-box;
+}
+.title{
+  margin-top: 25rpx;
   display: flex;
-  text-align: center;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  border: 0.5rpx solid #36474F;
   justify-content: center;
-  box-sizing: content-box;
-  padding: 30rpx 20rpx;
-  border-radius: 15rpx; 
-  margin: 10rpx;
+  align-items: center;
+  font-weight: 350;
+  font-size: 35rpx;
+}
+.Pic{
+  width: 750rpx;
+  height: 584rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.textname{
-  font-size: 40rpx;
+.QesBox{
+  width: 95%;
+  height: 244rpx;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
 }
-.testblock{
-    height: 100%;
-    padding-top: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.QesIn{
+  width: 220rpx;
+  height: 244rpx;
+  border-radius: 10rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.QesPic{
+  margin-top: 10rpx;
+  width: 100rpx;
+}
+.Font{
+  color: #000000;
+  font-family: PingFang SC;
+  font-weight: 230;
+  font-size: 28rpx;
+  line-height: 1.25;
+  letter-spacing: 0.25rpx;
+  text-align: center;
+  margin-top: 15rpx;
+}
+.DownBox{
+  width: 750rpx;
+  height: 240rpx;
+  position: absolute;
+  display: flex;
 }

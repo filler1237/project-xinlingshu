@@ -12,7 +12,16 @@ Page({
      record2:"cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/record2.jpg",
      RECORD:[0,0,0,0,0],
   },
-
+  onBackTap: function(e) {
+    var pages = getCurrentPages();                       //获取当前页面
+    var prePage = pages[pages.length - 2];               //获取上一页面
+    prePage.setData({
+      'search.page': 1                                   //给上一页面的变量赋值
+    })
+    wx.navigateBack({                                    //返回上一页面
+      delta: 1,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

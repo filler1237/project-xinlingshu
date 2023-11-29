@@ -40,7 +40,16 @@ Page({
     // 选择的时间索引
     hourIndex: -1,
 },
-
+onBackTap: function(e) {
+  var pages = getCurrentPages();                       //获取当前页面
+  var prePage = pages[pages.length - 2];               //获取上一页面
+  prePage.setData({
+    'search.page': 1                                   //给上一页面的变量赋值
+  })
+  wx.navigateBack({                                    //返回上一页面
+    delta: 1,
+  })
+},
 onLoad: function (options) { // 页面加载时执行的函数
 var that = this; // 保存当前页面的上下文
 this.initDateList();

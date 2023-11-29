@@ -17,7 +17,16 @@ Page({
     pixe:0, //设备像素比
     imginfo:{} //图片信息
   },
-
+  onBackTap: function(e) {
+    var pages = getCurrentPages();                       //获取当前页面
+    var prePage = pages[pages.length - 2];               //获取上一页面
+    prePage.setData({
+      'search.page': 1                                   //给上一页面的变量赋值
+    })
+    wx.navigateBack({                                    //返回上一页面
+      delta: 1,
+    })
+  },
   async tijiao(e){ //提交按钮点击事件
     wx.getSystemInfo({ //获取设备信息
       success: (result) => {

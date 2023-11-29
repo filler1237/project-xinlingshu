@@ -1,3 +1,14 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='../../../../image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">预约记录</view>
+<view class="bottom">
+  <image class="down"src="../../../../image/up.png" style="width: 100%;"/>
+  <image class="up" src="../../../../image/down.png" style="width: 100%;"/>
+  <image class="girl"src="../../../../image/girl.png" style="width: 200rpx;"/>
+</view>
+
+<view class="page">
 <view hidden="{{booklist}}" class="notBook">
   还没有预约哦QAQ
 </view>
@@ -11,4 +22,5 @@
     <view class="detail">{{ item.detail }}</view>
     <view class="spacer"></view>
   </view>
+</view>
 </view>

@@ -1,4 +1,15 @@
 <!--pages/auth/usercenter/usercenter.wxml-->
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">个人信息</view>
+<view class="bottom">
+  <image class="down"src="/image/up.png" style="width: 100%;"/>
+  <image class="up" src="/image/down.png" style="width: 100%;"/>
+  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
+</view>
+
+<view class="page">
 <view class="touxiangbox">
   <view bindtap="ChangeImage">
     <image class="touxiang" src="{{ImageSrc}}" mode="widthFix"/>
@@ -11,60 +22,61 @@
 
 <view class="Area">
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       姓名
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{Namevalue}}" placeholder="请输入姓名" bindinput="NameChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Namevalue}}" placeholder="请输入姓名" bindinput="NameChange"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       个性签名
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{Sign}}" placeholder="请输入个性签名" bindinput="SignChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Sign}}" placeholder="请输入个性签名" bindinput="SignChange"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       性别
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{Sex}}" placeholder="请输入性别"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Sex}}" placeholder="请输入性别"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       联系电话
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{PhoneNumber}}" placeholder="请输入手机号" bindinput="PNChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{PhoneNumber}}" placeholder="请输入手机号" bindinput="PNChange"/>
   </view>
 </view>
 
 <view class="Area">
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       院校
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{School}}" disabled="disabled"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{School}}" disabled="disabled"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       学号
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{StuNum}}" placeholder="请输入学号" bindinput="STUNChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{StuNum}}" placeholder="请输入学号" bindinput="STUNChange"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       学院
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{SchoolP}}" placeholder="请输入学院" bindinput="SPChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{SchoolP}}" placeholder="请输入学院" bindinput="SPChange"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       专业
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{Project}}" placeholder="请输入专业" bindinput="PJChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Project}}" placeholder="请输入专业" bindinput="PJChange"/>
   </view>
   <view class="Each">
-    <view style="margin-bottom: 8rpx;">
+    <view class="label" style="margin-bottom: 8rpx;">
       年级
     </view>
-    <input style="margin-bottom: 8rpx;" type="text" value="{{Class}}" placeholder="请输入年级" bindinput="ClassChange"/>
+    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Class}}" placeholder="请输入年级" bindinput="ClassChange"/>
   </view>
+</view>
 </view>

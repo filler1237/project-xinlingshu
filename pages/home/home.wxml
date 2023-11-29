@@ -1,51 +1,87 @@
-<swiper class="tips" indicator-dots indicator-color="#ff8474" indicator-active-color="gray" autoplay interval="4000" circular>
-  <swiper-item>
-    <view class="tital">
-      <text class="tip">情话对着左耳说更有效</text>
-     </view>
-     <view class="ttxt">
-      <text>美国萨姆休斯敦州立大学研究人员的一项最新研究发现，对着爱人的左耳甜言蜜语更能俘获她们的芳心。这是因为人的左耳由右脑控制。而在人脑分工中，右脑半球负责感性直观思维，对情感类体验更为敏锐。</text>
-     </view>
-  </swiper-item> 
-  <swiper-item>
-    <view class="tital">
-      <text class="tip">人用右耳听的话比用左耳记得更牢</text>
-     </view>
-     <view class="ttxt">
-      <text>因为右耳听到的信息汇入左半脑，而左半脑比右半脑更具记忆优势。所以要想让对方牢牢记住你说的话，对着他/她的右耳说吧！</text>
-     </view>
-  </swiper-item> 
-  <swiper-item>
-    <view class="tital">
-      <text class="tip">从网络聊天习惯读懂一个人</text>
-     </view>
-     <view class="ttxt">
-      <text>喜欢用“......”和“。。。”的人心底大多比较柔软，没有坏心眼，同时也会反映出他/她对待事情的优柔寡断，大部分会有选择恐惧症。。。</text>
-     </view>
-  </swiper-item> 
-</swiper>
-<view class="button1">
-  <navigator class="mbutton" url="../../home/pages/home/function/social/social" style="width:30%">
-  <image src="./resourse/social2.png" style="width: 60rpx;"/>
-  <text class="txt1">心灵社区</text>
-  </navigator>
-  <navigator class="mbutton" url="../../home/pages/home/function/test/test" style="width:30%">
-  <image src="./resourse/test2.png" style="width: 60rpx;"/>
-  <text class="txt1">心理测评</text>
-  </navigator> 
-   <navigator class="mbutton" url="../../home/pages/home/function/card/card" style="width:30%">
-  <image src="./resourse/card2.png" style="width: 60rpx;"/>
-  <text class="txt1">塔罗牌</text>
-  </navigator>
+<!--pages/Main/Main.wxml-->
+<view style="height: 100%; flex-direction: column;">
+<view class= "SwiperBox">
+  <swiper class="SwiperBox" indicator-dots="true" indicator-active-color="#FEDB03" indicator-color="#FEDB033F">
+    <swiper-item class= "SwiperIma">
+      <view class= "SwiperIma">
+        <image src="/image/swiper_image.jpg" mode="widthFix"></image>
+      </view>
+    </swiper-item>
+  </swiper>
 </view>
-<view class="button2">
-  <navigator class="bbutton1" url="../../home/pages/home/function/consult/consult" style="width:45%">
-  <text class="txt2" >心理咨询</text>
-  </navigator> 
-  <navigator class="bbutton2" url="../../home/pages/home/function/read/read" style="width:45%">
-  <text class="txt2" >心理解谜</text>
-</navigator> 
+
+<view class="pageall">
+  <view class="Mid">
+    <view class="Mid_r">
+      <view class="ZiXun" bind:tap="gotoZiXun">
+        <view class="ZiXun">
+          <text class="Font">心理咨询</text>
+          <text class="Font_s">psychological counseling</text>
+          <image style="height: 275rpx;" src="/image/ZiXun.png" mode="heightFix"/>
+        </view>
+      </view>
+    </view>
+
+  <view class="Mid_r">
+    <view class="CePing" bind:tap="gotoCePing">
+      <view class="CePing">
+        <view class="Mid_f">
+          <text class="Font">心理测评</text>
+          <text class="Font_s">治愈您的心灵</text>
+        </view>
+        <view class="Mid_i">
+          <image src="/image/CePing.png" mode="widthFix"/>
+        </view>
+      </view>
+    </view>
+
+    <view class="SheQu" bind:tap="gotoSheQu">
+      <view class="SheQu">
+        <view class="Mid_f">
+          <text class="Font">心理社区</text>
+          <text class="Font_s">治愈您的心灵</text>
+        </view>
+        <view class="Mid_i">
+          <image src="/image/SheQu.png" mode="widthFix"/>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
-<view class="jitang">
-  <image src="/assets/主页.jpeg" mode="heightFix"/>
+
+<view class="BuJi" bind:tap="gotoBuJi">
+  <view class="BuJi" style="margin: 0;">
+    <view class="BuJi_i" style="width:250rpx; flex-direction: column;">
+      <text class="Font">心理补给</text>
+      <text class="Font_s">Spiritual nourishment</text>
+    </view>
+    <view class="BuJi_i" style="justify-content: flex-end; align-items: flex-end; margin-right: 25rpx;">
+      <image src="/image/BuJi.png" mode="widthFix"/>
+    </view>
+  </view>
+</view>
+
+<text class="Font" style="margin-left: 50rpx;">心灵娱乐</text>
+<view class="GameBox">
+  <view class="Game" bind:tap="gotoTaLuo">
+    <view class="GameIma">
+      <image src="/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
+    </view>
+    <text class="Font_G">塔罗牌</text>
+  </view>
+  <view class="Game">
+  <view class="GameIma">
+    <image src="/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
+  </view>
+    <text class="Font_G">塔罗牌</text>
+  </view>
+  <view class="Game">
+  <view class="GameIma">
+    <image src="/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
+  </view>
+    <text class="Font_G">塔罗牌</text>
+  </view>
+</view>
+
+</view>
 </view>

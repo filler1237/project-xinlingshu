@@ -1,3 +1,12 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='../../../../../image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">心灵补给</view>
+<view class="bottom">
+  <image class="down"src="../../../../../image/up.png" style="width: 100%;"/>
+  <image class="up" src="../../../../../image/down.png" style="width: 100%;"/>
+  <image class="girl"src="../../../../../image/girl.png" style="width: 200rpx;"/>
+</view>
 <view class="thispage"> 
 <view class="zl">
   <navigator url="./text/1/1" class="zhuanlan">

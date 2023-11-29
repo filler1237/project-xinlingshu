@@ -1,7 +1,50 @@
 /* pages/sushuo/XIE/XIE.wxss */
-
 page{
-  background-color: #91c789;
+  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%);
+}
+.title{
+  color: #000000;
+  font-family: PingFang SC;
+  font-weight: medium;
+  font-size: 32rpx;
+  line-height: 1.5;
+  letter-spacing: 0rpx;
+  text-align: center;
+  position: absolute;
+  top: 4.5%;
+  left: 43%  ;
+}
+.partone{
+  margin-bottom: 10rpx;
+  height: 56rpx;
+  position: absolute;
+  top:4.5%;
+  left: 0;
+}
+.partone .back {
+  position: absolute;
+  z-index:2;
+  height: 34rpx;
+  left: 50rpx;
+  top:20rpx;
+}
+.up{
+  position: fixed;
+  left: 0;
+  bottom: -5rpx;
+  height: 292rpx;
+}
+.down{
+  position:fixed;
+  left: 0;
+  bottom: -5rpx;
+  height: 130rpx;
+}
+.girl{
+  position: fixed;
+  left: 426rpx;
+  bottom: 35rpx;
+  height: 212rpx;
 }
 
 .inputbox{
@@ -10,7 +53,9 @@ page{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 70rpx 20rpx;
+  margin-top: 30%;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
   box-sizing: border-box;
   border-radius: 15rpx;
   background-color: #fff5e0;
@@ -27,6 +72,7 @@ textarea{
 
 button{
   background-color: #ff8474;
+  margin-top: 50rpx;
 }
 .wd-list{
   margin: 15rpx;

@@ -44,6 +44,7 @@ App({
         shejiao: 0
       }    
     },
+    
     token: "",
   },
 })

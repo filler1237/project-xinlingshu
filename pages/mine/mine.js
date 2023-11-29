@@ -7,8 +7,8 @@ Page({
   // 页面初始化数据
   data: {
       // 初始化用户头像、昵称
-      avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
-      nickName: "Hi,游客,点击去登录吧!",
+      avatarUrl: "https://i.postimg.cc/qqWgStbK/a.jpg",
+      nickName: "游客，点击登录",
       username:'',
       userInfo:{},
       openid:"",
