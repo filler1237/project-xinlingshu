@@ -1,0 +1,26 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">心灵补给</view>
+<view class="bottom">
+  <image class="down"src="/image/up.png" style="width: 100%;"/>
+  <image class="up" src="/image/down.png" style="width: 100%;"/>
+  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
+</view>
+<view class="thispage"> 
+<view class="zl">
+  <navigator url="./text/1/1" class="zhuanlan">
+    <view class="text1">
+      后续开通企业主体，才能发布相关信息
+  </view>
+  </navigator>
+  <navigator url="./text/2/2" class="zhuanlan">
+    <view class="text1">
+      后续开通企业主体，才能发布相关信息
+    </view>
+  </navigator>
+</view>
+  <view class="background">
+  <image src="/assets/tree1.png" mode="widthFix" style="position: absolute; left: 0; right: 0; margin: 0 auto;"/>
+</view> 
+</view>

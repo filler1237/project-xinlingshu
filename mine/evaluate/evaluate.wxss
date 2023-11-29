@@ -10,17 +10,27 @@
   align-items: center;
 }
 
-.bookbox{
-  height: 300rpx;
+.bookbox {
+  height: auto;
   width: 720rpx;
   display: flex;
   flex-direction: column;
   border-radius: 15rpx;
   margin: 10rpx;
   align-items: center;
-
+  overflow: hidden; /* 避免内容溢出 */
 }
 
+.bookbox.active {
+  background-color: #98b86a; /* 进行中的背景颜色 */
+}
+
+.bookbox.inactive {
+  background-color: #ccdcb4; /* 已结束的背景颜色 */
+}
+.spacer {
+  height: 20rpx; /* 设置占位符的高度为10rpx */
+}
 .timetable{
   width :700rpx;
   display: flex;
@@ -51,4 +61,14 @@
 
 .detail{
   margin: 10rpx;
+}
+.notBook{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 70%;
+  background-color: #98b86a;
+  height: 20%;
+  font-size:50rpx;
 }

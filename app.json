@@ -12,46 +12,46 @@
       "root": "home",
       "name": "home",
       "pages": [
-        "pages/home/function/test/test",
-        "pages/home/function/test/SDS/SDS",
-        "pages/home/function/test/SDS/result/result",
-        "pages/home/function/test/SDS/SDStext/SDStext",
-        "pages/home/function/test/SAS/SAS",
-        "pages/home/function/test/SAS/SAStext/SAStext",
-        "pages/home/function/test/SAS/SASresult/SASresult",
-        "pages/home/function/test/AIS/AIS",
-        "pages/home/function/test/AIS/AIStext/AIStext",
-        "pages/home/function/test/AIS/result/result",
-        "pages/home/function/test/GHQ/GHQ",
-        "pages/home/function/test/GHQ/GHQtext/GHQtext",
-        "pages/home/function/test/GHQ/GHQresult/GHQresult",
-        "pages/home/function/consult/consult",
-        "pages/home/function/read/read",
-        "pages/home/function/read/text/2/2",
-        "pages/home/function/card/card",
-        "pages/home/function/social/social",
-        "pages/home/function/read/text/1/1"
+        "test/test",
+        "test/SDS/SDS",
+        "test/SDS/result/result",
+        "test/SDS/SDStext/SDStext",
+        "test/SAS/SAS",
+        "test/SAS/SAStext/SAStext",
+        "test/SAS/SASresult/SASresult",
+        "test/AIS/AIS",
+        "test/AIS/AIStext/AIStext",
+        "test/AIS/result/result",
+        "test/GHQ/GHQ",
+        "test/GHQ/GHQtext/GHQtext",
+        "test/GHQ/GHQresult/GHQresult",
+        "consult/consult",
+        "read/read",
+        "read/text/2/2",
+        "card/card",
+        "social/social",
+        "read/text/1/1"
       ]
     },
     {
       "root": "sushuo",
       "name": "sushuo",
       "pages": [
-        "pages/sushuo/XIE/XIE",
-        "pages/sushuo/DA/DA"
+        "XIE/XIE",
+        "DA/DA"
       ]
     },
     {
       "root": "mine",
       "name": "mine",
       "pages": [
-        "pages/mine/booked/booked",
-        "pages/mine/evaluate/evaluate",
-        "pages/mine/contact/contact",
-        "pages/mine/list/list",
-        "pages/mine/setting/setting",
-        "pages/mine/mycomment/mycomment",
-        "pages/mine/record/record"
+        "booked/booked",
+        "evaluate/evaluate",
+        "contact/contact",
+        "list/list",
+        "setting/setting",
+        "mycomment/mycomment",
+        "record/record"
       ]
     }
   ],

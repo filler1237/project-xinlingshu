@@ -1,0 +1,17 @@
+<van-tabbar active="{{ active }}">
+  <van-tabbar-item info="3"> -->
+    <image
+      slot="icon"
+      src="{{ icon.normal }}"
+      mode="aspectFit"
+    />
+    <image
+      slot="icon-active"
+      src="{{ icon.active }}"
+      mode="aspectFit"
+    />
+
+   </van-tabbar-item>
+  <van-tabbar-item icon="search">标签</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+</van-tabbar>

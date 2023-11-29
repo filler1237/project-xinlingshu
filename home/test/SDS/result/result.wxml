@@ -1,0 +1,49 @@
+<!--pages/home/function/1/SDS/result/result.wxml-->
+<view class="contentsPages" style="height:{{navBarHeight}}px; padding: {{titleBottom+45}}rpx 0rpx 0rpx 20rpx;">
+  <view class="title" bind:tap="BACK">
+    {{title}}
+  </view></view>
+
+
+<view class="IconBox">
+  <view class="QesIn" style="background: #E5FFF0;" bind:tap="GoToSDS">
+    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
+    <view class="Font" style="text-align: center;">
+      <text >抑郁自评量表</text>
+      <text >SDS</text>
+    </view>
+  </view>
+</view>
+
+<view class="IntroBox">
+<text class="Font" style="color: #96CE74; top: 20rpx;">您的测评结果</text>
+
+
+<view wx:if="{{advise == 1}}">
+<text class="Font" style="color: #000000;">{{result[0]}}
+</text>
+</view>
+
+<view wx:if="{{advise == 2}}">
+<text class="Font" style="color: #000000;">{{result[1]}}
+</text>
+</view>
+<view wx:if="{{advise == 3}}">
+<text class="Font" style="color: #000000;">{{result[2]}}
+</text>
+</view>
+<view wx:if="{{advise == 4}}">
+<text class="Font" style="color: #000000;">{{result[3]}}
+</text>
+</view>
+<text class="Font" style="color: #96CE74; top: 20rpx; align-content: center;" bind:tap="OneMore">
+再测一次
+</text>
+
+<button style="color: #ffffff;" bind:tap="BackTo">返回</button>
+</view>
+
+
+<view style="padding-top: 82rpx;">
+  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+</view>

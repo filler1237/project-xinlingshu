@@ -9,7 +9,7 @@ Page({
   },
   gotoXIE (){
       wx.navigateTo({
-        url: '../../sushuo/pages/sushuo/XIE/XIE'
+        url: '/sushuo/XIE/XIE'
       })
   },
   gotoDA (){

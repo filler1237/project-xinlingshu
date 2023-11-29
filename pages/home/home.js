@@ -2,12 +2,12 @@
 Page({
   gotoZiXun (){
     wx.navigateTo({
-      url: '/home/pages/home/function/consult/consult'
+      url: '/home/consult/consult'
     })
 },
 gotoCePing (){
   wx.navigateTo({
-    url: '/home/pages/home/function/test/test'
+    url: '/home/test/test'
   })
 },
 gotoSheQu (){
@@ -17,12 +17,12 @@ gotoSheQu (){
 },
 gotoBuJi (){
   wx.navigateTo({
-    url: '/home/pages/home/function/read/read'
+    url: '/home/read/read'
   })
 },
 gotoTaLuo (){
   wx.navigateTo({
-    url: '/home/pages/home/function/card/card'
+    url: '/home/card/card'
   })
 },
   /**
