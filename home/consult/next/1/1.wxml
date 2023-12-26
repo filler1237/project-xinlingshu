@@ -1,0 +1,49 @@
+<!--pages/home/resourse/next/1/1.wxml-->
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">心理咨询</view>
+<view class="bottom">
+  <image class="down" src="/image/down.png" style="width: 100%;"/>
+  <image class="up"src="/image/up.png" style="width: 100%;"/>
+  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
+</view>
+<view class="logo">
+<image class="logo_1" src="/image/logo1.png" >
+</image>
+<view class="value_1"  >预约信息</view>
+<image class="rail_1" src="/image/railgreen.png"></image>
+
+<image class="logo_2" src="/image/logo1.png" >
+</image>
+<view class="value_2"  >预约信息</view>
+<image class="rail_2" src="/image/railgreen.png"></image>
+
+<image class="logo_3" src="/image/logo1.png" >
+</image>
+<view class="value_3"  >预约信息</view>
+<image class="rail_3" src="/image/tailwhite.png"></image>
+</view>
+
+<view class="page" data-weui-theme="{{theme}}">
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+  <mp-form-page class="message_1" title="致咨询老师的一封信"></mp-form-page>
+   
+    <mp-cells class="start" title="To:">
+    <view class="message">
+        <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="">
+          <textarea date-field="detail" class="weui-textarea" placeholder="请简述目前遇到的困难和希望得到的帮助\n请输入文本（不多于140字）" style="height: 12em" bindinput="textareaInput"></textarea>
+          <view class="weui-textarea-counter">{{formData.length}}/140</view>
+        </mp-cell>
+  </view>
+</mp-cells>
+
+  <view slot="button">
+      <navigator url="./2/2" >
+      <button class="weui-btn" >
+          <view class="character">下一步
+        </view>
+      </button>
+    </navigator>
+    </view>
+</view>

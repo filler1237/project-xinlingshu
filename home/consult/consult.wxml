@@ -4,17 +4,33 @@
 </view>
 <view class="title">心理咨询</view>
 <view class="bottom">
-  <image class="down"src="/image/up.png" style="width: 100%;"/>
-  <image class="up" src="/image/down.png" style="width: 100%;"/>
+  <image class="down" src="/image/down.png" style="width: 100%;"/>
+  <image class="up"src="/image/up.png" style="width: 100%;"/>
   <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
+</view>
+<view class="logo">
+<image class="logo_1" src="/image/logo1.png" >
+</image>
+<view class="value_1"  >预约信息</view>
+<image class="rail_1" src="/image/railgreen.png"></image>
+
+<image class="logo_2" src="/image/logo1.png" >
+</image>
+<view class="value_2"  >预约信息</view>
+<image class="rail_2" src="/image/tailwhite.png"></image>
+
+<image class="logo_3" src="/image/logo1.png" >
+</image>
+<view class="value_3"  >预约信息</view>
+<image class="rail_3" src="/image/tailwhite.png"></image>
 </view>
 
 <view class="page" data-weui-theme="{{theme}}">
   <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
 
-  <mp-form-page title="心理咨询预约" subtitle="{{ schoolIndex>-1? dataSchool.schools[schoolIndex] + ' · ' + dataSchool.teachers[dataSchool.schools[schoolIndex]]['地点'] :  '深圳技术大学' }}">
+  <mp-form-page class="message_1" title="个人预约信息">
     <mp-form id="form" models="{{formData}}">
-      <mp-cells title="预约信息">
+      <mp-cells class="message" title="预约信息">
         <mp-cell prop="teacher" title="咨询师" ext-class="">
           <picker mode="selector" range="{{teacherList}}" value="{{teacherIndex}}" bindchange="bindTeacherChange">
         <view class="value">{{teacherList[teacherIndex] || '请选择咨询师'}}</view>
@@ -25,23 +41,25 @@
         <view class="value">{{dateList[selectedDateIndex] || '请选择日期'}}</view>
       </picker>
         </mp-cell>
+
         <mp-cell prop="hour" title="预约时间" ext-class="">
           <picker mode="selector" range="{{hourList}}" value="{{hourIndex}}" bindchange="onHourChange">
         <view class="value">{{hourList[hourIndex] || '请选择时间'}}</view>
       </picker>
         </mp-cell>
-      </mp-cells>
-
-      <mp-cells title="请简述目前遇到的困难和希望得到的帮助">
-        <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="">
-          <textarea date-field="detail" class="weui-textarea" placeholder="请输入文本（不多于140字）" style="height: 5em" bindinput="textareaInput"></textarea>
-          <view class="weui-textarea-counter">{{formData.length}}/140</view>
+        <mp-cell prop="phonenumber" title="联系方式" ext-class="">
+        <input type="number" placeholder="填写手机号码"
+        maxlength="11"/>
         </mp-cell>
       </mp-cells>
     </mp-form>
-
-    <view slot="button">
-      <button class="weui-btn" type="primary" bindtap="submitForm">提交预约</button>
-    </view>
   </mp-form-page>
+  <view slot="button">
+    <navigator url="./next/1/1" >
+      <button class="weui-btn" >
+          <view class="character">下一步
+        </view>
+      </button>
+    </navigator>
+    </view>
 </view>

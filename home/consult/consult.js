@@ -110,7 +110,7 @@ initDateList: function() {
    // 创建时间列表
    const hourList = [];
    // 循环添加每隔两个小时的时间
-   for (let i = 9; i < 22; i += 2) {
+   for (let i = 9; i < 16; i += 2) {
      // 将时间格式化为字符串，添加到时间列表中
      const hourString = this.formatNumber(i) + ':00';
      hourList.push(hourString);
