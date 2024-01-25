@@ -2,6 +2,7 @@
 /* pages/mine/mine.wxss */
 page{
   background-color: #FFFFF5;
+  height: 1500rpx;
 }
 .contentsPages {
   box-sizing: border-box;
@@ -30,7 +31,7 @@ page{
   justify-content: space-between;
   flex-direction: row;
   padding: 20rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 15rpx;
 }
 .QesIn{
   width: 220rpx;
