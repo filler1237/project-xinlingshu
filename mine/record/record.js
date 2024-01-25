@@ -8,6 +8,7 @@ Page({
    */
   data:
    {
+     title: "测评记录",
      record1:"cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/record1.jpg",
      record2:"cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/assets/record2.jpg",
      RECORD:[0,0,0,0,0],

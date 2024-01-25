@@ -1,6 +1,7 @@
 /* home/test/result/result.wxss */
 page{
   background-color: #FFFFF5;
+  height: 680rpx;
 }
 
 .IconBox{

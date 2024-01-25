@@ -1,15 +1,6 @@
 <!--pages/mine/record/record.wxml-->
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='../../../../image/back.svg' style="width: 18rpx;"></image>
-</view>
-<view class="title">测评记录</view>
-<view class="bottom">
-  <image class="down"src="../../../../image/up.png" style="width: 100%;"/>
-  <image class="up" src="../../../../image/down.png" style="width: 100%;"/>
-  <image class="girl"src="../../../../image/girl.png" style="width: 200rpx;"/>
-</view>
+<navigation-bar title='{{title}}'></navigation-bar>
 
-<view class="page">
 
 <view class="max">
   <view class="recordbox" style="background-color: #ccdcb4;">
@@ -67,6 +58,4 @@
     </view>
   </view>
 
-
-</view>
 </view>
