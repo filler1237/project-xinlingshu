@@ -13,27 +13,20 @@
       "name": "home",
       "pages": [
         "test/test",
+        "test/intro/intro",
         "test/SDS/SDS",
-        "test/SDS/result/result",
-        "test/SDS/SDStext/SDStext",
         "test/SAS/SAS",
-        "test/SAS/SAStext/SAStext",
-        "test/SAS/SASresult/SASresult",
         "test/AIS/AIS",
-        "test/AIS/AIStext/AIStext",
-        "test/AIS/result/result",
         "test/GHQ/GHQ",
-        "test/GHQ/GHQtext/GHQtext",
-        "test/GHQ/GHQresult/GHQresult",
+        "test/result/result",
         "consult/consult",
+        "consult/next/1/1",
+        "consult/next/1/2/2",
         "read/read",
         "read/text/2/2",
         "card/card",
         "social/social",
-        "read/text/1/1",
-        "consult/next/1/1",
-        "consult/next/1/2/2"
-        
+        "read/text/1/1"
       ]
     },
     {
@@ -76,6 +69,7 @@
     "navigationStyle": "custom"
   },
   "tabBar": {
+    
     "list": [
       {
         "pagePath": "pages/sushuo/sushuo",
@@ -102,7 +96,8 @@
     "van-field": "/miniprogram_npm/vant-weapp/field/index",
     "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index",
     "van-tabbar": "/miniprogram_npm/vant-weapp/tabbar/index",
-    "van-tabbar-item": "/miniprogram_npm/vant-weapp/tabbar-item/index"
+    "van-tabbar-item": "/miniprogram_npm/vant-weapp/tabbar-item/index",
+    "navigation-bar": "components/navigation-bar/navigation-bar"
   },
   "lazyCodeLoading": "requiredComponents",
   "style": "v2",

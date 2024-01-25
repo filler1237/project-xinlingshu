@@ -19,24 +19,28 @@ Page({
       url: '/pages/home/home',
     })
   },
-  GoToSDS(){
+  GoToIntro: function(e){
+    this.setData({
+      id : e.currentTarget.dataset.id
+    })
     wx.navigateTo({
-      url: '/home/pages/home/function/test/SDS/SDS',
+      // url: '/home/test/SDS/SDS',
+      url: '/home/test/intro/intro?id=' + this.data.id,
     })
   },
   GoToSAS(){
     wx.navigateTo({
-      url: '/home/pages/home/function/test/SAS/SAS',
+      url: '/home/test/SAS/SAS',
     })
   },
   GoToGHQ(){
     wx.navigateTo({
-      url: '/home/pages/home/function/test/GHQ/GHQ',
+      url: '/home/test/GHQ/GHQ',
     })
   },
   GoToAIS(){
     wx.navigateTo({
-      url: '/home/pages/home/function/test/AIS/AIS',
+      url: '/home/test/AIS/AIS',
     })
   },
   /**
@@ -45,17 +49,8 @@ Page({
   data: {
     navBarHeight: 0, //导航栏高度
     titleBottom: 0, //顶部距离
-    title:'心理测评'
-  },
-  onBackTap: function(e) {
-    var pages = getCurrentPages();                       //获取当前页面
-    var prePage = pages[pages.length - 2];               //获取上一页面
-    prePage.setData({
-      'search.page': 1                                   //给上一页面的变量赋值
-    })
-    wx.navigateBack({                                    //返回上一页面
-      delta: 1,
-    })
+    title:'心理测评',
+    id: 0
   },
   /**
    * 生命周期函数--监听页面加载

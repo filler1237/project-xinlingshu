@@ -1,0 +1,47 @@
+/* home/test/result/result.wxss */
+page{
+  background-color: #FFFFF5;
+}
+
+.IconBox{
+  width: 750rpx;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25rpx;
+}
+.QesIn{
+  width: 220rpx;
+  height: 244rpx;
+  border-radius: 10rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.QesPic{
+  margin-top: 10rpx;
+  width: 100rpx;
+}
+
+.IntroBox{
+  width: 82%;
+  height: 100%;
+  margin: 35rpx;
+  padding: 35rpx;
+  padding-top: 40rpx;
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+button{
+  background-color: #96CE74;
+  height: 75rpx;
+}

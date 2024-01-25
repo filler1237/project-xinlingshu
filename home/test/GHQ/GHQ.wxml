@@ -1,15 +1,54 @@
-<!--pages/home/function/1/GHQ/GHQ.wxml-->
-<view class="name">
-  <text class="textname">一般健康问卷 （ GHQ-20 ）</text>
+<navigation-bar title="一般健康问卷 GHQ-12"></navigation-bar>
+
+<view class="IconBox">
+  <view class="QesIn" style="background: {{color}};">
+    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
+    <view class="Font" style="text-align: center;">
+      <text >一般健康问卷</text>
+      <text >GHQ-12</text>
+    </view>
+  </view>
 </view>
 
-<view class="containerSDS">
-  <text>一般健康问卷 GHQ-20 （ General Health Questionnaire ）
-原为 Goldberg 编制，后由清华大学教育研究所李虹博士等人修订。共20个项目，含 GHQ-自我肯定（9 个项目），GHQ-忧郁量表（6 个项目），GHQ-焦虑量表（5个项目）3 个分量表。忧郁量表和焦虑量表得分越高，表明忧郁和焦虑程度越强 ，自我肯定分量表得分越高，自我肯定程度越强 ；将自我肯定分量表记分进行反向转换与忧郁、焦虑量表分合成，形成身心问题总分，总分越高，身心健康水平越低。</text>
+<view class="quesbox" wx:if="{{id<=19}}">
+
+<swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{GHQQuestion}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+        </view>
+      </view>
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+<view wx:if="{{id != 0}}">
+  <view class="tips" bindtap="LastQ">
+    上一题
+  </view>
+</view>
+<view class="tips" style="color: #FEDB03;" wx:if="{{id<=19}}">
+    {{id+1}}/20
+</view>
 </view>
 
-<view class="name">
-  <text class="tips">请根据最近一个月的实际感觉,选择较符合的选项</text>
+
+
+<view wx:if="{{id==20}}" class="quesbox"  >
+   <view class="select flex" bindtap="Goresult">
+    <label >查看结果</label>
+    </view> 
 </view>
 
-<button bindtap="Gotext">开始测试</button>
+<view>
+  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+</view>

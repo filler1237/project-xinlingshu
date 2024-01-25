@@ -1,15 +1,56 @@
-<!--pages/home/function/1/AIS/AIS.wxml-->
-<view class="name">
-  <text class="textname">阿森斯失眠量表（AIS）</text>
+<navigation-bar title="阿森斯失眠量表 AIS"></navigation-bar>
+
+<view class="IconBox">
+  <view class="QesIn" style="background: {{color}};">
+    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
+    <view class="Font" style="text-align: center;">
+      <text >阿森斯失眠量表</text>
+      <text >AIS</text>
+    </view>
+  </view>
 </view>
 
-<view class="containerSDS">
-  <text>阿森斯失眠量表也称亚森失眠量表，是国际公认的睡眠质量自测量表，可用于对公众的睡眠质量状况进行调查。在我国，也推荐人们使用该量表对睡眠质量进行调查。
-阿森斯失眠量表可用于对你经历的睡眠障碍进行自我评估。对于下列问题，如果过去1个月内每星期至少在你身上发生3次，你就应该进行评测，并圈出符合你的情况的选项。</text>
+<view class="quesbox" wx:if="{{id<=7}}">
+
+<swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{AISquestion}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
+        </view>
+      </view>
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+<view wx:if="{{id != 0}}">
+  <view class="tips" bindtap="LastQ">
+    上一题
+  </view>
+</view>
+<view class="tips" style="color: #FEDB03;" wx:if="{{id<=7}}">
+    {{id+1}}/8
+</view>
 </view>
 
-<view class="name">
-  <text class="tips">请根据最近一个月的实际感觉,选择较符合的选项</text>
+
+
+<view wx:if="{{id==8}}" class="quesbox"  >
+   <view class="select flex" bindtap="Goresult">
+    <label >查看结果</label>
+    </view> 
 </view>
 
-<button bindtap="Gotext">开始测试</button>
+<view>
+  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+</view>

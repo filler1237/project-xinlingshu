@@ -1,0 +1,27 @@
+<!--home/test/intro/intro.wxml-->
+<!--pages/home/function/1/SDS/SDS.wxml-->
+<!--pages/mine/List/List.wxml-->
+<navigation-bar title="{{title}}"></navigation-bar>
+
+
+<view class="IconBox">
+  <view class="QesIn" style="background: {{color}};">
+    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
+    <view class="Font" style="text-align: center;">
+      <text >{{icontitle}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="IntroBox">
+<text class="Font" style="color: #96CE74; top: 20rpx;">量表简介</text>
+<text class="Font" style="color: #000000;">{{intro}}</text>
+<text class="Font" style="color: #96CE74; font-size: 20rpx; text-align: center; margin-top: 20rpx;">请根据最近一周的实际感觉，选择较符合的选项</text>
+<button style="color: #ffffff;" bind:tap="GoTest">开始测试</button>
+</view>
+
+
+
+<view style="padding-top: 65rpx;">
+  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+</view>

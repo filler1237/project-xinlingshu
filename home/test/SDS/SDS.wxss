@@ -1,18 +1,8 @@
-/* pages/home/function/1/SDS/SDS.wxss */
+/* pages/home/function/1/SDS/SDStext/SDStext.wxss */
 page{
   background-color: #FFFFF5;
 }
-.contentsPages {
-  box-sizing: border-box;
-}
-.title{
-  margin-top: 25rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 350;
-  font-size: 35rpx;
-}
+
 .IconBox{
   width: 750rpx;
   height: 300rpx;
@@ -36,25 +26,6 @@ page{
   margin-top: 10rpx;
   width: 100rpx;
 }
-
-.IntroBox{
-  width: 82%;
-  height: 700rpx;
-  margin: 35rpx;
-  padding: 35rpx;
-  padding-top: 40rpx;
-  background-color: #ffffff;
-  border-radius: 10rpx;
-  backdrop-filter: blur(20rpx);
-  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-button{
-  background-color: #96CE74;
-  height: 75rpx;
-}
 .Font{
   font-family: PingFang SC;
   font-weight: 230;
@@ -68,11 +39,52 @@ button{
   margin-top: 15rpx;
 }
 
-.DownBox{
-  width: 750rpx;
-  /* height: 240rpx; */
-  position: absolute;
+
+.quesbox{
+  width: 100%;
+  height: 900rpx;
   display: flex;
-  justify-content: end;
-  align-self: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45rpx;
+  box-sizing: border-box;
 }
+.question{
+  text-align: center;
+  padding: 5rpx 3rpx;
+  font-size: 38rpx;
+  font-weight: normal;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFF5;
+}
+
+.flex .item{
+  flex: 100;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7rpx;
+  flex-direction: column;
+}
+ 
+.select {
+  padding: 15px 10px;
+  background-color: #FFFFF5;
+}
+ 
+.select label {
+  border: 1px solid #96CE74;
+  color: #96CE74;
+  padding: 15px 7px;
+  margin: 10rpx;
+  font-size: 17px;
+  font-weight: 300;
+  border-radius: 4px;
+  width: 550rpx;
+  text-align: center;
+}
+ 

@@ -1,13 +1,7 @@
-<!--pages/home/function/1/SDS/SDS.wxml-->
-<!--pages/mine/List/List.wxml-->
-<view class="contentsPages" style="height:{{navBarHeight}}px; padding: {{titleBottom+45}}rpx 0rpx 0rpx 20rpx;">
-  <view class="title" bind:tap="BACK">
-    {{title}}
-  </view></view>
-
+<navigation-bar title="抑郁自测量表 SAS"></navigation-bar>
 
 <view class="IconBox">
-  <view class="QesIn" style="background: #E5FFF0;" bind:tap="GoToSDS">
+  <view class="QesIn" style="background: {{color}};">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font" style="text-align: center;">
       <text >抑郁自评量表</text>
@@ -16,15 +10,49 @@
   </view>
 </view>
 
-<view class="IntroBox">
-<text class="Font" style="color: #96CE74; top: 20rpx;">量表简介</text>
-<text class="Font" style="color: #000000;">{{intro}}</text>
-<text class="Font" style="color: #96CE74; text-align: center;">请根据最近一周的实际感觉，选择较符合的选项</text>
-<button style="color: #ffffff;" bind:tap="Gotext">开始测试</button>
+<view class="quesbox" wx:if="{{id<=19}}">
+
+<swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{QUESTION}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
+        </view>
+      </view>
+
+      
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+<view wx:if="{{id != 0}}">
+  <view class="tips" bindtap="LastQ">
+    上一题
+  </view>
+</view>
+<view class="tips" style="color: #FEDB03;" wx:if="{{id<=19}}">
+    {{id+1}}/20
+</view>
 </view>
 
 
 
-<view style="padding-top: 82rpx;">
+<view wx:if="{{id==20}}" class="quesbox"  >
+   <view class="select flex" bindtap="Goresult">
+    <label >查看结果</label>
+    </view> 
+</view>
+
+<view>
   <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
 </view>

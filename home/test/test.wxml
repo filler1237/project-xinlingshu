@@ -1,29 +1,26 @@
 <!--pages/home/function/test/test.wxml-->
-<view class="contentsPages" style="height:{{navBarHeight}}px; padding: {{titleBottom+45}}rpx 0rpx 0rpx 20rpx;">
-  <view class="title" bind:tap="BACK">
-    {{title}}
-  </view></view>
+<navigation-bar title="心理测评"></navigation-bar>
 
 <view class="Pic">
 <image src="/image/QingSu.png" mode="heightFix" class="Pic"/>
 </view>
 
 <view class="QesBox">
-  <view class="QesIn" style="background: #E5FFF0;" bind:tap="GoToSDS">
+  <view class="QesIn" style="background: #E5FFF0;" data-id="0" bind:tap="GoToIntro" >
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>抑郁自评量表</text>
       <text>SDS</text>
     </view>
   </view>
-  <view class="QesIn" style="background: #EDF9FC;" bind:tap="GoToSAS">
+  <view class="QesIn" style="background: #EDF9FC;" data-id="1" bind:tap="GoToIntro">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>焦虑自评量表</text>
       <text>SAS</text>
     </view>
   </view>
-  <view class="QesIn" style="background: #FFFBE3;" bind:tap="GoToAIS">
+  <view class="QesIn" style="background: #FFFBE3;" data-id="2" bind:tap="GoToIntro">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>阿森斯失眠量表</text>
@@ -34,21 +31,21 @@
 
 
 <view class="QesBox">
-  <view class="QesIn" style="background: #F0F4FF;" bind:tap="GoToGHQ">
+  <view class="QesIn" style="background: #F0F4FF;" data-id="3" bind:tap="GoToIntro">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>一般健康问卷</text>
       <text>GHD-12</text>
     </view>
   </view>
-  <view class="QesIn" style="background: #FEF4FF;">
+  <view class="QesIn" style="background: #FEF4FF;"  data-id="1" bind:tap="GoToIntro">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>焦虑自评量表</text>
       <text>SAS</text>
     </view>
   </view>
-  <view class="QesIn" style="background: #F9FFE3;">
+  <view class="QesIn" style="background: #F9FFE3;" data-id="2" bind:tap="GoToIntro">
     <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
     <view class="Font">
       <text>阿森斯失眠量表</text>

@@ -1,14 +1,58 @@
-<!--pages/home/function/1/SAS/SAS.wxml-->
-<view class="name">
-  <text class="textname">焦虑自评量表（SAS）</text>
+<navigation-bar title="焦虑自测量表 SDS"></navigation-bar>
+
+<view class="IconBox">
+  <view class="QesIn" style="background: {{color}};">
+    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
+    <view class="Font" style="text-align: center;">
+      <text >焦虑自评量表</text>
+      <text >SAS</text>
+    </view>
+  </view>
 </view>
 
-<view class="containerSDS">
-  <text>   焦虑自评量表 （ Self 一Rating Anxiety Seale , SAS ） 由 Zung于1971年编制, 从量表构造的形式到具体评定办法 , 都与抑郁自评量表 （ SDS ） 十分相似 , 它也是一个含有20个项目 , 分为4级评分的自评量表 , 用于评出焦虑病人的主观感受。</text>
+<view class="quesbox" wx:if="{{id<=19}}">
+
+<swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
+  <block wx:for="{{SASQuestion}}" >
+    <swiper-item style="height:fit-content;">
+        
+      <view class="question">
+        {{item.question}}
+      </view>
+
+      <view class="select flex" >
+        <view  class="item" >
+          <label bindtap="OpA">{{OptionA}}</label>
+          <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
+        </view>
+      </view>
+
+      
+      
+      
+    </swiper-item>  
+  </block> 
+</swiper>
+<view wx:if="{{id != 0}}">
+  <view class="tips" bindtap="LastQ">
+    上一题
+  </view>
+</view>
+<view class="tips" style="color: #FEDB03;" wx:if="{{id<=19}}">
+    {{id+1}}/20
+</view>
 </view>
 
-<view class="name">
-  <text class="tips">请根据最近一周的实际感觉,选择较符合的选项</text>
+
+
+<view wx:if="{{id==20}}" class="quesbox"  >
+   <view class="select flex" bindtap="Goresult">
+    <label >查看结果</label>
+    </view> 
 </view>
 
-<button bindtap="Gotest">开始测试</button>
+<view>
+  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+</view>
