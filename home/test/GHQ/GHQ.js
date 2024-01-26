@@ -1,3 +1,4 @@
+const AddRes = wx.cloud.database().collection('Scales')
 var AnsA = new Array()
 var AnsB = new Array()
 var AnsC = new Array()
@@ -18,8 +19,19 @@ Page({
     this.setData({
       RES : "自我肯定：" + A + "\n\n抑郁：" + B + "\n\n焦虑：" + C
     })
+    /* 上传结果 */
+    AddRes.add({
+      data:{
+        open_id: this.open_id,
+        Time: new Date().toJSON().substring(0, 10) + ' ' + new Date().toTimeString().substring(0,8),
+        RES: this.data.RES,
+        title: this.data.title
+      }
+    })
+    
+    /* 跳转至结果页 */
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES,
+      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
     })
     },
     
@@ -97,6 +109,7 @@ Page({
 data: {
   title: "一般健康问卷GHQ-12",
   color: "",
+  RAI: "",
   id:0,
   A:0,
   B:0,
@@ -139,6 +152,9 @@ data: {
 onLoad(options) {
   this.setData({
     color: options.color
+  })
+  this.setData({
+    RAI: options.ReturnAddressId
   })
 },
 

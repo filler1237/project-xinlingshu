@@ -2,7 +2,7 @@
 Page({
   GoTest(){
     wx.redirectTo({
-      url: this.data.Url[this.data.id] + '?color=' + this.data.color
+      url: this.data.Url[this.data.id] + '?color=' + this.data.color + '&ReturnAddressId=' + this.data.id,
     })
   },
   /**
