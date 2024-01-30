@@ -30,6 +30,6 @@
 </view>
 
 
-<view style="padding-top: 82rpx;">
+<view style="padding-top: 75rpx;">
   <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
 </view>

@@ -1,4 +1,5 @@
 // pages/home/function/1/SDS/SDStext/SDStext.js
+const AddRes = wx.cloud.database().collection('Scales')
 var SumArr = new Array()
 var Sum = 0
 Page({
@@ -29,9 +30,19 @@ Page({
       })
     }
 
+    /* 上传结果 */
+    AddRes.add({
+      data:{
+        open_id: this.open_id,
+        Time: new Date().toJSON().substring(0, 10) + ' ' + new Date().toTimeString().substring(0,8),
+        RES: this.data.RES,
+        title: this.data.title
+      }
+    })
+
     console.log(RES)
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES,
+      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
     })
   },
 
@@ -109,10 +120,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    navBarHeight: 0, //导航栏高度
-    titleBottom: 0, //顶部距离
     title:'抑郁自评量表SDS',
     color: '',
+    RAI: "",
     id:0,
     SumArr:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     Sum:0,
@@ -158,6 +168,9 @@ Page({
   onLoad(options) {
     this.setData({
       color: options.color
+    })
+    this.setData({
+      RAI: options.ReturnAddressId
     })
   },
 

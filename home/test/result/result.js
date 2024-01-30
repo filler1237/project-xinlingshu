@@ -7,7 +7,7 @@ Page({
   },
   OneMore(){
     wx.redirectTo({
-      url: '',
+      url: '/home/test/intro/intro?id=' + this.data.ReturnAddressId,
     })
   },
   /**
@@ -17,7 +17,8 @@ Page({
     title: "",
     icontitle: "",
     advise: "",
-    color: ""
+    color: "",
+    ReturnAddressId: "",
   },
 
   /**
@@ -35,6 +36,9 @@ Page({
     })
     this.setData({
       color : options.color
+    })
+    this.setData({
+      ReturnAddressId : options.ReturnAddressId
     })
   },
 

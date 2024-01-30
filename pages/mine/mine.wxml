@@ -49,7 +49,7 @@
 <view class="tools" style="width:690rpx">
   <view class="title">树洞宝藏</view>
   <view class="items" style="width: 610rpx;">
-    <navigator url="/home/function/test/test" class="item" style="width:112rpx ;">
+    <navigator url="/home/test/test" class="item" style="width:112rpx ;">
       <image class="icon" src="/image/slideshow-line.jpg" style="width: 53.33rpx;"/>
       <text>心理测评</text>
     </navigator>

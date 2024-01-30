@@ -22,6 +22,6 @@
 
 
 
-<view style="padding-top: 65rpx;">
+<view>
   <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
 </view>

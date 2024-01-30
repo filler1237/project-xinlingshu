@@ -1,8 +1,10 @@
 <!--pages/sushuo/XIE/XIE.wxml-->
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+<navigation-bar title="心理咨询"></navigation-bar>
+
+<!-- <view class='partone' style="width:82rpx" bindtap='onBackTap'>
     <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
 </view>
-<view class="title">心理咨询</view>
+<view class="title">心理咨询</view> -->
 <view class="bottom">
   <image class="down" src="/image/down.png" style="width: 100%;"/>
   <image class="up"src="/image/up.png" style="width: 100%;"/>

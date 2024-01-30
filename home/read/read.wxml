@@ -1,7 +1,4 @@
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
-</view>
-<view class="title">心灵补给</view>
+<navigation-bar title="心灵补给"></navigation-bar>
 <view class="bottom">
   <image class="down"src="/image/up.png" style="width: 100%;"/>
   <image class="up" src="/image/down.png" style="width: 100%;"/>

@@ -80,6 +80,14 @@ page{
   position: relative;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
+=======
+  justify-content: space-between;
+  margin: 30rpx;
+  box-sizing: border-box;
+  border-radius: 15rpx;
+  background-color: #fff5e0;
+>>>>>>> master2
 }
 .photo .tree{
   width: 268rpx;

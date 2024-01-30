@@ -1,4 +1,5 @@
 // pages/home/function/1/AIS/AIStext/AIStext.js
+const AddRes = wx.cloud.database().collection('Scales')
 var Ans = new Array()
 var SUMofANS = 0
 Page({
@@ -25,8 +26,19 @@ Page({
         RES : "您的测评得分是：" + SUMofANS + "\n\n" + this.data.result[2],
       })
     }
+    /* 上传结果 */
+    AddRes.add({
+      data:{
+        open_id: this.open_id,
+        Time: new Date().toJSON().substring(0, 10) + ' ' + new Date().toTimeString().substring(0,8),
+        RES: this.data.RES,
+        title: this.data.title
+      }
+    })
+
+    /* 跳转至结果页 */
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES,
+      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
     })
   },
     /**
@@ -35,6 +47,7 @@ Page({
     data: {
       title: "阿森斯失眠量表AIS",
       color: "",
+      RAI: "",
       OptionA:'不符合',
       OptionB:'不太符合',
       OptionC:'比较符合',
@@ -118,6 +131,9 @@ Page({
     onLoad(options) {
       this.setData({
         color: options.color
+      })
+      this.setData({
+        RAI: options.ReturnAddressId
       })
     },
   

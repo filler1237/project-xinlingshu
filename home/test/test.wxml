@@ -54,6 +54,6 @@
   </view>
 </view>
 
-<view style="padding-top: 45rpx;">
+<view>
   <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
 </view>
