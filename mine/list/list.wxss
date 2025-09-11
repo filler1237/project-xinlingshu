@@ -33,18 +33,21 @@ page{
   left: 0;
   bottom: -5rpx;
   height: 292rpx;
+  z-index: -2;
 }
 .down{
   position:fixed;
   left: 0;
   bottom: -5rpx;
   height: 130rpx;
+  z-index: -1;
 }
 .girl{
   position: fixed;
   left: 426rpx;
   bottom: 35rpx;
   height: 212rpx;
+  z-index: -1;
 }
 
 .page{

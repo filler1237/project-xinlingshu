@@ -1,5 +1,4 @@
 <!--pages/sushuo/XIE/XIE.wxml-->
-<<<<<<< HEAD
 <view class='partone' style="width:82rpx" bindtap='onBackTap'>
     <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
 </view>
@@ -20,28 +19,6 @@
     <icon class='ui-uploader-item-icon' bindtap='clearImg' data-index="{{index}}" type="clear" size="20" color="#666666" />
     <!-- 图片 -->
     <image bindtap='showImg' data-index="{{index}}" src='{{item}}' style="height: 170rpx;width: 170rpx;"></image>
-=======
-<navigation-bar title="倾诉"></navigation-bar>
-
-
-<view class="bottom">
-  <image class="down"src="/image/down.png" style="width: 100%;"/>
-  <image class="up" src="/image/up.png" style="width: 100%;"/>
-  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
-</view>
-
-<form bindsubmit="tijiao">
-<!--提交文本内容-->
-  <view>
-
-    <!-- <textarea placeholder="这是一个属于你的树洞" bindtap="tell" auto-focus="true"/> -->
-    <view class="inputbox" style="padding:20rpx;">
-      <textarea name="wbnr" placeholder="这是一个属于你的树洞" bindinput="tell" value='{{wbnr}}' style="width:100%;color:#080100;" maxlength="-1" />
-      <view class="zs" style="display:flex;flex-direction:row-reverse;margin-right:15rpx">
-        <text class="sy" style="font-size:85%;color:#656565">{{sy}}</text>
-      </view>
-    </view>
->>>>>>> master2
   </view>
   <!-- 上传按钮+框 -->
   <view class='ui-uploader' bindtap='upload' wx:if="{{showUpload}}">

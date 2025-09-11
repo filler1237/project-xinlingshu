@@ -1,1 +1,109 @@
 /* pages/sushuo/DA/DA.wxss */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.title {
+  color: #000000;
+  font-family: PingFang SC;
+  font-weight: medium;
+  font-size: 32rpx;
+  line-height: 1.5;
+  letter-spacing: 0rpx;
+  text-align: center;
+  position: absolute;
+  top: 4.5%;
+  left: 43%;
+}
+
+.partone {
+  margin-bottom: 10rpx;
+  height: 56rpx;
+  position: absolute;
+  top: 4.5%;
+  left: 0;
+}
+
+.partone .back {
+  position: absolute;
+  z-index: 2;
+  height: 34rpx;
+  left: 50rpx;
+  top: 20rpx;
+}
+
+.chat-container {
+  flex: 1;
+  padding: 20rpx;
+  margin-top: 20%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-item {
+  max-width: 80%;
+  padding: 15rpx;
+  border-radius: 10rpx;
+  margin: 10rpx 0;
+  word-wrap: break-word;
+}
+
+.mineTextBox {
+  align-self: flex-end;
+  background-color: #96CE74;
+  text-align: right;
+}
+
+.himTextBox {
+  align-self: flex-start;
+  background-color: #f0f0f0;
+  border: 2rpx solid #96CE74;
+  text-align: left;
+}
+
+.message-text {
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.mineText {
+  color: #ffffff;
+}
+
+.himText {
+  color: #333333;
+}
+
+.input-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #ffffff;
+  box-shadow: 0 -2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.input-box {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.send-button {
+  width: 100rpx;
+  height: 80rpx;
+  background-color: #96CE74;
+  color: #ffffff;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}

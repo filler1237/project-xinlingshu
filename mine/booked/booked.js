@@ -8,8 +8,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    Appointments: [],
-    booklist:false,
+    Appointments: [
+      {
+        date: '2024-08-01',
+        startTime: '09:00',
+        status: '进行中',
+        teacher: '张',
+        detail: '记得调整日常作息'
+      },
+      {
+        date: '2024-08-02',
+        startTime: '10:00',
+        status: '已结束',
+        teacher: '李',
+        detail: '记得少吃生冷，照顾好自己'
+      },
+      {
+        date: '2024-08-03',
+        startTime: '11:00',
+        status: '进行中',
+        teacher: '王',
+        detail: '平日里多运动，提高身体素质，心情才会好'
+      }
+    ],
+    booklist:true,
   },
   onBackTap: function(e) {
     var pages = getCurrentPages();                       //获取当前页面

@@ -14,7 +14,7 @@ Page({
   },
   gotoDA (){
     wx.navigateTo({
-      url: ''
+      url: '/sushuo/DA/DA'
     })
 },
 

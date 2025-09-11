@@ -1,5 +1,5 @@
 page{
-  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%);
+  background: linear-gradient(180deg, #73d68b 0%, #edf5f2 100%);
 }
 .title{
   color: #000000;
@@ -51,14 +51,14 @@ page{
 }
 .text{
   text-align: center;
-  margin-top: 20%;
+  margin-top: 10%;
   font-size: 50rpx;
   font-weight: 100;
 }
 .board{
-  margin-top: 20%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-top: 5%;
+  margin-left: 3%;
+  margin-right: 8%;
 }
 .rows{
   margin-bottom:5rpx ;
@@ -70,9 +70,47 @@ page{
 .cols{
   margin: 5rpx;
 }
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0);
+  }
+  50% {
+    transform: rotateY(90deg);
+  }
+}
+
+.card {
+  animation: flip 0.5s linear;
+  animation-fill-mode: forwards;
+  transform-style: preserve-3d;
+}
 .card{
-   width:  215rpx;
-   height: 320rpx;
+   width:  225rpx;
+   height: 310rpx;
    padding:1rpx;
    margin: 0.5rpx;
+}
+@keyframes neonGlow {
+  0% {
+    text-shadow: 0 0 4px #fff, 0 0 6px #fff, 0 0 8px #fff, 0 0 10px #00e3e3, 0 0 12px #00e3e3, 0 0 14px #00e3e3, 0 0 16px #00e3e3;
+  }
+  50% {
+    text-shadow: none;
+  }
+  100% {
+    text-shadow: 0 0 4px #fff, 0 0 6px #fff, 0 0 8px #fff, 0 0 10px #00e3e3, 0 0 12px #00e3e3, 0 0 14px #00e3e3, 0 0 16px #00e3e3;
+  }
+}
+
+.text {
+  font-size: 25px;
+  color: rgb(239, 247, 242);
+  text-align: center;
+  padding: 6px;
+}
+
+.cool-title {
+  background-color: rgba(0, 0, 0, 0); /* 设置背景颜色为透明 */
+  animation: neonGlow 2s infinite alternate;
 }

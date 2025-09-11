@@ -3,6 +3,23 @@
   "projectname": "miniprogram-1",
   "setting": {
     "compileHotReLoad": true,
-    "bigPackageSizeSupport": true
-  }
+    "bigPackageSizeSupport": true,
+    "urlCheck": false,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "skylineRenderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showShadowRootInWxmlPanel": true,
+    "useStaticServer": false,
+    "useLanDebug": false,
+    "showES6CompileOption": false,
+    "checkInvalidKey": true,
+    "ignoreDevUnusedFiles": false,
+    "useIsolateContext": true
+  },
+  "libVersion": "3.10.0",
+  "condition": {}
 }

@@ -1,0 +1,36 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="title">心情记录</view>
+<view class="container">
+  <view class="card-list">
+ <block wx:for="{{cards}}" wx:key="id">
+    <view class="card">
+      <text class="card-content">{{item.content}}</text>
+      <view class="card-actions">
+       <button class="edit-button" bindtap="editCard" data-index="{{index}}">编辑</button>
+       <button class="delete-button" bindtap="deleteCard" data-index="{{index}}">删除</button>
+      </view>
+    </view>
+  </block>
+  <!-- 模态框 -->
+  <view wx:if="{{ showModal }}" class="modal">
+    <!-- 编辑内容的表单 -->
+    <textarea bindinput="inputContent" value="{{ editedContent }}"></textarea>
+    <!-- 确定按钮 -->
+    <button bindtap="confirmEdit">确定</button>
+    <!-- 取消按钮 -->
+    <button bindtap="cancelEdit">取消</button>
+  </view>
+</view>
+  <!-- 添加卡片 -->
+  <view class="add-card-button" bindtap="toggleAddCard">
+    <text class="icon">+</text>
+  </view>
+  
+  <!-- 添加卡片弹窗 -->
+  <view wx:if="{{ showAddCardPopup }}" class="add-card-popup" animation="{{addCardAnimation}}">
+    <input class="input" placeholder="请输入您的心情卡片" bindinput="onInputChange" value="{{inputText}}" />
+    <button class="add-button" bindtap="addCard">添加卡片</button>
+  </view>
+</view>

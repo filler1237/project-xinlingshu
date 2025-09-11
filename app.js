@@ -1,5 +1,5 @@
 wx.cloud.init({
-  env:'tuxls-4gadsqlb8cd8de9e',
+  env:'cloud1-2gxal8as6b6bfe21',
   traceUser: true
 });
 

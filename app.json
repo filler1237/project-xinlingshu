@@ -5,7 +5,11 @@
     "pages/sushuo/sushuo",
     "pages/logs/logs",
     "pages/auth/usercenter/usercenter",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/diary/create/create",
+    "pages/diary/detail/detail",
+    "pages/diary/calendar/calendar",
+    "pages/diary/trend/trend"
   ],
   "subPackages": [
     {
@@ -25,6 +29,7 @@
         "read/read",
         "read/text/2/2",
         "card/card",
+        "emotion/emotion",
         "social/social",
         "read/text/1/1"
       ]
@@ -34,7 +39,8 @@
       "name": "sushuo",
       "pages": [
         "XIE/XIE",
-        "DA/DA"
+        "DA/DA",
+        "XIE/record/record"
       ]
     },
     {
@@ -69,7 +75,6 @@
     "navigationStyle": "custom"
   },
   "tabBar": {
-    
     "list": [
       {
         "pagePath": "pages/sushuo/sushuo",

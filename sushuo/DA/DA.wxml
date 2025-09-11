@@ -1,2 +1,17 @@
-<!--pages/sushuo/DA/DA.wxml-->
-<text>pages/sushuo/DA/DA.wxml</text>
+<view class="page">
+  <view class="title">倾谈</view>
+  <view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+  </view>
+  <view class="chat-container">
+    <block wx:for="{{content}}" wx:key="index">
+      <view class="message-item {{item.id == 1 ? 'mineTextBox' : 'himTextBox'}}">
+        <text class="message-text {{item.id == 1 ? 'mineText' : 'himText'}}">{{item.text}}</text>
+      </view>
+    </block>
+  </view>
+  <view class="input-bar">
+    <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange"/>
+    <button class="send-button" bindtap="sendMessage">发送</button>
+  </view>
+</view>

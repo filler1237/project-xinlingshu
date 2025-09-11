@@ -25,6 +25,11 @@ gotoTaLuo (){
     url: '/home/card/card'
   })
 },
+gotoEmotion (){
+  wx.navigateTo({
+    url: '/home/emotion/emotion'
+  })
+},
   /**
    * 页面的初始数据
    */

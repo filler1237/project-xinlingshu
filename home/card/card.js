@@ -5,7 +5,7 @@ var app = getApp()
 var allCard = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'card7', 'card8', 'card9', 'card10'];
 
 // 定义卡牌的背面图片地址
-var backCardImage = "../images/background4.jpg"
+var backCardImage = "/images/card3_up.jpg"
 
 // 定义页面对象
 Page({
@@ -19,7 +19,7 @@ Page({
     firstX: -1,        // 点击的第一张卡牌的坐标 
     firstY: -1,
     cards: [],        // 随机挑选出来的牌   
-    size: 6,        // 界面显示的牌数=size*2
+    size: 9,        // 界面显示的牌数=size*2
     clickable: false,    // 当前是否可点击
   },
   onBackTap: function(e) {
@@ -53,7 +53,8 @@ Page({
         ix++; iy = 0;
       }
       cards[ix].push({
-        src: 'cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/image/' + tmp[i] + '.jpg',
+        // src: 'cloud://tuxls-4gadsqlb8cd8de9e.7475-tuxls-4gadsqlb8cd8de9e-1317306213/image/' + tmp[i] + '.jpg',
+        src:'/images/card_down.png',
         state: 1   // 为1时显示图片,为0时显示牌背面
       });
     }
@@ -112,11 +113,12 @@ Page({
     // 更新页面数据
     this.setData({ cards: this.data.cards });
   },
-
   // 页面加载
   onLoad: function () {
     // 开始游戏
     this.startGame();
     console.log(this.data.cards);
-  }
+  },
+
+  
 })

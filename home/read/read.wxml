@@ -8,12 +8,12 @@
 <view class="zl">
   <navigator url="./text/1/1" class="zhuanlan">
     <view class="text1">
-      后续开通企业主体，才能发布相关信息
+      「老好人」为什么不受欢迎？
   </view>
   </navigator>
   <navigator url="./text/2/2" class="zhuanlan">
     <view class="text1">
-      后续开通企业主体，才能发布相关信息
+      有毒的「女性魅力」，是时候对它说不了
     </view>
   </navigator>
 </view>
