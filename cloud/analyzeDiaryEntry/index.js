@@ -5,7 +5,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
 // 在云函数“环境变量”里配置：LLM_GATEWAY_URL（必填），LLM_API_KEY（可选）
-const LLM_URL = process.env.LLM_GATEWAY_URL
+const LLM_URL = 'https://api.deepseek.com/v1/chat/completions'
 const LLM_API_KEY = process.env.LLM_API_KEY
 
 exports.main = async (event, context) => {
@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
     ]
 
     const resp = await axios.post(LLM_URL, {
-      model: 'Qwen2.5-7B-Instruct',
+      model: 'deepseek-chat',
       messages: prompt,
       temperature: 0.6
     }, {
