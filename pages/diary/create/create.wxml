@@ -1,0 +1,100 @@
+<!--pages/diary/create/create.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="title">记录心情</view>
+    <view class="date-picker">
+      <picker mode="date" value="{{date}}" bindchange="onDateChange">
+        <view class="date-display">
+          <text class="date-text">{{date}}</text>
+          <text class="date-icon">📅</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 情绪类型和情绪强度横向排列 -->
+  <view class="emotion-intensity-row">
+    <!-- 情绪类型选择器 -->
+    <view class="emotion-section">
+      <view class="section-title">情绪类型</view>
+      <view class="emotion-selector" bindtap="showEmotionSelector">
+        <text class="emotion-text">{{selectedEmotionType || '请选择情绪类型'}}</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+
+    <!-- 情绪强度选择器 -->
+    <view class="intensity-section">
+      <view class="section-title">情绪强度</view>
+      <view class="intensity-display">
+        <text class="intensity-label">强度: {{emotionIntensity}}/10</text>
+        <slider 
+          value="{{emotionIntensity}}" 
+          min="1" 
+          max="10" 
+          step="1"
+          bindchange="onEmotionIntensityChange"
+          activeColor="#ff6b6b"
+          backgroundColor="#e0e0e0"
+          block-size="20"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 日记内容输入 -->
+  <view class="content-section">
+    <view class="section-title">日记内容</view>
+    <textarea 
+      class="content-input"
+      placeholder="记录今天的心情和感受..."
+      value="{{content}}"
+      bindinput="onContentInput"
+      maxlength="2000"
+      show-confirm-bar="{{false}}"
+      auto-height
+    />
+    <view class="char-count">{{content.length}}/2000</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-secondary" bindtap="loadDraft">加载草稿</button>
+    <button class="btn btn-secondary" bindtap="saveDraft">保存草稿</button>
+    <button class="btn btn-danger" bindtap="clearContent">清空</button>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button 
+      class="btn btn-primary submit-btn" 
+      bindtap="submitDiary"
+      disabled="{{isSubmitting || isAnalyzing}}"
+      loading="{{isSubmitting}}"
+    >
+      <text wx:if="{{isAnalyzing}}">AI分析中...</text>
+      <text wx:elif="{{isSubmitting}}">保存中...</text>
+      <text wx:else>保存日记</text>
+    </button>
+  </view>
+
+  <!-- 情绪类型选择弹窗 -->
+  <view class="emotion-modal" wx:if="{{showEmotionSelector}}" bindtap="closeEmotionSelector">
+    <view class="emotion-modal-content" catchtap="">
+      <view class="modal-title">选择情绪类型</view>
+      <view class="emotion-list">
+        <view 
+          class="emotion-item" 
+          wx:for="{{emotionTypes}}" 
+          wx:key="*this"
+          data-emotion="{{item}}"
+          bindtap="selectEmotionType"
+        >
+          <text class="emotion-name">{{item}}</text>
+          <text class="check-icon" wx:if="{{selectedEmotionType === item}}">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

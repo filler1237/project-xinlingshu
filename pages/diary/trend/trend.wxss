@@ -1,0 +1,329 @@
+/* pages/diary/trend/trend.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* 头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  color: white;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.date-range {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+/* 时间范围选择 */
+.time-range-selector {
+  display: flex;
+  gap: 10rpx;
+  margin-bottom: 20rpx;
+  padding: 0 10rpx;
+}
+
+.range-btn {
+  flex: 1;
+  padding: 15rpx 10rpx;
+  border-radius: 8rpx;
+  background: white;
+  color: #666;
+  border: 2rpx solid #e9ecef;
+  font-size: 22rpx;
+  text-align: center;
+  min-width: 0;
+}
+
+.range-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* 情绪统计 */
+.emotion-stats {
+  background: white;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.stats-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15rpx;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+}
+
+.stat-color {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+}
+
+.stat-emotion {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.stat-count {
+  font-size: 20rpx;
+  color: #666;
+}
+
+/* 情绪筛选 */
+.emotion-filter {
+  background: white;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.filter-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.filter-btn {
+  padding: 12rpx 20rpx;
+  border-radius: 15rpx;
+  background: #f8f9fa;
+  color: #666;
+  border: 2rpx solid #e9ecef;
+  font-size: 20rpx;
+  min-width: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.filter-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* 趋势图表 */
+.trend-chart {
+  background: white;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.chart-container {
+  height: 250rpx;
+  display: flex;
+  align-items: end;
+  gap: 8rpx;
+  padding: 15rpx 0;
+  overflow-x: auto;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  gap: 8rpx;
+  min-width: 100%;
+  height: 100%;
+}
+
+.chart-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  min-width: 40rpx;
+}
+
+.bar-fill {
+  width: 100%;
+  min-height: 20rpx;
+  border-radius: 4rpx 4rpx 0 0;
+  transition: all 0.3s ease;
+}
+
+.bar-value {
+  font-size: 20rpx;
+  color: #666;
+  margin-top: 10rpx;
+}
+
+.bar-date {
+  font-size: 18rpx;
+  color: #999;
+  margin-top: 5rpx;
+  transform: rotate(-45deg);
+  white-space: nowrap;
+}
+
+/* 详细数据 */
+.detail-data {
+  background: white;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.detail-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.data-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.data-item {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  padding: 15rpx;
+  background: #f8f9fa;
+  border-radius: 8rpx;
+}
+
+.data-date {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: bold;
+  min-width: 120rpx;
+}
+
+.data-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+}
+
+.data-intensity {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.data-count {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.data-emotion {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  color: white;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 15rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+}
+
+.btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  border: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+  color: #666;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999;
+}

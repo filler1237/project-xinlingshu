@@ -1,0 +1,291 @@
+/* pages/diary/calendar/calendar.wxss */
+.container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* 导航栏 */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 80rpx;
+  background: white;
+  padding: 40rpx 50rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  padding: 15rpx;
+  border-radius: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.nav-item:active {
+  background: #f8f9fa;
+}
+
+.nav-icon {
+  font-size: 32rpx;
+}
+
+.nav-text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 头部 */
+.header {
+  background: white;
+  padding: 15rpx;
+  margin: 0 10rpx;
+  border-radius: 15rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-btn {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: none;
+  font-size: 28rpx;
+  color: #667eea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-display {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.month-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.arrow {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 星期标题 */
+.weekdays {
+  display: flex;
+  margin: 0 10rpx;
+  background: white;
+  border-bottom: 1rpx solid #f0f0f0;
+  border-radius: 15rpx 15rpx 0 0;
+}
+
+.weekday {
+  width: calc(100% / 7);
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+  color: #666;
+  font-weight: bold;
+  border-right: 1rpx solid #f0f0f0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.weekday:last-child {
+  border-right: none;
+}
+/* 日历网格 */
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background: white;
+  margin: 0 10rpx 20rpx 10rpx;
+  border-radius: 0 0 15rpx 15rpx;
+}
+
+.calendar-day {
+  width: calc(100% / 7);
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-right: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.calendar-day:nth-child(7n) {
+  border-right: none;
+}
+
+.calendar-day:active {
+  background: #f8f9fa;
+}
+
+.calendar-day.current-month {
+  color: #333;
+}
+
+.calendar-day.other-month {
+  color: #ccc;
+}
+
+.calendar-day.selected {
+  background: #667eea;
+  color: white;
+}
+
+.day-number {
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-bottom: 3rpx;
+}
+
+.emotion-indicator {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 8rpx;
+}
+
+/* 情绪图例 */
+.emotion-legend {
+  background: white;
+  padding: 20rpx;
+  border-radius: 15rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.legend-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.legend-color {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+}
+
+.legend-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 月份选择器 */
+.month-picker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.month-picker-content {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin: 40rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.picker-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30rpx;
+  color: #333;
+}
+
+.year-selector {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+  justify-content: center;
+}
+
+.year-btn {
+  padding: 15rpx 30rpx;
+  border-radius: 10rpx;
+  background: #f8f9fa;
+  color: #666;
+  border: none;
+  font-size: 24rpx;
+}
+
+.year-btn.current {
+  background: #667eea;
+  color: white;
+}
+
+.month-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15rpx;
+}
+
+.month-btn {
+  padding: 20rpx;
+  border-radius: 10rpx;
+  background: #f8f9fa;
+  color: #666;
+  border: none;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.month-btn.current {
+  background: #667eea;
+  color: white;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200rpx;
+  color: #666;
+  font-size: 28rpx;
+}

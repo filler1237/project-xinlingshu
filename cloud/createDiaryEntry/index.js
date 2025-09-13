@@ -5,7 +5,7 @@ const db = cloud.database()
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const { content, emotionIntensity = null, date } = event
+  const { content, emotionIntensity = null, date, emotionType = null } = event
 
   if (!content || !date) {
     return { ok: false, error: 'content and date are required' }
@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
     userId: wxContext.OPENID,
     date, // YYYY-MM-DD
     content,
-    emotionType: null,
+    emotionType: emotionType,
     emotionIntensity,
     empathyReply: null,
     keywords: [],

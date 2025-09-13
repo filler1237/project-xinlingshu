@@ -1,0 +1,291 @@
+/* pages/diary/create/create.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 120rpx; /* 为底部按钮留出空间 */
+}
+
+/* 头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15rpx;
+  padding: 25rpx 20rpx;
+  margin-bottom: 25rpx;
+  color: white;
+  position: relative;
+  width: 100%;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+}
+
+.date-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 18rpx 25rpx;
+  border-radius: 12rpx;
+  backdrop-filter: blur(10rpx);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.date-text {
+  font-size: 30rpx;
+  margin-right: 15rpx;
+  font-weight: 500;
+}
+
+.date-icon {
+  font-size: 26rpx;
+}
+
+/* 情绪类型和强度横向排列 */
+.emotion-intensity-row {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 25rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 通用section样式 */
+.emotion-section,
+.intensity-section {
+  flex: 1;
+  background: white;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid #f0f0f0;
+}
+
+.content-section {
+  background: white;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  margin-bottom: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid #f0f0f0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  width: 6rpx;
+  height: 30rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin-right: 15rpx;
+  border-radius: 3rpx;
+}
+
+/* 情绪选择器 */
+.emotion-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border: 2rpx solid #e9ecef;
+  transition: all 0.3s ease;
+  min-height: 80rpx;
+}
+
+.emotion-selector:active {
+  background: #e9ecef;
+  border-color: #667eea;
+}
+
+.emotion-text {
+  font-size: 30rpx;
+  color: #666;
+  flex: 1;
+}
+
+.arrow {
+  font-size: 26rpx;
+  color: #999;
+  margin-left: 15rpx;
+}
+
+/* 情绪强度 */
+.intensity-display {
+  padding: 25rpx 0;
+}
+
+.intensity-label {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 25rpx;
+  display: block;
+  font-weight: 500;
+}
+
+/* 内容输入 */
+.content-input {
+  width: 100%;
+  min-height: 300rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  line-height: 1.8;
+  background: #f8f9fa;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.content-input:focus {
+  border-color: #667eea;
+  background: white;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 15rpx;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 15rpx;
+  margin-bottom: 30rpx;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn {
+  flex: 1;
+  padding: 18rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  min-height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: calc(33.333% - 10rpx);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: bold;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 20rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.3);
+  margin: 0;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+}
+
+/* 情绪类型选择弹窗 */
+.emotion-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.emotion-modal-content {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin: 40rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30rpx;
+  color: #333;
+}
+
+.emotion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.emotion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.emotion-item:active {
+  background: #e9ecef;
+  border-color: #667eea;
+}
+
+.emotion-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.check-icon {
+  font-size: 24rpx;
+  color: #667eea;
+  font-weight: bold;
+}

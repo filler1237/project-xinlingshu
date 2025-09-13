@@ -5,11 +5,7 @@
     "pages/sushuo/sushuo",
     "pages/logs/logs",
     "pages/auth/usercenter/usercenter",
-    "pages/index/index",
-    "pages/diary/create/create",
-    "pages/diary/detail/detail",
-    "pages/diary/calendar/calendar",
-    "pages/diary/trend/trend"
+    "pages/index/index"
   ],
   "subPackages": [
     {
@@ -55,6 +51,16 @@
         "mycomment/mycomment",
         "record/record"
       ]
+    },
+    {
+      "root": "pages/diary",
+      "name": "diary",
+      "pages": [
+        "create/create",
+        "detail/detail",
+        "calendar/calendar",
+        "trend/trend"
+      ]
     }
   ],
   "preloadRule": {
@@ -63,7 +69,8 @@
       "packages": [
         "home",
         "sushuo",
-        "mine"
+        "mine",
+        "diary"
       ]
     }
   },

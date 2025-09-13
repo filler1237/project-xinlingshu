@@ -1,0 +1,141 @@
+<!--pages/diary/trend/trend.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="title">情绪趋势分析</view>
+    <view class="date-range">
+      <text class="date-text">{{startDate}} 至 {{endDate}}</text>
+    </view>
+  </view>
+
+  <!-- 时间范围选择 -->
+  <view class="time-range-selector">
+    <button 
+      class="range-btn {{timeRange === 'week' ? 'active' : ''}}"
+      data-range="week"
+      bindtap="selectTimeRange"
+    >
+      近7天
+    </button>
+    <button 
+      class="range-btn {{timeRange === 'month' ? 'active' : ''}}"
+      data-range="month"
+      bindtap="selectTimeRange"
+    >
+      近30天
+    </button>
+    <button 
+      class="range-btn {{timeRange === 'quarter' ? 'active' : ''}}"
+      data-range="quarter"
+      bindtap="selectTimeRange"
+    >
+      近90天
+    </button>
+  </view>
+
+  <!-- 情绪统计 -->
+  <view class="emotion-stats" wx:if="{{!loading}}">
+    <view class="stats-title">情绪分布</view>
+    <view class="stats-grid">
+      <view 
+        class="stat-item" 
+        wx:for="{{emotionStats}}" 
+        wx:key="*this"
+        wx:for-item="count"
+        wx:for-index="emotion"
+      >
+        <view class="stat-color" style="background-color: {{getEmotionColor(emotion)}}"></view>
+        <view class="stat-info">
+          <text class="stat-emotion">{{emotion}}</text>
+          <text class="stat-count">{{count}}次</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪筛选 -->
+  <view class="emotion-filter">
+    <view class="filter-title">筛选情绪</view>
+    <view class="filter-buttons">
+      <button 
+        class="filter-btn {{selectedEmotion === 'all' ? 'active' : ''}}"
+        data-emotion="all"
+        bindtap="selectEmotion"
+      >
+        全部
+      </button>
+      <button 
+        class="filter-btn {{selectedEmotion === item ? 'active' : ''}}"
+        wx:for="{{emotionTypes}}" 
+        wx:key="*this"
+        data-emotion="{{item}}"
+        bindtap="selectEmotion"
+      >
+        {{item}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 趋势图表 -->
+  <view class="trend-chart" wx:if="{{chartData && !loading}}">
+    <view class="chart-title">情绪强度趋势</view>
+    <view class="chart-container">
+      <view class="chart-bars">
+        <view 
+          class="chart-bar" 
+          wx:for="{{chartData}}" 
+          wx:key="date"
+        >
+          <view 
+            class="bar-fill"
+            style="height: {{item.averageIntensity * 10}}%; background-color: {{getEmotionColor(item.dominantEmotion)}}"
+          ></view>
+          <text class="bar-value">{{item.averageIntensity}}</text>
+          <text class="bar-date">{{formatDate(item.date)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 详细数据 -->
+  <view class="detail-data" wx:if="{{chartData && !loading}}">
+    <view class="detail-title">详细数据</view>
+    <view class="data-list">
+      <view 
+        class="data-item" 
+        wx:for="{{chartData}}" 
+        wx:key="date"
+        wx:if="{{item.emotionCount > 0}}"
+      >
+        <view class="data-date">{{formatDate(item.date)}}</view>
+        <view class="data-info">
+          <text class="data-intensity">平均强度: {{item.averageIntensity}}</text>
+          <text class="data-count">记录: {{item.emotionCount}}次</text>
+        </view>
+        <view 
+          class="data-emotion" 
+          style="background-color: {{getEmotionColor(item.dominantEmotion)}}"
+        >
+          {{item.dominantEmotion}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-secondary" bindtap="exportData">导出数据</button>
+    <button class="btn btn-primary" bindtap="loadTrendData">刷新数据</button>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && trendData.length === 0}}">
+    <text class="empty-text">暂无数据</text>
+    <text class="empty-desc">开始记录你的心情吧</text>
+  </view>
+</view>

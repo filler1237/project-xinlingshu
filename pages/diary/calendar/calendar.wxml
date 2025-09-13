@@ -1,0 +1,102 @@
+<!--pages/diary/calendar/calendar.wxml-->
+<view class="container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-item" bindtap="goToCreate">
+      <text class="nav-icon">✏️</text>
+      <text class="nav-text">写日记</text>
+    </view>
+    <view class="nav-item" bindtap="goToTrend">
+      <text class="nav-icon">📊</text>
+      <text class="nav-text">趋势分析</text>
+    </view>
+  </view>
+  <!-- 头部 -->
+  <view class="header">
+    <view class="month-selector">
+      <button class="nav-btn" bindtap="prevMonth">‹</button>
+      <view class="month-display" bindtap="showMonthPicker">
+        <text class="month-text">{{currentYear}}年{{currentMonth}}月</text>
+        <text class="arrow">▼</text>
+      </view>
+      <button class="nav-btn" bindtap="nextMonth">›</button>
+    </view>
+  </view>
+
+  <!-- 星期标题 -->
+  <view class="weekdays">
+    <text class="weekday" wx:for="{{['日', '一', '二', '三', '四', '五', '六']}}" wx:key="*this">
+      {{item}}
+    </text>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-grid">
+    <view 
+      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{selectedDate === item.date ? 'selected' : ''}}"
+      wx:for="{{daysInMonth}}" 
+      wx:key="date"
+      data-date="{{item.date}}"
+      bindtap="selectDate"
+    >
+      <view class="day-number">{{item.day}}</view>
+      <view 
+        class="emotion-indicator"
+        wx:if="{{item.emotionType}}"
+        style="background-color: {{getEmotionColor(item.emotionType)}}; {{getIntensityStyle(item.emotionIntensity)}}"
+      ></view>
+    </view>
+  </view>
+
+  <!-- 情绪图例 -->
+  <view class="emotion-legend">
+    <view class="legend-title">情绪图例</view>
+    <view class="legend-items">
+      <view 
+        class="legend-item" 
+        wx:for="{{emotionColors}}" 
+        wx:key="*this"
+        wx:for-item="color"
+        wx:for-index="emotion"
+      >
+        <view class="legend-color" style="background-color: {{color}}"></view>
+        <text class="legend-text">{{emotion}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 月份选择器 -->
+  <view class="month-picker-modal" wx:if="{{showMonthPicker}}" bindtap="hideMonthPicker">
+    <view class="month-picker-content" catchtap="">
+      <view class="picker-title">选择月份</view>
+      <view class="year-selector">
+        <button class="year-btn" bindtap="selectMonth" data-year="{{currentYear - 1}}" data-month="{{currentMonth}}">
+          {{currentYear - 1}}年
+        </button>
+        <button class="year-btn current" bindtap="selectMonth" data-year="{{currentYear}}" data-month="{{currentMonth}}">
+          {{currentYear}}年
+        </button>
+        <button class="year-btn" bindtap="selectMonth" data-year="{{currentYear + 1}}" data-month="{{currentMonth}}">
+          {{currentYear + 1}}年
+        </button>
+      </view>
+      <view class="month-selector">
+        <button 
+          class="month-btn {{currentMonth === i ? 'current' : ''}}"
+          wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" 
+          wx:key="*this"
+          data-year="{{currentYear}}"
+          data-month="{{item}}"
+          bindtap="selectMonth"
+        >
+          {{item}}月
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

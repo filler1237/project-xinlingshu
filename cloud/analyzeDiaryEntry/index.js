@@ -4,7 +4,6 @@ const axios = require('axios')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
-// 在云函数“环境变量”里配置：LLM_GATEWAY_URL（必填），LLM_API_KEY（可选）
 const LLM_URL = 'https://api.deepseek.com/v1/chat/completions'
 const LLM_API_KEY = process.env.LLM_API_KEY
 
@@ -64,6 +63,6 @@ function parseLLMText(text) {
   const m = text.match(/(\d+)\s*\/?\s*10|([0-9]{1,2})分/)
   if (m) intensity = Number(m[1] || m[2]); if (intensity > 10) intensity = 10
   let empathyReply = (text.split('回复：')[1] || '').split('\n')[0] || text.slice(0, 50)
-  let keywords = Array.from(new Set((text.match(/[\u4e00-\u9fa5]{2,4}/g) || []).slice(0, 5)))
+  let keywords = Array.from(new Set((text.match(/[\u4e00-\u9fa5]{2,6}/g) || []).slice(0, 5)))
   return { emotionType, emotionIntensity: intensity ?? null, empathyReply, keywords }
 }

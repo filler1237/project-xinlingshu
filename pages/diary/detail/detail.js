@@ -1,0 +1,202 @@
+// pages/diary/detail/detail.js
+const app = getApp()
+
+Page({
+  data: {
+    diaryEntry: null,
+    loading: true,
+    error: null,
+    showAnalysis: false,
+    isAnalyzing: false
+  },
+
+  onLoad(options) {
+    const { id } = options
+    if (id) {
+      this.loadDiaryEntry(id)
+    } else {
+      this.setData({
+        error: '缺少日记ID',
+        loading: false
+      })
+    }
+  },
+
+  // 加载日记条目
+  async loadDiaryEntry(entryId) {
+    try {
+      this.setData({ loading: true, error: null })
+
+      // 从数据库获取日记条目
+      const db = wx.cloud.database()
+      const result = await db.collection('DiaryEntries').doc(entryId).get()
+      
+      if (result.data) {
+        console.log('加载的日记数据:', result.data) // 调试用
+        this.setData({
+          diaryEntry: result.data,
+          loading: false
+        })
+      } else {
+        throw new Error('日记不存在')
+      }
+    } catch (error) {
+      console.error('加载日记失败:', error)
+      this.setData({
+        error: error.message || '加载失败',
+        loading: false
+      })
+    }
+  },
+
+  // 重新分析日记
+  async reanalyzeDiary() {
+    const { diaryEntry } = this.data
+    if (!diaryEntry) return
+
+    this.setData({ isAnalyzing: true })
+
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'analyzeDiaryEntry',
+        data: {
+          entryId: diaryEntry._id
+        }
+      })
+
+      if (result.result.ok) {
+        // 重新加载日记条目
+        await this.loadDiaryEntry(diaryEntry._id)
+        
+        wx.showToast({
+          title: '重新分析完成',
+          icon: 'success'
+        })
+      } else {
+        throw new Error(result.result.error || '分析失败')
+      }
+    } catch (error) {
+      console.error('重新分析失败:', error)
+      wx.showToast({
+        title: error.message || '分析失败',
+        icon: 'none'
+      })
+    } finally {
+      this.setData({ isAnalyzing: false })
+    }
+  },
+
+  // 编辑日记
+  editDiary() {
+    const { diaryEntry } = this.data
+    if (!diaryEntry) return
+
+    wx.navigateTo({
+      url: `/pages/diary/edit/edit?id=${diaryEntry._id}`
+    })
+  },
+
+  // 删除日记
+  deleteDiary() {
+    const { diaryEntry } = this.data
+    if (!diaryEntry) return
+
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这篇日记吗？删除后无法恢复。',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            const db = wx.cloud.database()
+            await db.collection('DiaryEntries').doc(diaryEntry._id).remove()
+            
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            })
+            
+            // 返回上一页
+            setTimeout(() => {
+              wx.navigateBack()
+            }, 1500)
+          } catch (error) {
+            console.error('删除失败:', error)
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            })
+          }
+        }
+      }
+    })
+  },
+
+  // 分享日记
+  shareDiary() {
+    const { diaryEntry } = this.data
+    if (!diaryEntry) return
+
+    return {
+      title: `我的心情日记 - ${diaryEntry.date}`,
+      path: `/pages/diary/detail/detail?id=${diaryEntry._id}`,
+      imageUrl: '/images/diary-share.png'
+    }
+  },
+
+  // 复制内容
+  copyContent() {
+    const { diaryEntry } = this.data
+    if (!diaryEntry) return
+
+    wx.setClipboardData({
+      data: diaryEntry.content,
+      success: () => {
+        wx.showToast({
+          title: '内容已复制',
+          icon: 'success'
+        })
+      }
+    })
+  },
+
+  // 格式化日期
+  formatDate(dateStr) {
+    const date = new Date(dateStr)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}年${month}月${day}日`
+  },
+
+  // 格式化时间
+  formatTime(timeStr) {
+    if (!timeStr) return ''
+    const date = new Date(timeStr)
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${hours}:${minutes}`
+  },
+
+  // 获取情绪颜色
+  getEmotionColor(emotionType) {
+    const colorMap = {
+      '快乐': '#ffd93d',
+      '平静': '#6bcf7f',
+      '焦虑': '#ff6b6b',
+      '悲伤': '#4dabf7',
+      '愤怒': '#ff8cc8',
+      '其他': '#9775fa'
+    }
+    console.log('获取情绪颜色:', emotionType) // 调试用
+    return colorMap[emotionType] || '#9775fa'
+  },
+
+  // 获取情绪强度描述
+  getIntensityText(intensity) {
+    if (!intensity || intensity === null) return '未设置'
+    if (intensity <= 3) return '轻微'
+    if (intensity <= 6) return '中等'
+    if (intensity <= 8) return '强烈'
+    return '非常强烈'
+  }
+})

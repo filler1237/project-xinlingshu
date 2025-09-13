@@ -61,6 +61,18 @@
   </view>
 </view>
 
+<view class="Diary" bind:tap="gotoDiary">
+  <view class="Diary" style="margin: 0;">
+    <view class="Diary_i" style="width:250rpx; flex-direction: column;">
+      <text class="Font">情绪日记</text>
+      <text class="Font_s">Emotion Diary</text>
+    </view>
+    <view class="Diary_i" style="justify-content: flex-end; align-items: flex-end; margin-right: 25rpx;">
+      <image src="/image/QingSu.png" mode="widthFix"/>
+    </view>
+  </view>
+</view>
+
 <text class="Font" style="margin-left: 50rpx;">心灵娱乐</text>
 <view class="GameBox">
   <view class="Game" bind:tap="gotoTaLuo">

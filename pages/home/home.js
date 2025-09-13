@@ -27,7 +27,12 @@ gotoTaLuo (){
 },
 gotoEmotion (){
   wx.navigateTo({
-    url: '/home/emotion/emotion'
+    url: '/pages/diary/calendar/calendar'
+  })
+},
+gotoDiary (){
+  wx.navigateTo({
+    url: '/pages/diary/calendar/calendar'
   })
 },
   /**

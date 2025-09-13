@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
   try {
     const { data } = await db.collection('DiaryEntries')
       .where({
-        userId: wxContext.OPENID,
+        UserID: wxContext.OPENID,
         date: db.command.gte(startDate).and(db.command.lte(endDate))
       })
       .orderBy('date', 'asc')
