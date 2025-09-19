@@ -1,0 +1,26 @@
+/* home/read/create/create.wxss */
+.container {
+  padding: 200rpx;
+}
+.form-item {
+  margin-bottom: 300rpx;
+}
+.title-input {
+  border: 1px solid #eee;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+}
+.content-textarea {
+  width: 100%;
+  height: 500rpx; /* 将高度修改为接近屏幕宽度的值 */
+  border: 1px solid 5#eee;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  font-size: 30rpx;
+
+}
+.publish-button {
+  margin-top: 40rpx;
+}

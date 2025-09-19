@@ -23,11 +23,12 @@
         "consult/next/1/1",
         "consult/next/1/2/2",
         "read/read",
-        "read/text/2/2",
         "card/card",
         "emotion/emotion",
         "social/social",
-        "read/text/1/1"
+        "read/detail/detail",
+        "read/create",
+        "read/create/create"
       ]
     },
     {

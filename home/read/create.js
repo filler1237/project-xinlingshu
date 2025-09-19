@@ -1,4 +1,4 @@
-// pages/home/function/read/text/1/1.js
+// home/read/create.js
 Page({
 
   /**

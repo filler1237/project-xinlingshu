@@ -1,0 +1,11 @@
+<!-- home/read/create/create.wxml -->
+<view class="container">
+  <view class="form-item">
+    <input class="title-input" placeholder="请输入文章标题" model:value="{{title}}" />
+  </view>
+  <view class="form-item">
+    <textarea class="content-textarea" placeholder="请输入文章内容..." model:value="{{content}}" style="width: 100%;">
+    </textarea>
+  </view>
+  <button class="publish-button" type="primary" bind:tap="publishArticle">发表</button>
+</view>

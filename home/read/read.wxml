@@ -1,4 +1,6 @@
-<navigation-bar title="心灵补给"></navigation-bar>
+<navigation-bar title="心灵补给">
+ <view slot="right" class="add-button" bind:tap="goToCreatePage"> + </view>
+</navigation-bar>
 <view class="bottom">
   <image class="down"src="/image/up.png" style="width: 100%;"/>
   <image class="up" src="/image/down.png" style="width: 100%;"/>
@@ -6,18 +8,10 @@
 </view>
 <view class="thispage"> 
 <view class="zl">
-  <navigator url="./text/1/1" class="zhuanlan">
+  <view wx:for="{{articles}}" wx:key="_id" class="zhuanlan" bind:tap="goToDetail" data-id="{{item._id}}">
     <view class="text1">
-      「老好人」为什么不受欢迎？
-  </view>
-  </navigator>
-  <navigator url="./text/2/2" class="zhuanlan">
-    <view class="text1">
-      有毒的「女性魅力」，是时候对它说不了
+      {{item.title}}
     </view>
-  </navigator>
+  </view>
 </view>
-  <view class="background">
-  <image src="/assets/tree1.png" mode="widthFix" style="position: absolute; left: 0; right: 0; margin: 0 auto;"/>
-</view> 
 </view>

@@ -17,7 +17,9 @@ exports.login = async (event, context) => {
     await users.add({
       data: {
         userInfo: userInfo,
-        data: event.data
+        data: event.data,
+        treeLevel:1,
+        unlockedAchievements:[]
       }
     })
   } else {
@@ -41,7 +43,9 @@ exports.register = async (event, context) => {
   await users.add({
     data: {
       userInfo: userInfo,
-      data: event.data
+      data: event.data,
+      treeLevel:1,
+      unlockedAchievements:[]
     }
   })
 

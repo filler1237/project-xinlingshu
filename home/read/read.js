@@ -1,74 +1,44 @@
-// pages/home/function/read/read.js
+// home/read/read.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    articles: []
   },
-  onBackTap: function(e) {
-    var pages = getCurrentPages();                       //获取当前页面
-    var prePage = pages[pages.length - 2];               //获取上一页面
-    prePage.setData({
-      'search.page': 1                                   //给上一页面的变量赋值
-    })
-    wx.navigateBack({                                    //返回上一页面
-      delta: 1,
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.getArticles();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  getArticles() {
+    wx.cloud.callFunction({
+      name: 'getArticles',
+      success: res => {
+        this.setData({
+          articles: res.result.data
+        });
+      },
+      fail: err => {
+        console.error('[云函数] [getArticles] 调用失败', err)
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  goToDetail(event) {
+    const articleId = event.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/home/read/detail/detail?id=${articleId}`,
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  goToCreatePage() {
+    wx.navigateTo({
+      url: '/home/read/create/create',
+    })
   }
 })
+

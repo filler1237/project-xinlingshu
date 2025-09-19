@@ -81,3 +81,16 @@ page{
   font-size: 50rpx;
   font-weight: 100;
 }
+.add-button{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+  color: #333;
+  margin-right: 20rpx; /* 调整与右侧胶囊按钮的距离 */
+  border: 1px solid #e0e0e0;
+}
