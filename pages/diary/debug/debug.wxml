@@ -1,0 +1,55 @@
+<!--pages/diary/debug/debug.wxml-->
+<navigation-bar title="情绪强度调试" back="{{true}}"></navigation-bar>
+
+<view class="container">
+  <view class="debug-section">
+    <view class="section-title">调试信息</view>
+    <view class="debug-item">
+      <text class="label">用户选择的强度:</text>
+      <text class="value">{{userIntensity}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">用户选择的类型:</text>
+      <text class="value">{{userEmotionType}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">数据库中的强度:</text>
+      <text class="value">{{dbIntensity}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">数据库中的类型:</text>
+      <text class="value">{{dbEmotionType}}</text>
+    </view>
+  </view>
+
+  <view class="debug-section">
+    <view class="section-title">测试操作</view>
+    <button class="test-btn" bindtap="testCreateDiary">创建测试日记</button>
+    <button class="test-btn" bindtap="testAnalyzeDiary">分析测试日记</button>
+    <button class="test-btn" bindtap="loadLatestDiary">加载最新日记</button>
+  </view>
+
+  <view class="debug-section" wx:if="{{latestDiary}}">
+    <view class="section-title">最新日记数据</view>
+    <view class="debug-item">
+      <text class="label">ID:</text>
+      <text class="value">{{latestDiary._id}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">内容:</text>
+      <text class="value">{{latestDiary.content}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">情绪类型:</text>
+      <text class="value">{{latestDiary.emotionType}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">情绪强度:</text>
+      <text class="value">{{latestDiary.emotionIntensity}}</text>
+    </view>
+    <view class="debug-item">
+      <text class="label">创建时间:</text>
+      <text class="value">{{latestDiary.createdAt}}</text>
+    </view>
+  </view>
+</view>

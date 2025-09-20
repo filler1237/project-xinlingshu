@@ -1,16 +1,23 @@
 <!--pages/diary/calendar/calendar.wxml-->
+<navigation-bar title="日记日历" back="{{true}}"></navigation-bar>
+
 <view class="container">
-  <!-- 导航栏 -->
+  <!-- 导航栏 - 移到最上方 -->
   <view class="nav-bar">
     <view class="nav-item" bindtap="goToCreate">
       <text class="nav-icon">✏️</text>
       <text class="nav-text">写日记</text>
+    </view>
+    <view class="nav-item" bindtap="showDiaryList">
+      <text class="nav-icon">📝</text>
+      <text class="nav-text">我的日记</text>
     </view>
     <view class="nav-item" bindtap="goToTrend">
       <text class="nav-icon">📊</text>
       <text class="nav-text">趋势分析</text>
     </view>
   </view>
+  
   <!-- 头部 -->
   <view class="header">
     <view class="month-selector">
@@ -33,11 +40,9 @@
   <!-- 日历网格 -->
   <view class="calendar-grid">
     <view 
-      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{selectedDate === item.date ? 'selected' : ''}}"
+      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}}"
       wx:for="{{daysInMonth}}" 
       wx:key="date"
-      data-date="{{item.date}}"
-      bindtap="selectDate"
     >
       <view class="day-number">{{item.day}}</view>
       <view 
@@ -93,6 +98,89 @@
         </button>
       </view>
     </view>
+  </view>
+
+  <!-- 日记列表弹窗 -->
+  <view class="diary-list-modal" wx:if="{{showDiaryListModal}}" bindtap="hideDiaryList">
+    <view class="diary-list-content" catchtap="">
+      <view class="diary-list-header">
+        <text class="diary-list-title">我的日记</text>
+        <view class="header-actions">
+          <text class="delete-all-btn" bindtap="showDeleteAllConfirm" wx:if="{{diaryList.length > 0}}">清空</text>
+          <text class="close-btn" bindtap="hideDiaryList">×</text>
+        </view>
+      </view>
+      
+      <view class="diary-list-body">
+        <view class="diary-loading" wx:if="{{diaryListLoading}}">
+          <text>加载中...</text>
+        </view>
+        
+        <view class="diary-deleting" wx:elif="{{isDeletingAll}}">
+          <text>正在删除所有日记...</text>
+        </view>
+        
+        <view class="diary-empty" wx:elif="{{diaryList.length === 0}}">
+          <text>还没有写过日记</text>
+        </view>
+        
+        <scroll-view class="diary-scroll" scroll-y="true" wx:else>
+          <view 
+            class="diary-item" 
+            wx:for="{{diaryList}}" 
+            wx:key="_id"
+            bindtap="viewDiaryDetail"
+            data-id="{{item._id}}"
+          >
+            <view class="diary-item-header">
+              <view class="diary-date-section">
+                <text class="diary-date">{{formatDate(item.date)}}</text>
+                <text class="diary-weekday">{{formatWeekday(item.date)}}</text>
+              </view>
+              <view class="diary-emotion-section">
+                <view 
+                  class="diary-emotion-tag" 
+                  wx:if="{{item.emotionType}}"
+                  style="background-color: {{getEmotionColor(item.emotionType)}}"
+                >
+                  {{item.emotionType}}
+                </view>
+                <view 
+                  class="diary-intensity" 
+                  wx:if="{{item.emotionIntensity !== null && item.emotionIntensity !== undefined}}"
+                >
+                  强度: {{item.emotionIntensity}}/10
+                </view>
+              </view>
+            </view>
+            <view class="diary-content-wrapper">
+              <text class="diary-content">{{item.content}}</text>
+            </view>
+            <view class="diary-info-section">
+              <view class="diary-date-emotion">
+                <text class="diary-record-date">{{formatDate(item.date)}}</text>
+                <view 
+                  class="diary-record-emotion" 
+                  wx:if="{{item.emotionType}}"
+                  style="background-color: {{getEmotionColor(item.emotionType)}}"
+                >
+                  {{item.emotionType}}
+                </view>
+              </view>
+              <text class="diary-preview">点击查看详情</text>
+            </view>
+            <view class="diary-footer">
+              <text class="diary-time">{{formatTime(item.createdAt)}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 调试按钮 -->
+  <view class="debug-section" style="position: fixed; bottom: 20rpx; right: 20rpx; z-index: 999;">
+    <button class="debug-btn" bindtap="testDatabase" size="mini">测试数据库</button>
   </view>
 
   <!-- 加载状态 -->

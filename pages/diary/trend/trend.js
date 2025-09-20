@@ -11,7 +11,9 @@ Page({
     loading: true,
     chartData: null,
     selectedEmotion: 'all',
-    emotionTypes: ['快乐', '平静', '焦虑', '悲伤', '愤怒', '其他']
+    emotionTypes: ['快乐', '平静', '焦虑', '悲伤', '愤怒', '其他'],
+    isZoomed: false,
+    yAxisLabels: ['0', '2', '4', '6', '8', '10']
   },
 
   onLoad() {
@@ -55,6 +57,7 @@ Page({
       
       if (result.result.ok) {
         const { series, stat } = result.result
+        console.log('获取到的趋势数据:', series) // 调试日志
         this.setData({
           trendData: series,
           emotionStats: stat,
@@ -97,6 +100,9 @@ Page({
         ? entries 
         : entries.filter(entry => entry.emotionType === selectedEmotion)
       
+      console.log(`日期 ${date} 的原始数据:`, entries) // 调试日志
+      console.log(`日期 ${date} 的过滤后数据:`, filteredEntries) // 调试日志
+      
       if (filteredEntries.length === 0) {
         return {
           date,
@@ -106,8 +112,14 @@ Page({
         }
       }
       
-      const totalIntensity = filteredEntries.reduce((sum, entry) => sum + (entry.emotionIntensity || 0), 0)
-      const averageIntensity = totalIntensity / filteredEntries.length
+      const totalIntensity = filteredEntries.reduce((sum, entry) => {
+        const intensity = entry.emotionIntensity
+        console.log(`情绪强度: ${intensity}, 类型: ${typeof intensity}`) // 调试日志
+        return sum + (intensity !== null && intensity !== undefined ? intensity : 0)
+      }, 0)
+      const averageIntensity = filteredEntries.length > 0 ? totalIntensity / filteredEntries.length : 0
+      
+      console.log(`日期 ${date} 计算的平均强度: ${averageIntensity}`) // 调试日志
       
       // 找出主导情绪
       const emotionCount = {}
@@ -230,5 +242,26 @@ Page({
         })
       }
     })
+  },
+
+  // 切换缩放
+  toggleZoom() {
+    this.setData({
+      isZoomed: !this.data.isZoomed
+    })
+  },
+
+  // 计算连接线角度
+  calculateLineAngle(startY, endY, width) {
+    const deltaY = endY - startY
+    const angle = Math.atan2(deltaY, width) * 180 / Math.PI
+    return angle
+  },
+
+  // 计算连接线长度
+  calculateLineLength(startX, startY, endX, endY) {
+    const deltaX = endX - startX
+    const deltaY = endY - startY
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY)
   }
 })

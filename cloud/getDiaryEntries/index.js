@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
 
   try {
     let query = db.collection('DiaryEntries').where({
-      UserID: wxContext.OPENID
+      userId: wxContext.OPENID
     })
 
     // 添加日期范围筛选

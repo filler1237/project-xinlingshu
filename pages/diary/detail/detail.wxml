@@ -1,4 +1,6 @@
 <!--pages/diary/detail/detail.wxml-->
+<navigation-bar title="日记详情" back="{{true}}"></navigation-bar>
+
 <view class="container">
   <!-- 加载状态 -->
   <view class="loading" wx:if="{{loading}}">
@@ -17,7 +19,10 @@
     <view class="header">
       <view class="date-info">
         <text class="date">{{formatDate(diaryEntry.date)}}</text>
+        <text class="weekday">{{formatWeekday(diaryEntry.date)}}</text>
         <text class="time">{{formatTime(diaryEntry.createdAt)}}</text>
+        <text class="debug-text">创建日期: {{diaryEntry.date}}</text>
+        
       </view>
       <view class="emotion-badge" style="background-color: {{getEmotionColor(diaryEntry.emotionType)}}">
         <text class="emotion-text">{{diaryEntry.emotionType || '未分析'}}</text>
@@ -29,14 +34,7 @@
       <view class="analysis-title">情绪分析</view>
       <view class="intensity-info">
         <text class="intensity-label">强度：</text>
-        <view class="intensity-bar">
-          <view 
-            class="intensity-fill" 
-            style="width: {{((diaryEntry.emotionIntensity || 0) * 10)}}%; background-color: {{getEmotionColor(diaryEntry.emotionType)}}"
-          ></view>
-        </view>
-        <text class="intensity-value">{{diaryEntry.emotionIntensity || 0}}/10</text>
-        <text class="intensity-desc">{{getIntensityText(diaryEntry.emotionIntensity)}}</text>
+        <text class="intensity-value">{{diaryEntry.emotionIntensity || 0}}</text>
       </view>
       
       <!-- AI回复 -->
@@ -45,25 +43,14 @@
         <view class="reply-content">{{diaryEntry.empathyReply}}</view>
       </view>
 
-      <!-- 关键词 -->
-      <view class="keywords" wx:if="{{diaryEntry.keywords && diaryEntry.keywords.length > 0}}">
-        <view class="keywords-title">关键词</view>
-        <view class="keywords-list">
-          <text 
-            class="keyword-tag" 
-            wx:for="{{diaryEntry.keywords}}" 
-            wx:key="*this"
-            wx:if="{{item}}"
-          >
-            {{item}}
-          </text>
-        </view>
-      </view>
     </view>
 
     <!-- 日记内容 -->
     <view class="content-section">
-      <view class="content-title">日记内容</view>
+      <view class="content-header">
+        <view class="content-title">日记内容</view>
+        <view class="content-date">{{formatDate(diaryEntry.date)}} {{formatWeekday(diaryEntry.date)}}</view>
+      </view>
       <view class="content-text">{{diaryEntry.content}}</view>
     </view>
 

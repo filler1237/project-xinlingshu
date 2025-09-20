@@ -11,14 +11,18 @@ exports.main = async (event, context) => {
   try {
     const { data } = await db.collection('DiaryEntries')
       .where({
-        UserID: wxContext.OPENID,
+        userId: wxContext.OPENID,
         date: db.command.gte(startDate).and(db.command.lte(endDate))
       })
       .orderBy('date', 'asc')
       .get()
 
     // 聚合统计
-    const series = data.map(d => ({ date: d.date, emotionType: d.emotionType, emotionIntensity: d.emotionIntensity ?? null }))
+    const series = data.map(d => ({ 
+      date: d.date, 
+      emotionType: d.emotionType, 
+      emotionIntensity: d.emotionIntensity !== null && d.emotionIntensity !== undefined ? d.emotionIntensity : 0 
+    }))
     const stat = {}
     data.forEach(d => {
       const k = d.emotionType || '其他'
