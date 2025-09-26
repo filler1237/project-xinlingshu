@@ -1,5 +1,12 @@
-<navigation-bar title="{{title}}"></navigation-bar>
+<navigation-bar title="{{article.title}}"></navigation-bar>
 <view class="container">
-  <view class="title">{{title}}</view>
-  <view class="content">{{content}}</view>
+  <view class="title">{{article.title}}</view>
+  <view class="content">{{article.content}}</view>
+  <button 
+    class="delete-button" 
+    wx:if="{{article._openid === userOpenid}}" 
+    bind:tap="deleteArticle"
+    type="warn">
+    删除文章
+  </button>
 </view>

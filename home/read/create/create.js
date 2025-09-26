@@ -28,7 +28,7 @@ Page({
       success: res => {
         wx.hideLoading();
         wx.showToast({
-          title: '发表成功',
+          title: '发表成功 +10成长值',
         });
         // 返回上一页并刷新
         const pages = getCurrentPages();

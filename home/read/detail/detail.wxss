@@ -12,3 +12,7 @@
   font-size: 32rpx;
   line-height: 1.6;
 }
+
+.delete-button {
+  margin-top: 40rpx;
+}

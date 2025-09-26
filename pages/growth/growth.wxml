@@ -1,0 +1,21 @@
+<!-- pages/growth/growth.wxml -->
+<view class="container">
+  <view class="tree-container">
+    <image class="tree-image" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
+    <view class="growth-value">成长值: {{growthValue}}</view>
+    <view class="growth-level">心理树等级: {{treeLevel}}</view>
+  </view>
+
+  <view class="achievements-container">
+    <view class="section-title">我的徽章</view>
+    <view class="achievements-grid" wx:if="{{unlockedAchievements.length > 0}}">
+      <view class="badge" wx:for="{{unlockedAchievements}}" wx:key="_id">
+        <image class="badge-icon" src="{{item.iconUrl}}" />
+        <view class="badge-name">{{item.name}}</view>
+      </view>
+    </view>
+    <view class="no-achievements" wx:else>
+      <text>暂未获得任何徽章，继续努力吧！</text>
+    </view>
+  </view>
+</view>

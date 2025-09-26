@@ -5,7 +5,8 @@
     "pages/sushuo/sushuo",
     "pages/logs/logs",
     "pages/auth/usercenter/usercenter",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/growth/growth"
   ],
   "subPackages": [
     {
@@ -95,6 +96,12 @@
         "text": "主页",
         "iconPath": "image/Homepage.png",
         "selectedIconPath": "image/Homepage.png"
+      },
+      {
+        "pagePath": "pages/growth/growth",
+        "text": "心理树",
+        "iconPath": "image/tree.png",
+        "selectedIconPath": "image/tree.png"
       },
       {
         "pagePath": "pages/mine/mine",

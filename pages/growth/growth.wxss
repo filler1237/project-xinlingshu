@@ -1,0 +1,73 @@
+/* pages/growth/growth.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.tree-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+  padding: 30rpx;
+  background-color: #f7f7f7;
+  border-radius: 20rpx;
+}
+
+.tree-image {
+  width: 400rpx;
+  height: 400rpx;
+}
+
+.growth-value {
+  margin-top: 20rpx;
+  font-size: 32rpx;
+  color: #888;
+}
+
+.achievements-container {
+  width: 100%;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 8rpx solid #96CE74;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx;
+}
+
+.badge-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #eee;
+  margin-bottom: 10rpx;
+}
+
+.badge-name {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.no-achievements {
+  text-align: center;
+  color: #999;
+  padding: 40rpx;
+}

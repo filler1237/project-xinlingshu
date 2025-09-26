@@ -2,7 +2,7 @@
 <image class="avatar" src="{{avatarUrl}}" style="width: 166rpx;"  bindtap="toLogin"></image>
 <view class='ucenter' style="width: 678rpx;">
   <view>
-    <text class="name" bindtap="toLogin">{{nickName}}</text>
+    <text class="name" bindtap="handleLogin">{{nickName}}</text>
   </view>
   <view class="level">
     心灵等级{{fuyuanli.Level}}

@@ -1,26 +1,55 @@
 /* home/read/create/create.wxss */
 .container {
-  padding: 200rpx;
+  padding: 40rpx;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
 .form-item {
-  margin-bottom: 300rpx;
+  margin-bottom: 40rpx;
 }
+
+.form-label {
+  display: block;
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
 .title-input {
-  border: 1px solid #eee;
+  border: 1rpx solid #e0e0e0;
   padding: 20rpx;
   border-radius: 10rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .content-textarea {
   width: 100%;
-  height: 500rpx; /* 将高度修改为接近屏幕宽度的值 */
-  border: 1px solid 5#eee;
+  height: 400rpx;
+  border: 1rpx solid #e0e0e0;
   padding: 20rpx;
   border-radius: 10rpx;
   box-sizing: border-box;
   font-size: 30rpx;
-
 }
+
 .publish-button {
-  margin-top: 40rpx;
+  margin-top: 60rpx;
+  background-color: #07c160;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.2);
 }

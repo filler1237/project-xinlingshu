@@ -3,53 +3,59 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 
 const db = cloud.database()
-const users = db.collection('users')
 
-// 登录函数
-exports.login = async (event, context) => {
-  const { userInfo } = event
-  const user = await users.where({
-    _openid: userInfo.openid
+// 将云函数统一为一个入口main
+exports.main=async(event,context)=>{
+  const wxContext=cloud.getWXContext()
+  const openid=wxContext.OPENID
+
+  // 在前端接收用户授权的基本信息
+  const{nickName,avatarUrl}=event
+
+  // 根据openid查询用户是否已存在
+  const userRes=await db.collection('users').where({
+    _openid:openid
   }).get()
 
-  if (user.data.length === 0) {
-    // 如果用户不存在，注册
-    await users.add({
-      data: {
-        userInfo: userInfo,
-        data: event.data,
+  let userInfo;
+
+  // 用户是否存在
+  if(userRes.data.length===0){
+    console.log('用户不存在，执行注册');
+    const addUserRes=await db.collection('users').add({
+      data:{
+        _openid:openid,
+        nickName:nickName,
+        avatarUrl:avatarUrl,
+        createTime:db.serverDate(),
+        // 初始化成长系统
+        growthValue:0,
         treeLevel:1,
-        unlockedAchievements:[]
+        unlockedAchievements:[],
+        fuyuanli:{
+          max:10,
+          gap:10,
+          Level:1,
+          shengli:0,
+          xinli:0,
+          qingxu:0,
+          shejiao:0
+        }
       }
     })
-  } else {
-    // 如果用户已存在，更新用户信息
-    await users.doc(user.data[0]._id).update({
-      data: {
-        userInfo: userInfo,
-        data: event.data
+    userInfo=(await db.collection('users').doc(addUserRes._id).get()).data;
+  } else{
+    console.log('用户已存在，执行登陆');
+    const userId=userRes.data[0]._id;
+    await db.collection('users').doc(userId).update({
+      data:{
+        nickName:nickName,
+        avatarUrl:avatarUrl
       }
     })
+    userInfo = (await db.collection('users').doc(userId).get()).data;
   }
-
   return {
-    success: true
-  }
-}
-
-// 注册函数
-exports.register = async (event, context) => {
-  const { userInfo } = event
-  await users.add({
-    data: {
-      userInfo: userInfo,
-      data: event.data,
-      treeLevel:1,
-      unlockedAchievements:[]
-    }
-  })
-
-  return {
-    success: true
+    userInfo:userInfo
   }
 }
