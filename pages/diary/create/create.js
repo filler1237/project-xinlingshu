@@ -90,11 +90,21 @@ Page({
 
     try {
       // 1. 创建日记条目
+      console.log('提交前的数据:', {
+        content: content.trim(),
+        emotionIntensity: emotionIntensity,
+        emotionIntensityType: typeof emotionIntensity,
+        parsedIntensity: parseInt(emotionIntensity),
+        parsedType: typeof parseInt(emotionIntensity),
+        date: date,
+        emotionType: selectedEmotionType
+      })
+      
       const createResult = await wx.cloud.callFunction({
         name: 'createDiaryEntry',
         data: {
           content: content.trim(),
-          emotionIntensity: parseInt(emotionIntensity),
+          emotionIntensity: emotionIntensity ? parseInt(emotionIntensity) : null,
           date: date,
           emotionType: selectedEmotionType || null
         }
@@ -213,5 +223,6 @@ Page({
         }
       }
     })
-  }
+  },
+
 })

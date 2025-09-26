@@ -11,16 +11,23 @@ exports.main = async (event, context) => {
     return { ok: false, error: 'content and date are required' }
   }
 
+  // 确保emotionIntensity是有效的数字或null
+  const validEmotionIntensity = (emotionIntensity !== null && emotionIntensity !== undefined && !isNaN(emotionIntensity)) ? emotionIntensity : null
+  
   const doc = {
     userId: wxContext.OPENID,
     date, // YYYY-MM-DD
     content,
     emotionType: emotionType,
-    emotionIntensity,
+    emotionIntensity: validEmotionIntensity,
     empathyReply: null,
     keywords: [],
     createdAt: new Date()
   }
+  
+  console.log('准备保存的日记数据:', doc) // 调试日志
+  console.log('原始情绪强度:', emotionIntensity, typeof emotionIntensity) // 调试日志
+  console.log('有效情绪强度:', validEmotionIntensity, typeof validEmotionIntensity) // 调试日志
 
   try {
     const res = await db.collection('DiaryEntries').add({ data: doc })

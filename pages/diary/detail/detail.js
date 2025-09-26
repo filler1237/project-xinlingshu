@@ -107,23 +107,56 @@ Page({
       success: async (res) => {
         if (res.confirm) {
           try {
-            const db = wx.cloud.database()
-            await db.collection('DiaryEntries').doc(diaryEntry._id).remove()
+            console.log('开始删除日记，ID:', diaryEntry._id)
             
-            wx.showToast({
-              title: '删除成功',
-              icon: 'success'
-            })
-            
-            // 返回上一页
-            setTimeout(() => {
-              wx.navigateBack()
-            }, 1500)
+            // 先尝试使用云函数删除
+            try {
+              const result = await wx.cloud.callFunction({
+                name: 'deleteDiary',
+                data: {
+                  diaryId: diaryEntry._id
+                }
+              })
+              
+              console.log('云函数删除结果:', result)
+              
+              if (result.result && result.result.success) {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success'
+                })
+                
+                // 返回上一页
+                setTimeout(() => {
+                  wx.navigateBack()
+                }, 1500)
+                return
+              } else {
+                throw new Error(result.result?.error || '云函数删除失败')
+              }
+            } catch (cloudError) {
+              console.log('云函数删除失败，尝试直接删除:', cloudError)
+              
+              // 如果云函数失败，尝试直接删除
+              const db = wx.cloud.database()
+              await db.collection('DiaryEntries').doc(diaryEntry._id).remove()
+              
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success'
+              })
+              
+              // 返回上一页
+              setTimeout(() => {
+                wx.navigateBack()
+              }, 1500)
+            }
           } catch (error) {
             console.error('删除失败:', error)
             wx.showToast({
-              title: '删除失败',
-              icon: 'none'
+              title: `删除失败: ${error.message}`,
+              icon: 'none',
+              duration: 3000
             })
           }
         }
@@ -161,7 +194,27 @@ Page({
 
   // 格式化日期
   formatDate(dateStr) {
-    const date = new Date(dateStr)
+    if (!dateStr) return '无日期'
+    
+    let date
+    if (typeof dateStr === 'string') {
+      date = new Date(dateStr)
+    } else if (dateStr instanceof Date) {
+      date = dateStr
+    } else if (dateStr.seconds) {
+      // 处理Firebase Timestamp格式
+      date = new Date(dateStr.seconds * 1000)
+    } else {
+      console.log('未知的日期格式:', dateStr)
+      return '日期格式错误'
+    }
+    
+    // 检查日期是否有效
+    if (isNaN(date.getTime())) {
+      console.log('无效的日期:', dateStr)
+      return '无效日期'
+    }
+    
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
@@ -171,10 +224,57 @@ Page({
   // 格式化时间
   formatTime(timeStr) {
     if (!timeStr) return ''
-    const date = new Date(timeStr)
+    
+    // 处理不同的数据类型
+    let date
+    if (typeof timeStr === 'string') {
+      date = new Date(timeStr)
+    } else if (timeStr instanceof Date) {
+      date = timeStr
+    } else if (timeStr.seconds) {
+      // 处理Firebase Timestamp格式
+      date = new Date(timeStr.seconds * 1000)
+    } else {
+      console.log('未知的时间格式:', timeStr)
+      return '时间格式错误'
+    }
+    
+    // 检查日期是否有效
+    if (isNaN(date.getTime())) {
+      console.log('无效的日期:', timeStr)
+      return '无效日期'
+    }
+    
     const hours = String(date.getHours()).padStart(2, '0')
     const minutes = String(date.getMinutes()).padStart(2, '0')
     return `${hours}:${minutes}`
+  },
+
+  // 格式化星期几
+  formatWeekday(dateStr) {
+    if (!dateStr) return '无日期'
+    
+    let date
+    if (typeof dateStr === 'string') {
+      date = new Date(dateStr)
+    } else if (dateStr instanceof Date) {
+      date = dateStr
+    } else if (dateStr.seconds) {
+      // 处理Firebase Timestamp格式
+      date = new Date(dateStr.seconds * 1000)
+    } else {
+      console.log('未知的日期格式:', dateStr)
+      return '日期格式错误'
+    }
+    
+    // 检查日期是否有效
+    if (isNaN(date.getTime())) {
+      console.log('无效的日期:', dateStr)
+      return '无效日期'
+    }
+    
+    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    return weekdays[date.getDay()]
   },
 
   // 获取情绪颜色
@@ -198,5 +298,6 @@ Page({
     if (intensity <= 6) return '中等'
     if (intensity <= 8) return '强烈'
     return '非常强烈'
-  }
+  },
+
 })
