@@ -188,4 +188,46 @@ Page({
   addQX() { this.updateFuyuanli("qingxu"); },
   addSJ() { this.updateFuyuanli("shejiao"); },
 
+  /**
+   * 用户点击每日签到按钮
+   */
+  onSignIn() {
+    if (!this.data.isLogin) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+
+    wx.showLoading({
+      title: '签到中...',
+    });
+
+    wx.cloud.callFunction({
+      name: 'taskSignIn',
+    }).then(res => {
+      wx.hideLoading();
+      if (res.result.code === 0) {
+        wx.showToast({
+          title: `签到成功！获得 ${res.result.reward} 水滴`,
+          icon: 'success'
+        });
+        // 可以在这里更新本地的水滴数量，如果需要实时显示的话
+      } else {
+        // 其他情况，例如已经签到或失败
+        wx.showToast({
+          title: res.result.message,
+          icon: 'none'
+        });
+      }
+    }).catch(err => {
+      wx.hideLoading();
+      wx.showToast({
+        title: '签到失败，请稍后再试',
+        icon: 'none'
+      });
+      console.error("签到云函数调用失败", err);
+    });
+  },
 });

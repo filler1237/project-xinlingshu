@@ -5,9 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    growthValue:0,
-    treeLevel:1,
-    unlockedAchievements:[]
+    growthValue: 0,
+    treeLevel: 1,
+    unlockedAchievements: [],
+    animationState: ''
   },
 
   /**
@@ -39,13 +40,32 @@ Page({
         name:'getUserGrowthData',
         success:res=>{
           wx.hideLoading()
-          if(res.result.code===0){
+          if (res.result.code === 0) {
             const data = res.result.data;
-            this.setData({
-              growthValue: data.growthValue,
-              treeLevel: data.treeLevel,
-              unlockedAchievements: data.unlockedAchievements
-            })
+            const oldLevel = this.data.treeLevel;
+
+            if (oldLevel !== data.treeLevel) {
+              // Level changed, trigger animation
+              this.setData({
+                animationState: ''
+              });
+              setTimeout(() => {
+                this.setData({
+                  growthValue: data.growthValue,
+                  treeLevel: data.treeLevel,
+                  unlockedAchievements: data.unlockedAchievements,
+                  animationState: 'animated'
+                });
+              }, 100); // A short delay to allow the DOM to update
+            } else {
+              // Initial load or no level change
+              this.setData({
+                growthValue: data.growthValue,
+                treeLevel: data.treeLevel,
+                unlockedAchievements: data.unlockedAchievements,
+                animationState: 'animated' // Make it visible on first load
+              });
+            }
           }
           else{
             wx.showToast({

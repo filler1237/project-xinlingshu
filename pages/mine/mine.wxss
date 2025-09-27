@@ -65,18 +65,34 @@ page{
   right: 22rpx;
   top: 45rpx;
 }
-.ucenter .shudong {
-  height: 114rpx;
+
+/* 新的Flexbox容器样式 */
+.actions-container {
   position: absolute;
-  left: 56rpx;
-  top: 186rpx;
-  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 114rpx;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.action-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex: 1; /* 让每个项目平分空间 */
 }
-.ucenter .shudong .txt{
+
+.action-item .icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.action-item .txt {
   color: #253858;
   font-family: PingFang SC;
   font-weight: regular;
@@ -85,66 +101,11 @@ page{
   letter-spacing: 0rpx;
   text-align: center;
 }
-.ucenter .shudong image{
-  height: 40rpx;
-}
-.ucenter .test {
-  height: 114rpx;
-  position: absolute;
-  left: 280rpx;
-  top: 186rpx;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.ucenter .test .txt{
-  color: #253858;
-  font-family: PingFang SC;
-  font-weight: regular;
-  font-size: 24rpx;
-  line-height: 56rpx;
-  letter-spacing: 0rpx;
-  text-align: center;
-}
-.ucenter .test image{
-  height: 40rpx;
-}
-.ucenter .message {
-  height: 114rpx;
-  position: absolute;
-  left: 508rpx;
-  top: 186rpx;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.ucenter .message .txt{
-  color: #253858;
-  font-family: PingFang SC;
-  font-weight: regular;
-  font-size: 24rpx;
-  line-height: 56rpx;
-  letter-spacing: 0rpx;
-  text-align: center;
-}
-.ucenter .message image{
-  height: 40rpx;
-}
-.ucenter .line1{
-  top: 186rpx;
-  left: 220rpx;
-  position: absolute;
-  height: 100rpx;
-}
-.ucenter .line2{
-  top: 186rpx;
-  left: 450rpx;
-  position: absolute;
-  height: 100rpx;
+
+.divider {
+  width: 2rpx;
+  height: 80rpx;
+  background-color: #E0E0E0;
 }
 .myBook{
   background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%);

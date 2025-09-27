@@ -7,6 +7,7 @@
 }
 
 .tree-container {
+  margin-top: 50rpx;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,9 +18,38 @@
   border-radius: 20rpx;
 }
 
-.tree-image {
+.tree-animation-wrapper {
   width: 400rpx;
   height: 400rpx;
+  position: relative;
+}
+
+.tree-image {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.tree-image.enter {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes grow {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tree-image.animated {
+  animation: grow 0.5s ease-in-out forwards;
 }
 
 .growth-value {
