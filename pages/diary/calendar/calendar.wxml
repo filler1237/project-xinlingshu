@@ -22,7 +22,7 @@
   <view class="header">
     <view class="month-selector">
       <button class="nav-btn" bindtap="prevMonth">‹</button>
-      <view class="month-display" bindtap="showMonthPicker">
+      <view class="month-display" bindtap="showDatePicker">
         <text class="month-text">{{currentYear}}年{{currentMonth}}月</text>
         <text class="arrow">▼</text>
       </view>
@@ -40,15 +40,19 @@
   <!-- 日历网格 -->
   <view class="calendar-grid">
     <view 
-      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}}"
+      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}} {{item.emotionType ? 'has-diary' : ''}}"
       wx:for="{{daysInMonth}}" 
       wx:key="date"
+      bindtap="onDayClick"
+      data-date="{{item.date}}"
+      data-emotion-type="{{item.emotionType}}"
+      data-diary-id="{{item.diaryId}}"
     >
       <view class="day-number">{{item.day}}</view>
       <view 
         class="emotion-indicator"
         wx:if="{{item.emotionType}}"
-        style="background-color: {{getEmotionColor(item.emotionType)}}; {{getIntensityStyle(item.emotionIntensity)}}"
+        style="background-color: {{item.emotionColor}}; {{item.intensityStyle}}"
       ></view>
     </view>
   </view>
@@ -65,37 +69,60 @@
         wx:for-index="emotion"
       >
         <view class="legend-color" style="background-color: {{color}}"></view>
+        <text class="legend-emoji">{{getEmotionEmoji(emotion)}}</text>
         <text class="legend-text">{{emotion}}</text>
       </view>
     </view>
   </view>
 
-  <!-- 月份选择器 -->
-  <view class="month-picker-modal" wx:if="{{showMonthPicker}}" bindtap="hideMonthPicker">
-    <view class="month-picker-content" catchtap="">
-      <view class="picker-title">选择月份</view>
-      <view class="year-selector">
-        <button class="year-btn" bindtap="selectMonth" data-year="{{currentYear - 1}}" data-month="{{currentMonth}}">
-          {{currentYear - 1}}年
-        </button>
-        <button class="year-btn current" bindtap="selectMonth" data-year="{{currentYear}}" data-month="{{currentMonth}}">
-          {{currentYear}}年
-        </button>
-        <button class="year-btn" bindtap="selectMonth" data-year="{{currentYear + 1}}" data-month="{{currentMonth}}">
-          {{currentYear + 1}}年
-        </button>
+  <!-- 日期选择器 -->
+  <view class="date-picker-modal" wx:if="{{showDatePicker}}" bindtap="hideDatePicker">
+    <view class="date-picker-content" catchtap="">
+      <view class="picker-title">选择日期</view>
+      
+      <!-- 年月日选择器 -->
+      <view class="picker-container">
+        <view class="picker-column">
+          <text class="picker-label">年</text>
+          <picker 
+            mode="selector" 
+            range="{{yearList}}" 
+            value="{{yearList.indexOf(selectedYear)}}"
+            bindchange="selectYear"
+          >
+            <view class="picker-display">{{selectedYear}}年</view>
+          </picker>
+        </view>
+        
+        <view class="picker-column">
+          <text class="picker-label">月</text>
+          <picker 
+            mode="selector" 
+            range="{{monthList}}" 
+            value="{{selectedMonth - 1}}"
+            bindchange="selectMonth"
+          >
+            <view class="picker-display">{{selectedMonth}}月</view>
+          </picker>
+        </view>
+        
+        <view class="picker-column">
+          <text class="picker-label">日</text>
+          <picker 
+            mode="selector" 
+            range="{{dayList}}" 
+            value="{{selectedDay - 1}}"
+            bindchange="selectDay"
+          >
+            <view class="picker-display">{{selectedDay}}日</view>
+          </picker>
+        </view>
       </view>
-      <view class="month-selector">
-        <button 
-          class="month-btn {{currentMonth === i ? 'current' : ''}}"
-          wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" 
-          wx:key="*this"
-          data-year="{{currentYear}}"
-          data-month="{{item}}"
-          bindtap="selectMonth"
-        >
-          {{item}}月
-        </button>
+      
+      <!-- 操作按钮 -->
+      <view class="picker-actions">
+        <button class="picker-btn cancel" bindtap="hideDatePicker">取消</button>
+        <button class="picker-btn confirm" bindtap="confirmDateSelection">确定</button>
       </view>
     </view>
   </view>
@@ -178,10 +205,6 @@
     </view>
   </view>
 
-  <!-- 调试按钮 -->
-  <view class="debug-section" style="position: fixed; bottom: 20rpx; right: 20rpx; z-index: 999;">
-    <button class="debug-btn" bindtap="testDatabase" size="mini">测试数据库</button>
-  </view>
 
   <!-- 加载状态 -->
   <view class="loading" wx:if="{{loading}}">

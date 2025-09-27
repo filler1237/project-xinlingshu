@@ -8,10 +8,18 @@ Page({
     diaryEntries: [],
     calendarData: {},
     loading: true,
-    showMonthPicker: false,
+    showDatePicker: false,
     currentYear: 0,
     currentMonth: 0,
+    currentDay: 0,
     daysInMonth: [],
+    // 日期选择器相关
+    yearList: [],
+    monthList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    dayList: [],
+    selectedYear: 0,
+    selectedMonth: 0,
+    selectedDay: 0,
     // 日记列表相关
     showDiaryListModal: false,
     diaryList: [],
@@ -24,6 +32,14 @@ Page({
       '悲伤': '#4dabf7',
       '愤怒': '#ff8cc8',
       '其他': '#9775fa'
+    },
+    emotionEmojis: {
+      '快乐': '😊',
+      '平静': '😌',
+      '焦虑': '😰',
+      '悲伤': '😢',
+      '愤怒': '😠',
+      '其他': '🤔'
     }
   },
 
@@ -33,13 +49,25 @@ Page({
     const month = today.getMonth() + 1
     const date = today.getDate()
     
+    // 生成年份列表（从1900年到2100年）
+    const yearList = []
+    for (let i = 1900; i <= 2100; i++) {
+      yearList.push(i)
+    }
+    
     this.setData({
       currentDate: `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`,
       selectedDate: `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`,
       currentYear: year,
-      currentMonth: month
+      currentMonth: month,
+      currentDay: date,
+      yearList: yearList,
+      selectedYear: year,
+      selectedMonth: month,
+      selectedDay: date
     })
     
+    this.generateDayList(year, month)
     this.generateCalendar()
     this.loadDiaryEntries()
   },
@@ -128,17 +156,34 @@ Page({
         series.forEach(entry => {
           calendarData[entry.date] = {
             emotionType: entry.emotionType,
-            emotionIntensity: entry.emotionIntensity
+            emotionIntensity: entry.emotionIntensity,
+            diaryId: entry._id || entry.id // 确保包含日记ID
           }
         })
         
         // 更新日历数据
         const updatedDays = this.data.daysInMonth.map(day => {
           const entry = calendarData[day.date]
-          return {
-            ...day,
-            emotionType: entry ? entry.emotionType : null,
-            emotionIntensity: entry ? entry.emotionIntensity : null
+          if (entry) {
+            return {
+              ...day,
+              emotionType: entry.emotionType,
+              emotionIntensity: entry.emotionIntensity,
+              emotionColor: this.getEmotionColor(entry.emotionType),
+              emotionEmoji: this.getEmotionEmoji(entry.emotionType),
+              intensityStyle: this.getIntensityStyle(entry.emotionIntensity),
+              diaryId: entry.diaryId
+            }
+          } else {
+            return {
+              ...day,
+              emotionType: null,
+              emotionIntensity: null,
+              emotionColor: null,
+              emotionEmoji: null,
+              intensityStyle: null,
+              diaryId: null
+            }
           }
         })
         
@@ -199,23 +244,66 @@ Page({
     this.loadDiaryEntries()
   },
 
-  // 显示月份选择器
-  showMonthPicker() {
-    this.setData({ showMonthPicker: true })
+  // 生成日期列表
+  generateDayList(year, month) {
+    const daysInMonth = new Date(year, month, 0).getDate()
+    const dayList = []
+    for (let i = 1; i <= daysInMonth; i++) {
+      dayList.push(i)
+    }
+    this.setData({ dayList })
   },
 
-  // 隐藏月份选择器
-  hideMonthPicker() {
-    this.setData({ showMonthPicker: false })
+  // 显示日期选择器
+  showDatePicker() {
+    this.setData({ 
+      showDatePicker: true,
+      selectedYear: this.data.currentYear,
+      selectedMonth: this.data.currentMonth,
+      selectedDay: this.data.currentDay
+    })
+    this.generateDayList(this.data.selectedYear, this.data.selectedMonth)
+  },
+
+  // 隐藏日期选择器
+  hideDatePicker() {
+    this.setData({ showDatePicker: false })
+  },
+
+  // 选择年份
+  selectYear(e) {
+    const year = parseInt(e.detail.value)
+    this.setData({ 
+      selectedYear: year,
+      selectedDay: 1 // 重置日期为1号
+    })
+    this.generateDayList(year, this.data.selectedMonth)
   },
 
   // 选择月份
   selectMonth(e) {
-    const { year, month } = e.currentTarget.dataset
+    const month = parseInt(e.detail.value) + 1 // picker的索引从0开始
+    this.setData({ 
+      selectedMonth: month,
+      selectedDay: 1 // 重置日期为1号
+    })
+    this.generateDayList(this.data.selectedYear, month)
+  },
+
+  // 选择日期
+  selectDay(e) {
+    const day = parseInt(e.detail.value) + 1 // picker的索引从0开始
+    this.setData({ selectedDay: day })
+  },
+
+  // 确认日期选择
+  confirmDateSelection() {
+    const { selectedYear, selectedMonth, selectedDay } = this.data
     this.setData({
-      currentYear: year,
-      currentMonth: month,
-      showMonthPicker: false
+      currentYear: selectedYear,
+      currentMonth: selectedMonth,
+      currentDay: selectedDay,
+      showDatePicker: false
     })
     
     this.generateCalendar()
@@ -225,6 +313,11 @@ Page({
   // 获取情绪颜色
   getEmotionColor(emotionType) {
     return this.data.emotionColors[emotionType] || '#e9ecef'
+  },
+
+  // 获取情绪emoji
+  getEmotionEmoji(emotionType) {
+    return this.data.emotionEmojis[emotionType] || '😐'
   },
 
   // 获取情绪强度样式
@@ -475,6 +568,25 @@ Page({
     const date = new Date(dateStr)
     const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
     return weekdays[date.getDay()]
+  },
+
+  // 处理日历日期点击
+  onDayClick(e) {
+    const { date, emotionType, diaryId } = e.currentTarget.dataset
+    
+    if (emotionType && diaryId) {
+      // 有日记记录，跳转到详情页面
+      wx.navigateTo({
+        url: `/pages/diary/detail/detail?id=${diaryId}`
+      })
+    } else {
+      // 没有日记记录，提示用户
+      wx.showToast({
+        title: '这一天还没有日记记录',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
 
 

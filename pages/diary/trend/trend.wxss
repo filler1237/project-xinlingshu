@@ -124,6 +124,9 @@
   font-size: 24rpx;
   color: #333;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
 }
 
 .stat-count {
@@ -131,47 +134,6 @@
   color: #666;
 }
 
-/* 情绪筛选 */
-.emotion-filter {
-  background: white;
-  border-radius: 15rpx;
-  padding: 20rpx;
-  margin: 0 20rpx 20rpx 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
-  width: calc(100% - 40rpx);
-  box-sizing: border-box;
-}
-
-.filter-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
-}
-
-.filter-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10rpx;
-}
-
-.filter-btn {
-  padding: 12rpx 20rpx;
-  border-radius: 15rpx;
-  background: #f8f9fa;
-  color: #666;
-  border: 2rpx solid #e9ecef;
-  font-size: 20rpx;
-  min-width: 0;
-  flex: 1;
-  text-align: center;
-}
-
-.filter-btn.active {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
-}
 
 /* 趋势图表 */
 .trend-chart {
@@ -271,6 +233,32 @@
   border-radius: 8rpx;
 }
 
+/* 左侧情绪信息 */
+.data-emotion-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+  min-width: 80rpx;
+  padding: 8rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12rpx;
+  border: 2rpx solid rgba(102, 126, 234, 0.2);
+}
+
+.emotion-emoji {
+  font-size: 32rpx;
+  line-height: 1;
+}
+
+.emotion-type {
+  font-size: 18rpx;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* 中间日期信息 */
 .data-date {
   font-size: 24rpx;
   color: #333;
@@ -278,6 +266,7 @@
   min-width: 120rpx;
 }
 
+/* 右侧数据信息 */
 .data-info {
   flex: 1;
   display: flex;
@@ -290,16 +279,51 @@
   color: #666;
 }
 
-.data-count {
+.data-date-info {
   font-size: 20rpx;
   color: #999;
 }
 
+/* 右侧情绪标签 */
 .data-emotion {
   padding: 8rpx 16rpx;
   border-radius: 20rpx;
   color: white;
   font-size: 20rpx;
+  font-weight: bold;
+}
+
+/* 展开/收起按钮 */
+.expand-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 15rpx;
+  margin-top: 10rpx;
+  background: #f8f9fa;
+  border-radius: 8rpx;
+  border: 2rpx solid #e9ecef;
+  color: #667eea;
+  font-size: 24rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.expand-button:active {
+  background: #e9ecef;
+  transform: scale(0.98);
+}
+
+.expand-text {
+  font-size: 24rpx;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.expand-icon {
+  font-size: 20rpx;
+  color: #667eea;
   font-weight: bold;
 }
 
@@ -414,7 +438,7 @@
   border-radius: 15rpx;
   background: #fafafa;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.3s ease;
 }
 
@@ -456,7 +480,7 @@
 .chart-area {
   flex: 1;
   position: relative;
-  padding: 20rpx;
+  padding: 20rpx 20rpx 80rpx 20rpx;
 }
 
 .grid-lines {
@@ -551,12 +575,13 @@
 
 .line-segment {
   position: absolute;
-  height: 2rpx;
+  height: 3rpx;
   background: #667eea;
   transform-origin: left center;
   opacity: 0.8;
-  border-radius: 1rpx;
+  border-radius: 2rpx;
   z-index: 5;
+  box-shadow: 0 1rpx 3rpx rgba(102, 126, 234, 0.3);
 }
 
 /* 使用CSS绘制连接线 */
@@ -587,20 +612,174 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40rpx;
+  height: 60rpx;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 20rpx;
   background: #f8f9fa;
   border-top: 1rpx solid #e9ecef;
+  overflow: visible;
+  z-index: 20;
 }
 
 .x-label {
+  position: absolute;
   font-size: 20rpx;
-  color: #666;
+  color: #333;
   text-align: center;
   white-space: nowrap;
+  transform: translateX(-50%);
+  min-width: 80rpx;
+  font-weight: 500;
+}
+
+.x-label.no-data {
+  color: #999;
+  font-style: italic;
+  z-index: 21;
+}
+
+/* 数据点调试信息样式 */
+.debug-point-info {
+  position: absolute;
+  top: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  white-space: nowrap;
+  z-index: 30;
+  min-width: 80rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.4);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10rpx);
+}
+
+.debug-emotion {
+  color: #ffffff;
+  font-size: 18rpx;
+  font-weight: 600;
+  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.3);
+}
+
+/* 横屏模式适配 */
+.line-chart-container.zoomed {
+  width: 100vh;
+  height: 100vw;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  background: white;
+  overflow: hidden;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  margin-top: -50vw;
+  margin-left: -50vh;
+}
+
+.line-chart-container.zoomed .chart-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.line-chart-container.zoomed .chart-area {
   flex: 1;
-  padding: 0 5rpx;
+  position: relative;
+  margin: 0 60rpx 40rpx 60rpx;
+  min-height: 0;
+}
+
+.line-chart-container.zoomed .y-axis {
+  width: 50rpx;
+  height: 100%;
+  position: absolute;
+  left: -50rpx;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.line-chart-container.zoomed .x-axis {
+  height: 40rpx;
+  position: absolute;
+  bottom: -40rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rpx;
+}
+
+.line-chart-container.zoomed .line-chart {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.line-chart-container.zoomed .y-label {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.line-chart-container.zoomed .x-label {
+  font-size: 20rpx;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.line-chart-container.zoomed .debug-point-info {
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  min-width: 100rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 25rpx;
+  box-shadow: 0 6rpx 16rpx rgba(102, 126, 234, 0.5);
+  border: 3rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.line-chart-container.zoomed .debug-emotion {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.4);
+}
+
+/* 横屏模式关闭按钮 */
+.zoom-close-btn {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  width: 50rpx;
+  height: 50rpx;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.zoom-close-btn:active {
+  background: rgba(0, 0, 0, 0.8);
 }
