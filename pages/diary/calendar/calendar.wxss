@@ -122,7 +122,7 @@
 
 .calendar-day {
   width: calc(100% / 7);
-  height: 100rpx;
+  height: 110rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,6 +132,34 @@
   border-bottom: 1rpx solid #f0f0f0;
   transition: all 0.3s ease;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.calendar-day:active {
+  background: #f8f9fa;
+  transform: scale(0.95);
+}
+
+.calendar-day.has-diary {
+  cursor: pointer;
+  position: relative;
+}
+
+.calendar-day.has-diary:active {
+  background: #f0f8ff;
+  transform: scale(0.95);
+}
+
+.calendar-day.has-diary::after {
+  content: '';
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background: #667eea;
+  border-radius: 50%;
+  opacity: 0.6;
 }
 
 .calendar-day:nth-child(7n) {
@@ -147,13 +175,20 @@
 }
 
 .calendar-day.today {
-  background: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-weight: bold;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.3);
 }
 
 .calendar-day.today .day-number {
   font-weight: bold;
+  font-size: 26rpx;
+}
+
+.calendar-day.today .emotion-indicator {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.3);
 }
 
 .day-number {
@@ -163,11 +198,13 @@
 }
 
 .emotion-indicator {
-  width: 16rpx;
-  height: 16rpx;
+  width: 20rpx;
+  height: 20rpx;
   border-radius: 50%;
   position: absolute;
-  bottom: 8rpx;
+  bottom: 6rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
 }
 
 /* 情绪图例 */
@@ -195,22 +232,38 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  gap: 8rpx;
+  padding: 8rpx 12rpx;
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.legend-item:active {
+  background: #e9ecef;
+  transform: scale(0.95);
 }
 
 .legend-color {
-  width: 20rpx;
-  height: 20rpx;
+  width: 16rpx;
+  height: 16rpx;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-emoji {
+  font-size: 20rpx;
+  flex-shrink: 0;
 }
 
 .legend-text {
-  font-size: 24rpx;
-  color: #666;
+  font-size: 22rpx;
+  color: #333;
+  font-weight: 500;
 }
 
-/* 月份选择器 */
-.month-picker-modal {
+/* 日期选择器 */
+.date-picker-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -223,63 +276,96 @@
   z-index: 1000;
 }
 
-.month-picker-content {
+.date-picker-content {
   background: white;
   border-radius: 20rpx;
   padding: 40rpx;
   margin: 40rpx;
   max-height: 80vh;
   overflow-y: auto;
+  min-width: 600rpx;
 }
 
 .picker-title {
   font-size: 32rpx;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
   color: #333;
 }
 
-.year-selector {
+.picker-container {
   display: flex;
-  gap: 20rpx;
-  margin-bottom: 30rpx;
+  gap: 30rpx;
+  margin-bottom: 40rpx;
   justify-content: center;
 }
 
-.year-btn {
-  padding: 15rpx 30rpx;
-  border-radius: 10rpx;
-  background: #f8f9fa;
-  color: #666;
-  border: none;
+.picker-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.picker-label {
   font-size: 24rpx;
-}
-
-.year-btn.current {
-  background: #667eea;
-  color: white;
-}
-
-.month-selector {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15rpx;
-}
-
-.month-btn {
-  padding: 20rpx;
-  border-radius: 10rpx;
-  background: #f8f9fa;
   color: #666;
-  border: none;
-  font-size: 24rpx;
+  margin-bottom: 15rpx;
+  font-weight: bold;
+}
+
+.picker-display {
+  padding: 20rpx 30rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  font-size: 28rpx;
+  color: #333;
   text-align: center;
+  min-width: 120rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
 }
 
-.month-btn.current {
+.picker-display:active {
+  background: #e9ecef;
+  border-color: #667eea;
+}
+
+.picker-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+}
+
+.picker-btn {
+  padding: 20rpx 40rpx;
+  border-radius: 15rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  border: none;
+  min-width: 120rpx;
+  transition: all 0.3s ease;
+}
+
+.picker-btn.cancel {
+  background: #f8f9fa;
+  color: #666;
+}
+
+.picker-btn.cancel:active {
+  background: #e9ecef;
+  transform: scale(0.95);
+}
+
+.picker-btn.confirm {
   background: #667eea;
   color: white;
+}
+
+.picker-btn.confirm:active {
+  background: #5a6fd8;
+  transform: scale(0.95);
 }
 
 /* 加载状态 */
@@ -558,13 +644,3 @@
   color: #999;
 }
 
-/* 调试按钮 */
-.debug-btn {
-  background: #667eea;
-  color: white;
-  border-radius: 20rpx;
-  font-size: 20rpx;
-  padding: 10rpx 20rpx;
-  border: none;
-  box-shadow: 0 4rpx 10rpx rgba(102, 126, 234, 0.3);
-}

@@ -10,15 +10,38 @@ Page({
     endDate: '',
     loading: true,
     chartData: null,
-    selectedEmotion: 'all',
-    emotionTypes: ['快乐', '平静', '焦虑', '悲伤', '愤怒', '其他'],
     isZoomed: false,
-    yAxisLabels: ['0', '2', '4', '6', '8', '10']
+    yAxisLabels: ['0', '2', '4', '6', '8', '10'],
+    showAllDetails: false
   },
 
   onLoad() {
     this.initDateRange()
     this.loadTrendData()
+  },
+
+  onShow() {
+    // 页面显示时检查是否需要保持屏幕常亮
+    if (this.data.isZoomed) {
+      // 如果当前是放大状态，保持屏幕常亮
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      })
+    }
+  },
+
+  onHide() {
+    // 页面隐藏时关闭屏幕常亮
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
+  },
+
+  onUnload() {
+    // 页面卸载时关闭屏幕常亮
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
   },
 
   // 初始化日期范围
@@ -58,9 +81,20 @@ Page({
       if (result.result.ok) {
         const { series, stat } = result.result
         console.log('获取到的趋势数据:', series) // 调试日志
+        
+        // 为情绪统计添加emoji
+        const emotionStatsWithEmoji = {}
+        Object.keys(stat).forEach(emotion => {
+          emotionStatsWithEmoji[emotion] = {
+            count: stat[emotion],
+            emoji: this.getEmotionEmoji(emotion)
+          }
+        })
+        
         this.setData({
           trendData: series,
           emotionStats: stat,
+          emotionStatsWithEmoji: emotionStatsWithEmoji,
           loading: false
         })
         
@@ -82,7 +116,18 @@ Page({
 
   // 生成图表数据
   generateChartData() {
-    const { trendData, selectedEmotion } = this.data
+    const { trendData } = this.data
+    
+    console.log('generateChartData 开始执行')
+    console.log('trendData:', trendData)
+    console.log('trendData.length:', trendData ? trendData.length : 'trendData is null/undefined')
+    
+    // 检查trendData是否为空
+    if (!trendData || trendData.length === 0) {
+      console.log('trendData为空，设置chartData为空数组')
+      this.setData({ chartData: [] })
+      return
+    }
     
     // 按日期分组
     const groupedData = {}
@@ -93,17 +138,16 @@ Page({
       groupedData[entry.date].push(entry)
     })
     
+    console.log('groupedData:', groupedData)
+    console.log('groupedData keys:', Object.keys(groupedData))
+    
     // 计算每日平均情绪强度
     const chartData = Object.keys(groupedData).map(date => {
       const entries = groupedData[date]
-      const filteredEntries = selectedEmotion === 'all' 
-        ? entries 
-        : entries.filter(entry => entry.emotionType === selectedEmotion)
       
       console.log(`日期 ${date} 的原始数据:`, entries) // 调试日志
-      console.log(`日期 ${date} 的过滤后数据:`, filteredEntries) // 调试日志
       
-      if (filteredEntries.length === 0) {
+      if (entries.length === 0) {
         return {
           date,
           averageIntensity: 0,
@@ -112,18 +156,18 @@ Page({
         }
       }
       
-      const totalIntensity = filteredEntries.reduce((sum, entry) => {
+      const totalIntensity = entries.reduce((sum, entry) => {
         const intensity = entry.emotionIntensity
         console.log(`情绪强度: ${intensity}, 类型: ${typeof intensity}`) // 调试日志
         return sum + (intensity !== null && intensity !== undefined ? intensity : 0)
       }, 0)
-      const averageIntensity = filteredEntries.length > 0 ? totalIntensity / filteredEntries.length : 0
+      const averageIntensity = entries.length > 0 ? totalIntensity / entries.length : 0
       
       console.log(`日期 ${date} 计算的平均强度: ${averageIntensity}`) // 调试日志
       
       // 找出主导情绪
       const emotionCount = {}
-      filteredEntries.forEach(entry => {
+      entries.forEach(entry => {
         if (entry.emotionType) {
           emotionCount[entry.emotionType] = (emotionCount[entry.emotionType] || 0) + 1
         }
@@ -136,10 +180,14 @@ Page({
       return {
         date,
         averageIntensity: Math.round(averageIntensity * 10) / 10,
-        emotionCount: filteredEntries.length,
-        dominantEmotion
+        emotionCount: entries.length,
+        dominantEmotion,
+        dominantEmotionEmoji: this.getEmotionEmoji(dominantEmotion)
       }
     }).sort((a, b) => new Date(a.date) - new Date(b.date))
+    
+    console.log('生成的chartData:', chartData)
+    console.log('chartData.length:', chartData.length)
     
     this.setData({ chartData })
   },
@@ -180,12 +228,6 @@ Page({
     this.loadTrendData()
   },
 
-  // 选择情绪类型
-  selectEmotion(e) {
-    const emotion = e.currentTarget.dataset.emotion
-    this.setData({ selectedEmotion: emotion })
-    this.generateChartData()
-  },
 
   // 获取情绪颜色
   getEmotionColor(emotionType) {
@@ -200,6 +242,19 @@ Page({
     return colorMap[emotionType] || '#e9ecef'
   },
 
+  // 获取情绪emoji
+  getEmotionEmoji(emotionType) {
+    const emojiMap = {
+      '快乐': '😊',
+      '平静': '😌',
+      '焦虑': '😰',
+      '悲伤': '😢',
+      '愤怒': '😠',
+      '其他': '🤔'
+    }
+    return emojiMap[emotionType] || '😐'
+  },
+
   // 获取情绪强度描述
   getIntensityDescription(intensity) {
     if (intensity <= 3) return '轻微'
@@ -210,10 +265,14 @@ Page({
 
   // 格式化日期
   formatDate(dateStr) {
+    console.log('formatDate 输入:', dateStr, typeof dateStr)
     const date = new Date(dateStr)
+    console.log('formatDate 解析后的日期:', date)
     const month = date.getMonth() + 1
     const day = date.getDate()
-    return `${month}月${day}日`
+    const result = `${month}月${day}日`
+    console.log('formatDate 输出:', result)
+    return result
   },
 
   // 导出数据
@@ -246,16 +305,36 @@ Page({
 
   // 切换缩放
   toggleZoom() {
+    const isZoomed = !this.data.isZoomed
+    
+    if (isZoomed) {
+      // 切换到横屏模式
+      wx.setScreenBrightness({
+        value: 0.8
+      })
+      
+      // 保持屏幕常亮
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      })
+    } else {
+      // 切换回竖屏模式
+      wx.setKeepScreenOn({
+        keepScreenOn: false
+      })
+    }
+    
     this.setData({
-      isZoomed: !this.data.isZoomed
+      isZoomed: isZoomed
     })
   },
 
   // 计算连接线角度
-  calculateLineAngle(startY, endY, width) {
-    const deltaY = endY - startY
-    const angle = Math.atan2(deltaY, width) * 180 / Math.PI
-    return angle
+  calculateLineAngle(startIntensity, endIntensity, widthPercent) {
+    const deltaY = (startIntensity - endIntensity) * 10 // 注意：Y轴方向反转，所以deltaY也要反转
+    const widthPixels = widthPercent // 宽度百分比
+    const angle = Math.atan2(deltaY, widthPixels) * 180 / Math.PI
+    return Math.round(angle * 100) / 100 // 保留两位小数
   },
 
   // 计算连接线长度
@@ -263,5 +342,12 @@ Page({
     const deltaX = endX - startX
     const deltaY = endY - startY
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+  },
+
+  // 切换详细数据展开/收起
+  toggleDetailExpansion() {
+    this.setData({
+      showAllDetails: !this.data.showAllDetails
+    })
   }
 })

@@ -37,28 +37,6 @@
     </button>
   </view>
 
-  <!-- 情绪筛选 -->
-  <view class="emotion-filter">
-    <view class="filter-title">筛选情绪</view>
-    <view class="filter-buttons">
-      <button 
-        class="filter-btn {{selectedEmotion === 'all' ? 'active' : ''}}"
-        data-emotion="all"
-        bindtap="selectEmotion"
-      >
-        全部
-      </button>
-      <button 
-        class="filter-btn {{selectedEmotion === item ? 'active' : ''}}"
-        wx:for="{{emotionTypes}}" 
-        wx:key="*this"
-        data-emotion="{{item}}"
-        bindtap="selectEmotion"
-      >
-        {{item}}
-      </button>
-    </view>
-  </view>
 
   <!-- 情绪统计 -->
   <view class="emotion-stats" wx:if="{{!loading}}">
@@ -66,19 +44,20 @@
     <view class="stats-grid">
       <view 
         class="stat-item" 
-        wx:for="{{emotionStats}}" 
+        wx:for="{{emotionStatsWithEmoji}}" 
         wx:key="*this"
-        wx:for-item="count"
+        wx:for-item="emotionData"
         wx:for-index="emotion"
       >
         <view class="stat-color" style="background-color: {{getEmotionColor(emotion)}}"></view>
         <view class="stat-info">
-          <text class="stat-emotion">{{emotion}}</text>
-          <text class="stat-count">{{count}}次</text>
+          <text class="stat-emotion">{{emotionData.emoji}} {{emotion}}</text>
+          <text class="stat-count">{{emotionData.count}}次</text>
         </view>
       </view>
     </view>
   </view>
+
 
   <!-- 情绪强度趋势折线图 - 独占一行 -->
   <view class="intensity-trend-section" wx:if="{{chartData && !loading}}">
@@ -90,6 +69,11 @@
     </view>
     
     <view class="line-chart-container {{isZoomed ? 'zoomed' : ''}}" bindtap="toggleZoom">
+      <!-- 横屏模式关闭按钮 -->
+      <view class="zoom-close-btn" wx:if="{{isZoomed}}" bindtap="toggleZoom" catchtap="true">
+        <text>✕</text>
+      </view>
+      
       <view class="chart-wrapper">
         <!-- Y轴标签 -->
         <view class="y-axis">
@@ -110,7 +94,7 @@
                   class="data-point" 
                   wx:for="{{chartData}}" 
                   wx:key="date"
-                  style="left: {{(index * 100) / (chartData.length - 1)}}%; top: {{(item.averageIntensity * 10)}}%"
+                  style="left: {{(index * 100) / (chartData.length - 1)}}%; top: {{100 - (item.averageIntensity * 10)}}%"
                   data-index="{{index}}"
                   data-date="{{item.date}}"
                   data-intensity="{{item.averageIntensity}}"
@@ -120,24 +104,40 @@
                   <text class="tooltip-date">{{formatDate(item.date)}}</text>
                   <text class="tooltip-intensity">强度: {{item.averageIntensity}}</text>
                 </view>
+                
+                <!-- 调试信息 -->
+                <view class="debug-point-info">
+                  <text class="debug-emotion">{{item.dominantEmotionEmoji}} {{item.dominantEmotion || '未知'}}</text>
+                </view>
               </view>
             </view>
             
-              <!-- 连接线 -->
-              <view class="connection-lines">
-                <view 
-                  class="line-segment" 
-                  wx:for="{{chartData}}" 
-                  wx:key="date"
-                  wx:if="{{index < chartData.length - 1}}"
-                  style="left: {{(index * 100) / (chartData.length - 1)}}%; top: {{(item.averageIntensity * 10)}}%; width: {{100 / (chartData.length - 1)}}%;"
-                ></view>
-              </view>
+            <!-- 连接线 -->
+            <!-- <view class="connection-lines">
+              <view 
+                class="line-segment" 
+                wx:for="{{chartData}}" 
+                wx:key="date"
+                wx:if="{{index < chartData.length - 1}}"
+                style="left: {{(index * 100) / (chartData.length - 1)}}%; top: {{100 - (item.averageIntensity * 10)}}%; width: {{100 / (chartData.length - 1)}}%; transform: rotate({{calculateLineAngle(item.averageIntensity, chartData[index + 1].averageIntensity, 100 / (chartData.length - 1))}}deg);"
+              ></view>
+            </view> -->
           </view>
           
           <!-- X轴标签 -->
           <view class="x-axis">
-            <text class="x-label" wx:for="{{chartData}}" wx:key="date">{{formatDate(item.date)}}</text>
+            <text 
+              class="x-label" 
+              wx:for="{{chartData}}" 
+              wx:key="date"
+              wx:if="{{chartData.length > 0}}"
+              style="left: {{chartData.length === 1 ? '50%' : chartData.length === 2 ? (index === 0 ? '25%' : '75%') : (index * 100) / (chartData.length - 1)}}%;"
+            >{{item.date}}</text>
+            <text 
+              class="x-label no-data" 
+              wx:if="{{chartData.length === 0}}"
+              style="left: 50%; transform: translateX(-50%);"
+            >暂无数据</text>
           </view>
         </view>
       </view>
@@ -152,13 +152,24 @@
         class="data-item" 
         wx:for="{{chartData}}" 
         wx:key="date"
-        wx:if="{{item.emotionCount > 0}}"
+        wx:if="{{item.emotionCount > 0 && (index < 3 || showAllDetails)}}"
       >
-        <view class="data-date">{{formatDate(item.date)}}</view>
-        <view class="data-info">
-          <text class="data-intensity">平均强度: {{item.averageIntensity}}</text>
-          <text class="data-count">记录: {{item.emotionCount}}次</text>
+        <!-- 左侧情绪信息 -->
+        <view class="data-emotion-info">
+          <view class="emotion-emoji">{{item.dominantEmotionEmoji}}</view>
+          <view class="emotion-type">{{item.dominantEmotion}}</view>
         </view>
+        
+        <!-- 中间日期信息 -->
+        <view class="data-date">{{formatDate(item.date)}}</view>
+        
+        <!-- 右侧数据信息 -->
+        <view class="data-info">
+          <text class="data-intensity">情绪强度: {{item.averageIntensity}}</text>
+          <text class="data-date-info">{{item.date}}</text>
+        </view>
+        
+        <!-- 右侧情绪标签 -->
         <view 
           class="data-emotion" 
           style="background-color: {{getEmotionColor(item.dominantEmotion)}}"
@@ -166,14 +177,15 @@
           {{item.dominantEmotion}}
         </view>
       </view>
+      
+      <!-- 展开/收起按钮 -->
+      <view class="expand-button" wx:if="{{chartData.length > 3}}" bindtap="toggleDetailExpansion">
+        <text class="expand-text">{{showAllDetails ? '收起' : '展开全部'}}</text>
+        <text class="expand-icon">{{showAllDetails ? '▲' : '▼'}}</text>
+      </view>
     </view>
   </view>
 
-  <!-- 操作按钮 -->
-  <view class="action-buttons">
-    <button class="btn btn-secondary" bindtap="exportData">导出数据</button>
-    <button class="btn btn-primary" bindtap="loadTrendData">刷新数据</button>
-  </view>
 
   <!-- 加载状态 -->
   <view class="loading" wx:if="{{loading}}">
