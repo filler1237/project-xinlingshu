@@ -37,8 +37,8 @@
           max="10" 
           step="1"
           bindchange="onEmotionIntensityChange"
-          activeColor="#ff6b6b"
-          backgroundColor="#e0e0e0"
+          activeColor="#96CE74"
+          backgroundColor="#E5FFF0"
           block-size="20"
         />
       </view>

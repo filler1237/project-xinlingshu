@@ -1,7 +1,13 @@
 /* pages/diary/calendar/calendar.wxss */
+page {
+  background-color: #FFFFF5;
+}
+
 .container {
-  background-color: #f8f9fa;
+  padding: 20rpx;
+  background: transparent;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* 导航栏 */
@@ -9,11 +15,14 @@
   display: flex;
   justify-content: center;
   gap: 60rpx;
-  background: white;
+  background: #E5FFF0;
   padding: 40rpx 30rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(20rpx);
 }
 
 .nav-item {
@@ -22,31 +31,38 @@
   align-items: center;
   gap: 10rpx;
   padding: 15rpx;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
   transition: all 0.3s ease;
 }
 
 .nav-item:active {
-  background: #f8f9fa;
+  background: rgba(150, 206, 116, 0.2);
+  transform: scale(0.95);
 }
 
 .nav-icon {
   font-size: 32rpx;
+  color: #96CE74;
 }
 
 .nav-text {
   font-size: 22rpx;
-  color: #666;
+  color: #333;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 /* 头部 */
 .header {
-  background: white;
-  padding: 15rpx;
-  margin: 0 10rpx;
-  border-radius: 15rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(20rpx);
 }
 
 .month-selector {
@@ -56,16 +72,23 @@
 }
 
 .nav-btn {
-  width: 50rpx;
-  height: 50rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
-  background: #f8f9fa;
+  background: #96CE74;
   border: none;
   font-size: 28rpx;
-  color: #667eea;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+  background: #7FB85A;
 }
 
 .month-display {
@@ -77,33 +100,39 @@
 }
 
 .month-text {
-  font-size: 28rpx;
-  font-weight: bold;
+  font-size: 32rpx;
+  font-weight: 350;
   color: #333;
+  font-family: PingFang SC;
 }
 
 .arrow {
   font-size: 24rpx;
-  color: #999;
+  color: #96CE74;
+  font-weight: 300;
 }
 
 /* 星期标题 */
 .weekdays {
   display: flex;
-  margin: 0 10rpx;
-  background: white;
-  border-bottom: 1rpx solid #f0f0f0;
-  border-radius: 15rpx 15rpx 0 0;
+  background: #ffffff;
+  border-bottom: 1rpx solid #E5FFF0;
+  border-radius: 10rpx 10rpx 0 0;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .weekday {
   width: calc(100% / 7);
   text-align: center;
-  padding: 20rpx 0;
-  font-size: 26rpx;
-  color: #666;
-  font-weight: bold;
-  border-right: 1rpx solid #f0f0f0;
+  padding: 25rpx 0;
+  font-size: 28rpx;
+  color: #96CE74;
+  font-weight: 300;
+  font-family: PingFang SC;
+  border-right: 1rpx solid #E5FFF0;
   box-sizing: border-box;
   position: relative;
 }
@@ -115,28 +144,31 @@
 .calendar-grid {
   display: flex;
   flex-wrap: wrap;
-  background: white;
-  margin: 0 10rpx 20rpx 10rpx;
-  border-radius: 0 0 15rpx 15rpx;
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  border-radius: 0 0 10rpx 10rpx;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .calendar-day {
   width: calc(100% / 7);
-  height: 110rpx;
+  height: 120rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  border-right: 1rpx solid #f0f0f0;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-right: 1rpx solid #E5FFF0;
+  border-bottom: 1rpx solid #E5FFF0;
   transition: all 0.3s ease;
   box-sizing: border-box;
   cursor: pointer;
 }
 
 .calendar-day:active {
-  background: #f8f9fa;
+  background: #E5FFF0;
   transform: scale(0.95);
 }
 
@@ -146,20 +178,21 @@
 }
 
 .calendar-day.has-diary:active {
-  background: #f0f8ff;
+  background: rgba(150, 206, 116, 0.1);
   transform: scale(0.95);
 }
 
 .calendar-day.has-diary::after {
   content: '';
   position: absolute;
-  top: 4rpx;
-  right: 4rpx;
-  width: 8rpx;
-  height: 8rpx;
-  background: #667eea;
+  top: 8rpx;
+  right: 8rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background: #96CE74;
   border-radius: 50%;
-  opacity: 0.6;
+  opacity: 0.8;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .calendar-day:nth-child(7n) {
@@ -175,10 +208,14 @@
 }
 
 .calendar-day.today {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #96CE74;
   color: white;
-  font-weight: bold;
-  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.3);
+  font-weight: 350;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  border-radius: 8rpx;
+  margin: 4rpx;
+  width: calc(100% / 7 - 8rpx);
+  height: calc(120rpx - 8rpx);
 }
 
 .calendar-day.today .day-number {
@@ -192,35 +229,51 @@
 }
 
 .day-number {
-  font-size: 24rpx;
-  font-weight: bold;
-  margin-bottom: 3rpx;
+  font-size: 26rpx;
+  font-weight: 300;
+  margin-bottom: 5rpx;
+  font-family: PingFang SC;
 }
 
 .emotion-indicator {
-  width: 20rpx;
-  height: 20rpx;
+  width: 24rpx;
+  height: 24rpx;
   border-radius: 50%;
   position: absolute;
-  bottom: 6rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+  bottom: 8rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3rpx 8rpx rgba(0, 0, 0, 0.3);
 }
 
 /* 情绪图例 */
 .emotion-legend {
-  background: white;
-  padding: 20rpx;
-  border-radius: 15rpx;
-  margin: 0 10rpx 20rpx 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 25rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(20rpx);
 }
 
 .legend-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  margin-bottom: 25rpx;
+  font-family: PingFang SC;
+  display: flex;
+  align-items: center;
+}
+
+.legend-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
 }
 
 .legend-items {
@@ -232,34 +285,38 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8rpx;
-  padding: 8rpx 12rpx;
-  background: #f8f9fa;
-  border-radius: 20rpx;
+  gap: 10rpx;
+  padding: 12rpx 16rpx;
+  background: #E5FFF0;
+  border-radius: 10rpx;
   transition: all 0.3s ease;
+  border: 2rpx solid transparent;
 }
 
 .legend-item:active {
-  background: #e9ecef;
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #96CE74;
   transform: scale(0.95);
 }
 
 .legend-color {
-  width: 16rpx;
-  height: 16rpx;
+  width: 20rpx;
+  height: 20rpx;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .legend-emoji {
-  font-size: 20rpx;
+  font-size: 24rpx;
   flex-shrink: 0;
 }
 
 .legend-text {
-  font-size: 22rpx;
+  font-size: 24rpx;
   color: #333;
-  font-weight: 500;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 /* 日期选择器 */
@@ -277,21 +334,24 @@
 }
 
 .date-picker-content {
-  background: white;
-  border-radius: 20rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   padding: 40rpx;
   margin: 40rpx;
   max-height: 80vh;
   overflow-y: auto;
   min-width: 600rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  backdrop-filter: blur(20rpx);
 }
 
 .picker-title {
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: 36rpx;
+  font-weight: 350;
   text-align: center;
   margin-bottom: 40rpx;
-  color: #333;
+  color: #96CE74;
+  font-family: PingFang SC;
 }
 
 .picker-container {
@@ -316,20 +376,23 @@
 }
 
 .picker-display {
-  padding: 20rpx 30rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  font-size: 28rpx;
-  color: #333;
+  padding: 25rpx 35rpx;
+  background: #E5FFF0;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #96CE74;
   text-align: center;
   min-width: 120rpx;
   border: 2rpx solid transparent;
   transition: all 0.3s ease;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .picker-display:active {
-  background: #e9ecef;
-  border-color: #667eea;
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #96CE74;
+  transform: scale(0.98);
 }
 
 .picker-actions {
@@ -339,33 +402,36 @@
 }
 
 .picker-btn {
-  padding: 20rpx 40rpx;
-  border-radius: 15rpx;
-  font-size: 28rpx;
-  font-weight: bold;
+  padding: 25rpx 45rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  font-weight: 300;
   border: none;
-  min-width: 120rpx;
+  min-width: 140rpx;
   transition: all 0.3s ease;
+  font-family: PingFang SC;
 }
 
 .picker-btn.cancel {
-  background: #f8f9fa;
-  color: #666;
+  background: #E5FFF0;
+  color: #96CE74;
+  border: 2rpx solid #96CE74;
 }
 
 .picker-btn.cancel:active {
-  background: #e9ecef;
+  background: rgba(150, 206, 116, 0.2);
   transform: scale(0.95);
 }
 
 .picker-btn.confirm {
-  background: #667eea;
+  background: #96CE74;
   color: white;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .picker-btn.confirm:active {
-  background: #5a6fd8;
   transform: scale(0.95);
+  background: #7FB85A;
 }
 
 /* 加载状态 */
@@ -393,14 +459,16 @@
 }
 
 .diary-list-content {
-  background: white;
-  border-radius: 20rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   margin: 20rpx;
-  max-height: 60vh;
+  max-height: 70vh;
   width: calc(100% - 40rpx);
   display: flex;
   flex-direction: column;
   position: relative;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  backdrop-filter: blur(20rpx);
 }
 
 .diary-list-header {
@@ -412,9 +480,10 @@
 }
 
 .diary-list-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 36rpx;
+  font-weight: 350;
+  color: #96CE74;
+  font-family: PingFang SC;
 }
 
 .header-actions {
@@ -496,21 +565,24 @@
 }
 
 .diary-item {
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  padding: 15rpx;
-  margin-bottom: 15rpx;
-  border-left: 6rpx solid #667eea;
+  background: #E5FFF0;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-left: 8rpx solid #96CE74;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  overflow: hidden;
 }
 
 .diary-item:active {
-  background: #e9ecef;
+  background: rgba(150, 206, 116, 0.2);
   transform: scale(0.98);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .diary-item-header {
@@ -543,24 +615,34 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 8rpx;
+  flex-shrink: 0;
+  max-width: 120rpx;
 }
 
 .diary-emotion-tag {
   padding: 6rpx 12rpx;
   border-radius: 15rpx;
-  font-size: 20rpx;
+  font-size: 18rpx;
   color: white;
   font-weight: bold;
-  min-width: 60rpx;
+  min-width: 50rpx;
   text-align: center;
+  max-width: 100rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .diary-intensity {
-  font-size: 18rpx;
+  font-size: 16rpx;
   color: rgb(153, 153, 153);
   background: #f0f0f0;
   padding: 4rpx 8rpx;
   border-radius: 10rpx;
+  max-width: 100rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .diary-content-wrapper {
@@ -576,6 +658,8 @@
   word-break: break-all;
   white-space: pre-wrap;
   display: block;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .diary-info-section {
@@ -588,6 +672,7 @@
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  min-width: 0;
 }
 
 .diary-date-emotion {
@@ -595,7 +680,7 @@
   align-items: center;
   gap: 10rpx;
   flex: 1;
-  margin-right: 10rpx;
+  margin-right: 15rpx;
   min-width: 0;
   overflow: hidden;
 }
@@ -604,29 +689,31 @@
   font-size: 20rpx;
   color: rgb(63, 59, 59);
   font-weight: bold;
-  max-width: 100rpx;
+  max-width: 80rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .diary-record-emotion {
   padding: 2rpx 8rpx;
   border-radius: 10rpx;
-  font-size: 32rpx;
+  font-size: 20rpx;
   color: rgb(201, 87, 87);
   font-weight: bold;
-  min-width: 50rpx;
+  min-width: 40rpx;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .diary-preview {
   font-size: 18rpx;
-  color: #667eea;
-  font-weight: bold;
-  white-space: nowrap; /* 防止换行 */
-  flex-shrink: 0; /* 防止被压缩 */
-  max-width: 120rpx; /* 限制最大宽度 */
+  color: #96CE74;
+  font-weight: 300;
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 100rpx;
   overflow: hidden;
   text-overflow: ellipsis;
 }

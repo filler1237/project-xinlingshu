@@ -1,7 +1,11 @@
 /* pages/diary/create/create.wxss */
+page {
+  background-color: #FFFFF5;
+}
+
 .container {
   padding: 20rpx;
-  background-color: #f8f9fa;
+  background: transparent;
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 120rpx; /* 为底部按钮留出空间 */
@@ -9,20 +13,24 @@
 
 /* 头部 */
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 15rpx;
+  background: #E5FFF0;
+  border-radius: 10rpx;
   padding: 25rpx 20rpx;
   margin-bottom: 25rpx;
-  color: white;
+  color: #96CE74;
   position: relative;
   width: 100%;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  backdrop-filter: blur(20rpx);
 }
 
 .title {
   font-size: 36rpx;
-  font-weight: bold;
+  font-weight: 350;
   margin-bottom: 20rpx;
   text-align: center;
+  font-family: PingFang SC;
+  color: #96CE74;
 }
 
 .date-picker {
@@ -36,22 +44,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(150, 206, 116, 0.2);
   padding: 18rpx 25rpx;
-  border-radius: 12rpx;
+  border-radius: 10rpx;
   backdrop-filter: blur(10rpx);
   width: 100%;
   box-sizing: border-box;
+  border: 2rpx solid rgba(150, 206, 116, 0.3);
 }
 
 .date-text {
   font-size: 30rpx;
   margin-right: 15rpx;
-  font-weight: 500;
+  font-weight: 300;
+  color: #96CE74;
+  font-family: PingFang SC;
 }
 
 .date-icon {
   font-size: 26rpx;
+  color: #96CE74;
 }
 
 /* 情绪类型和强度横向排列 */
@@ -67,38 +79,41 @@
 .emotion-section,
 .intensity-section {
   flex: 1;
-  background: white;
-  border-radius: 15rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   padding: 25rpx;
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
-  border: 1rpx solid #f0f0f0;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  border: 1rpx solid #E5FFF0;
+  backdrop-filter: blur(20rpx);
 }
 
 .content-section {
-  background: white;
-  border-radius: 15rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   padding: 25rpx;
   margin-bottom: 25rpx;
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
-  border: 1rpx solid #f0f0f0;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  border: 1rpx solid #E5FFF0;
   width: 100%;
   box-sizing: border-box;
+  backdrop-filter: blur(20rpx);
 }
 
 .section-title {
   font-size: 30rpx;
-  font-weight: bold;
-  color: #333;
+  font-weight: 350;
+  color: #96CE74;
   margin-bottom: 20rpx;
   display: flex;
   align-items: center;
+  font-family: PingFang SC;
 }
 
 .section-title::before {
   content: '';
   width: 6rpx;
   height: 30rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #96CE74;
   margin-right: 15rpx;
   border-radius: 3rpx;
 }
@@ -109,28 +124,32 @@
   justify-content: space-between;
   align-items: center;
   padding: 25rpx 20rpx;
-  background: #f8f9fa;
-  border-radius: 12rpx;
-  border: 2rpx solid #e9ecef;
+  background: #E5FFF0;
+  border-radius: 10rpx;
+  border: 2rpx solid #96CE74;
   transition: all 0.3s ease;
   min-height: 80rpx;
 }
 
 .emotion-selector:active {
-  background: #e9ecef;
-  border-color: #667eea;
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #7FB85A;
+  transform: scale(0.98);
 }
 
 .emotion-text {
   font-size: 30rpx;
-  color: #666;
+  color: #96CE74;
   flex: 1;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .arrow {
   font-size: 26rpx;
-  color: #999;
+  color: #96CE74;
   margin-left: 15rpx;
+  font-weight: 300;
 }
 
 /* 情绪强度 */
@@ -140,10 +159,11 @@
 
 .intensity-label {
   font-size: 30rpx;
-  color: #666;
+  color: #96CE74;
   margin-bottom: 25rpx;
   display: block;
-  font-weight: 500;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 /* 内容输入 */
@@ -151,25 +171,30 @@
   width: 100%;
   min-height: 300rpx;
   padding: 20rpx;
-  border: 2rpx solid #e9ecef;
-  border-radius: 12rpx;
+  border: 2rpx solid #E5FFF0;
+  border-radius: 10rpx;
   font-size: 28rpx;
   line-height: 1.8;
-  background: #f8f9fa;
+  background: #E5FFF0;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: PingFang SC;
+  color: #96CE74;
 }
 
 .content-input:focus {
-  border-color: #667eea;
-  background: white;
+  border-color: #96CE74;
+  background: #ffffff;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .char-count {
   text-align: right;
   font-size: 24rpx;
-  color: #999;
+  color: #96CE74;
   margin-top: 15rpx;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 /* 操作按钮 */
@@ -185,7 +210,7 @@
 .btn {
   flex: 1;
   padding: 18rpx 12rpx;
-  border-radius: 12rpx;
+  border-radius: 10rpx;
   font-size: 24rpx;
   border: none;
   position: relative;
@@ -195,35 +220,58 @@
   align-items: center;
   justify-content: center;
   max-width: calc(33.333% - 10rpx);
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .btn-secondary {
-  background: #6c757d;
-  color: white;
+  background: #E5FFF0;
+  color: #96CE74;
+  border: 2rpx solid #96CE74;
+}
+
+.btn-secondary:active {
+  background: rgba(150, 206, 116, 0.2);
+  transform: scale(0.95);
 }
 
 .btn-danger {
-  background: #dc3545;
-  color: white;
+  background: #FFE5E5;
+  color: #FF6B6B;
+  border: 2rpx solid #FF6B6B;
+}
+
+.btn-danger:active {
+  background: rgba(255, 107, 107, 0.2);
+  transform: scale(0.95);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #96CE74;
   color: white;
-  font-weight: bold;
+  font-weight: 300;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+}
+
+.btn-primary:active {
+  background: #7FB85A;
+  transform: scale(0.95);
 }
 
 .submit-btn {
   width: 100%;
-  padding: 20rpx;
-  font-size: 28rpx;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.3);
+  padding: 25rpx;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   margin: 0;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .submit-btn:disabled {
   opacity: 0.6;
+  background: #ccc;
 }
 
 /* 情绪类型选择弹窗 */
@@ -241,20 +289,23 @@
 }
 
 .emotion-modal-content {
-  background: white;
-  border-radius: 20rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   padding: 40rpx;
   margin: 40rpx;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  backdrop-filter: blur(20rpx);
 }
 
 .modal-title {
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: 36rpx;
+  font-weight: 350;
   text-align: center;
   margin-bottom: 30rpx;
-  color: #333;
+  color: #96CE74;
+  font-family: PingFang SC;
 }
 
 .emotion-list {
@@ -268,24 +319,27 @@
   justify-content: space-between;
   align-items: center;
   padding: 25rpx;
-  background: #f8f9fa;
+  background: #E5FFF0;
   border-radius: 10rpx;
   border: 2rpx solid transparent;
   transition: all 0.3s ease;
 }
 
 .emotion-item:active {
-  background: #e9ecef;
-  border-color: #667eea;
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #96CE74;
+  transform: scale(0.98);
 }
 
 .emotion-name {
   font-size: 28rpx;
-  color: #333;
+  color: #96CE74;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .check-icon {
   font-size: 24rpx;
-  color: #667eea;
-  font-weight: bold;
+  color: #96CE74;
+  font-weight: 300;
 }

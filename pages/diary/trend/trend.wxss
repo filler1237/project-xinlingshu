@@ -1,39 +1,51 @@
 /* pages/diary/trend/trend.wxss */
+page {
+  background-color: #FFFFF5;
+}
+
 .container {
   padding: 20rpx;
-  background-color: #f8f9fa;
+  background: transparent;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* 头部 */
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 20rpx;
+  background: #E5FFF0;
+  border-radius: 10rpx;
   padding: 30rpx;
   margin-bottom: 30rpx;
-  color: white;
+  color: #96CE74;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 120rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  backdrop-filter: blur(20rpx);
 }
 
 .title {
   font-size: 36rpx;
-  font-weight: bold;
+  font-weight: 350;
   margin-bottom: 10rpx;
   text-align: center;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: PingFang SC;
+  color: #96CE74;
 }
 
 .date-range {
   font-size: 24rpx;
   opacity: 0.8;
   text-align: center;
+  color: #96CE74;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 /* 时间范围选择 */
@@ -49,20 +61,29 @@
 .range-btn {
   flex: 1;
   padding: 12rpx 8rpx;
-  border-radius: 8rpx;
-  background: white;
-  color: #666;
-  border: 2rpx solid #e9ecef;
+  border-radius: 10rpx;
+  background: #ffffff;
+  color: #96CE74;
+  border: 2rpx solid #E5FFF0;
   font-size: 20rpx;
   text-align: center;
   min-width: 0;
   white-space: nowrap;
+  font-family: PingFang SC;
+  font-weight: 300;
+  transition: all 0.3s ease;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .range-btn.active {
-  background: #667eea;
+  background: #96CE74;
   color: white;
-  border-color: #667eea;
+  border-color: #96CE74;
+  transform: scale(0.98);
+}
+
+.range-btn:active {
+  transform: scale(0.95);
 }
 
 /* 情绪分布和趋势图表并排 */
@@ -76,21 +97,34 @@
 
 /* 情绪统计 */
 .emotion-stats {
-  background: white;
-  border-radius: 15rpx;
-  padding: 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-radius: 10rpx;
+  padding: 25rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   margin: 0 20rpx 20rpx 20rpx;
   width: calc(100% - 40rpx);
   box-sizing: border-box;
   display: block;
+  backdrop-filter: blur(20rpx);
 }
 
 .stats-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  margin-bottom: 25rpx;
+  font-family: PingFang SC;
+  display: flex;
+  align-items: center;
+}
+
+.stats-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
 }
 
 .stats-grid {
@@ -104,14 +138,23 @@
   align-items: center;
   gap: 15rpx;
   padding: 20rpx;
-  background: #f8f9fa;
+  background: #E5FFF0;
   border-radius: 10rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.stat-item:active {
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #96CE74;
+  transform: scale(0.98);
 }
 
 .stat-color {
-  width: 20rpx;
-  height: 20rpx;
+  width: 24rpx;
+  height: 24rpx;
   border-radius: 50%;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 .stat-info {
@@ -123,15 +166,18 @@
 .stat-emotion {
   font-size: 24rpx;
   color: #333;
-  font-weight: bold;
+  font-weight: 300;
   display: flex;
   align-items: center;
   gap: 8rpx;
+  font-family: PingFang SC;
 }
 
 .stat-count {
   font-size: 20rpx;
   color: #666;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 
@@ -202,20 +248,33 @@
 
 /* 详细数据 */
 .detail-data {
-  background: white;
-  border-radius: 15rpx;
-  padding: 20rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
+  padding: 25rpx;
   margin: 0 20rpx 20rpx 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   width: calc(100% - 40rpx);
   box-sizing: border-box;
+  backdrop-filter: blur(20rpx);
 }
 
 .detail-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  margin-bottom: 25rpx;
+  font-family: PingFang SC;
+  display: flex;
+  align-items: center;
+}
+
+.detail-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
 }
 
 .data-list {
@@ -228,9 +287,17 @@
   display: flex;
   align-items: center;
   gap: 15rpx;
-  padding: 15rpx;
-  background: #f8f9fa;
-  border-radius: 8rpx;
+  padding: 20rpx;
+  background: #E5FFF0;
+  border-radius: 10rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.data-item:active {
+  background: rgba(150, 206, 116, 0.2);
+  border-color: #96CE74;
+  transform: scale(0.98);
 }
 
 /* 左侧情绪信息 */
@@ -242,8 +309,8 @@
   min-width: 80rpx;
   padding: 8rpx;
   background: rgba(255, 255, 255, 0.8);
-  border-radius: 12rpx;
-  border: 2rpx solid rgba(102, 126, 234, 0.2);
+  border-radius: 10rpx;
+  border: 2rpx solid rgba(150, 206, 116, 0.3);
 }
 
 .emotion-emoji {
@@ -254,16 +321,18 @@
 .emotion-type {
   font-size: 18rpx;
   color: #666;
-  font-weight: 500;
+  font-weight: 300;
   text-align: center;
+  font-family: PingFang SC;
 }
 
 /* 中间日期信息 */
 .data-date {
   font-size: 24rpx;
   color: #333;
-  font-weight: bold;
+  font-weight: 350;
   min-width: 120rpx;
+  font-family: PingFang SC;
 }
 
 /* 右侧数据信息 */
@@ -277,11 +346,15 @@
 .data-intensity {
   font-size: 22rpx;
   color: #666;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .data-date-info {
   font-size: 20rpx;
   color: #999;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 /* 右侧情绪标签 */
@@ -290,7 +363,9 @@
   border-radius: 20rpx;
   color: white;
   font-size: 20rpx;
-  font-weight: bold;
+  font-weight: 300;
+  font-family: PingFang SC;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
 }
 
 /* 展开/收起按钮 */
@@ -301,30 +376,33 @@
   gap: 8rpx;
   padding: 15rpx;
   margin-top: 10rpx;
-  background: #f8f9fa;
-  border-radius: 8rpx;
-  border: 2rpx solid #e9ecef;
-  color: #667eea;
+  background: #E5FFF0;
+  border-radius: 10rpx;
+  border: 2rpx solid #96CE74;
+  color: #96CE74;
   font-size: 24rpx;
-  font-weight: 500;
+  font-weight: 300;
   transition: all 0.3s ease;
+  font-family: PingFang SC;
 }
 
 .expand-button:active {
-  background: #e9ecef;
+  background: rgba(150, 206, 116, 0.2);
   transform: scale(0.98);
 }
 
 .expand-text {
   font-size: 24rpx;
-  color: #667eea;
-  font-weight: 500;
+  color: #96CE74;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 .expand-icon {
   font-size: 20rpx;
-  color: #667eea;
-  font-weight: bold;
+  color: #96CE74;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 /* 操作按钮 */
@@ -387,15 +465,16 @@
 
 /* 情绪强度趋势折线图 - 独占一行 */
 .intensity-trend-section {
-  background: white;
-  border-radius: 20rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
   margin: 20rpx;
   padding: 30rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
   width: calc(100% - 40rpx);
   box-sizing: border-box;
   display: block;
   clear: both;
+  backdrop-filter: blur(20rpx);
 }
 
 .trend-header {
@@ -407,8 +486,20 @@
 
 .trend-title {
   font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  font-weight: 350;
+  color: #96CE74;
+  font-family: PingFang SC;
+  display: flex;
+  align-items: center;
+}
+
+.trend-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
 }
 
 .trend-actions {
@@ -418,25 +509,26 @@
 
 .zoom-btn {
   font-size: 24rpx;
-  color: #667eea;
-  font-weight: bold;
+  color: #333;
+  font-weight: 300;
   padding: 8rpx 16rpx;
-  border-radius: 8rpx;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1rpx solid rgba(102, 126, 234, 0.3);
+  border-radius: 10rpx;
+  background: rgba(150, 206, 116, 0.1);
+  border: 2rpx solid rgba(150, 206, 116, 0.3);
   transition: all 0.3s ease;
+  font-family: PingFang SC;
 }
 
 .zoom-btn:active {
-  background: rgba(102, 126, 234, 0.2);
+  background: rgba(150, 206, 116, 0.2);
   transform: scale(0.95);
 }
 
 .line-chart-container {
   height: 500rpx;
-  border: 2rpx solid #f0f0f0;
-  border-radius: 15rpx;
-  background: #fafafa;
+  border: 2rpx solid #E5FFF0;
+  border-radius: 10rpx;
+  background: #ffffff;
   position: relative;
   overflow: visible;
   transition: all 0.3s ease;
@@ -474,7 +566,8 @@
   font-size: 20rpx;
   color: #666;
   text-align: center;
-  font-weight: 500;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 .chart-area {
@@ -630,7 +723,8 @@
   white-space: nowrap;
   transform: translateX(-50%);
   min-width: 80rpx;
-  font-weight: 500;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 .x-label.no-data {
