@@ -7,8 +7,14 @@ Page({
     emotionIntensity: 5,
     date: '',
     isAnalyzing: false,
-    showEmotionSelector: false,
-    emotionTypes: ['快乐', '平静', '焦虑', '悲伤', '愤怒', '其他'],
+    emotionOptions: [
+      { name: '快乐', emoji: '😊' },
+      { name: '平静', emoji: '😌' },
+      { name: '焦虑', emoji: '😟' },
+      { name: '悲伤', emoji: '😢' },
+      { name: '愤怒', emoji: '😠' },
+      { name: '其他', emoji: '🤔' }
+    ],
     selectedEmotionType: '',
     isSubmitting: false
   },
@@ -20,6 +26,11 @@ Page({
     this.setData({
       date: dateStr
     })
+    this.loadTemporaryDiary()
+  },
+
+  onUnload() {
+    this.saveTemporaryDiary()
   },
 
   // 输入日记内容
@@ -43,27 +54,27 @@ Page({
     })
   },
 
-  // 显示情绪类型选择器
-  showEmotionSelector() {
-    this.setData({
-      showEmotionSelector: true
-    })
-  },
-
   // 选择情绪类型
   selectEmotionType(e) {
-    const emotionType = e.currentTarget.dataset.emotion
+    const emotionType = e.currentTarget.dataset.emotion;
     this.setData({
-      selectedEmotionType: emotionType,
-      showEmotionSelector: false
-    })
-  },
+      selectedEmotionType: emotionType
+    });
 
-  // 关闭情绪类型选择器
-  closeEmotionSelector() {
-    this.setData({
-      showEmotionSelector: false
-    })
+    // 推荐情绪强度
+    const recommendedIntensity = {
+      '快乐': 7,
+      '平静': 5,
+      '焦虑': 6,
+      '悲伤': 4,
+      '愤怒': 8,
+      '其他': 5
+    };
+    if (recommendedIntensity[emotionType]) {
+      this.setData({
+        emotionIntensity: recommendedIntensity[emotionType]
+      });
+    }
   },
 
   // 提交日记
@@ -89,17 +100,9 @@ Page({
     this.setData({ isSubmitting: true })
 
     try {
+      this.setData({ isSubmitting: true })
+
       // 1. 创建日记条目
-      console.log('提交前的数据:', {
-        content: content.trim(),
-        emotionIntensity: emotionIntensity,
-        emotionIntensityType: typeof emotionIntensity,
-        parsedIntensity: parseInt(emotionIntensity),
-        parsedType: typeof parseInt(emotionIntensity),
-        date: date,
-        emotionType: selectedEmotionType
-      })
-      
       const createResult = await wx.cloud.callFunction({
         name: 'createDiaryEntry',
         data: {
@@ -156,55 +159,51 @@ Page({
         isSubmitting: false,
         isAnalyzing: false
       })
+      // 提交成功后清除暂存
+      wx.removeStorageSync('temporaryDiary')
     }
   },
 
-  // 保存草稿
-  saveDraft() {
-    const { content, emotionIntensity, date } = this.data
-    
-    if (!content.trim()) {
-      wx.showToast({
-        title: '请输入日记内容',
-        icon: 'none'
-      })
-      return
-    }
-
-    // 保存到本地存储
-    const draft = {
-      content,
-      emotionIntensity,
-      date,
-      timestamp: Date.now()
-    }
-    
-    wx.setStorageSync('diaryDraft', draft)
-    
-    wx.showToast({
-      title: '草稿已保存',
-      icon: 'success'
-    })
-  },
-
-  // 加载草稿
-  loadDraft() {
-    try {
-      const draft = wx.getStorageSync('diaryDraft')
-      if (draft) {
-        this.setData({
-          content: draft.content || '',
-          emotionIntensity: draft.emotionIntensity || 5,
-          date: draft.date || new Date().toISOString().split('T')[0]
-        })
-        
-        wx.showToast({
-          title: '草稿已加载',
-          icon: 'success'
-        })
+  // 自动暂存日记
+  saveTemporaryDiary() {
+    const { content, emotionIntensity, date, selectedEmotionType } = this.data
+    if (content && content.trim().length > 0) {
+      const temporaryDiary = {
+        content,
+        emotionIntensity,
+        date,
+        selectedEmotionType,
+        timestamp: Date.now()
       }
-    } catch (error) {
-      console.error('加载草稿失败:', error)
+      wx.setStorageSync('temporaryDiary', temporaryDiary)
+      console.log('日记已自动暂存')
+    }
+  },
+
+  // 加载暂存的日记
+  loadTemporaryDiary() {
+    const temporaryDiary = wx.getStorageSync('temporaryDiary')
+    if (temporaryDiary && temporaryDiary.content) {
+      wx.showModal({
+        title: '恢复日记',
+        content: '检测到上次未保存的日记，是否要恢复？',
+        success: (res) => {
+          if (res.confirm) {
+            this.setData({
+              content: temporaryDiary.content,
+              emotionIntensity: temporaryDiary.emotionIntensity,
+              date: temporaryDiary.date,
+              selectedEmotionType: temporaryDiary.selectedEmotionType
+            })
+            wx.showToast({
+              title: '已恢复',
+              icon: 'success'
+            })
+          }
+          // 无论是否恢复，都清除暂存
+          wx.removeStorageSync('temporaryDiary')
+        }
+      })
     }
   },
 

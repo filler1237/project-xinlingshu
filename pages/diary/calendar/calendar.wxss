@@ -52,6 +52,21 @@ page {
   font-family: PingFang SC;
 }
 
+/* 用户引导信息 */
+.guidance-info {
+  background: #E5FFF0;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+}
+
+.guidance-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
 /* 头部 */
 .header {
   background: #ffffff;
@@ -565,169 +580,90 @@ page {
 }
 
 .diary-item {
-  background: #E5FFF0;
-  border-radius: 10rpx;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
-  border-left: 8rpx solid #96CE74;
-  transition: all 0.3s ease;
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  width: 100%;
-  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
-  overflow: hidden;
+  align-items: center;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #E5FFF0;
+  transition: all 0.2s ease-in-out;
 }
 
 .diary-item:active {
-  background: rgba(150, 206, 116, 0.2);
   transform: scale(0.98);
-  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  background: #F8F9FA;
 }
 
-.diary-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10rpx;
-  flex-shrink: 0;
-}
-
-.diary-date-section {
+.diary-item-date {
   display: flex;
   flex-direction: column;
-  gap: 5rpx;
-}
-
-.diary-date {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.diary-weekday {
-  font-size: 22rpx;
-  color: #666;
-}
-
-.diary-emotion-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8rpx;
-  flex-shrink: 0;
-  max-width: 120rpx;
-}
-
-.diary-emotion-tag {
-  padding: 6rpx 12rpx;
-  border-radius: 15rpx;
-  font-size: 18rpx;
-  color: white;
-  font-weight: bold;
-  min-width: 50rpx;
-  text-align: center;
-  max-width: 100rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.diary-intensity {
-  font-size: 16rpx;
-  color: rgb(153, 153, 153);
-  background: #f0f0f0;
-  padding: 4rpx 8rpx;
-  border-radius: 10rpx;
-  max-width: 100rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.diary-content-wrapper {
-  margin-bottom: 10rpx;
-  flex-shrink: 0;
-}
-
-.diary-content {
-  font-size: 28rpx;
-  color: rgb(68, 63, 63);
-  line-height: 1.5;
-  word-wrap: break-word;
-  word-break: break-all;
-  white-space: pre-wrap;
-  display: block;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.diary-info-section {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 8rpx;
-  flex-shrink: 0;
-  padding: 5rpx 0;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  min-width: 0;
+  justify-content: center;
+  margin-right: 25rpx;
+  padding-right: 25rpx;
+  border-right: 1rpx solid #E5FFF0;
 }
 
-.diary-date-emotion {
-  display: flex;
-  align-items: center;
-  gap: 10rpx;
-  flex: 1;
-  margin-right: 15rpx;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.diary-record-date {
-  font-size: 20rpx;
-  color: rgb(63, 59, 59);
-  font-weight: bold;
-  max-width: 80rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.diary-record-emotion {
-  padding: 2rpx 8rpx;
-  border-radius: 10rpx;
-  font-size: 20rpx;
-  color: rgb(201, 87, 87);
-  font-weight: bold;
-  min-width: 40rpx;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.diary-preview {
-  font-size: 18rpx;
+.diary-item-date .day {
+  font-size: 48rpx;
+  font-weight: 500;
   color: #96CE74;
-  font-weight: 300;
-  white-space: nowrap;
-  flex-shrink: 0;
-  max-width: 100rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1;
 }
 
-.diary-footer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-shrink: 0;
-  padding: 5rpx 0;
-}
-
-.diary-time {
-  font-size: 18rpx;
+.diary-item-date .month {
+  font-size: 24rpx;
   color: #999;
 }
 
+.diary-item-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diary-emotion-tag {
+  padding: 6rpx 15rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: white;
+  font-weight: 400;
+}
+
+.diary-weekday {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.main-content {
+  width: 100%;
+}
+
+.diary-content-preview {
+  font-size: 28rpx;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.main-footer {
+  width: 100%;
+}
+
+.diary-time {
+  font-size: 22rpx;
+  color: #ccc;
+}

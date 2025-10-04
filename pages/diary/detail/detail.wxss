@@ -231,6 +231,69 @@ page {
   font-weight: 300;
 }
 
+/* 情绪电台 */
+.emotion-radio {
+  padding: 25rpx;
+  border-bottom: 1rpx solid #E5FFF0;
+}
+
+.radio-title {
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  font-family: PingFang SC;
+}
+
+.radio-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
+}
+
+.recommendation-card {
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  padding: 25rpx;
+  border: 2rpx solid #e9ecef;
+}
+
+.rec-type {
+  font-size: 24rpx;
+  font-weight: 300;
+  color: #fff;
+  background-color: #96CE74;
+  padding: 5rpx 15rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+  margin-bottom: 15rpx;
+}
+
+.rec-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.rec-author {
+  font-size: 26rpx;
+  color: #888;
+  margin-bottom: 20rpx;
+  text-align: right;
+}
+
+.rec-reason {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
 
 /* 内容区域 */
 .content-section {
@@ -309,7 +372,6 @@ page {
   border: none;
   text-align: center;
   min-width: 0;
-  max-width: calc(25% - 12rpx);
   box-sizing: border-box;
   font-family: PingFang SC;
   font-weight: 300;

@@ -86,16 +86,6 @@ Page({
     }
   },
 
-  // 编辑日记
-  editDiary() {
-    const { diaryEntry } = this.data
-    if (!diaryEntry) return
-
-    wx.navigateTo({
-      url: `/pages/diary/edit/edit?id=${diaryEntry._id}`
-    })
-  },
-
   // 删除日记
   deleteDiary() {
     const { diaryEntry } = this.data
@@ -179,13 +169,19 @@ Page({
   // 复制内容
   copyContent() {
     const { diaryEntry } = this.data
-    if (!diaryEntry) return
+    if (!diaryEntry || !diaryEntry.empathyReply) {
+      wx.showToast({
+        title: '没有AI回复可复制',
+        icon: 'none'
+      })
+      return
+    }
 
     wx.setClipboardData({
-      data: diaryEntry.content,
+      data: diaryEntry.empathyReply,
       success: () => {
         wx.showToast({
-          title: '内容已复制',
+          title: 'AI回复已复制',
           icon: 'success'
         })
       }

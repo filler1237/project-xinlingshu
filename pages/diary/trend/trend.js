@@ -12,7 +12,9 @@ Page({
     chartData: null,
     isZoomed: false,
     yAxisLabels: ['0', '2', '4', '6', '8', '10'],
-    showAllDetails: false
+    showAllDetails: false,
+    isAnalyzingTrend: false,
+    trendAnalysisResult: ''
   },
 
   onLoad() {
@@ -222,7 +224,9 @@ Page({
     this.setData({
       timeRange,
       startDate: formatDate(startDate),
-      endDate: formatDate(today)
+      endDate: formatDate(today),
+      trendAnalysisResult: '', // 重置AI分析结果
+      isAnalyzingTrend: false // 重置分析状态
     })
     
     this.loadTrendData()
@@ -349,5 +353,40 @@ Page({
     this.setData({
       showAllDetails: !this.data.showAllDetails
     })
+  },
+
+  // 运行AI趋势分析
+  async runTrendAnalysis() {
+    this.setData({ isAnalyzingTrend: true, trendAnalysisResult: '' })
+    wx.showLoading({ title: 'AI分析中...' })
+
+    try {
+      const { startDate, endDate } = this.data
+      const result = await wx.cloud.callFunction({
+        name: 'analyzeEmotionTrend',
+        data: {
+          startDate,
+          endDate
+        }
+      })
+
+      wx.hideLoading()
+
+      if (result.result.ok) {
+        this.setData({
+          trendAnalysisResult: result.result.analysis,
+          isAnalyzingTrend: false
+        })
+      } else {
+        throw new Error(result.result.error || 'AI分析失败')
+      }
+    } catch (error) {
+      wx.hideLoading()
+      this.setData({ isAnalyzingTrend: false })
+      wx.showToast({
+        title: error.message,
+        icon: 'none'
+      })
+    }
   }
 })

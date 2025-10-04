@@ -45,6 +45,17 @@
 
     </view>
 
+    <!-- 情绪电台 -->
+    <view class="emotion-radio" wx:if="{{diaryEntry.recommendation}}">
+      <view class="radio-title">情绪电台</view>
+      <view class="recommendation-card">
+        <view class="rec-type">{{diaryEntry.recommendation.type}}</view>
+        <view class="rec-title">{{diaryEntry.recommendation.title}}</view>
+        <view class="rec-author" wx:if="{{diaryEntry.recommendation.author}}">—— {{diaryEntry.recommendation.author}}</view>
+        <view class="rec-reason">{{diaryEntry.recommendation.reason}}</view>
+      </view>
+    </view>
+
     <!-- 日记内容 -->
     <view class="content-section">
       <view class="content-header">
@@ -60,8 +71,7 @@
         <text wx:if="{{isAnalyzing}}">重新分析中...</text>
         <text wx:else>重新分析</text>
       </button>
-      <button class="btn btn-secondary" bindtap="editDiary">编辑</button>
-      <button class="btn btn-secondary" bindtap="copyContent">复制</button>
+      <button class="btn btn-secondary" bindtap="copyContent">复制AI回复</button>
       <button class="btn btn-danger" bindtap="deleteDiary">删除</button>
     </view>
   </view>

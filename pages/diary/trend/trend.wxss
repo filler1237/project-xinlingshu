@@ -877,3 +877,78 @@ page {
 .zoom-close-btn:active {
   background: rgba(0, 0, 0, 0.8);
 }
+
+/* 全屏模式下的容器样式 */
+.container.fullscreen {
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* AI趋势洞察 */
+.ai-insight-section {
+  background: #ffffff;
+  border-radius: 10rpx;
+  margin: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  width: calc(100% - 40rpx);
+  box-sizing: border-box;
+}
+
+.insight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25rpx;
+}
+
+.insight-title {
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  font-family: PingFang SC;
+  display: flex;
+  align-items: center;
+}
+
+.insight-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
+}
+
+.analyze-btn {
+  padding: 10rpx 25rpx;
+  background: #96CE74;
+  color: white;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  font-weight: 300;
+  border: none;
+}
+
+.insight-content {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.insight-placeholder {
+  font-size: 24rpx;
+  color: #888;
+  text-align: center;
+  padding: 40rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+}

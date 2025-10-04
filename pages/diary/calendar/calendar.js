@@ -336,6 +336,16 @@ Page({
     return `${year}年${month}月${day}日`
   },
 
+  formatDay(dateStr) {
+    const date = new Date(dateStr)
+    return String(date.getDate()).padStart(2, '0')
+  },
+
+  formatMonth(dateStr) {
+    const date = new Date(dateStr)
+    return String(date.getMonth() + 1).padStart(2, '0')
+  },
+
   // 导航函数
   goToCreate() {
     wx.navigateTo({
@@ -346,6 +356,12 @@ Page({
   goToTrend() {
     wx.navigateTo({
       url: '/pages/diary/trend/trend'
+    })
+  },
+
+  goToWordCloud() {
+    wx.navigateTo({
+      url: '/pages/diary/wordcloud/wordcloud'
     })
   },
 
