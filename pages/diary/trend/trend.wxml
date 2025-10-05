@@ -6,6 +6,9 @@
   <view class="header" wx:if="{{!isZoomed}}">
     <view class="title">
       <text>情绪趋势分析</text>
+      <view class="warm-prompt">
+        <text>💡在这里您可以看到近几天来您的心情变化趋势，这是了解自己的一个好方法！</text>
+      </view>
       <view class="date-range">
         <text class="date-text">{{startDate}} 至 {{endDate}}</text>
       </view>

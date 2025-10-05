@@ -37,11 +37,11 @@ echarts.extendSeriesModel({
 
     top: 'center',
 
-    width: '70%',
+    width: '100%',
 
-    height: '80%',
+    height: '100%',
 
-    sizeRange: [12, 60],
+    sizeRange: [8, 30],
 
     rotationRange: [-90, 90],
 
@@ -49,11 +49,13 @@ echarts.extendSeriesModel({
 
     gridSize: 8,
 
-    drawOutOfBound: false,
+    drawOutOfBound: true,
     shrinkToFit: false,
 
     textStyle: {
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      // 将文字颜色统一设置为黑色
+      color: 'black'
     }
   }
 });

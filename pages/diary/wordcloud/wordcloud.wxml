@@ -6,13 +6,21 @@
       <van-tab title="大家" name="global"></van-tab>
     </van-tabs>
 
-    <view class="slider-container">
-      <text>时间范围: 最近 {{ days }} 天</text>
-      <van-slider value="{{ days }}" min="7" max="365" bind:change="onDaysChange" />
-    </view>
-
-    <view class="debug-info" wx:if="{{debugInfo}}">
-      <text>调试信息: {{debugInfo}}</text>
+    <view class="card-container">
+      <view class="card-title">
+        <text>情绪词海</text>
+      </view>
+      <view class="card-subtitle">{{subtitle}}</view>
+      <view class="time-range-selector">
+        <view 
+          wx:for="{{timeRanges}}" 
+          wx:key="days" 
+          class="range-btn {{days === item.days ? 'active' : ''}}" 
+          data-days="{{item.days}}" 
+          bind:tap="onRangeChange">
+          {{item.text}}
+        </view>
+      </view>
     </view>
 
     <view class="wordcloud-container">

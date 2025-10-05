@@ -9,6 +9,16 @@ echarts.extendChartView({
 
     var data = seriesModel.getData();
 
+    // 新增：获取画布尺寸并设置给布局实例
+    var width = api.getWidth();
+    var height = api.getHeight();
+    var layoutInstance = seriesModel.layoutInstance;
+    
+    if (layoutInstance) {
+      layoutInstance.canvas.width = width;
+      layoutInstance.canvas.height = height;
+    }
+
     var gridSize = seriesModel.get('gridSize');
 
     seriesModel.layoutInstance || (seriesModel.layoutInstance = {})
@@ -29,8 +39,10 @@ echarts.extendChartView({
         y: drawn.info.fillTextOffsetY + size * 0.5,
         text: text,
         verticalAlign: 'middle',
-        fill: data.getItemVisual(dataIdx, 'style').fill,
-        fontSize: size
+        fill: '#000', // 设置文字颜色为黑色
+        backgroundColor: data.getItemVisual(dataIdx, 'style').fill, // 设置背景颜色为随机生成的颜色
+        fontSize: size,
+        padding: [4, 6] // 增加一些内边距，让背景框更好看
       });
 
       group.add(textEl);

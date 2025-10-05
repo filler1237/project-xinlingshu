@@ -2,20 +2,25 @@
   width: 100%;
   position: relative;
   text-align: center;
+  height: 320px; /* 设定一个高度以确保动画元素在容器内 */
+  transform: translateX(330rpx); /* 将整个词云容器向右平移140rpx */
 }
 
 .item {
   text-align: center;
-  border-radius: 4rpx;
-  height: 48rpx;
-  line-height: 48rpx;
-  padding: 0 32rpx;
+  border-radius: 8rpx; /* 圆角稍大一些 */
+  /* 移除固定的高度和行高，让其自适应内容 */
+  padding: 16rpx; /* 调整内边距 */
+  display: inline-block; /* 改为inline-block以包裹内容 */
+  min-width: 40rpx; /* 设置一个最小宽度 */
 }
 
 .item-name {
   font-size: 30rpx;
-  color: #f0f1f7;
+  color: #555555;
   font-weight: bold;
+  writing-mode: vertical-rl; /* 实现文字竖排 */
+  letter-spacing: 4rpx; /* 增加文字间距 */
 }
 
 .item1 {

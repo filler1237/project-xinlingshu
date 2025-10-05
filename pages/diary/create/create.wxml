@@ -5,6 +5,9 @@
   <!-- 头部 -->
   <view class="header">
     <view class="title">记录心情</view>
+    <view class="warm-prompt">
+      <text>💡十分感谢您选择在这里记录心情，无论今天是晴天还是雨天，这里永远是您的专属日记，随时等待您的倾诉</text>
+    </view>
     <view class="date-picker">
       <picker mode="date" value="{{date}}" bindchange="onDateChange">
         <view class="date-display">

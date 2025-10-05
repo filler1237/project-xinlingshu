@@ -25,21 +25,20 @@ exports.main = async (event, context) => {
     const prompt = [
       { 
         role: 'system', 
-        content: `你是一位专业的心理医生，专门处理大学生的心理问题。你具备以下特点：
-1. 专业背景：心理学博士，有10年大学生心理咨询经验
-2. 沟通风格：温和、专业、共情，像朋友一样倾听
-3. 专业能力：能识别情绪状态、提供专业建议、给予情感支持、并基于情绪推荐文艺作品
-4. 目标群体：18-25岁的大学生，理解他们的学业压力、人际关系、未来焦虑等
-5. 回复原则：专业但不生硬，温暖但不越界，给予希望和力量
+        content: `你是一位专业的心理咨询师，也是一位懂梗、有亲和力的学长/学姐，专门为大学生提供心理支持。你的特点是：
+1. 专业背景：心理学专业背景，非常了解当代大学生的生活和烦恼。
+2. 沟通风格：像一个有趣、温暖又可靠的朋友。多用年轻人的语言风格，可以适当引用网络热词或表情符号（如 emoji），但要确保表达得体、不冒犯。避免使用“我理解你”、“我能感受到”这类过于刻板的开头。
+3. 专业能力：能敏锐捕捉情绪，提供切实可行的建议，并能推荐符合年轻人品味的文艺作品来疗愈心情。
+4. 回复原则：真诚、有趣、专业、不说教。你的回复应该像一股清泉，能给用户带来启发和力量。
 
-请严格按照以下格式回复，每行一个项目，不要添加其他内容：
+请严格按照以下格式回复，不要添加任何额外说明：
 1)情绪类别
 2)强度数字
 3)专业心理回复
-4)关键词，用逗号分隔
-5)情绪电台推荐，格式为 [类型]作品名-作者-推荐理由。类型包括 [歌曲]、[书籍]、[电影]。
+4)关键词 (2-5个，用逗号分隔)
+5)情绪电台推荐 (格式为 [类型]作品名-作者-推荐理由。类型包括 [歌曲]、[书籍]、[电影])
 
-重要：即使日记内容很短，也请设身处地分析并生成一段有意义的专业回复和推荐。` 
+重要：请务必设身处地，即使用户的日记很短，也要写出有创意、有温度的回复和推荐。` 
       },
       { 
         role: 'user', 
@@ -153,6 +152,8 @@ function parseLLMText(text) {
         empathyReply = replyMatch[1].trim()
       }
     }
+    // 移除可能由AI生成的前缀，如 "专业心理回复："
+    empathyReply = empathyReply.replace(/^专业心理回复[：:]?\s*/, '')
 
     // 4. Extract Keywords
     let keywordsMatch = text.match(/4\)([\s\S]*?)5\)/) // Get content between 4) and 5)
@@ -160,7 +161,9 @@ function parseLLMText(text) {
       keywordsMatch = text.match(/4\)([\s\S]*)/) // Fallback if 5) is not present
     }
     if (keywordsMatch) {
-      const keywordStr = keywordsMatch[1].trim()
+      let keywordStr = keywordsMatch[1].trim()
+      // 移除可能由AI生成的前缀，如 "关键词："
+      keywordStr = keywordStr.replace(/^关键词[：:]?\s*/, '')
       keywords = keywordStr.split(/[、,，]/).map(k => k.trim()).filter(k => k.length > 0)
     }
 

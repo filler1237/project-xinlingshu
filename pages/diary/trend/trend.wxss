@@ -39,6 +39,18 @@ page {
   color: #96CE74;
 }
 
+.warm-prompt {
+  font-size: 24rpx;
+  color: #88B86A;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 15rpx 20rpx;
+  border-radius: 10rpx;
+  margin-top: 15rpx;
+  text-align: center;
+  line-height: 1.6;
+  border: 1rpx solid rgba(150, 206, 116, 0.2);
+}
+
 .date-range {
   font-size: 24rpx;
   opacity: 0.8;
