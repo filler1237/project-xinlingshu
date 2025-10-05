@@ -98,6 +98,7 @@ exports.main = async (event, context) => {
     console.log('准备更新数据库的数据:', updateData) // 调试日志
     console.log('最终的情绪强度:', updateData.emotionIntensity) // 调试日志
     
+    // 在云函数端，update方法直接接收数据对象，不需要外层的 'data' 包装
     await db.collection('DiaryEntries').doc(entryId).update({
       data: updateData
     })

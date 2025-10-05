@@ -2,6 +2,7 @@ const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 const _ = db.command
+const $ = db.command.aggregate
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
@@ -14,7 +15,7 @@ exports.main = async (event, context) => {
 
   let matchCondition = {
     createdAt: _.gte(startDate),
-    keywords: _.exists(true) // 只考虑包含关键词的日记
+    keywords: _.exists(true).and(_.neq([])) // 只考虑包含非空关键词数组的日记
   }
 
   if (scope === 'personal') {
@@ -31,7 +32,7 @@ exports.main = async (event, context) => {
       .unwind('$keywords')
       .group({
         _id: '$keywords',
-        count: _.sum(1)
+        count: $.sum(1)
       })
       .project({
         _id: 0,

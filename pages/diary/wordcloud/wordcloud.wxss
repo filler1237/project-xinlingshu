@@ -1,56 +1,34 @@
-page {
-  background-color: #f7f8fa;
+.page-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20rpx;
+  background-color: #f7f8fa;
+  /* Removed fixed height, it will now fill the remaining space */
 }
 
-.tabs {
-  width: 100%;
-}
-
-.picker-container {
-  width: 100%;
-  padding: 20rpx;
-  text-align: center;
+.slider-container {
+  padding: 16px;
   background-color: #fff;
-  margin-top: 20rpx;
-  border-radius: 10rpx;
 }
 
-.picker {
-  font-size: 28rpx;
-  color: #333;
-}
-
-.chart-container {
-  width: 100%;
-  height: 800rpx;
-  margin-top: 20rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
+.wordcloud-container {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-ec-canvas {
+  position: relative;
   width: 100%;
-  height: 100%;
+  /* Removed height: 100% as flex:1 will handle it */
+  margin-top: 20px;
 }
 
-.loading, .error {
-  font-size: 28rpx;
+.error-message,
+.empty-message {
   color: #999;
-}
-
-.description {
-  margin-top: 30rpx;
-  font-size: 26rpx;
-  color: #666;
-  text-align: center;
 }

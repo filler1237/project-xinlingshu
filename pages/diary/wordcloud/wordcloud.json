@@ -1,10 +1,11 @@
 {
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar",
     "van-tab": "/miniprogram_npm/vant-weapp/tab/index",
     "van-tabs": "/miniprogram_npm/vant-weapp/tabs/index",
-    "van-icon": "/miniprogram_npm/vant-weapp/icon/index",
-    "ec-canvas": "/pages/ec-canvas/ec-canvas"
+    "van-loading": "/miniprogram_npm/vant-weapp/loading/index",
+    "van-slider": "/miniprogram_npm/vant-weapp/slider/index",
+    "liu-photo-wall": "/components/native-photo-wall/index",
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
   },
-  "navigationBarTitleText": "情绪词云"
+  "navigationStyle": "custom"
 }

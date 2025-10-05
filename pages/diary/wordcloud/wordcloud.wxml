@@ -1,30 +1,25 @@
-<navigation-bar title="情绪词云" back="{{true}}"></navigation-bar>
+<view class="page-wrapper">
+  <navigation-bar title="情绪词云" show-back-button="{{true}}"></navigation-bar>
+  <view class="container">
+    <van-tabs active="{{ activeTab }}" bind:change="onTabChange">
+      <van-tab title="我的" name="personal"></van-tab>
+      <van-tab title="大家" name="global"></van-tab>
+    </van-tabs>
 
-<view class="container">
-  <!-- Tab 切换 -->
-  <van-tabs active="{{ activeTab }}" bind:change="onTabChange" class="tabs">
-    <van-tab title="我的词云" name="personal"></van-tab>
-    <van-tab title="大家的词云" name="global"></van-tab>
-  </van-tabs>
+    <view class="slider-container">
+      <text>时间范围: 最近 {{ days }} 天</text>
+      <van-slider value="{{ days }}" min="7" max="365" bind:change="onDaysChange" />
+    </view>
 
-  <!-- 时间范围选择 -->
-  <view class="picker-container">
-    <picker bindchange="onDaysChange" value="{{days}}" range="{{[7, 30, 90]}}">
-      <view class="picker">
-        最近 {{days}} 天 <van-icon name="arrow-down" />
-      </view>
-    </picker>
-  </view>
+    <view class="debug-info" wx:if="{{debugInfo}}">
+      <text>调试信息: {{debugInfo}}</text>
+    </view>
 
-  <!-- 词云容器 -->
-  <view class="chart-container">
-    <view wx:if="{{loading}}" class="loading">加载中...</view>
-    <view wx:elif="{{error}}" class="error">{{error}}</view>
-    <ec-canvas wx:else id="mychart-dom-wordcloud" canvas-id="mychart-wordcloud" ec="{{ ec }}"></ec-canvas>
-  </view>
-
-  <!-- 描述文字 -->
-  <view class="description" wx:if="{{activeTab === 'global'}}">
-    <text>看看和你一样的大学生，最近都在关心什么吧！</text>
+    <view class="wordcloud-container">
+      <van-loading wx:if="{{loading}}" size="24px">加载中...</van-loading>
+      <view wx:if="{{!loading && error}}" class="error-message">{{ error }}</view>
+      <liu-photo-wall wx:if="{{!loading && !error && keywordList.length > 0}}" dataList="{{keywordList}}" />
+      <view wx:if="{{!loading && !error && keywordList.length === 0}}" class="empty-message">暂无数据</view>
+    </view>
   </view>
 </view>

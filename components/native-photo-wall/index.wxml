@@ -1,0 +1,12 @@
+<view class="main-info">
+  <view 
+    class="item item{{index + 1}}" 
+    style="background-color:{{bgColor[index]}};" 
+    wx:for="{{dataList}}" 
+    wx:key="index" 
+    wx:if="{{index < 21}}" 
+    bind:tap="clickItem"
+    data-item="{{item}}">
+    <view class="item-name">{{item}}</view>
+  </view>
+</view>
