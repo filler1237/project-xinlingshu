@@ -1,27 +1,54 @@
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
-</view>
-<view class="title">塔罗牌</view>
-<view class="bottom">
-  <image class="down"src="/image/up.png" style="width: 100%;"/>
-  <image class="up" src="/image/down.png" style="width: 100%;"/>
-  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
-</view>
+<!-- home/card/card.wxml -->
+<view class="container">
+  <view class='partone' style="width:82rpx" bindtap='onBackTap'>
+      <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+  </view>
+  <view class="title">请点击牌堆抽取塔罗牌</view>
+  <view class="navigation-hint">从牌堆中抽取三张牌以获取解读</view>
 
-<view class="page">
-<view class="text cool-title">
-  提升我的复原力
-</view>
-<view class="">
-  <view class="board" >
-    <view class="rows" wx:for="{{cards}}" wx:for-index="idx" wx:for-item="row">
-        <view wx:for="{{row}}" class="cols"   wx:for-index="idy"  wx:for-item="card" > 
-            <view  class="" data-ix="{{idx}}"  data-iy="{{idy}}"  bindtap="onTap" >
-                <image class="card" style="display:{{card.state == 0 ? 'none' : 'block'}}" mode="scaleToFill" src= "{{card.src}}" data-card="{{card}}" bindtap="preview"></image>
-                <image class="card back" style="display:{{card.state != 0 ? 'none' : 'block'}}" mode="scaleToFill" src= "{{backImage}}" ></image>
+  <!-- 主牌堆，用于发牌 -->
+  <view class="dealing-area">
+    <view class="main-deck {{selectedCards.length >= 3 ? 'disabled' : ''}}" bindtap="handleDealTap">
+      <image mode="widthFix" src="/Cards-jpg/CardBacks.jpg" />
+    </view>
+  </view>
+
+  <!-- 已选牌区 -->
+  <view class="selected-area">
+    <!-- 三个卡牌展示区 -->
+    <view class="card-display-wrapper" wx:for="{{[0, 1, 2]}}" wx:key="*this">
+      <view class="card-slot">
+        <view class="card-container {{selectedCards[index] ? 'dealt' : ''}}">
+          <!-- 卡牌翻转容器 -->
+          <view class="card-inner {{selectedCards[index].isFlipped ? 'is-flipped' : ''}}">
+            <!-- 卡背 -->
+            <view class="card-face card-back">
+              <image mode="widthFix" src="/Cards-jpg/CardBacks.jpg" />
             </view>
+            <!-- 卡面 -->
+            <view class="card-face card-front">
+              <image wx:if="{{selectedCards[index]}}" class="card-image" src="{{selectedCards[index].frontImage}}"></image>
+            </view>
+          </view>
         </view>
+      </view>
+      <text wx:if="{{selectedCards[index]}}" class="card-name">{{selectedCards[index].name}} {{selectedCards[index].isReversed ? '(逆)' : '(正)'}}</text>
+      <!-- Add a placeholder for the text so the layout doesn't jump -->
+      <text wx:else class="card-name placeholder">&nbsp;</text>
     </view>
-    </view>
-</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button bindtap="handleRetry" class="retry-btn">重新选择</button>
+    <button bindtap="viewResult" class="result-btn" disabled="{{selectedCards.length < 3 || isLoading}}" loading="{{isLoading}}">
+      {{isLoading ? '分析中...' : '查看结果'}}
+    </button>
+  </view>
+
+  <!-- AI分析结果区 -->
+  <view class="analysis-area" wx:if="{{analysisResult}}">
+    <view class="analysis-title">AI解读</view>
+    <view class="analysis-content">{{analysisResult}}</view>
+  </view>
 </view>
