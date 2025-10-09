@@ -1,4 +1,5 @@
 <!--pages/diary/calendar/calendar.wxml-->
+<wxs src="./format.wxs" module="tools" />
 <navigation-bar title="日记日历" back="{{true}}"></navigation-bar>
 
 <view class="container">
@@ -16,6 +17,15 @@
       <text class="nav-icon">📊</text>
       <text class="nav-text">趋势分析</text>
     </view>
+    <view class="nav-item" bindtap="goToWordCloud">
+      <text class="nav-icon">☁️</text>
+      <text class="nav-text">情绪词云</text>
+    </view>
+  </view>
+
+  <!-- 用户引导信息 -->
+  <view class="guidance-info">
+    <text class="guidance-text">💡 点击日历上的日期可查看当天日记，或使用上方按钮进行更多操作。</text>
   </view>
   
   <!-- 头部 -->
@@ -159,12 +169,12 @@
             bindtap="viewDiaryDetail"
             data-id="{{item._id}}"
           >
-            <view class="diary-item-header">
-              <view class="diary-date-section">
-                <text class="diary-date">{{formatDate(item.date)}}</text>
-                <text class="diary-weekday">{{formatWeekday(item.date)}}</text>
-              </view>
-              <view class="diary-emotion-section">
+            <view class="diary-item-date">
+              <text class="day">{{tools.formatDay(item.date)}}</text>
+              <text class="month">{{tools.formatMonth(item.date)}}月</text>
+            </view>
+            <view class="diary-item-main">
+              <view class="main-header">
                 <view 
                   class="diary-emotion-tag" 
                   wx:if="{{item.emotionType}}"
@@ -172,32 +182,14 @@
                 >
                   {{item.emotionType}}
                 </view>
-                <view 
-                  class="diary-intensity" 
-                  wx:if="{{item.emotionIntensity !== null && item.emotionIntensity !== undefined}}"
-                >
-                  强度: {{item.emotionIntensity}}/10
-                </view>
+                <text class="diary-weekday">{{tools.formatWeekday(item.date)}}</text>
               </view>
-            </view>
-            <view class="diary-content-wrapper">
-              <text class="diary-content">{{item.content}}</text>
-            </view>
-            <view class="diary-info-section">
-              <view class="diary-date-emotion">
-                <text class="diary-record-date">{{formatDate(item.date)}}</text>
-                <view 
-                  class="diary-record-emotion" 
-                  wx:if="{{item.emotionType}}"
-                  style="background-color: {{getEmotionColor(item.emotionType)}}"
-                >
-                  {{item.emotionType}}
-                </view>
+              <view class="main-content">
+                <text class="diary-content-preview">{{item.content}}</text>
               </view>
-              <text class="diary-preview">点击查看详情</text>
-            </view>
-            <view class="diary-footer">
-              <text class="diary-time">{{formatTime(item.createdAt)}}</text>
+              <view class="main-footer">
+                <text class="diary-time">{{tools.formatTime(item.createdAt)}} 记录</text>
+              </view>
             </view>
           </view>
         </scroll-view>

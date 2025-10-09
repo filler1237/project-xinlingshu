@@ -1,0 +1,33 @@
+<view class="page-wrapper">
+  <navigation-bar title="情绪词云" show-back-button="{{true}}"></navigation-bar>
+  <view class="container">
+    <van-tabs active="{{ activeTab }}" bind:change="onTabChange">
+      <van-tab title="我的" name="personal"></van-tab>
+      <van-tab title="大家" name="global"></van-tab>
+    </van-tabs>
+
+    <view class="card-container">
+      <view class="card-title">
+        <text>情绪词海</text>
+      </view>
+      <view class="card-subtitle">{{subtitle}}</view>
+      <view class="time-range-selector">
+        <view 
+          wx:for="{{timeRanges}}" 
+          wx:key="days" 
+          class="range-btn {{days === item.days ? 'active' : ''}}" 
+          data-days="{{item.days}}" 
+          bind:tap="onRangeChange">
+          {{item.text}}
+        </view>
+      </view>
+    </view>
+
+    <view class="wordcloud-container">
+      <van-loading wx:if="{{loading}}" size="24px">加载中...</van-loading>
+      <view wx:if="{{!loading && error}}" class="error-message">{{ error }}</view>
+      <liu-photo-wall wx:if="{{!loading && !error && keywordList.length > 0}}" dataList="{{keywordList}}" />
+      <view wx:if="{{!loading && !error && keywordList.length === 0}}" class="empty-message">暂无数据</view>
+    </view>
+  </view>
+</view>

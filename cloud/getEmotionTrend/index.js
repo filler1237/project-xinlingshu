@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
       .orderBy('date', 'asc')
       .get()
 
-    // 聚合统计
+    
     const series = data.map(d => ({ 
       date: d.date, 
       emotionType: d.emotionType, 

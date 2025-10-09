@@ -1,7 +1,11 @@
 /* pages/diary/create/create.wxss */
+page {
+  background: linear-gradient(to bottom, #E5FFF0, #FFFFF5);
+}
+
 .container {
   padding: 20rpx;
-  background-color: #f8f9fa;
+  background: transparent;
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 120rpx; /* 为底部按钮留出空间 */
@@ -9,20 +13,36 @@
 
 /* 头部 */
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 15rpx;
+  background: linear-gradient(135deg, #E5FFF0, #D5F5E3);
+  border-radius: 16rpx;
   padding: 25rpx 20rpx;
   margin-bottom: 25rpx;
-  color: white;
+  color: #96CE74;
   position: relative;
   width: 100%;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(20rpx);
 }
 
 .title {
-  font-size: 36rpx;
-  font-weight: bold;
+  font-size: 40rpx;
+  font-weight: 400;
   margin-bottom: 20rpx;
   text-align: center;
+  font-family: PingFang SC;
+  color: #96CE74;
+}
+
+.warm-prompt {
+  font-size: 24rpx;
+  color: #88B86A;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 15rpx 20rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+  line-height: 1.6;
+  border: 1rpx solid rgba(150, 206, 116, 0.2);
 }
 
 .date-picker {
@@ -36,101 +56,114 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(150, 206, 116, 0.2);
   padding: 18rpx 25rpx;
-  border-radius: 12rpx;
+  border-radius: 10rpx;
   backdrop-filter: blur(10rpx);
   width: 100%;
   box-sizing: border-box;
+  border: 2rpx solid rgba(150, 206, 116, 0.3);
 }
 
 .date-text {
   font-size: 30rpx;
   margin-right: 15rpx;
-  font-weight: 500;
+  font-weight: 300;
+  color: #96CE74;
+  font-family: PingFang SC;
 }
 
 .date-icon {
   font-size: 26rpx;
-}
-
-/* 情绪类型和强度横向排列 */
-.emotion-intensity-row {
-  display: flex;
-  gap: 20rpx;
-  margin-bottom: 25rpx;
-  width: 100%;
-  box-sizing: border-box;
+  color: #96CE74;
 }
 
 /* 通用section样式 */
 .emotion-section,
-.intensity-section {
-  flex: 1;
-  background: white;
-  border-radius: 15rpx;
-  padding: 25rpx;
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
-  border: 1rpx solid #f0f0f0;
-}
-
+.intensity-section,
 .content-section {
-  background: white;
-  border-radius: 15rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
   padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #E5FFF0;
+  backdrop-filter: blur(20rpx);
   margin-bottom: 25rpx;
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
-  border: 1rpx solid #f0f0f0;
   width: 100%;
   box-sizing: border-box;
 }
 
 .section-title {
   font-size: 30rpx;
-  font-weight: bold;
-  color: #333;
+  font-weight: 350;
+  color: #96CE74;
   margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: PingFang SC;
+}
+
+.section-title .title-text {
   display: flex;
   align-items: center;
 }
 
-.section-title::before {
+.section-title .title-text::before {
   content: '';
   width: 6rpx;
   height: 30rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #96CE74;
   margin-right: 15rpx;
   border-radius: 3rpx;
 }
 
-/* 情绪选择器 */
-.emotion-selector {
+.clear-btn {
+  font-size: 24rpx;
+  color: #FF6B6B;
+  padding: 5rpx 15rpx;
+  border-radius: 20rpx;
+  background-color: #FFE5E5;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:active {
+  transform: scale(0.95);
+  background-color: rgba(255, 107, 107, 0.2);
+}
+
+/* 新的情绪表情选择器 */
+.emotion-emoji-selector {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 25rpx 20rpx;
-  background: #f8f9fa;
-  border-radius: 12rpx;
-  border: 2rpx solid #e9ecef;
-  transition: all 0.3s ease;
-  min-height: 80rpx;
+  padding: 10rpx 0;
 }
 
-.emotion-selector:active {
-  background: #e9ecef;
-  border-color: #667eea;
+.emotion-emoji-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  transition: all 0.2s ease-in-out;
+  border: 2rpx solid transparent;
 }
 
-.emotion-text {
-  font-size: 30rpx;
-  color: #666;
-  flex: 1;
+.emotion-emoji-item .emoji {
+  font-size: 50rpx;
+  margin-bottom: 5rpx;
 }
 
-.arrow {
-  font-size: 26rpx;
-  color: #999;
-  margin-left: 15rpx;
+.emotion-emoji-item .emoji-name {
+  font-size: 22rpx;
+  color: #96CE74;
+}
+
+.emotion-emoji-item.selected {
+  transform: scale(1.1);
+  background-color: #E5FFF0;
+  border-color: #96CE74;
 }
 
 /* 情绪强度 */
@@ -140,10 +173,11 @@
 
 .intensity-label {
   font-size: 30rpx;
-  color: #666;
+  color: #96CE74;
   margin-bottom: 25rpx;
   display: block;
-  font-weight: 500;
+  font-weight: 300;
+  font-family: PingFang SC;
 }
 
 /* 内容输入 */
@@ -151,141 +185,56 @@
   width: 100%;
   min-height: 300rpx;
   padding: 20rpx;
-  border: 2rpx solid #e9ecef;
-  border-radius: 12rpx;
+  border: 2rpx solid #E5FFF0;
+  border-radius: 10rpx;
   font-size: 28rpx;
   line-height: 1.8;
-  background: #f8f9fa;
+  background: #E5FFF0;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: PingFang SC;
+  color: #96CE74;
 }
 
 .content-input:focus {
-  border-color: #667eea;
-  background: white;
+  border-color: #96CE74;
+  background: #ffffff;
+  box-shadow: 0 0 0 6rpx rgba(150, 206, 116, 0.1);
 }
 
 .char-count {
   text-align: right;
   font-size: 24rpx;
-  color: #999;
+  color: #96CE74;
   margin-top: 15rpx;
-}
-
-/* 操作按钮 */
-.action-buttons {
-  display: flex;
-  gap: 15rpx;
-  margin-bottom: 30rpx;
-  padding: 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.btn {
-  flex: 1;
-  padding: 18rpx 12rpx;
-  border-radius: 12rpx;
-  font-size: 24rpx;
-  border: none;
-  position: relative;
-  transition: all 0.3s ease;
-  min-height: 70rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: calc(33.333% - 10rpx);
-}
-
-.btn-secondary {
-  background: #6c757d;
-  color: white;
-}
-
-.btn-danger {
-  background: #dc3545;
-  color: white;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to right, #96CE74, #7FB85A);
   color: white;
-  font-weight: bold;
+  font-weight: 400;
+  box-shadow: 0 4rpx 12rpx rgba(150, 206, 116, 0.3);
+}
+
+.btn-primary:active {
+  background: linear-gradient(to right, #7FB85A, #6AA34F);
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(150, 206, 116, 0.4);
 }
 
 .submit-btn {
   width: 100%;
-  padding: 20rpx;
-  font-size: 28rpx;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.3);
+  padding: 25rpx;
+  font-size: 32rpx;
+  border-radius: 16rpx;
   margin: 0;
+  font-family: PingFang SC;
+  font-weight: 300;
 }
 
 .submit-btn:disabled {
   opacity: 0.6;
-}
-
-/* 情绪类型选择弹窗 */
-.emotion-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.emotion-modal-content {
-  background: white;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  margin: 40rpx;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.modal-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 30rpx;
-  color: #333;
-}
-
-.emotion-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15rpx;
-}
-
-.emotion-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25rpx;
-  background: #f8f9fa;
-  border-radius: 10rpx;
-  border: 2rpx solid transparent;
-  transition: all 0.3s ease;
-}
-
-.emotion-item:active {
-  background: #e9ecef;
-  border-color: #667eea;
-}
-
-.emotion-name {
-  font-size: 28rpx;
-  color: #333;
-}
-
-.check-icon {
-  font-size: 24rpx;
-  color: #667eea;
-  font-weight: bold;
+  background: #ccc;
 }

@@ -134,3 +134,13 @@
   color: rgb(203, 216, 216);
   text-align: center;
 }
+
+@font-face {
+  font-weight: 400;
+  font-family: vant-icon;
+  font-style: normal;
+  font-display: auto;
+  src: url(/assets/fonts/vant-icon-d3825a.woff2) format("woff2"),
+       url(/assets/fonts/vant-icon-d3825a.woff) format("woff"),
+       url(/assets/fonts/vant-icon-d3825a.ttf) format("truetype");
+}

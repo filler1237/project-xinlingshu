@@ -1,11 +1,14 @@
 <!--pages/diary/trend/trend.wxml-->
-<navigation-bar title="情绪趋势分析" back="{{true}}"></navigation-bar>
+<navigation-bar title="情绪趋势分析" back="{{true}}" wx:if="{{!isZoomed}}"></navigation-bar>
 
-<view class="container">
+<view class="container {{isZoomed ? 'fullscreen' : ''}}">
   <!-- 头部 -->
-  <view class="header">
+  <view class="header" wx:if="{{!isZoomed}}">
     <view class="title">
       <text>情绪趋势分析</text>
+      <view class="warm-prompt">
+        <text>💡在这里您可以看到近几天来您的心情变化趋势，这是了解自己的一个好方法！</text>
+      </view>
       <view class="date-range">
         <text class="date-text">{{startDate}} 至 {{endDate}}</text>
       </view>
@@ -13,7 +16,7 @@
   </view>
 
   <!-- 时间范围选择 -->
-  <view class="time-range-selector">
+  <view class="time-range-selector" wx:if="{{!isZoomed}}">
     <button 
       class="range-btn {{timeRange === 'week' ? 'active' : ''}}"
       data-range="week"
@@ -39,7 +42,7 @@
 
 
   <!-- 情绪统计 -->
-  <view class="emotion-stats" wx:if="{{!loading}}">
+  <view class="emotion-stats" wx:if="{{!loading && !isZoomed}}">
     <view class="stats-title">情绪分布</view>
     <view class="stats-grid">
       <view 
@@ -144,8 +147,24 @@
     </view>
   </view>
 
+  <!-- AI趋势洞察 -->
+  <view class="ai-insight-section" wx:if="{{!isZoomed}}">
+    <view class="insight-header">
+      <view class="insight-title">AI趋势洞察</view>
+      <button class="analyze-btn" bindtap="runTrendAnalysis" loading="{{isAnalyzingTrend}}">
+        {{isAnalyzingTrend ? '分析中...' : '获取AI分析'}}
+      </button>
+    </view>
+    <view class="insight-content" wx:if="{{trendAnalysisResult}}">
+      <text selectable="true">{{trendAnalysisResult}}</text>
+    </view>
+    <view class="insight-placeholder" wx:if="{{!trendAnalysisResult && !isAnalyzingTrend}}">
+      <text>点击按钮，获取AI对您近期情绪趋势的专业分析和建议。</text>
+    </view>
+  </view>
+
   <!-- 详细数据 -->
-  <view class="detail-data" wx:if="{{chartData && !loading}}">
+  <view class="detail-data" wx:if="{{chartData && !loading && !isZoomed}}">
     <view class="detail-title">详细数据</view>
     <view class="data-list">
       <view 
@@ -188,12 +207,12 @@
 
 
   <!-- 加载状态 -->
-  <view class="loading" wx:if="{{loading}}">
+  <view class="loading" wx:if="{{loading && !isZoomed}}">
     <text>加载中...</text>
   </view>
 
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{!loading && trendData.length === 0}}">
+  <view class="empty" wx:if="{{!loading && trendData.length === 0 && !isZoomed}}">
     <text class="empty-text">暂无数据</text>
     <text class="empty-desc">开始记录你的心情吧</text>
   </view>

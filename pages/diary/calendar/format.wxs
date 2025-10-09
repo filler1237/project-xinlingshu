@@ -1,0 +1,37 @@
+var padZero = function(num) {
+  return num < 10 ? '0' + num : num;
+};
+
+var formatDay = function(dateStr) {
+  if (!dateStr) return '';
+  var date = getDate(dateStr);
+  return padZero(date.getDate());
+};
+
+var formatMonth = function(dateStr) {
+  if (!dateStr) return '';
+  var date = getDate(dateStr);
+  return padZero(date.getMonth() + 1);
+};
+
+var formatWeekday = function(dateStr) {
+  if (!dateStr) return '';
+  var date = getDate(dateStr);
+  var weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  return weekdays[date.getDay()];
+};
+
+var formatTime = function(dateStr) {
+  if (!dateStr) return '';
+  var date = getDate(dateStr);
+  var hours = padZero(date.getHours());
+  var minutes = padZero(date.getMinutes());
+  return hours + ':' + minutes;
+};
+
+module.exports = {
+  formatDay: formatDay,
+  formatMonth: formatMonth,
+  formatWeekday: formatWeekday,
+  formatTime: formatTime
+};

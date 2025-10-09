@@ -61,7 +61,8 @@
         "create/create",
         "detail/detail",
         "calendar/calendar",
-        "trend/trend"
+        "trend/trend",
+        "wordcloud/wordcloud"
       ]
     }
   ],

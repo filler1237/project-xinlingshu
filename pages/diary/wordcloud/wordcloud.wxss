@@ -1,0 +1,111 @@
+page {
+  background-color: #FFFFF5; /* 统一页面背景色 */
+}
+
+/* 优化 van-tabs 导航栏风格 */
+van-tabs {
+  width: 100%;
+  --tabs-bottom-bar-color: #96CE74;
+  --tabs-nav-background-color: #FFFFF5;
+  margin-bottom: 30rpx; /* 增加与下方卡片的间距 */
+}
+
+.page-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFF5;
+  padding: 20rpx 0;
+  box-sizing: border-box;
+}
+
+.card-container {
+  background: #ffffff;
+  border-radius: 0;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 350;
+  color: #96CE74;
+  /* margin-bottom is removed, spacing will be handled by subtitle */
+  font-family: "PingFang SC", sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+.card-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background: #96CE74;
+  margin-right: 15rpx;
+  border-radius: 3rpx;
+}
+
+.card-subtitle {
+  font-size: 24rpx;
+  color: #aaa;
+  font-weight: 300;
+  margin-top: 8rpx; /* 与主标题的间距 */
+  padding-left: 21rpx; /* 与主标题的竖条对齐 */
+}
+
+.time-range-selector {
+  display: flex;
+  gap: 15rpx;
+  width: 100%; /* 确保容器占满横向空间 */
+  margin-top: 30rpx; /* 与副标题的间距 */
+}
+
+.range-btn {
+  flex: 1;
+  padding: 16rpx 8rpx;
+  border-radius: 10rpx;
+  background: #ffffff;
+  color: #96CE74;
+  border: 2rpx solid #E5FFF0;
+  font-size: 24rpx;
+  text-align: center;
+  font-family: "PingFang SC", sans-serif;
+  font-weight: 300;
+  transition: all 0.3s ease;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+}
+
+.range-btn.active {
+  background: #96CE74;
+  color: white;
+  border-color: #96CE74;
+  transform: scale(0.98);
+}
+
+.wordcloud-container {
+  flex: 1; /* 让其填充剩余空间 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 0;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  min-height: 300px; 
+  overflow: hidden; /* 隐藏动画溢出的部分 */
+}
+
+.error-message,
+.empty-message {
+  color: #999;
+  font-family: "PingFang SC", sans-serif;
+  font-weight: 300;
+}
