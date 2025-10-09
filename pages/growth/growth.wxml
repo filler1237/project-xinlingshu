@@ -1,11 +1,13 @@
 <!-- pages/growth/growth.wxml -->
 <view class="container">
   <view class="tree-container">
+    <image class="background-image" src="/images/tree/背景图.png" mode="aspectFill"></image>
     <view class="tree-animation-wrapper">
       <image class="tree-image {{animationState}}" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" key="{{treeLevel}}" />
     </view>
     <view class="growth-value">成长值: {{growthValue}}</view>
     <view class="growth-level">心理树等级: {{treeLevel}}</view>
+    <button class="water-button" type="primary" bindtap="onWatering">浇水</button>
   </view>
 
   <view class="achievements-container">

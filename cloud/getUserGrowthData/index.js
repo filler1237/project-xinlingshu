@@ -27,7 +27,8 @@ exports.main = async (event, context) => {
     data:{
       growthValue:user.growthValue,
       treeLevel:user.treeLevel,
-      unlockedAchievements:achievementsRes.data
+      unlockedAchievements:achievementsRes.data,
+      waterdrops:user.waterDrops
     }
   }
 } catch(e){

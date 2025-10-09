@@ -210,7 +210,7 @@ Page({
       wx.hideLoading();
       if (res.result.code === 0) {
         wx.showToast({
-          title: `签到成功！获得 ${res.result.reward} 水滴`,
+          title: `签到成功！+${res.result.reward}水滴`,
           icon: 'success'
         });
         // 可以在这里更新本地的水滴数量，如果需要实时显示的话
