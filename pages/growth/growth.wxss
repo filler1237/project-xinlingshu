@@ -1,22 +1,22 @@
 /* pages/growth/growth.wxss */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20rpx;
+page {
+  background-color: #f7f7f7; /* 为页面滚动区域设置底色 */
 }
 
-.tree-container {
-  margin-top: 400rpx;
+.container {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40rpx;
-  padding: 30rpx;
-  border-radius: 20rpx;
+}
+
+/* 1. 首屏区域样式 */
+.hero-section {
+  height: 70vh; /* 关键：占满整个视口高度 */
+  width: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* 1. 改为底部对齐 */
+  padding-bottom: 25vh;   /* 2. 从底部向上推起约1/4屏幕高度，视觉效果更佳 */
 }
 
 .background-image {
@@ -25,47 +25,64 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
 }
 
 .tree-animation-wrapper {
-  width: 400rpx;
-  height: 400rpx;
+  width: 500rpx;
+  height: 500rpx;
   position: relative;
-}
-
-.tree-image {
-  width: 100%;
-  height: 100%;
-  position:relative;
+  z-index: 3;
+  /* 生长动画的目标转移到这里 */
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
-.tree-image.enter {
+.tree-animation-wrapper.enter,
+.tree-animation-wrapper.animated {
   opacity: 1;
   transform: scale(1);
 }
 
-@keyframes grow {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.tree-image {
+  width: 100%;
+  height: 100%;
+  /* 应用新的摇摆动画 */
+  animation: sway-animation 5s ease-in-out infinite;
+  transform-origin: bottom center; /* 设置旋转中心点 */
 }
 
-.tree-image.animated {
-  animation: grow 0.5s ease-in-out forwards;
+/* 2. 下方内容区域样式 */
+.content-section {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 成长信息面板 */
+.growth-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  border-radius: 20rpx;
+  background-color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 40rpx;
+}
+
+.growth-level {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
 }
 
 .growth-value {
-  margin-top: 20rpx;
-  font-size: 32rpx;
+  margin-top: 10rpx;
+  font-size: 30rpx;
   color: #888;
 }
 
@@ -76,8 +93,13 @@
   border-color: #96CE74;
 }
 
+/* 我的徽章 */
 .achievements-container {
   width: 100%;
+  background-color: #ffffff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
 .section-title {
@@ -90,7 +112,7 @@
 
 .achievements-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(120rpx, 1fr));
   gap: 20rpx;
 }
 
@@ -118,4 +140,95 @@
   text-align: center;
   color: #999;
   padding: 40rpx;
+}
+
+/* 新增：树的摇摆动画 */
+@keyframes sway-animation {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1.5deg);
+  }
+  75% {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* 云朵动画 */
+@keyframes float-animation {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-200rpx); }
+}
+
+.cloud {
+  position: absolute; /* 相对于 hero-section 定位 */
+  z-index: 2;
+  animation-name: float-animation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.cloud1 {
+  width: 280rpx;
+  top: 5%; /* 3. 调高云朵位置 */
+  opacity: 0.9;
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+
+.cloud2 {
+  width: 220rpx;
+  top: 3%; /* 3. 调高云朵位置 */
+  opacity: 0.7;
+  animation-duration: 18s;
+  animation-delay: -10s;
+}
+
+.cloud3 {
+  width: 150rpx;
+  top: 20%; /* 3. 调高云朵位置并错开 */
+  opacity: 0.8;
+  animation-duration: 22s;
+  animation-delay: 0s;
+}
+
+/* 新增：浇水动画和水壶样式 */
+@keyframes watering-animation {
+  0% {
+    opacity: 0;
+    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(0) translateY(0) rotate(45deg);
+  }
+  75% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
+  }
+}
+
+.watering-can {
+  position: absolute;
+  width: 150rpx;
+  height: 150rpx;
+  right: 150rpx; /* 根据树的位置微调 */
+  top: 50%;     /* 根据树的位置微调 */
+  z-index: 10;
+  animation: watering-animation 2s ease-in-out forwards;
+}
+
+.cloud4 {
+  width: 250rpx;
+  top: 18%; /* 3. 调高云朵位置并错开 */
+  opacity: 0.8;
+  animation-duration: 10s;
+  animation-delay: -4s;
 }

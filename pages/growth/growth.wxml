@@ -1,25 +1,40 @@
 <!-- pages/growth/growth.wxml -->
 <view class="container">
-  <view class="tree-container">
+  <!-- 1. 首屏区域：占满整个屏幕 -->
+  <view class="hero-section">
     <image class="background-image" src="/images/tree/背景图.png" mode="aspectFill"></image>
-    <view class="tree-animation-wrapper">
-      <image class="tree-image {{animationState}}" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" key="{{treeLevel}}" />
+    <image class="cloud cloud1" src="/images/tree/云朵1.png" mode="aspectFit"></image>
+    <image class="cloud cloud2" src="/images/tree/云朵2.png" mode="aspectFit"></image>
+    <image class="cloud cloud3" src="/images/tree/云朵3.png" mode="aspectFit"></image>
+    <image class="cloud cloud4" src="/images/tree/云朵3.png" mode="aspectFit"></image>
+    <view class="tree-animation-wrapper {{animationState}}">
+      <image class="tree-image" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" key="{{treeLevel}}" />
     </view>
-    <view class="growth-value">成长值: {{growthValue}}</view>
-    <view class="growth-level">心理树等级: {{treeLevel}}</view>
-    <button class="water-button" type="primary" bindtap="onWatering">浇水</button>
+    <!-- 新增：浇水动画的水壶 -->
+    <image wx:if="{{isWatering}}" class="watering-can" src="/images/tree/水壶.png" mode="aspectFit"></image>
   </view>
 
-  <view class="achievements-container">
-    <view class="section-title">我的徽章</view>
-    <view class="achievements-grid" wx:if="{{unlockedAchievements.length > 0}}">
-      <view class="badge" wx:for="{{unlockedAchievements}}" wx:key="_id">
-        <image class="badge-icon" src="{{item.iconUrl}}" />
-        <view class="badge-name">{{item.name}}</view>
-      </view>
+  <!-- 2. 页面下方内容区域 -->
+  <view class="content-section">
+    <!-- 成长信息面板 -->
+    <view class="growth-info">
+      <view class="growth-level">心理树等级: {{treeLevel}}</view>
+      <view class="growth-value">成长值: {{growthValue}}</view>
+      <button class="water-button" type="primary" bindtap="onWatering">浇水</button>
     </view>
-    <view class="no-achievements" wx:else>
-      <text>暂未获得任何徽章，继续努力吧！</text>
+
+    <!-- 我的徽章 -->
+    <view class="achievements-container">
+      <view class="section-title">我的徽章</view>
+      <view class="achievements-grid" wx:if="{{unlockedAchievements.length > 0}}">
+        <view class="badge" wx:for="{{unlockedAchievements}}" wx:key="_id">
+          <image class="badge-icon" src="{{item.iconUrl}}" />
+          <view class="badge-name">{{item.name}}</view>
+        </view>
+      </view>
+      <view class="no-achievements" wx:else>
+        <text>暂未获得任何徽章，继续努力吧！</text>
+      </view>
     </view>
   </view>
 </view>

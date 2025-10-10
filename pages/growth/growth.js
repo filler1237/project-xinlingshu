@@ -8,7 +8,8 @@ Page({
     growthValue: 0,
     treeLevel: 1,
     unlockedAchievements: [],
-    animationState: ''
+    animationState: '',
+    isWatering: false // 新增：控制浇水动画的状态
   },
 
   /**
@@ -82,20 +83,27 @@ Page({
     },
 
   onWatering() {
-    wx.showLoading({
-      title: '浇水中...',
-    });
+    // 如果正在浇水，则不重复触发
+    if (this.data.isWatering) {
+      return;
+    }
+
+    // 1. 显示水壶，开始动画
+    this.setData({ isWatering: true });
+
+    // 2. 播放动画期间，可以先调用云函数
     wx.cloud.callFunction({
       name: 'waterTheTree',
       success: res => {
-        wx.hideLoading();
         if (res.result.code === 0) {
-          wx.showToast({
-            title: '浇水成功',
-            icon: 'success'
-          });
-          // 重新获取数据，以显示更新后的成长值和可能的新等级
-          this.getGrowthData();
+          // 成功后等待动画结束再刷新数据
+          setTimeout(() => {
+            wx.showToast({
+              title: '浇水成功',
+              icon: 'success'
+            });
+            this.getGrowthData();
+          }, 2000); // 动画时长为2秒
         } else {
           wx.showToast({
             title: res.result.message || '浇水失败',
@@ -104,7 +112,6 @@ Page({
         }
       },
       fail: err => {
-        wx.hideLoading();
         wx.showToast({
           title: '请求失败',
           icon: 'none'
@@ -112,6 +119,11 @@ Page({
         console.error('[云函数][waterTheTree]调用失败', err);
       }
     });
+
+    // 3. 动画结束后，隐藏水壶
+    setTimeout(() => {
+      this.setData({ isWatering: false });
+    }, 2000); // 动画时长为2秒
   },
 
   /**
