@@ -1,0 +1,45 @@
+<!--home/divination/divination.wxml-->
+<navigation-bar title="周易占卜" back="{{true}}" color="black" background="white"></navigation-bar>
+<view class="container">
+  <view class="description">心诚则灵，默念所问之事，投掷六次。</view>
+
+  <view class="hexagram-area">
+    <block wx:if="{{hexagram.length > 0}}">
+      <view wx:for="{{hexagram}}" wx:key="index" class="line-container">
+        <view class="line-symbol">{{item.symbol}}</view>
+        <view class="line-type">
+          <block wx:if="{{item.isChanging}}">
+            <text class="changing-indicator">{{item.value === 6 ? 'x' : 'o'}}</text>
+            (动爻)
+          </block>
+          <block wx:else>
+            ({{item.value === 7 ? '少阳' : '少阴'}})
+          </block>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="placeholder">请开始投掷...</view>
+    </block>
+  </view>
+
+  <view class="controls">
+    <button 
+      class="throw-button" 
+      bindtap="throwCoins" 
+      disabled="{{!canThrow || isDivining}}"
+      loading="{{isDivining}}">
+      {{throwCount < 6 ? '第 ' + (throwCount + 1) + ' 次投掷' : '查看结果'}}
+    </button>
+    <button class="reset-button" bindtap="reset" wx:if="{{throwCount > 0}}">重新占卜</button>
+  </view>
+
+  <view class="result-area" wx:if="{{result}}">
+    <view class="result-title">占卜结果</view>
+    <text class="result-text">{{result}}</text>
+  </view>
+
+  <view class="footer-note">
+    <text>-- 结果仅供娱乐 --</text>
+  </view>
+</view>

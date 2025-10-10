@@ -81,11 +81,11 @@
     </view>
     <text class="Font_G">塔罗牌</text>
   </view>
-  <view class="Game" bind:tap="gotoEmotion">
+  <view class="Game" bind:tap="gotoDivination">
   <view class="GameIma">
     <image src="/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
   </view>
-    <text class="Font_G">情绪管理</text>
+    <text class="Font_G">周易占卜</text>
   </view>
   <view class="Game">
   <view class="GameIma">
