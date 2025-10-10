@@ -25,9 +25,9 @@ gotoTaLuo (){
     url: '/home/card/card'
   })
 },
-gotoEmotion (){
+gotoDivination (){
   wx.navigateTo({
-    url: '/pages/diary/calendar/calendar'
+    url: '/home/divination/divination'
   })
 },
 gotoDiary (){

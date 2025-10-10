@@ -1,0 +1,123 @@
+/* home/divination/divination.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  padding-top: 120rpx; /* 为自定义导航栏留出空间 */
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.description {
+  font-size: 28rpx;
+  color: #888;
+  margin-bottom: 40rpx;
+}
+
+.hexagram-area {
+  width: 100%;
+  min-height: 300rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 40rpx;
+  display: flex;
+  flex-direction: column-reverse; /* 爻从下往上显示 */
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.placeholder {
+  color: #aaa;
+}
+
+.line-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 8rpx 0;
+}
+
+.line-symbol {
+  font-size: 40rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+  color: #333;
+}
+
+.line-type {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.changing-indicator {
+  font-weight: bold;
+  color: #e54d42;
+  margin-right: 8rpx;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.throw-button, .reset-button {
+  width: 80%;
+  height: 90rpx;
+  border-radius: 45rpx;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.throw-button {
+  background-color: #07c160;
+  color: white;
+  margin-bottom: 30rpx;
+}
+
+.reset-button {
+  background-color: #fff;
+  color: #555;
+  border: 1rpx solid #ddd;
+}
+
+.result-area {
+  width: 100%;
+  margin-top: 40rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.result-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.result-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.8;
+  white-space: pre-wrap; /* 保留换行符 */
+}
+
+.footer-note {
+  margin-top: 60rpx;
+  font-size: 24rpx;
+  color: #aaa;
+}
