@@ -23,6 +23,16 @@
     </block>
   </view>
 
+  <!-- 硬币动画区域 -->
+  <view class="coins-animation-area">
+    <view class="coin-container" wx:for="{{coins}}" wx:key="index">
+      <view class="coin {{item.animationClass}}">
+        <view class="coin-face coin-front"></view>
+        <view class="coin-face coin-back"></view>
+      </view>
+    </view>
+  </view>
+
   <view class="controls">
     <button 
       class="throw-button" 
@@ -35,8 +45,40 @@
   </view>
 
   <view class="result-area" wx:if="{{result}}">
-    <view class="result-title">占卜结果</view>
-    <text class="result-text">{{result}}</text>
+    <!-- 结构化展示 -->
+    <block wx:if="{{isResultObject}}">
+      <view class="result-title">占卜结果</view>
+      
+      <view class="hexagram-display">
+        <view class="hexagram-item">
+          <view class="hexagram-label">本卦</view>
+          <view class="hexagram-name">{{result.originalHexagram.name}}</view>
+          <view class="hexagram-constitution">{{result.originalHexagram.constitution}}</view>
+        </view>
+        
+        <view class="arrow" wx:if="{{result.changedHexagram.name !== '无'}}">→</view>
+        
+        <view class="hexagram-item" wx:if="{{result.changedHexagram.name !== '无'}}">
+          <view class="hexagram-label">变卦</view>
+          <view class="hexagram-name">{{result.changedHexagram.name}}</view>
+          <view class="hexagram-constitution">{{result.changedHexagram.constitution}}</view>
+        </view>
+      </view>
+
+      <view class="moving-lines" wx:if="{{result.movingLineInfos.length > 0}}">
+        动爻：{{result.movingLineInfos.join('、')}}
+      </view>
+
+      <view class="interpretation-divider"></view>
+
+      <view class="interpretation-title">智者解读</view>
+      <text class="result-text">{{result.aiInterpretation}}</text>
+    </block>
+    <!-- 错误信息展示 -->
+    <block wx:else>
+      <view class="result-title">出错了</view>
+      <text class="result-text error-text">{{result}}</text>
+    </block>
   </view>
 
   <view class="footer-note">

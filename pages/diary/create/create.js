@@ -7,16 +7,43 @@ Page({
     emotionIntensity: 5,
     date: '',
     isAnalyzing: false,
-    emotionOptions: [
-      { name: '快乐', emoji: '😊' },
-      { name: '平静', emoji: '😌' },
-      { name: '焦虑', emoji: '😟' },
-      { name: '悲伤', emoji: '😢' },
-      { name: '愤怒', emoji: '😠' },
-      { name: '其他', emoji: '🤔' }
+    emotionCategories: [
+      {
+        category: '积极',
+        emotions: [
+          { name: '快乐', emoji: '😊' },
+          { name: '激动', emoji: '🤩' },
+          { name: '满足', emoji: '🥰' },
+        ]
+      },
+      {
+        category: '中性',
+        emotions: [
+          { name: '平静', emoji: '😌' },
+          { name: '其他', emoji: '🤔' }
+        ]
+      },
+      {
+        category: '消极',
+        emotions: [
+          { name: '疲惫', emoji: '😫' },
+          { name: '委屈', emoji: '😔' },
+          { name: '焦虑', emoji: '😟' },
+          { name: '悲伤', emoji: '😢' },
+          { name: '愤怒', emoji: '😠' },
+        ]
+      }
     ],
+    activeCategoryIndex: 0,
     selectedEmotionType: '',
-    isSubmitting: false
+    isSubmitting: false,
+    placeholderText: '记录今天的心情和感受...'
+  },
+
+  switchCategory(e) {
+    this.setData({
+      activeCategoryIndex: e.currentTarget.dataset.index
+    })
   },
 
   onLoad() {
@@ -57,14 +84,31 @@ Page({
   // 选择情绪类型
   selectEmotionType(e) {
     const emotionType = e.currentTarget.dataset.emotion;
+    const placeholderMap = {
+      '快乐': '今天发生了什么让你开心的事？',
+      '激动': '是什么事让你心潮澎湃？',
+      '满足': '记录下这份满满的成就感和幸福感吧！',
+      '平静': '记录下这份宁静的时刻吧。',
+      '疲惫': '辛苦了，好好休息一下，把疲惫都卸下吧。',
+      '委屈': '心里有什么委屈，随时可以在这里倾诉。',
+      '焦虑': '是什么让你感到不安？试着写下来吧。',
+      '悲伤': '别担心，这里是你的安全港湾，倾诉出来会好很多。',
+      '愤怒': '发生了什么事让你生气？把不快都写出来吧。',
+      '其他': '记录下此刻的所思所想...'
+    };
     this.setData({
-      selectedEmotionType: emotionType
+      selectedEmotionType: emotionType,
+      placeholderText: placeholderMap[emotionType] || '记录今天的心情和感受...'
     });
 
     // 推荐情绪强度
     const recommendedIntensity = {
       '快乐': 7,
-      '平静': 5,
+      '激动': 9,
+      '满足': 8,
+      '平静': 3,
+      '疲惫': 4,
+      '委屈': 5,
       '焦虑': 6,
       '悲伤': 4,
       '愤怒': 8,

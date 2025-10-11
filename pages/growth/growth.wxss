@@ -38,7 +38,7 @@ page {
 }
 
 .is-growing {
-  transform: scaleY(2);
+  transform: scaleY(1.2);
 }
 
 .tree-image {

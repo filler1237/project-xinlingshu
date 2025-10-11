@@ -132,6 +132,35 @@ page {
   background-color: rgba(255, 107, 107, 0.2);
 }
 
+/* 情绪分类标签 */
+.emotion-category-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20rpx;
+  background-color: rgba(150, 206, 116, 0.1);
+  border-radius: 30rpx;
+  padding: 8rpx;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-tab {
+  padding: 10rpx 35rpx;
+  font-size: 26rpx;
+  color: #96CE74;
+  border-radius: 25rpx;
+  transition: all 0.3s ease;
+  font-weight: 300;
+}
+
+.category-tab.active {
+  background-color: #96CE74;
+  color: #ffffff;
+  font-weight: 400;
+  box-shadow: 0 2rpx 8rpx rgba(150, 206, 116, 0.3);
+}
+
 /* 新的情绪表情选择器 */
 .emotion-emoji-selector {
   display: flex;

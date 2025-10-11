@@ -6,10 +6,16 @@ Page({
    */
   data: {
     hexagram: [], // 存储六个爻的结果
-    result: '', // 存储最终的卦象和解读
+    result: null, // 修改：存储结构化的解读结果
+    isResultObject: false, // 新增：用于WXML判断result类型
     isDivining: false, // 是否正在起卦
     throwCount: 0, // 投掷次数
     canThrow: true, // 是否可以投掷
+    coins: [
+      { value: 0, animationClass: '' },
+      { value: 0, animationClass: '' },
+      { value: 0, animationClass: '' }
+    ], // 存储三枚硬币的状态
   },
 
   /**
@@ -22,11 +28,28 @@ Page({
 
     this.setData({ isDivining: true, canThrow: false });
 
+    // 重置动画
+    this.setData({
+      'coins[0].animationClass': '',
+      'coins[1].animationClass': '',
+      'coins[2].animationClass': '',
+    });
+
     // 模拟三枚铜钱，正面为3，反面为2
     const coin1 = Math.floor(Math.random() * 2) + 2;
     const coin2 = Math.floor(Math.random() * 2) + 2;
     const coin3 = Math.floor(Math.random() * 2) + 2;
     const sum = coin1 + coin2 + coin3;
+
+    // 触发动画
+    setTimeout(() => {
+      this.setData({
+        'coins[0].animationClass': coin1 === 3 ? 'flip-heads' : 'flip-tails',
+        'coins[1].animationClass': coin2 === 3 ? 'flip-heads' : 'flip-tails',
+        'coins[2].animationClass': coin3 === 3 ? 'flip-heads' : 'flip-tails',
+      });
+    }, 100);
+
 
     let line;
     // 6: 老阴 (--) x
@@ -37,11 +60,11 @@ Page({
       case 6:
         line = { type: 'old_yin', value: 6, symbol: '⚋', isChanging: true };
         break;
-      case 7:
-        line = { type: 'young_yang', value: 7, symbol: '⚊', isChanging: false };
-        break;
-      case 8:
+      case 7: // 两反一正，为少阴
         line = { type: 'young_yin', value: 8, symbol: '⚋', isChanging: false };
+        break;
+      case 8: // 两正一反，为少阳
+        line = { type: 'young_yang', value: 7, symbol: '⚊', isChanging: false };
         break;
       case 9:
         line = { type: 'old_yang', value: 9, symbol: '⚊', isChanging: true };
@@ -62,7 +85,7 @@ Page({
       if (newThrowCount === 6) {
         this.analyzeHexagram(newHexagram);
       }
-    }, 500); // 增加一个短暂的延迟，提升用户体验
+    }, 1200); // 增加延迟以等待动画完成
   },
 
   /**
@@ -108,11 +131,14 @@ Page({
       wx.hideLoading();
       if (res.result && res.result.success) {
         this.setData({
-          result: res.result.analysis
+          result: res.result.analysis, // 现在 analysis 是一个对象
+          isResultObject: true
         });
       } else {
+        // 保持错误信息为字符串，以便前端可以区分
         this.setData({
-          result: '解读失败，请稍后再试。\n' + (res.result.error || '')
+          result: '解读失败，请稍后再试。\n' + (res.result ? res.result.error : '未知错误'),
+          isResultObject: false
         });
       }
     }).catch(err => {
@@ -139,9 +165,15 @@ Page({
   reset() {
     this.setData({
       hexagram: [],
-      result: '',
+      result: null,
+      isResultObject: false,
       throwCount: 0,
       canThrow: true,
+      coins: [
+        { value: 0, animationClass: '' },
+        { value: 0, animationClass: '' },
+        { value: 0, animationClass: '' }
+      ],
     });
   },
 
