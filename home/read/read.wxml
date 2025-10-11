@@ -1,4 +1,4 @@
-<navigation-bar title="心灵补给">
+<navigation-bar title="心灵社区">
  <view slot="right" class="add-button" bind:tap="goToCreatePage"> + </view>
 </navigation-bar>
 <view class="bottom">

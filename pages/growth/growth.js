@@ -8,8 +8,8 @@ Page({
     growthValue: 0,
     treeLevel: 1,
     unlockedAchievements: [],
-    animationState: '',
-    isWatering: false // 新增：控制浇水动画的状态
+    isWatering: false, // 新增：控制浇水动画的状态
+    isAnimating: false //新增控制树木升级动画播放效果
   },
 
   /**
@@ -33,58 +33,57 @@ Page({
     this.getGrowthData();
   },
 
-  getGrowthData(){
-    wx.showLoading({
-      title:'加载中...',
-    })
-      wx.cloud.callFunction({
-        name:'getUserGrowthData',
-        success:res=>{
-          wx.hideLoading()
-          if (res.result.code === 0) {
-            const data = res.result.data;
-            const oldLevel = this.data.treeLevel;
+    getGrowthData() {
+    wx.cloud.callFunction({
+      name: 'getUserGrowthData',
+      success: res => {
+        if (res.result.code === 0) {
+          const data = res.result.data;
+          const oldLevel = this.data.treeLevel;
 
-            if (oldLevel !== data.treeLevel) {
-              // 等级发生变化，触发动画
-              this.setData({
-                animationState: ''
-              });
-              setTimeout(() => {
-                this.setData({
-                  growthValue: data.growthValue,
-                  treeLevel: data.treeLevel,
-                  unlockedAchievements: data.unlockedAchievements,
-                  animationState: 'animated'
-                });
-              }, 100); // 短暂延迟以确保DOM更新
-            } else {
-              // 首次加载或等级未发生变化
+          if (oldLevel !== data.treeLevel && oldLevel !== 0) {
+            // 第1步：播放动画
+            this.setData({
+              isAnimating: true
+            });
+
+            // 第2步：等待动画播完
+            setTimeout(() => {
+              // 第3步：动画结束后再更新图片
               this.setData({
                 growthValue: data.growthValue,
                 treeLevel: data.treeLevel,
                 unlockedAchievements: data.unlockedAchievements,
-                animationState: 'animated' // 首次加载时直接显示
+                isAnimating: false
               });
-            }
-          }
-          else{
-            wx.showToast({
-              title: '获取数据失败',
-              icon:'none'
+            }, 1000); 
+
+          } else {
+            // 直接更新数据
+            this.setData({
+              growthValue: data.growthValue,
+              treeLevel: data.treeLevel,
+              unlockedAchievements: data.unlockedAchievements
             });
           }
-        },
-        fail: err=>{
-          wx.hideLoading()
-          console.error('[云函数][getUserGrowthData]调用失败',err)
+        } else {
+          wx.showToast({
+            title: '获取数据失败',
+            icon: 'none'
+          });
         }
-      })
-    },
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error('[云函数][getUserGrowthData]调用失败', err)
+      }
+    })
+  },
+
 
   onWatering() {
     // 如果正在浇水，则不重复触发
-    if (this.data.isWatering) {
+    if (this.data.isWatering || this.data.isAnimating) {
       return;
     }
 

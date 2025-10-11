@@ -1,0 +1,203 @@
+/* pages/echoWall/echoWall.wxss */
+page {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f7f8fa;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. 顶部固定区域 */
+.top-fixed-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 顶部 Tab */
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 10rpx 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.tab-item {
+  color: #888;
+  padding: 15rpx 20rpx;
+  font-size: 30rpx;
+  border-bottom: 6rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  color: #28a745;
+  font-weight: bold;
+  border-bottom-color: #28a745;
+}
+
+/* 2. 中间可滚动内容区域 */
+.content {
+  flex: 1; /* 关键：让内容区填满剩余空间 */
+  padding: 40rpx;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+  /* 关键：为顶部和底部栏留出空间 */
+  padding-top: 220rpx; /* 估算值，导航栏+Tab栏高度 */
+  padding-bottom: 180rpx; /* 估算值，底部按钮栏高度 */
+}
+
+.page-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%; /* 确保在内容少时也能撑开 */
+  width: 100%;
+}
+
+/* 倾诉页面 */
+.vent-input {
+  width: 100%;
+  flex: 1; /* 占满所有可用垂直空间 */
+  padding: 30rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  line-height: 1.6;
+  font-size: 30rpx;
+  border: 1rpx solid #f0f0f0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 3. 底部固定按钮区域 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 20rpx 40rpx 40rpx; /* 适配底部安全区 */
+  background-color: #f7f8fa;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #28a745;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.submit-btn::after {
+  border: none;
+}
+
+/* 聆听页面 */
+.vent-card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  min-height: 350rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.vent-content {
+  font-size: 32rpx;
+  line-height: 1.6;
+  color: #333;
+}
+
+.echo-input {
+  width: 100%;
+  height: 200rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 40rpx;
+  box-sizing: border-box;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.skip-btn {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #f0f0f0;
+  color: #666;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+}
+.skip-btn::after {
+  border: none;
+}
+
+/* 我的回声页面 */
+.echo-list {
+  width: 100%;
+  height: 100%;
+}
+
+.my-vent-item {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.my-vent-content {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx dashed #eee;
+}
+
+.echo-content {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.echo-content.pending {
+  color: #999;
+  font-style: italic;
+  font-weight: normal;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100rpx;
+  color: #999;
+}
+
+.refresh-btn {
+  margin-top: 40rpx;
+  width: 200rpx;
+  font-size: 28rpx;
+}

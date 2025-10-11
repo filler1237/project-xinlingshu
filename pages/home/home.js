@@ -12,12 +12,12 @@ gotoCePing (){
 },
 gotoSheQu (){
   wx.navigateTo({
-    url: ''
+    url: '/home/read/read'
   })
 },
-gotoBuJi (){
+gotoEchoWall (){
   wx.navigateTo({
-    url: '/home/read/read'
+    url: '/pages/echoWall/echoWall'
   })
 },
 gotoTaLuo (){

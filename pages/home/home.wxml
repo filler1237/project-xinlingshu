@@ -49,10 +49,10 @@
   </view>
 </view>
 
-<view class="BuJi" bind:tap="gotoBuJi">
+<view class="BuJi" bind:tap="gotoEchoWall">
   <view class="BuJi" style="margin: 0;">
     <view class="BuJi_i" style="width:250rpx; flex-direction: column;">
-      <text class="Font">心理补给</text>
+      <text class="Font">心理树洞</text>
       <text class="Font_s">Spiritual nourishment</text>
     </view>
     <view class="BuJi_i" style="justify-content: flex-end; align-items: flex-end; margin-right: 25rpx;">

@@ -6,7 +6,8 @@
     "pages/logs/logs",
     "pages/auth/usercenter/usercenter",
     "pages/index/index",
-    "pages/growth/growth"
+    "pages/growth/growth",
+    "pages/echoWall/echoWall"
   ],
   "subPackages": [
     {

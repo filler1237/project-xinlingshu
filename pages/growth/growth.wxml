@@ -7,8 +7,8 @@
     <image class="cloud cloud2" src="/images/tree/云朵2.png" mode="aspectFit"></image>
     <image class="cloud cloud3" src="/images/tree/云朵3.png" mode="aspectFit"></image>
     <image class="cloud cloud4" src="/images/tree/云朵3.png" mode="aspectFit"></image>
-    <view class="tree-animation-wrapper {{animationState}}">
-      <image class="tree-image" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" key="{{treeLevel}}" />
+    <view class="tree-animation-wrapper {{animationState}} {{isAnimating ? 'is-growing' : ''}}">
+      <image class="tree-image tree-level-{{treeLevel}}" src="/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
     </view>
     <!-- 新增：浇水动画的水壶 -->
     <image wx:if="{{isWatering}}" class="watering-can" src="/images/tree/水壶.png" mode="aspectFit"></image>

@@ -1,0 +1,63 @@
+<!-- pages/echoWall/echoWall.wxml -->
+<view class="container">
+  <!-- 1. 顶部固定区域 -->
+  <view class="top-fixed-bar">
+    <navigation-bar title="心灵树洞" show-back-button="true"></navigation-bar>
+    <!-- 顶部 Tab 切换 -->
+    <view class="tabs">
+    <view class="tab-item {{activeTab === 'vent' ? 'active' : ''}}" data-tab="vent" bindtap="switchTab">我要倾诉</view>
+    <view class="tab-item {{activeTab === 'listen' ? 'active' : ''}}" data-tab="listen" bindtap="switchTab">随机聆听</view>
+    <view class="tab-item {{activeTab === 'myEchoes' ? 'active' : ''}}" data-tab="myEchoes" bindtap="switchTab">我的回声</view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 倾诉页面 -->
+    <view class="page-section" wx:if="{{activeTab === 'vent'}}">
+      <textarea class="vent-input" placeholder="在这里写下你的烦恼，它将被安全地投进树洞..." maxlength="-1" model:value="{{ventText}}"></textarea>
+    </view>
+
+    <!-- 聆听页面 -->
+    <view class="page-section" wx:if="{{activeTab === 'listen'}}">
+      <block wx:if="{{randomVent}}">
+        <view class="vent-card">
+          <text class="vent-content">{{randomVent.content}}</text>
+        </view>
+        <textarea class="echo-input" placeholder="送上一句温暖的回应..." maxlength="-1" model:value="{{echoText}}"></textarea>
+        <button class="submit-btn" type="primary" bindtap="submitEcho">送出回声</button>
+        <button class="skip-btn" bindtap="getRandomVent">换一个</button>
+      </block>
+      <block wx:else>
+        <view class="empty-state">
+          <text>暂时没有需要回应的烦恼，感谢你的善意！</text>
+          <button class="refresh-btn" bindtap="getRandomVent">刷新一下</button>
+        </view>
+      </block>
+    </view>
+
+    <!-- 我的回声页面 -->
+    <view class="page-section" wx:if="{{activeTab === 'myEchoes'}}">
+      <scroll-view scroll-y="true" class="echo-list">
+        <block wx:if="{{myVents.length > 0}}">
+          <view class="my-vent-item" wx:for="{{myVents}}" wx:key="_id">
+            <view class="my-vent-content">我曾说：{{item.content}}</view>
+            <view class="echo-content {{item.echo ? '' : 'pending'}}">
+              {{item.echo ? '收到的回声：' + item.echo : '等待回声中...'}}
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="empty-state">
+            <text>你还没有倾诉过烦恼，或者还没有收到回声。</text>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 底部按钮区域 -->
+  <view class="bottom-bar" wx:if="{{activeTab === 'vent'}}">
+    <button class="submit-btn" type="primary" bindtap="submitVent">投入树洞</button>
+  </view>
+</view>
