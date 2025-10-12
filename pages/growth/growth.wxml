@@ -1,4 +1,7 @@
 <!-- pages/growth/growth.wxml -->
+<view class="nav-bar-wrapper">
+  <navigation-bar title="我的成长树" background="transparent"></navigation-bar>
+</view>
 <view class="container">
   <!-- 1. 首屏区域：占满整个屏幕 -->
   <view class="hero-section">
@@ -20,7 +23,7 @@
     <view class="growth-info">
       <view class="growth-level">心理树等级: {{treeLevel}}</view>
       <view class="growth-value">成长值: {{growthValue}}</view>
-      <button class="water-button" type="primary" bindtap="onWatering">浇水</button>
+      <button class="water-button" type="primary" bindtap="onWatering">浇水 (水滴数：{{waterdrops}})</button>
     </view>
 
     <!-- 我的徽章 -->
