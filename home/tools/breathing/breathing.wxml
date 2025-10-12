@@ -1,0 +1,42 @@
+<!-- home/tools/breathing/breathing.wxml -->
+<view style="height: 100%; flex-direction: column; align-items: center; padding: 40rpx; background-color: #f0f9ff;">
+  <view class="header">
+    <view class="back-button" bind:tap="navigateBack">
+      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
+    </view>
+    <text class="header-title">✨ 快乐呼吸练习 ✨</text>
+    <view class="header-right"></view>
+  </view>
+  
+  <view class="breathing-circle-container">
+    <view class="cloud" style="display: {{animationType === 'inhaling' ? 'block' : 'none'}};"></view>
+      <view class="breathing-circle" style="transform: scale({{status === 'inhaling' ? (0.8 + (1 - 0.8) * (1 - countdown/inhaleTime)) : status === 'exhaling' ? (1 - (1 - 0.8) * (1 - countdown/exhaleTime)) : status === 'paused' ? 0.9 : 1}}); background: linear-gradient(135deg, {{status === 'inhaling' ? '#FFB6C1, #FFA07A' : status === 'holding' ? '#87CEEB, #87CEFA' : status === 'exhaling' ? '#98FB98, #90EE90' : status === 'paused' ? '#DDA0DD, #BA55D3' : '#E8F7FE, #D0EBFF'}});">
+      <text class="circle-icon">{{status === 'inhaling' ? '🌬️' : status === 'holding' ? '⏸️' : status === 'exhaling' ? '💨' : status === 'paused' ? '⏸️' : '😊'}}</text>
+      <text class="circle-text">{{instruction}}</text>
+      <text class="countdown-text">{{countdown}}</text>
+      <view class="bubbles-container" style="display: {{status === 'inhaling' ? 'block' : status === 'exhaling' ? 'block' : 'none'}};">
+        <view wx:for="{{[1, 2, 3, 4, 5]}}" class="bubble" style="animation-delay: {{index * 0.3}}s;"></view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="progress-bar">
+    <view class="progress-fill" style="width: {{progress}}%; background: linear-gradient(90deg, {{status === 'inhaling' ? '#FF6B6B, #FF8E8E' : status === 'holding' ? '#4ECDC4, #45B7AA' : status === 'exhaling' ? '#96CEB4, #88D8B0' : '#4CAF50, #8BC34A'}});"></view>
+  </view>
+  
+  <view class="controls">
+    <button wx:if="{{status === 'ready'}}" class="start-btn" bind:tap="startBreathing">🌈 开始练习 🌈</button>
+    <button wx:elif="{{status === 'paused'}}" class="continue-btn" bind:tap="resumeBreathing">▶️ 继续练习 ▶️</button>
+    <button wx:elif="{{status !== 'ready' && status !== 'paused'}}" class="stop-btn" bind:tap="stopBreathing">⏸️ 暂停练习 ⏸️</button>
+    <button class="reset-btn" bind:tap="resetBreathing">🔄 重新开始 🔄</button>
+  </view>
+  
+  <view class="instructions">
+    <text class="instruction-title">🐰 练习步骤：</text>
+    <text class="instruction-text">🐌 慢慢吸气 4 秒</text>
+    <text class="instruction-text">🐢 保持呼吸 7 秒</text>
+    <text class="instruction-text">🦋 缓缓呼气 8 秒</text>
+    <text class="instruction-text">🔄 重复这个过程 3 次</text>
+    <text class="instruction-text">💖 感受平静与放松 💖</text>
+  </view>
+</view>

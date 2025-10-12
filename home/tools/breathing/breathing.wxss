@@ -1,0 +1,257 @@
+/* home/tools/breathing/breathing.wxss */
+.header {
+  margin-bottom: 40rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-button {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.back-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.header-right {
+  width: 60rpx;
+}
+
+.header-title {
+  color: #ff6b6b;
+  font-family: PingFang SC;
+  font-weight: 700;
+  font-size: 44rpx;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.breathing-circle-container {
+  width: 550rpx;
+  height: 550rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50rpx;
+  position: relative;
+}
+
+.cloud {
+  position: absolute;
+  width: 200rpx;
+  height: 100rpx;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50rpx;
+  top: 100rpx;
+  left: 50rpx;
+  animation: float 3s ease-in-out infinite;
+  z-index: 1;
+}
+
+.cloud:before, .cloud:after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.cloud:before {
+  width: 80rpx;
+  height: 80rpx;
+  top: -40rpx;
+  left: 30rpx;
+}
+
+.cloud:after {
+  width: 100rpx;
+  height: 100rpx;
+  top: -50rpx;
+  right: 30rpx;
+}
+
+.breathing-circle {
+  width: 420rpx;
+  height: 420rpx;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0rpx 10rpx 30rpx 0rpx rgba(0,0,0,0.2);
+  transition: transform 1s ease-in-out, background 0.5s ease-in-out;
+  position: relative;
+  z-index: 2;
+  border: 8rpx solid white;
+}
+
+.circle-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.circle-text {
+  color: white;
+  font-family: PingFang SC;
+  font-weight: 600;
+  font-size: 36rpx;
+  margin-bottom: 20rpx;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+.countdown-text {
+  color: white;
+  font-family: PingFang SC;
+  font-weight: 800;
+  font-size: 80rpx;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+.bubbles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: bubbleRise 3s ease-in-out infinite;
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200rpx) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 28rpx;
+  background: #f5f5f5;
+  border-radius: 14rpx;
+  overflow: hidden;
+  margin-bottom: 60rpx;
+  box-shadow: inset 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 1s ease-in-out, background 0.5s ease-in-out;
+  border-radius: 14rpx;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40rpx;
+}
+
+.start-btn, .stop-btn, .reset-btn {
+  width: 80%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-radius: 50rpx;
+  margin-bottom: 24rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: white;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover, .stop-btn:hover, .reset-btn:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 24rpx rgba(0,0,0,0.25);
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, #4ECDC4, #45B7AA);
+}
+
+.continue-btn {
+  background-color: #4ecdc4;
+  color: white;
+  width: 80%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-radius: 50rpx;
+  margin-bottom: 24rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, #96CEB4, #88D8B0);
+  color: white;
+}
+
+.instructions {
+  width: 100%;
+  background: linear-gradient(135deg, #fff, #f8f9fa);
+  border-radius: 30rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+  border: 4rpx dashed #E0E0E0;
+}
+
+.instruction-title {
+  color: #FF6B6B;
+  font-family: PingFang SC;
+  font-weight: 700;
+  font-size: 32rpx;
+  display: block;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.instruction-text {
+  color: #4A4A4A;
+  font-family: PingFang SC;
+  font-weight: 500;
+  font-size: 28rpx;
+  display: block;
+  margin-bottom: 12rpx;
+  text-align: center;
+  line-height: 1.5;
+}
