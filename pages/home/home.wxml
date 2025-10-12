@@ -73,6 +73,16 @@
   </view>
 </view>
 
+<text class="Font" style="margin-left: 50rpx;">减压工具箱</text>
+<view class="GameBox">
+  <view class="Game" bind:tap="gotoTools">
+    <view class="GameIma">
+      <image src="/image/cat.jpg" mode="widthFix" class="GameIma"/>
+    </view>
+    <text class="Font_G">减压工具箱</text>
+  </view>
+</view>
+
 <text class="Font" style="margin-left: 50rpx;">心灵娱乐</text>
 <view class="GameBox">
   <view class="Game" bind:tap="gotoTaLuo">
