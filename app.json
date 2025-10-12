@@ -7,7 +7,8 @@
     "pages/auth/usercenter/usercenter",
     "pages/index/index",
     "pages/growth/growth",
-    "pages/echoWall/echoWall"
+    "pages/echoWall/echoWall",
+    "audioUpload/audioUpload"
   ],
   "subPackages": [
     {
@@ -30,7 +31,10 @@
         "social/social",
         "read/detail/detail",
         "read/create",
-        "read/create/create"
+        "read/create/create",
+        "tools/tools",
+        "tools/breathing/breathing",
+        "tools/whitenoise/whitenoise"
       ]
     },
     {

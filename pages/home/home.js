@@ -35,6 +35,11 @@ gotoDiary (){
     url: '/pages/diary/calendar/calendar'
   })
 },
+gotoTools (){
+  wx.navigateTo({
+    url: '/home/tools/tools'
+  })
+},
   /**
    * 页面的初始数据
    */

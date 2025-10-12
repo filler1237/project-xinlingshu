@@ -26,17 +26,25 @@ Page({
     diaryListLoading: false,
     isDeletingAll: false,
     emotionColors: {
-      '快乐': '#ffd93d',
-      '平静': '#6bcf7f',
-      '焦虑': '#ff6b6b',
-      '悲伤': '#4dabf7',
-      '愤怒': '#ff8cc8',
-      '其他': '#9775fa'
+      '快乐': '#FFC312', // 鲜黄
+      '激动': '#F79F1F', // 亮橙
+      '满足': '#EE5A24', // 珊瑚红
+      '平静': '#A3CB38', // 橄榄绿
+      '疲惫': '#7f8c8d', // 石板灰
+      '委屈': '#576574', // 深石板灰
+      '焦虑': '#8e44ad', // 紫色
+      '悲伤': '#3498db', // 蓝色
+      '愤怒': '#c0392b', // 深红
+      '其他': '#000000'  // 纯黑
     },
     emotionEmojis: {
       '快乐': '😊',
+      '激动': '🤩',
+      '满足': '🥰',
       '平静': '😌',
-      '焦虑': '😰',
+      '疲惫': '😫',
+      '委屈': '😔',
+      '焦虑': '😟',
       '悲伤': '😢',
       '愤怒': '😠',
       '其他': '🤔'
@@ -323,7 +331,8 @@ Page({
   // 获取情绪强度样式
   getIntensityStyle(emotionIntensity) {
     if (!emotionIntensity) return ''
-    const opacity = Math.max(0.3, emotionIntensity / 10)
+    // 将透明度范围从 0.2 (最弱) 映射到 1.0 (最强)
+    const opacity = 0.2 + (emotionIntensity / 10) * 0.8
     return `opacity: ${opacity}`
   },
 

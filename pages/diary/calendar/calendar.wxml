@@ -79,7 +79,7 @@
         wx:for-index="emotion"
       >
         <view class="legend-color" style="background-color: {{color}}"></view>
-        <text class="legend-emoji">{{getEmotionEmoji(emotion)}}</text>
+        <text class="legend-emoji">{{emotionEmojis[emotion]}}</text>
         <text class="legend-text">{{emotion}}</text>
       </view>
     </view>

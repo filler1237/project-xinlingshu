@@ -9,73 +9,73 @@ const LLM_URL = 'https://api.deepseek.com/v1/chat/completions';
 // 从环境变量中获取 API Key，您需要在云函数配置中设置好 LLM_API_KEY
 const LLM_API_KEY = process.env.LLM_API_KEY;
 
-// 最终版64卦数据 - 根据《易经》第一原理构建，确保100%准确
+// 64卦数据 - 源自维基百科，并按二进制码（初爻至上爻）排序
 // 编码规则：1代表阳爻（⚊），0代表阴爻（⚋）。二进制码字符串从左到右依次代表初爻（底）至上爻（顶）。
 const hexagrams = {
-    "111111": { "name": "乾", "pinyin": "qián", "constitution": "上乾下乾" },
     "000000": { "name": "坤", "pinyin": "kūn", "constitution": "上坤下坤" },
-    "100010": { "name": "屯", "pinyin": "zhūn", "constitution": "上坎下震" },
-    "010001": { "name": "蒙", "pinyin": "méng", "constitution": "上艮下坎" },
-    "111010": { "name": "需", "pinyin": "xū", "constitution": "上坎下乾" },
-    "010111": { "name": "讼", "pinyin": "sòng", "constitution": "上乾下坎" },
-    "000010": { "name": "师", "pinyin": "shī", "constitution": "上坎下坤" },
-    "010000": { "name": "比", "pinyin": "bǐ", "constitution": "上坤下坎" },
-    "111011": { "name": "小畜", "pinyin": "xiǎo xù", "constitution": "上巽下乾" },
-    "110111": { "name": "履", "pinyin": "lǚ", "constitution": "上乾下兑" },
-    "000111": { "name": "泰", "pinyin": "tài", "constitution": "上乾下坤" },
-    "111000": { "name": "否", "pinyin": "pǐ", "constitution": "上坤下乾" },
-    "111101": { "name": "同人", "pinyin": "tóng rén", "constitution": "上离下乾" },
-    "101111": { "name": "大有", "pinyin": "dà yǒu", "constitution": "上乾下离" },
-    "001000": { "name": "谦", "pinyin": "qiān", "constitution": "上坤下艮" },
-    "000100": { "name": "豫", "pinyin": "yù", "constitution": "上震下坤" },
-    "110100": { "name": "随", "pinyin": "suí", "constitution": "上震下兑" },
-    "001011": { "name": "蛊", "pinyin": "gǔ", "constitution": "上巽下艮" },
-    "110000": { "name": "临", "pinyin": "lín", "constitution": "上坤下兑" },
-    "000110": { "name": "观", "pinyin": "guān", "constitution": "上巽下坤" },
-    "100101": { "name": "噬嗑", "pinyin": "shì hé", "constitution": "上离下震" },
-    "101001": { "name": "贲", "pinyin": "bì", "constitution": "上艮下离" },
     "000001": { "name": "剥", "pinyin": "bō", "constitution": "上艮下坤" },
-    "100000": { "name": "复", "pinyin": "fù", "constitution": "上震下坤" },
-    "111100": { "name": "无妄", "pinyin": "wú wàng", "constitution": "上震下乾" },
-    "111001": { "name": "大畜", "pinyin": "dà xù", "constitution": "上艮下乾" },
-    "001100": { "name": "颐", "pinyin": "yí", "constitution": "上震下艮" },
-    "110011": { "name": "大过", "pinyin": "dà guò", "constitution": "上兑下巽" },
-    "010010": { "name": "坎", "pinyin": "kǎn", "constitution": "上坎下坎" },
-    "101101": { "name": "离", "pinyin": "lí", "constitution": "上离下离" },
-    "001110": { "name": "咸", "pinyin": "xián", "constitution": "上兑下艮" },
-    "011100": { "name": "恒", "pinyin": "héng", "constitution": "上震下巽" },
-    "001111": { "name": "遁", "pinyin": "dùn", "constitution": "上乾下艮" },
-    "100111": { "name": "大壮", "pinyin": "dà zhuàng", "constitution": "上乾下震" },
-    "101000": { "name": "晋", "pinyin": "jìn", "constitution": "上坤下离" },
-    "000101": { "name": "明夷", "pinyin": "míng yí", "constitution": "上离下坤" },
-    "011101": { "name": "家人", "pinyin": "jiā rén", "constitution": "上离下巽" },
-    "110101": { "name": "睽", "pinyin": "kuí", "constitution": "上离下兑" },
-    "001010": { "name": "蹇", "pinyin": "jiǎn", "constitution": "上坎下艮" },
-    "010100": { "name": "解", "pinyin": "jiě", "constitution": "上震下坎" },
-    "110001": { "name": "损", "pinyin": "sǔn", "constitution": "上艮下兑" },
-    "100110": { "name": "益", "pinyin": "yì", "constitution": "上巽下震" },
-    "110111": { "name": "夬", "pinyin": "guài", "constitution": "上乾下兑" },
-    "111110": { "name": "姤", "pinyin": "gòu", "constitution": "上兑下乾" },
+    "000010": { "name": "比", "pinyin": "bǐ", "constitution": "上坎下坤" },
+    "000011": { "name": "观", "pinyin": "guān", "constitution": "上巽下坤" },
+    "000100": { "name": "豫", "pinyin": "yù", "constitution": "上震下坤" },
+    "000101": { "name": "晋", "pinyin": "jìn", "constitution": "上离下坤" },
     "000110": { "name": "萃", "pinyin": "cuì", "constitution": "上兑下坤" },
-    "011000": { "name": "升", "pinyin": "shēng", "constitution": "上巽下坤" },
-    "011010": { "name": "困", "pinyin": "kùn", "constitution": "上坎下兑" },
-    "010011": { "name": "井", "pinyin": "jǐng", "constitution": "上巽下坎" },
-    "110101": { "name": "革", "pinyin": "gé", "constitution": "上离下兑" },
-    "101011": { "name": "鼎", "pinyin": "dǐng", "constitution": "上巽下离" },
-    "100100": { "name": "震", "pinyin": "zhèn", "constitution": "上震下震" },
+    "000111": { "name": "否", "pinyin": "pǐ", "constitution": "上乾下坤" },
+    "001000": { "name": "谦", "pinyin": "qiān", "constitution": "上坤下艮" },
     "001001": { "name": "艮", "pinyin": "gèn", "constitution": "上艮下艮" },
-    "011001": { "name": "渐", "pinyin": "jiàn", "constitution": "上艮下巽" },
-    "110100": { "name": "归妹", "pinyin": "guī mèi", "constitution": "上震下兑" },
-    "101100": { "name": "丰", "pinyin": "fēng", "constitution": "上震下离" },
+    "001010": { "name": "蹇", "pinyin": "jiǎn", "constitution": "上坎下艮" },
+    "001011": { "name": "渐", "pinyin": "jiàn", "constitution": "上巽下艮" },
+    "001100": { "name": "小过", "pinyin": "xiǎo guò", "constitution": "上震下艮" },
     "001101": { "name": "旅", "pinyin": "lǚ", "constitution": "上离下艮" },
+    "001110": { "name": "咸", "pinyin": "xián", "constitution": "上兑下艮" },
+    "001111": { "name": "遁", "pinyin": "dùn", "constitution": "上乾下艮" },
+    "010000": { "name": "师", "pinyin": "shī", "constitution": "上坤下坎" },
+    "010001": { "name": "蒙", "pinyin": "méng", "constitution": "上艮下坎" },
+    "010010": { "name": "坎", "pinyin": "kǎn", "constitution": "上坎下坎" },
+    "010011": { "name": "涣", "pinyin": "huàn", "constitution": "上巽下坎" },
+    "010100": { "name": "解", "pinyin": "jiě", "constitution": "上震下坎" },
+    "010101": { "name": "未济", "pinyin": "wèi jì", "constitution": "上离下坎" },
+    "010110": { "name": "困", "pinyin": "kùn", "constitution": "上兑下坎" },
+    "010111": { "name": "讼", "pinyin": "sòng", "constitution": "上乾下坎" },
+    "011000": { "name": "升", "pinyin": "shēng", "constitution": "上坤下巽" },
+    "011001": { "name": "蛊", "pinyin": "gǔ", "constitution": "上艮下巽" },
+    "011010": { "name": "井", "pinyin": "jǐng", "constitution": "上坎下巽" },
     "011011": { "name": "巽", "pinyin": "xùn", "constitution": "上巽下巽" },
-    "110110": { "name": "兑", "pinyin": "duì", "constitution": "上兑下兑" },
-    "011010": { "name": "涣", "pinyin": "huàn", "constitution": "上坎下巽" },
-    "010110": { "name": "节", "pinyin": "jié", "constitution": "上兑下坎" },
-    "011110": { "name": "中孚", "pinyin": "zhōng fú", "constitution": "上兑下巽" },
-    "110011": { "name": "小过", "pinyin": "xiǎo guò", "constitution": "上兑下巽" },
+    "011100": { "name": "恒", "pinyin": "héng", "constitution": "上震下巽" },
+    "011101": { "name": "鼎", "pinyin": "dǐng", "constitution": "上离下巽" },
+    "011110": { "name": "大过", "pinyin": "dà guò", "constitution": "上兑下巽" },
+    "011111": { "name": "姤", "pinyin": "gòu", "constitution": "上乾下巽" },
+    "100000": { "name": "复", "pinyin": "fù", "constitution": "上坤下震" },
+    "100001": { "name": "颐", "pinyin": "yí", "constitution": "上艮下震" },
+    "100010": { "name": "屯", "pinyin": "zhūn", "constitution": "上坎下震" },
+    "100011": { "name": "益", "pinyin": "yì", "constitution": "上巽下震" },
+    "100100": { "name": "震", "pinyin": "zhèn", "constitution": "上震下震" },
+    "100101": { "name": "噬嗑", "pinyin": "shì hé", "constitution": "上离下震" },
+    "100110": { "name": "随", "pinyin": "suí", "constitution": "上兑下震" },
+    "100111": { "name": "无妄", "pinyin": "wú wàng", "constitution": "上乾下震" },
+    "101000": { "name": "明夷", "pinyin": "míng yí", "constitution": "上坤下离" },
+    "101001": { "name": "贲", "pinyin": "bì", "constitution": "上艮下离" },
     "101010": { "name": "既济", "pinyin": "jì jì", "constitution": "上坎下离" },
-    "010101": { "name": "未济", "pinyin": "wèi jì", "constitution": "上离下坎" }
+    "101011": { "name": "家人", "pinyin": "jiā rén", "constitution": "上巽下离" },
+    "101100": { "name": "丰", "pinyin": "fēng", "constitution": "上震下离" },
+    "101101": { "name": "离", "pinyin": "lí", "constitution": "上离下离" },
+    "101110": { "name": "革", "pinyin": "gé", "constitution": "上兑下离" },
+    "101111": { "name": "同人", "pinyin": "tóng rén", "constitution": "上乾下离" },
+    "110000": { "name": "临", "pinyin": "lín", "constitution": "上坤下兑" },
+    "110001": { "name": "损", "pinyin": "sǔn", "constitution": "上艮下兑" },
+    "110010": { "name": "节", "pinyin": "jié", "constitution": "上坎下兑" },
+    "110011": { "name": "中孚", "pinyin": "zhōng fú", "constitution": "上巽下兑" },
+    "110100": { "name": "归妹", "pinyin": "guī mèi", "constitution": "上震下兑" },
+    "110101": { "name": "睽", "pinyin": "kuí", "constitution": "上离下兑" },
+    "110110": { "name": "兑", "pinyin": "duì", "constitution": "上兑下兑" },
+    "110111": { "name": "履", "pinyin": "lǚ", "constitution": "上乾下兑" },
+    "111000": { "name": "泰", "pinyin": "tài", "constitution": "上坤下乾" },
+    "111001": { "name": "大畜", "pinyin": "dà chù", "constitution": "上艮下乾" },
+    "111010": { "name": "需", "pinyin": "xū", "constitution": "上坎下乾" },
+    "111011": { "name": "小畜", "pinyin": "xiǎo chù", "constitution": "上巽下乾" },
+    "111100": { "name": "大壮", "pinyin": "dà zhuàng", "constitution": "上震下乾" },
+    "111101": { "name": "大有", "pinyin": "dà yǒu", "constitution": "上离下乾" },
+    "111110": { "name": "夬", "pinyin": "guài", "constitution": "上兑下乾" },
+    "111111": { "name": "乾", "pinyin": "qián", "constitution": "上乾下乾" }
 };
 
 // 云函数入口函数
@@ -87,8 +87,10 @@ exports.main = async (event, context) => {
 
   // --- 1. 精确计算所有相关卦象 ---
   const lineSymbolToBinary = (line) => (line === '⚊' ? '1' : '0');
+
+  // 修正：前端传来的爻是从初爻到上爻（bottom-to-top），数据表的键也是如此，因此直接转换即可。
   const originalBinary = originalLines.split('').map(lineSymbolToBinary).join('');
-  
+
   // 本卦
   const originalHexagram = hexagrams[originalBinary] || { name: '未知', constitution: '' };
 
@@ -99,18 +101,19 @@ exports.main = async (event, context) => {
     changedHexagram = hexagrams[changedBinary] || { name: '未知', constitution: '' };
   }
 
-  // 综卦 (将二进制码颠倒)
+  // 综卦 (Zong Gua): 垂直颠倒卦象，相当于反转 top-to-bottom 的二进制码。
   const zongBinary = originalBinary.split('').reverse().join('');
   const zongHexagram = hexagrams[zongBinary] || { name: '未知', constitution: '' };
 
-  // 错卦 (将二进制码按位取反)
+  // 错卦 (Cuo Gua): 每爻阴阳取反。
   const cuoBinary = originalBinary.split('').map(b => (b === '1' ? '0' : '1')).join('');
   const cuoHexagram = hexagrams[cuoBinary] || { name: '未知', constitution: '' };
 
-  // 互卦 (由2、3、4爻和3、4、5爻组成)
-  const huLowerTrigram = originalBinary.substring(1, 4); // 2,3,4爻
-  const huUpperTrigram = originalBinary.substring(2, 5); // 3,4,5爻
-  const huBinary = huLowerTrigram + huUpperTrigram;
+  // 互卦 (Hu Gua): 由内卦组成。
+  // originalBinary 是 top-to-bottom (爻 6, 5, 4, 3, 2, 1)
+  // 互卦上卦 = 原卦 5, 4, 3爻 -> originalBinary.substring(1, 4)
+  // 互卦下卦 = 原卦 4, 3, 2爻 -> originalBinary.substring(2, 5)
+  const huBinary = originalBinary.substring(1, 4) + originalBinary.substring(2, 5);
   const huHexagram = hexagrams[huBinary] || { name: '无', constitution: '' };
 
   // --- 2. 明确找出动爻位置和爻题 ---
@@ -191,9 +194,22 @@ exports.main = async (event, context) => {
 
     if (response.body && response.body.choices && response.body.choices[0]) {
       const aiResult = response.body.choices[0].message.content;
+      
+      // 返回结构化数据
       return {
         success: true,
-        analysis: aiResult
+        analysis: {
+          originalHexagram: originalHexagram,
+          changedHexagram: changedHexagram,
+          movingLineInfos: movingLineInfos,
+          aiInterpretation: aiResult,
+          // 辅助信息，前端可以根据需要展示
+          supplementaryInfo: {
+            zongHexagram: zongHexagram,
+            cuoHexagram: cuoHexagram,
+            huHexagram: huHexagram
+          }
+        }
       };
     } else {
       throw new Error('AI API a-normal response structure');

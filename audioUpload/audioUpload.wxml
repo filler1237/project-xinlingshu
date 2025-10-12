@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="header">
+    <view class="header-content">
+      <button class="back-button" type="default" bindtap="navigateBack">返回</button>
+      <text class="title">音频资源管理</text>
+    </view>
+    <text class="subtitle">上传和管理云存储中的音频文件</text>
+  </view>
+
+  <view class="upload-section">
+    <view class="upload-card">
+      <view class="select-section">
+        <text class="section-title">选择音频文件</text>
+        <button type="primary" bindtap="chooseAudio" disabled="{{isUploading}}">选择MP3文件</button>
+        <text wx:if="{{selectedFile}}" class="selected-file">已选择：{{selectedFile}}</text>
+      </view>
+
+      <view class="type-section">
+        <text class="section-title">选择声音类型</text>
+        <picker bindchange="switchSoundType" value="{{soundTypes.indexOf(selectedType)}}" range="{{soundTypes}}">
+          <view class="picker">
+            当前选择：{{selectedType}}
+          </view>
+        </picker>
+        <text class="tip-text">上传后将自动命名为：{{audioNames[selectedType]}}</text>
+      </view>
+
+      <view class="progress-section" wx:if="{{isUploading}}">
+        <text class="section-title">上传进度</text>
+        <progress percent="{{uploadProgress}}" stroke-width="4" active />
+        <text class="progress-text">正在上传，请稍候...</text>
+      </view>
+
+      <button type="primary" class="upload-btn" bindtap="uploadAudio" disabled="{{isUploading || !tempFilePath}}">
+        上传音频
+      </button>
+    </view>
+  </view>
+
+  <view class="resource-list">
+    <text class="list-title">已上传的音频资源</text>
+    
+    <block wx:if="{{audioList.length > 0}}">
+      <view class="resource-item" wx:for="{{audioList}}" wx:key="index">
+        <view class="item-info">
+          <text class="item-name">{{item.fileName}}</text>
+          <text class="item-type">类型：{{item.soundType}}</text>
+          <text class="item-time">上传时间：{{item.createTime}}</text>
+        </view>
+        <view class="item-actions">
+          <button size="mini" bindtap="previewAudio" data-id="{{item.fileID}}">预览</button>
+          <button size="mini" type="warn" bindtap="deleteAudio" data-id="{{item.fileID}}" data-index="{{index}}">删除</button>
+        </view>
+      </view>
+    </block>
+    
+    <view class="empty-tip" wx:else>
+      <text>暂无音频资源，请先上传</text>
+    </view>
+  </view>
+
+  <view class="guide-section">
+    <text class="guide-title">使用指南</text>
+    <view class="guide-content">
+      <text>1. 选择本地MP3格式的音频文件</text>
+      <text>2. 选择对应的声音类型</text>
+      <text>3. 点击上传按钮将音频上传到云存储</text>
+      <text>4. 上传后可在白噪音功能中使用</text>
+      <text>5. 支持预览和删除已上传的音频资源</text>
+    </view>
+  </view>
+</view>

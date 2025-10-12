@@ -1,0 +1,42 @@
+<!-- home/tools/tools.wxml -->
+<view style="height: 100%; flex-direction: column; padding: 20rpx;">
+  <view class="header">
+    <view class="back-button" bind:tap="navigateBack">
+      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
+    </view>
+    <text class="header-title">开发工具箱</text>
+    <view class="header-right"></view>
+  </view>
+  
+  <view class="tool-list">
+    <view class="tool-item" bind:tap="gotoBreathingExercise">
+      <view class="tool-icon">
+        <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">呼吸练习</text>
+        <text class="tool-desc">缓解压力和焦虑的呼吸训练</text>
+      </view>
+    </view>
+    
+    <view class="tool-item" bind:tap="gotoWhiteNoise">
+      <view class="tool-icon">
+        <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">白噪音</text>
+        <text class="tool-desc">帮助放松和专注的环境声音</text>
+      </view>
+    </view>
+    
+    <view class="tool-item" bind:tap="gotoAudioUpload">
+      <view class="tool-icon">
+        <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">音频资源管理</text>
+        <text class="tool-desc">上传和管理白噪音音频文件</text>
+      </view>
+    </view>
+  </view>
+</view>

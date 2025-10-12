@@ -1,0 +1,83 @@
+/* home/tools/tools.wxss */
+.header {
+  padding: 30rpx 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-button {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.header-right {
+  width: 60rpx;
+}
+
+.header-title {
+  color: #253858;
+  font-family: PingFang SC;
+  font-weight: 600;
+  font-size: 40rpx;
+}
+
+.tool-list {
+  padding: 20rpx;
+}
+
+.tool-item {
+  display: flex;
+  flex-direction: row;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  box-shadow: 0rpx 0rpx 8rpx 0rpx #00000019;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  align-items: center;
+}
+
+.tool-icon {
+  width: 120rpx;
+  height: 120rpx;
+  background: #F5F5F5;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tool-icon-img {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.tool-info {
+  margin-left: 30rpx;
+  flex: 1;
+}
+
+.tool-name {
+  color: #253858;
+  font-family: PingFang SC;
+  font-weight: 500;
+  font-size: 32rpx;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.tool-desc {
+  color: #2538587F;
+  font-family: PingFang SC;
+  font-weight: 300;
+  font-size: 24rpx;
+  display: block;
+}

@@ -1,0 +1,185 @@
+.container {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+.back-button {
+  position: absolute;
+  left: 20rpx;
+  min-width: 80rpx;
+  padding: 0;
+  font-size: 28rpx;
+  background-color: transparent;
+  color: #333;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.upload-section {
+  margin-bottom: 30rpx;
+}
+
+.upload-card {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.select-section,
+.type-section,
+.progress-section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.selected-file {
+  display: block;
+  margin-top: 15rpx;
+  font-size: 24rpx;
+  color: #07c160;
+  word-break: break-all;
+}
+
+.picker {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+}
+
+.tip-text {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.progress-text {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+}
+
+.upload-btn {
+  margin-top: 20rpx;
+}
+
+.resource-list {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.list-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.resource-item {
+  border-bottom: 1rpx solid #eee;
+  padding: 20rpx 0;
+}
+
+.resource-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  margin-bottom: 15rpx;
+}
+
+.item-name {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.item-type,
+.item-time {
+  font-size: 22rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 5rpx;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10rpx;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.guide-section {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.guide-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.guide-content {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.guide-content text {
+  display: block;
+  margin-bottom: 10rpx;
+  line-height: 1.5;
+}

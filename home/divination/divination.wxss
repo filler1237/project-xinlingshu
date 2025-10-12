@@ -121,3 +121,130 @@
   font-size: 24rpx;
   color: #aaa;
 }
+
+/* 硬币动画区域 */
+.coins-animation-area {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin-bottom: 40rpx;
+  height: 100rpx; /* 给动画留出空间 */
+}
+
+.coin-container {
+  perspective: 1000rpx;
+}
+
+.coin {
+  width: 100rpx;
+  height: 100rpx;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.coin-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.coin-front {
+  background-color: #f0c27b;
+  color: #a67c52;
+  border: 4rpx solid #a67c52;
+  box-sizing: border-box;
+}
+.coin-front::after {
+  content: '正';
+}
+
+.coin-back {
+  background-color: #dcdcdc;
+  color: #888;
+  border: 4rpx solid #888;
+  box-sizing: border-box;
+  transform: rotateY(180deg);
+}
+.coin-back::after {
+  content: '反';
+}
+
+/* 动画类 */
+.flip-heads {
+  transform: rotateY(1800deg); /* 翻转5圈，最终停在正面 */
+}
+
+.flip-tails {
+  transform: rotateY(1980deg); /* 翻转5.5圈，最终停在反面 */
+}
+
+/* 新增的结果区域样式 */
+.hexagram-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx 0;
+}
+
+.hexagram-item {
+  text-align: center;
+  padding: 0 30rpx;
+}
+
+.hexagram-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.hexagram-name {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.hexagram-constitution {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.arrow {
+  font-size: 40rpx;
+  color: #aaa;
+}
+
+.moving-lines {
+  text-align: center;
+  font-size: 26rpx;
+  color: #e54d42;
+  margin-top: 10rpx;
+  font-weight: bold;
+}
+
+.interpretation-divider {
+  height: 1rpx;
+  background-color: #eee;
+  width: 90%;
+  margin: 40rpx auto;
+}
+
+.interpretation-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.error-text {
+  color: #e54d42;
+  text-align: center;
+}

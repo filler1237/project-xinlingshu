@@ -1,0 +1,46 @@
+<!-- home/tools/whitenoise/whitenoise.wxml -->
+<view style="height: 100%; flex-direction: column; padding: 40rpx;">
+  <view class="header">
+    <view class="back-button" bind:tap="navigateBack">
+      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
+    </view>
+    <text class="header-title">白噪音</text>
+    <view class="header-right"></view>
+  </view>
+  
+  <view class="player">
+    <view class="play-button" bind:tap="togglePlay">
+      <image src="{{isPlaying ? '/image/TestIcon.png' : '/image/TestIcon.png'}}" mode="aspectFit" class="play-icon"/>
+      <text class="play-text">{{isPlaying ? '停止' : '播放'}}</text>
+    </view>
+    
+    <view class="current-sound">
+      <text class="current-sound-text">当前: {{currentSoundName || '未选择'}}</text>
+    </view>
+  </view>
+  
+  <view class="volume-control">
+    <text class="volume-label">音量</text>
+    <slider min="0" max="100" value="{{volume * 100}}" show-value bind:change="adjustVolume"/>
+  </view>
+  
+  <view class="sound-list">
+    <text class="list-title">选择声音</text>
+    <view class="sound-grid">
+      <view wx:for="{{sounds}}" wx:key="id" class="sound-item {{currentSound === item.id ? 'selected' : ''}}" bind:tap="selectSound" data-sound-id="{{item.id}}">
+        <view class="sound-icon">
+          <image src="{{item.icon}}" mode="aspectFit" class="sound-icon-img"/>
+        </view>
+        <text class="sound-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="benefits">
+    <text class="benefits-title">白噪音的好处：</text>
+    <text class="benefits-text">• 帮助集中注意力</text>
+    <text class="benefits-text">• 缓解压力和焦虑</text>
+    <text class="benefits-text">• 改善睡眠质量</text>
+    <text class="benefits-text">• 屏蔽干扰噪音</text>
+  </view>
+</view>

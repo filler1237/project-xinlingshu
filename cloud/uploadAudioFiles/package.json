@@ -1,0 +1,14 @@
+{
+  "name": "uploadAudioFiles",
+  "version": "1.0.0",
+  "description": "上传音频文件到云存储并保存资源信息",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.8.2"
+  }
+}

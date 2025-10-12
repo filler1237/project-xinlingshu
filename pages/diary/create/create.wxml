@@ -21,9 +21,20 @@
   <!-- 情绪类型选择器 -->
   <view class="emotion-section">
     <view class="section-title">情绪类型</view>
+    <view class="emotion-category-tabs">
+      <view 
+        wx:for="{{emotionCategories}}" 
+        wx:key="item.category" 
+        class="category-tab {{activeCategoryIndex === index ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-index="{{index}}"
+      >
+        {{item.category}}
+      </view>
+    </view>
     <view class="emotion-emoji-selector">
       <view 
-        wx:for="{{emotionOptions}}" 
+        wx:for="{{emotionCategories[activeCategoryIndex].emotions}}" 
         wx:key="item.name" 
         class="emotion-emoji-item {{selectedEmotionType === item.name ? 'selected' : ''}}"
         bindtap="selectEmotionType"
@@ -61,7 +72,7 @@
     </view>
     <textarea 
       class="content-input"
-      placeholder="记录今天的心情和感受..."
+      placeholder="{{placeholderText}}"
       value="{{content}}"
       bindinput="onContentInput"
       maxlength="2000"
