@@ -77,7 +77,7 @@
 <view class="GameBox">
   <view class="Game" bind:tap="gotoTools">
     <view class="GameIma">
-      <image src="/image/cat.jpg" mode="widthFix" class="GameIma"/>
+      <image src="/image/service-line.jpg" mode="widthFix" class="GameIma"/>
     </view>
     <text class="Font_G">减压工具箱</text>
   </view>

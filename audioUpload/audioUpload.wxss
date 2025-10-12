@@ -1,44 +1,60 @@
 .container {
-  padding: 20rpx;
-  background-color: #f8f8f8;
   min-height: 100vh;
+  background-color: #f0f9ff;
+  padding: 40rpx 20rpx;
+  box-sizing: border-box;
 }
 
 .header {
-  margin-bottom: 30rpx;
-  padding: 20rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
-}
-
-.header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 10rpx;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 24rpx 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
 .back-button {
-  position: absolute;
-  left: 20rpx;
-  min-width: 80rpx;
-  padding: 0;
-  font-size: 28rpx;
-  background-color: transparent;
-  color: #333;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.back-button:active {
+  transform: scale(0.95);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.back-icon {
+  width: 36rpx;
+  height: 36rpx;
 }
 
 .title {
   font-size: 36rpx;
   font-weight: bold;
-  color: #333;
-  display: block;
+  color: #4a6fa5;
+  text-align: center;
+  flex: 1;
+}
+
+.header-right {
+  width: 60rpx;
 }
 
 .subtitle {
   font-size: 24rpx;
   color: #666;
+  text-align: center;
+  margin-bottom: 30rpx;
+  padding: 10rpx;
 }
 
 .upload-section {
@@ -46,10 +62,11 @@
 }
 
 .upload-card {
-  background-color: #fff;
-  padding: 30rpx;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+  padding: 36rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
 }
 
 .select-section,
@@ -61,9 +78,11 @@
 .section-title {
   font-size: 28rpx;
   font-weight: bold;
-  color: #333;
+  color: #4a6fa5;
   display: block;
   margin-bottom: 15rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #6495ed;
 }
 
 .selected-file {
@@ -72,13 +91,23 @@
   font-size: 24rpx;
   color: #07c160;
   word-break: break-all;
+  background-color: rgba(7, 193, 96, 0.1);
+  padding: 10rpx;
+  border-radius: 8rpx;
 }
 
 .picker {
   padding: 20rpx;
-  background-color: #f8f8f8;
-  border-radius: 8rpx;
+  background-color: rgba(248, 248, 248, 0.8);
+  border-radius: 12rpx;
   font-size: 26rpx;
+  border: 1rpx solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.picker:active {
+  background-color: rgba(238, 238, 238, 0.8);
+  border-color: #6495ed;
 }
 
 .tip-text {
@@ -86,6 +115,7 @@
   margin-top: 10rpx;
   font-size: 22rpx;
   color: #999;
+  font-style: italic;
 }
 
 .progress-text {
@@ -98,31 +128,59 @@
 
 .upload-btn {
   margin-top: 20rpx;
+  background: linear-gradient(135deg, #6495ed 0%, #4169e1 100%);
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 25rpx;
+  padding: 20rpx 0;
+  border: none;
+  box-shadow: 0 4rpx 15rpx rgba(100, 149, 237, 0.4);
+  transition: all 0.3s ease;
+}
+
+.upload-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(100, 149, 237, 0.3);
+}
+
+.upload-btn[disabled] {
+  background: #cccccc;
+  box-shadow: none;
+  color: #666666;
 }
 
 .resource-list {
   margin-bottom: 30rpx;
-  background-color: #fff;
-  padding: 30rpx;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+  padding: 36rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
 }
 
 .list-title {
   font-size: 28rpx;
   font-weight: bold;
-  color: #333;
+  color: #4a6fa5;
   display: block;
   margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #6495ed;
 }
 
 .resource-item {
   border-bottom: 1rpx solid #eee;
   padding: 20rpx 0;
+  transition: all 0.3s ease;
 }
 
 .resource-item:last-child {
   border-bottom: none;
+}
+
+.resource-item:active {
+  background-color: rgba(245, 247, 250, 0.8);
 }
 
 .item-info {
@@ -151,35 +209,139 @@
   gap: 10rpx;
 }
 
+.item-actions button {
+  border-radius: 15rpx;
+  font-size: 22rpx;
+  transition: all 0.3s ease;
+}
+
+.item-actions button:active {
+  transform: scale(0.95);
+}
+
 .empty-tip {
   text-align: center;
-  padding: 40rpx 0;
+  padding: 60rpx 0;
   color: #999;
   font-size: 24rpx;
+  background-color: rgba(245, 247, 250, 0.8);
+  border-radius: 15rpx;
 }
 
 .guide-section {
-  background-color: #fff;
-  padding: 30rpx;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+  padding: 36rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 40rpx;
 }
 
 .guide-title {
   font-size: 28rpx;
   font-weight: bold;
-  color: #333;
+  color: #4a6fa5;
   display: block;
   margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #6495ed;
 }
 
 .guide-content {
   font-size: 24rpx;
   color: #666;
+  background-color: rgba(245, 247, 250, 0.6);
+  padding: 20rpx;
+  border-radius: 12rpx;
 }
 
 .guide-content text {
   display: block;
-  margin-bottom: 10rpx;
-  line-height: 1.5;
+  margin-bottom: 12rpx;
+  line-height: 1.6;
+  padding-left: 30rpx;
+  position: relative;
+}
+
+.guide-content text::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+/* 按钮样式优化 */
+button[type='primary'] {
+  background: linear-gradient(135deg, #6495ed 0%, #4169e1 100%);
+  border-radius: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(100, 149, 237, 0.4);
+  transition: all 0.3s ease;
+}
+
+button[type='primary']:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(100, 149, 237, 0.3);
+}
+
+button[type='warn'] {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  border-radius: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(255, 107, 107, 0.4);
+  transition: all 0.3s ease;
+}
+
+button[type='warn']:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
+}
+
+/* 进度条样式 */
+progress {
+  border-radius: 10rpx;
+  background-color: rgba(238, 238, 238, 0.8);
+}
+
+progress[active] {
+  background: linear-gradient(
+    90deg,
+    rgba(100, 149, 237, 0.2) 0%,
+    rgba(100, 149, 237, 0.4) 50%,
+    rgba(100, 149, 237, 0.2) 100%
+  );
+}
+
+/* 添加一些动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upload-card,
+.resource-list,
+.guide-section {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 320px) {
+  .title {
+    font-size: 32rpx;
+  }
+  
+  .subtitle {
+    font-size: 22rpx;
+  }
+  
+  .upload-card,
+  .resource-list,
+  .guide-section {
+    padding: 24rpx;
+  }
 }

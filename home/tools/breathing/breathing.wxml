@@ -1,5 +1,5 @@
 <!-- home/tools/breathing/breathing.wxml -->
-<view style="height: 100%; flex-direction: column; align-items: center; padding: 40rpx; background-color: #f0f9ff;">
+<view style="height: 100%; display: flex; flex-direction: column; align-items: center; padding: 40rpx; background-color: #f0f9ff;">
   <view class="header">
     <view class="back-button" bind:tap="navigateBack">
       <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
@@ -10,7 +10,7 @@
   
   <view class="breathing-circle-container">
     <view class="cloud" style="display: {{animationType === 'inhaling' ? 'block' : 'none'}};"></view>
-      <view class="breathing-circle" style="transform: scale({{status === 'inhaling' ? (0.8 + (1 - 0.8) * (1 - countdown/inhaleTime)) : status === 'exhaling' ? (1 - (1 - 0.8) * (1 - countdown/exhaleTime)) : status === 'paused' ? 0.9 : 1}}); background: linear-gradient(135deg, {{status === 'inhaling' ? '#FFB6C1, #FFA07A' : status === 'holding' ? '#87CEEB, #87CEFA' : status === 'exhaling' ? '#98FB98, #90EE90' : status === 'paused' ? '#DDA0DD, #BA55D3' : '#E8F7FE, #D0EBFF'}});">
+    <view class="breathing-circle" style="transform: scale({{status === 'inhaling' ? (0.8 + (1 - 0.8) * (1 - countdown/inhaleTime)) : status === 'exhaling' ? (1 - (1 - 0.8) * (1 - countdown/exhaleTime)) : status === 'paused' ? 0.9 : 1}}); background: linear-gradient(135deg, {{status === 'inhaling' ? '#FFB6C1, #FFA07A' : status === 'holding' ? '#87CEEB, #87CEFA' : status === 'exhaling' ? '#98FB98, #90EE90' : status === 'paused' ? '#DDA0DD, #BA55D3' : '#E8F7FE, #D0EBFF'}});">
       <text class="circle-icon">{{status === 'inhaling' ? '🌬️' : status === 'holding' ? '⏸️' : status === 'exhaling' ? '💨' : status === 'paused' ? '⏸️' : '😊'}}</text>
       <text class="circle-text">{{instruction}}</text>
       <text class="countdown-text">{{countdown}}</text>

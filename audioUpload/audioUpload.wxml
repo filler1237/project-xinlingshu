@@ -1,11 +1,12 @@
 <view class="container">
   <view class="header">
-    <view class="header-content">
-      <button class="back-button" type="default" bindtap="navigateBack">返回</button>
-      <text class="title">音频资源管理</text>
+    <view class="back-button" bind:tap="navigateBack">
+      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
     </view>
-    <text class="subtitle">上传和管理云存储中的音频文件</text>
+    <text class="title">🎵 音频资源管理 🎵</text>
+    <view class="header-right"></view>
   </view>
+  <text class="subtitle">上传和管理云存储中的音频文件</text>
 
   <view class="upload-section">
     <view class="upload-card">
