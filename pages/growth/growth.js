@@ -9,7 +9,8 @@ Page({
     treeLevel: 1,
     unlockedAchievements: [],
     isWatering: false, // 新增：控制浇水动画的状态
-    isAnimating: false //新增控制树木升级动画播放效果
+    isAnimating: false, //新增控制树木升级动画播放效果
+    waterdrops:0
   },
 
   /**
@@ -33,7 +34,12 @@ Page({
     this.getGrowthData();
   },
 
-    getGrowthData() {
+  getGrowthData() {
+    return new Promise((resolve,reject)=>{
+      wx.showLoading({
+        title:'加载中...',
+        mask:true
+      }); 
     wx.cloud.callFunction({
       name: 'getUserGrowthData',
       success: res => {
@@ -54,6 +60,7 @@ Page({
                 growthValue: data.growthValue,
                 treeLevel: data.treeLevel,
                 unlockedAchievements: data.unlockedAchievements,
+                waterdrops: data.waterdrops,
                 isAnimating: false
               });
             }, 1000); 
@@ -63,10 +70,14 @@ Page({
             this.setData({
               growthValue: data.growthValue,
               treeLevel: data.treeLevel,
-              unlockedAchievements: data.unlockedAchievements
+              unlockedAchievements: data.unlockedAchievements,
+              waterdrops: data.waterdrops
             });
           }
+          wx.hideLoading();
+          resolve(data);
         } else {
+          wx.hideLoading();
           wx.showToast({
             title: '获取数据失败',
             icon: 'none'
@@ -76,8 +87,10 @@ Page({
       fail: err => {
         wx.hideLoading()
         console.error('[云函数][getUserGrowthData]调用失败', err)
+        reject(err);
       }
-    })
+    });
+    });
   },
 
 
@@ -97,17 +110,26 @@ Page({
         if (res.result.code === 0) {
           // 成功后等待动画结束再刷新数据
           setTimeout(() => {
-            wx.showToast({
-              title: '浇水成功',
+            this.getGrowthData()
+            .then(data=>{
+              wx.showToast({
+              title: `浇水成功`,
               icon: 'success'
             });
-            this.getGrowthData();
+            })
+            .catch(err=>{
+              wx.showToast({
+                title:err.message || '数据刷新失败',
+                icon:'none'
+              });
+            });
           }, 2000); // 动画时长为2秒
         } else {
           wx.showToast({
             title: res.result.message || '浇水失败',
             icon: 'none'
           });
+          this.setData({ isWatering: false}); //重置浇水状态
         }
       },
       fail: err => {
@@ -115,6 +137,7 @@ Page({
           title: '请求失败',
           icon: 'none'
         });
+        this.setData({ isWatering: false});
         console.error('[云函数][waterTheTree]调用失败', err);
       }
     });

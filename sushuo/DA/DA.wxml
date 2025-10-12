@@ -3,15 +3,41 @@
   <view class='partone' style="width:82rpx" bindtap='onBackTap'>
     <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
   </view>
-  <view class="chat-container">
+
+  <!-- 聊天内容区域 -->
+  <scroll-view class="chat-container" scroll-y="true" scroll-into-view="{{'msg-' + (content.length - 1)}}">
     <block wx:for="{{content}}" wx:key="index">
-      <view class="message-item {{item.id == 1 ? 'mineTextBox' : 'himTextBox'}}">
-        <text class="message-text {{item.id == 1 ? 'mineText' : 'himText'}}">{{item.text}}</text>
+      <!-- 每条消息的容器 -->
+      <view id="{{'msg-' + index}}" class="message-row {{item.isUser ? 'user-row' : 'ai-row'}}">
+        <!-- AI 头像 -->
+        <image wx:if="{{!item.isUser}}" class="avatar" src="{{aiAvatarUrl}}"></image>
+        
+        <!-- 消息气泡 -->
+        <view class="message-bubble {{item.isUser ? 'user-bubble' : 'ai-bubble'}}">
+          <text class="message-text">{{item.text}}</text>
+        </view>
+
+        <!-- 用户头像 -->
+        <image wx:if="{{item.isUser}}" class="avatar" src="{{userAvatarUrl}}"></image>
       </view>
     </block>
-  </view>
+
+    <!-- AI 思考中状态 -->
+    <view wx:if="{{isSending}}" class="message-row ai-row">
+      <image class="avatar" src="{{aiAvatarUrl}}"></image>
+      <view class="message-bubble ai-bubble">
+        <view class="typing-indicator">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入栏 -->
   <view class="input-bar">
-    <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange"/>
+    <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange" confirm-type="send" bindconfirm="sendMessage"/>
     <button class="send-button" bindtap="sendMessage">发送</button>
   </view>
 </view>
