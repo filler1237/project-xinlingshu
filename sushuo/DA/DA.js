@@ -14,6 +14,10 @@ Page({
     // 你可以替换成真实的图片路径或网络链接
     userAvatarUrl: '/assets/默认头像.jpeg', // 使用项目中的默认头像
     aiAvatarUrl: '/image/logo1.png', // 使用项目中的 logo 作为 AI 头像
+    
+    // --- 新增：适配自定义导航栏 ---
+    statusBarHeight: 0,
+    headerHeight: 0,
   },
 
   onShow: function () {
@@ -93,13 +97,22 @@ Page({
   },
 
   onLoad: function (options) {
+    // --- 新增：获取设备信息以适配导航栏 ---
+    const systemInfo = wx.getSystemInfoSync();
+    const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
+
     let userId = app.globalData.userId || wx.getStorageSync('userId');
     if (!userId) {
       userId = this.generateUserId();
       wx.setStorageSync('userId', userId);
       app.globalData.userId = userId;
     }
-    this.setData({ userId: userId });
+    this.setData({ 
+      userId: userId,
+      statusBarHeight: systemInfo.statusBarHeight,
+      // 胶囊按钮的顶部位置减去状态栏高度，再乘以2，加上胶囊按钮的高度
+      headerHeight: (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height
+    });
     this.loadChatHistory(userId);
   },
 
@@ -109,11 +122,38 @@ Page({
 
   loadChatHistory: function (userId) {
     db.collection('chatHistory').where({ userId: userId }).get().then(res => {
-      if (res.data.length > 0) {
-        this.setData({
-          content: res.data[0].content || [],
-        });
+      const welcomeMessage = {
+        text: '你好！我是你的AI心理伙伴，有什么可以帮助你的吗？',
+        isUser: false
+      };
+      const threshold = 30 * 60 * 1000; // 30分钟缓存
+
+      let finalContent = [];
+      let needsWelcome = false;
+
+      if (res.data && res.data.length > 0) {
+        const history = res.data[0];
+        finalContent = history.content || []; // 先加载历史记录
+        const lastUpdated = history.lastUpdated;
+
+        // 检查是否需要发送欢迎语
+        if (!lastUpdated || (new Date() - new Date(lastUpdated)) > threshold) {
+          needsWelcome = true;
+        }
+      } else {
+        // 没有历史记录，是新用户
+        needsWelcome = true;
       }
+
+      if (needsWelcome) {
+        finalContent.push(welcomeMessage);
+      }
+
+      this.setData({
+        content: finalContent,
+      });
+    }).catch(err => {
+      console.error('加载聊天记录失败:', err);
     });
   },
 
@@ -121,14 +161,23 @@ Page({
     const { userId, content } = this.data;
     if (!userId) return;
 
+    const dataToSave = {
+      content: content,
+      lastUpdated: db.serverDate() // 使用服务器时间
+    };
+
     db.collection('chatHistory').where({ userId: userId }).get().then(res => {
       if (res.data.length > 0) {
         db.collection('chatHistory').doc(res.data[0]._id).update({
-          data: { content: content }
+          data: dataToSave
         });
       } else {
         db.collection('chatHistory').add({
-          data: { userId: userId, content: content }
+          data: { 
+            userId: userId, 
+            content: dataToSave.content,
+            lastUpdated: dataToSave.lastUpdated
+          }
         });
       }
     });

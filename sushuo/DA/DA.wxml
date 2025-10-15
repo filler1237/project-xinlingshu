@@ -1,11 +1,20 @@
 <view class="page">
-  <view class="title">倾谈</view>
-  <view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+  <!-- 自定义导航栏 -->
+  <view class="header" style="padding-top: {{statusBarHeight}}px; height: {{headerHeight}}px;">
+    <view class="back-button" bindtap="onBackTap" style="height: {{headerHeight}}px;">
+      <image class="back-icon" src="/image/back.svg"></image>
+    </view>
+    <view class="title">倾谈</view>
   </view>
 
   <!-- 聊天内容区域 -->
-  <scroll-view class="chat-container" scroll-y="true" scroll-into-view="{{'msg-' + (content.length - 1)}}">
+  <scroll-view 
+    class="chat-container" 
+    scroll-y="true" 
+    scroll-into-view="{{'msg-' + (content.length - 1)}}" 
+    scroll-with-animation="true"
+    style="padding-top: {{statusBarHeight + headerHeight}}px;"
+  >
     <block wx:for="{{content}}" wx:key="index">
       <!-- 每条消息的容器 -->
       <view id="{{'msg-' + index}}" class="message-row {{item.isUser ? 'user-row' : 'ai-row'}}">
@@ -38,6 +47,8 @@
   <!-- 输入栏 -->
   <view class="input-bar">
     <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange" confirm-type="send" bindconfirm="sendMessage"/>
-    <button class="send-button" bindtap="sendMessage">发送</button>
+    <view class="send-button" bindtap="sendMessage">
+      <view class="send-icon"></view>
+    </view>
   </view>
 </view>

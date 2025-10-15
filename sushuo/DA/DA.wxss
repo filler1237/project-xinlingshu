@@ -1,133 +1,153 @@
 /* pages/sushuo/DA/DA.wxss */
+
+/* --- 全局样式 --- */
 .page {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #F7F8FA; /* 更柔和的背景色 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* --- 顶部导航栏 --- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 标题居中 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.back-button {
+  position: absolute;
+  left: 20rpx;
+  /* top and height are set via inline styles in WXML */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+}
+
+.back-icon {
+  width: 36rpx;
+  height: 36rpx;
 }
 
 .title {
-  color: #000000;
-  font-family: PingFang SC;
-  font-weight: medium;
-  font-size: 32rpx;
-  line-height: 1.5;
-  letter-spacing: 0rpx;
-  text-align: center;
-  position: absolute;
-  top: 4.5%;
-  left: 43%;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333333;
 }
 
-.partone {
-  margin-bottom: 10rpx;
-  height: 56rpx;
-  position: absolute;
-  top: 4.5%;
-  left: 0;
-}
-
-.partone .back {
-  position: absolute;
-  z-index: 2;
-  height: 34rpx;
-  left: 50rpx;
-  top: 20rpx;
-}
-
+/* --- 聊天容器 --- */
 .chat-container {
   flex: 1;
   padding: 20rpx;
-  margin-top: 15%; /* 调整以适应标题栏 */
-  background-color: #ffffff;
-  overflow-y: auto; /* 允许滚动 */
+  padding-bottom: 40rpx; /* 增加底部内边距 */
+  background-color: #F7F8FA;
+  overflow-y: auto;
+  /* padding-top 将由 WXML 内联样式动态设置 */
 }
 
-/* --- 新增：消息行的基础样式 --- */
+/* --- 消息行 --- */
 .message-row {
   display: flex;
-  align-items: flex-start; /* 头像和气泡顶部对齐 */
-  margin-bottom: 30rpx;
+  align-items: flex-start;
+  margin-bottom: 40rpx;
+  width: 100%;
 }
 
-/* --- 新增：用户消息行的样式 --- */
-.user-row {
-  justify-content: flex-end; /* 用户消息靠右 */
-}
-
-/* --- 新增：AI 消息行的样式 --- */
 .ai-row {
-  justify-content: flex-start; /* AI 消息靠左 */
+  justify-content: flex-start;
 }
 
-/* --- 新增：头像样式 --- */
+.user-row {
+  justify-content: flex-end;
+}
+
 .avatar {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  flex-shrink: 0; /* 防止头像被压缩 */
+  flex-shrink: 0;
 }
 
-/* --- 修改：消息气泡的基础样式 --- */
+/* --- 消息气泡 --- */
 .message-bubble {
-  max-width: 65%; /* 调整最大宽度以适应头像 */
-  padding: 20rpx;
-  border-radius: 20rpx;
+  max-width: calc(100% - 180rpx); /* 调整宽度以留出更多空间 */
+  padding: 24rpx;
+  border-radius: 24rpx;
   word-wrap: break-word;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
-/* --- 新增：用户气泡样式 --- */
-.user-bubble {
-  background-color: #96CE74;
-  color: #ffffff;
-  margin-left: 20rpx;
-  border-top-right-radius: 0; /* 小三角效果 */
-}
-
-/* --- 新增：AI 气泡样式 --- */
 .ai-bubble {
-  background-color: #f0f0f0;
+  background-color: #FFFFFF;
   color: #333333;
+  margin-left: 20rpx;
+  border-top-left-radius: 4rpx; /* 调整圆角以形成气泡尖角 */
+}
+
+.user-bubble {
+  background-image: linear-gradient(to right, #88d75f, #96CE74); /* 渐变色 */
+  color: #ffffff;
   margin-right: 20rpx;
-  border-top-left-radius: 0; /* 小三角效果 */
+  border-top-right-radius: 4rpx;
 }
 
 .message-text {
-  font-size: 28rpx;
-  line-height: 1.5;
+  font-size: 30rpx;
+  line-height: 1.6;
 }
 
+/* --- 输入栏 --- */
 .input-bar {
   display: flex;
   align-items: center;
-  padding: 20rpx;
-  background-color: #ffffff;
-  box-shadow: 0 -2rpx 4rpx rgba(0, 0, 0, 0.1);
+  padding: 20rpx 24rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 -2rpx 4rpx rgba(0, 0, 0, 0.05);
 }
 
 .input-box {
   flex: 1;
   height: 80rpx;
-  padding: 0 20rpx;
-  border: 2rpx solid #ddd;
-  border-radius: 10rpx;
+  padding: 0 30rpx;
+  background-color: #F7F8FA;
+  border-radius: 40rpx; /* 圆角输入框 */
   font-size: 28rpx;
-  margin-right: 10rpx;
+  margin-right: 20rpx;
+  border: none; /* 移除边框 */
 }
 
 .send-button {
-  width: 100rpx;
+  width: 80rpx;
   height: 80rpx;
   background-color: #96CE74;
-  color: #ffffff;
-  border-radius: 10rpx;
+  border-radius: 50%; /* 圆形按钮 */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28rpx;
+  padding: 0;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(150, 206, 116, 0.4);
 }
 
-/* --- 新增：思考中动画 --- */
+.send-icon {
+  width: 40rpx;
+  height: 40rpx;
+  background-image: url('/image/QingSu-con.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* --- 思考中动画 --- */
 .typing-indicator {
   display: flex;
   align-items: center;
