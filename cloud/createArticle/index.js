@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
     await cloud.callFunction({
       name:'grantGrowth',
       data:{
-        _openId:wxContext.OPENID,
+        _openid:wxContext.OPENID,
         growthAmount:10
       }
     })

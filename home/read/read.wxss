@@ -1,96 +1,106 @@
-page{
-  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%);
-}
-.title{
-  color: #000000;
-  font-family: PingFang SC;
-  font-weight: medium;
-  font-size: 32rpx;
-  line-height: 1.5;
-  letter-spacing: 0rpx;
-  text-align: center;
-  position: absolute;
-  top: 4.5%;
-  left: 39%  ;
-}
-.partone{
-  margin-bottom: 10rpx;
-  height: 56rpx;
-  position: absolute;
-  top:4.5%;
-  left: 0;
-}
-.partone .back {
-  position: absolute;
-  z-index:2;
-  height: 34rpx;
-  left: 50rpx;
-  top:20rpx;
-}
-.up{
-  position: fixed;
-  left: 0;
-  bottom: -5rpx;
-  height: 292rpx;
-}
-.down{
-  position:fixed;
-  left: 0;
-  bottom: -5rpx;
-  height: 130rpx;
-}
-.girl{
-  position: fixed;
-  left: 426rpx;
-  bottom: 35rpx;
-  height: 212rpx;
+/* home/read/read.wxss */
+
+.article-list {
+  padding: 20rpx;
+  background-color: #f7f7f7; /* 给列表一个浅灰色背景 */
 }
 
-.thispage{
-  margin-top: 30%;
+.article-card {
+  background-color: #ffffff; /* 卡片背景为白色 */
+  border-radius: 16rpx; /* 圆角 */
+  margin-bottom: 20rpx; /* 卡片间距 */
+  padding: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05); /* 添加轻微的阴影增加立体感 */
+  overflow: hidden; /* 防止内容溢出 */
 }
-.background Image{
-  top: 25%;
-  z-index: -99;
+
+/* 卡片头部 */
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
 }
-.zl{
-  margin-top: 100rpx;
+
+.author-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%; /* 头像圆形 */
+  margin-right: 20rpx;
+}
+
+.author-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
 }
-.zhuanlan{
-  height: 100%;
-  width: 94%;
-  text-align: left;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  border: 0.5rpx solid #91c789;
-  justify-content: center;
-  box-sizing: content-box;
-  padding: 30rpx 10rpx;
-  border-radius: 15rpx; 
-  margin-top: 25rpx;
-  position: relative;
+
+.author-nickname {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
 }
-.text{
-  text-align: left;
-  margin-top: 20%;
-  font-size: 50rpx;
-  font-weight: 100;
+
+.publish-time {
+  font-size: 24rpx;
+  color: #999999;
 }
-.add-button{
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-  background-color: #f0f0f0;
+
+/* 卡片主体 */
+.card-body {
+  margin-bottom: 20rpx;
+}
+
+.article-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10rpx;
+  /* 最多显示两行，超出部分显示省略号 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-summary {
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.6;
+  /* 最多显示三行 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 卡片底部 */
+.card-footer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* 让点赞评论靠右对齐 */
   align-items: center;
-  font-size: 40rpx;
-  color: #333;
-  margin-right: 20rpx; /* 调整与右侧胶囊按钮的距离 */
-  border: 1px solid #e0e0e0;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0; /* 添加一条分割线 */
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  margin-left: 40rpx; /* 调整点赞和评论之间的间距 */
+  font-size: 26rpx;
+  color: #888888;
+}
+
+.footer-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
+}
+
+/* 空状态提示 */
+.empty-tip {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999999;
+  font-size: 28rpx;
 }

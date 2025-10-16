@@ -1,17 +1,38 @@
 <navigation-bar title="心灵社区">
  <view slot="right" class="add-button" bind:tap="goToCreatePage"> + </view>
 </navigation-bar>
-<view class="bottom">
-  <image class="down"src="/image/up.png" style="width: 100%;"/>
-  <image class="up" src="/image/down.png" style="width: 100%;"/>
-  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
-</view>
-<view class="thispage"> 
-<view class="zl">
-  <view wx:for="{{articles}}" wx:key="_id" class="zhuanlan" bind:tap="goToDetail" data-id="{{item._id}}">
-    <view class="text1">
-      {{item.title}}
+
+<view class="articles-list">
+  <!-- 文章卡片循环开始 -->
+  <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="gotoDetail" data-id="{{item._id}}">
+
+    <view class="card-header">
+      <image class="author-avatar" src="{{item.authorAvatarUrl}}" mode="aspectFill"></image>
+      <view class="author-info">
+        <view class="author-nickname">{{item.authorNickName}}</view>
+        <view class="publish-time">{{item.createTime}}</view>
+      </view>
     </view>
+
+    <view class="card-body">
+      <view class="article-title">{{item.title}}</view>
+      <view class="article-summary">{{item.summary}}</view>
+    </view>
+
+    <view class="card-footer">
+      <view class="footer-item">
+        <image class="footer-icon" src="/image/like.png"></image>
+        <text>{{item.likes}}</text>
+      </view>
+      <view class="footer-item">
+        <image class="footer-icon" src="/image/comment.png"></image>
+        <text>{{item.commentsCount}}</text>
+      </view>
+    </view>
+
   </view>
-</view>
+
+  <view wx:if="{{articles.length === 0}}" class="empty-tip">
+    <text>还没有人分享，快来抢占沙发吧！</text>
+  </view>
 </view>
