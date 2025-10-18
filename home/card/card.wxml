@@ -9,7 +9,7 @@
   <!-- 主牌堆，用于发牌 -->
   <view class="dealing-area">
     <view class="main-deck {{selectedCards.length >= 3 ? 'disabled' : ''}}" bindtap="handleDealTap">
-      <image mode="widthFix" src="/Cards-jpg/CardBacks.jpg" />
+      <image mode="widthFix" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/Cards-jpg/CardBacks.jpg" />
     </view>
   </view>
 
@@ -23,7 +23,7 @@
           <view class="card-inner {{selectedCards[index].isFlipped ? 'is-flipped' : ''}}">
             <!-- 卡背 -->
             <view class="card-face card-back">
-              <image mode="widthFix" src="/Cards-jpg/CardBacks.jpg" />
+              <image mode="widthFix" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/Cards-jpg/CardBacks.jpg" />
             </view>
             <!-- 卡面 -->
             <view class="card-face card-front">

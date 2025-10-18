@@ -73,7 +73,7 @@
   </view>
 </view>
 
-<text class="Font" style="margin-left: 50rpx;">减压工具箱</text>
+<text class="Font" style="margin-left: 50rpx;">心灵工具</text>
 <view class="GameBox">
   <view class="Game" bind:tap="gotoTools">
     <view class="GameIma">
@@ -81,10 +81,6 @@
     </view>
     <text class="Font_G">减压工具箱</text>
   </view>
-</view>
-
-<text class="Font" style="margin-left: 50rpx;">心灵娱乐</text>
-<view class="GameBox">
   <view class="Game" bind:tap="gotoTaLuo">
     <view class="GameIma">
       <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
@@ -95,13 +91,7 @@
   <view class="GameIma">
     <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
   </view>
-    <text class="Font_G">周易占卜</text>
-  </view>
-  <view class="Game">
-  <view class="GameIma">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
-  </view>
-    <text class="Font_G">塔罗牌</text>
+    <text class="Font_G">周易智慧</text>
   </view>
 </view>
 
