@@ -1,0 +1,198 @@
+<!--
+此文件为开发者工具生成，生成时间: 2025/10/17下午4:27:15
+使用方法：
+在 E:\project-xinling\miniprogram-1\pages\diary\trend\trend.wxml 引入模板
+
+```
+<import src="trend.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+```
+
+在 E:\project-xinling\miniprogram-1\pages\diary\trend\trend.wxss 中引入样式
+```
+@import "./trend.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view is="components/navigation-bar/navigation-bar">
+      <view class="weui-navigation-bar bar--weui-navigation-bar">
+        <view class="weui-navigation-bar__inner bar--weui-navigation-bar__inner ios bar--ios" style="color: ; background: ; ; padding-right: 93px; height: calc(var(--height) + 33px); padding-top: 33px">
+          <view class="weui-navigation-bar__left bar--weui-navigation-bar__left" style="width: 93px">
+            <view class="weui-navigation-bar__buttons bar--weui-navigation-bar__buttons weui-navigation-bar__buttons_goback bar--weui-navigation-bar__buttons_goback">
+              <view class="weui-navigation-bar__btn_goback_wrapper bar--weui-navigation-bar__btn_goback_wrapper sk-button" hover-class="weui-active" hover-stay-time="100">
+                <view class="weui-navigation-bar__button bar--weui-navigation-bar__button weui-navigation-bar__btn_goback bar--weui-navigation-bar__btn_goback"></view>
+              </view>
+            </view>
+          </view>
+          <view class="weui-navigation-bar__center bar--weui-navigation-bar__center">
+            <text class="sk-transparent sk-text-18-7500-608 sk-text" style="background-position-x: 50%;">情绪趋势分析</text>
+          </view>
+          <view class="weui-navigation-bar__right bar--weui-navigation-bar__right"></view>
+        </view>
+      </view>
+    </view>
+    <view class="container">
+      <view class="header">
+        <view class="title">
+          <text class="sk-transparent sk-text-18-7500-788 sk-text" style="background-position-x: 50%;">情绪趋势分析</text>
+          <view class="warm-prompt">
+            <text class="sk-transparent sk-text-18-7500-670 sk-text" style="background-position-x: 50%;">💡在这里您可以看到近几天来您的心情变化趋势，这是了解自己的一个好方法！</text>
+          </view>
+          <view class="date-range">
+            <text class="date-text sk-transparent sk-text-18-7500-725 sk-text" style="background-position-x: 50%;">2025-09-17 至 2025-10-17</text>
+          </view>
+        </view>
+      </view>
+      <view class="time-range-selector">
+        <button class="range-btn sk-transparent sk-button sk-pseudo sk-pseudo-circle" data-range="week">
+          近7天
+        </button>
+        <button class="range-btn active sk-transparent sk-button sk-pseudo sk-pseudo-circle" data-range="month">
+          近30天
+        </button>
+        <button class="range-btn sk-transparent sk-button sk-pseudo sk-pseudo-circle" data-range="quarter">
+          近90天
+        </button>
+      </view>
+      <view class="emotion-stats">
+        <view class="stats-title sk-transparent sk-text-18-7500-468 sk-text sk-pseudo sk-pseudo-circle">情绪分布</view>
+        <view class="stats-grid">
+          <view class="stat-item">
+            <view class="stat-color" style="background-color: "></view>
+            <view class="stat-info">
+              <text class="stat-emotion sk-transparent sk-text-18-7500-435 sk-text">🤔 其他</text>
+              <text class="stat-count sk-transparent sk-text-18-7500-202 sk-text">1次</text>
+            </view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-color" style="background-color: "></view>
+            <view class="stat-info">
+              <text class="stat-emotion sk-transparent sk-text-18-7500-641 sk-text">😠 愤怒</text>
+              <text class="stat-count sk-transparent sk-text-18-7500-199 sk-text">1次</text>
+            </view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-color" style="background-color: "></view>
+            <view class="stat-info">
+              <text class="stat-emotion sk-transparent sk-text-18-7500-189 sk-text">😟 焦虑</text>
+              <text class="stat-count sk-transparent sk-text-18-7500-70 sk-text">2次</text>
+            </view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-color" style="background-color: "></view>
+            <view class="stat-info">
+              <text class="stat-emotion sk-transparent sk-text-18-7500-652 sk-text">🥰 满足</text>
+              <text class="stat-count sk-transparent sk-text-18-7500-347 sk-text">1次</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="intensity-trend-section">
+        <view class="trend-header">
+          <view class="trend-title sk-transparent sk-text-18-7500-966 sk-text sk-pseudo sk-pseudo-circle">情绪强度趋势</view>
+          <view class="trend-actions">
+            <text class="zoom-btn sk-transparent sk-text-18-7500-547 sk-text">放大</text>
+          </view>
+        </view>
+        <view class="line-chart-container">
+          <view class="chart-wrapper">
+            <view class="y-axis">
+              <text class="y-label sk-transparent sk-text-18-7500-162 sk-text" style="background-position-x: 50%;">0</text>
+              <text class="y-label sk-transparent sk-text-18-7500-458 sk-text" style="background-position-x: 50%;">2</text>
+              <text class="y-label sk-transparent sk-text-18-7500-783 sk-text" style="background-position-x: 50%;">4</text>
+              <text class="y-label sk-transparent sk-text-18-7500-313 sk-text" style="background-position-x: 50%;">6</text>
+              <text class="y-label sk-transparent sk-text-18-7500-737 sk-text" style="background-position-x: 50%;">8</text>
+              <text class="y-label sk-transparent sk-text-18-7500-842 sk-text" style="background-position-x: 50%;">10</text>
+            </view>
+            <view class="chart-area">
+              <view class="grid-lines">
+                <view class="grid-line" style="top: 0%"></view>
+                <view class="grid-line" style="top: 20%"></view>
+                <view class="grid-line" style="top: 40%"></view>
+                <view class="grid-line" style="top: 60%"></view>
+                <view class="grid-line" style="top: 80%"></view>
+                <view class="grid-line" style="top: 100%"></view>
+              </view>
+              <view class="line-chart">
+                <view class="data-points">
+                  <view class="data-point" data-date="2025-10-01" data-index="0" data-intensity="5" style="left: 0%; top: 50%">
+                    <view class="point-dot" style="background-color: "></view>
+                    <view class="point-tooltip">
+                      <text class="tooltip-date"></text>
+                      <text class="tooltip-intensity sk-transparent sk-text-18-7500-159 sk-text">强度: 5</text>
+                    </view>
+                    <view class="debug-point-info sk-image">
+                      <text class="debug-emotion sk-transparent sk-text-18-7500-305 sk-text" style="background-position-x: 50%;">🤔 其他</text>
+                    </view>
+                  </view>
+                  <view class="data-point" data-date="2025-10-02" data-index="1" data-intensity="8" style="left: 25%; top: 20%">
+                    <view class="point-dot" style="background-color: "></view>
+                    <view class="point-tooltip">
+                      <text class="tooltip-date"></text>
+                      <text class="tooltip-intensity sk-transparent sk-text-18-7500-477 sk-text">强度: 8</text>
+                    </view>
+                    <view class="debug-point-info sk-image">
+                      <text class="debug-emotion sk-transparent sk-text-18-7500-913 sk-text" style="background-position-x: 50%;">😠 愤怒</text>
+                    </view>
+                  </view>
+                  <view class="data-point" data-date="2025-10-04" data-index="2" data-intensity="6" style="left: 50%; top: 40%">
+                    <view class="point-dot" style="background-color: "></view>
+                    <view class="point-tooltip">
+                      <text class="tooltip-date"></text>
+                      <text class="tooltip-intensity sk-transparent sk-text-18-7500-858 sk-text">强度: 6</text>
+                    </view>
+                    <view class="debug-point-info sk-image">
+                      <text class="debug-emotion sk-transparent sk-text-18-7500-578 sk-text" style="background-position-x: 50%;">😟 焦虑</text>
+                    </view>
+                  </view>
+                  <view class="data-point" data-date="2025-10-08" data-index="3" data-intensity="6" style="left: 75%; top: 40%">
+                    <view class="point-dot" style="background-color: "></view>
+                    <view class="point-tooltip">
+                      <text class="tooltip-date"></text>
+                      <text class="tooltip-intensity sk-transparent sk-text-18-7500-384 sk-text">强度: 6</text>
+                    </view>
+                    <view class="debug-point-info sk-image">
+                      <text class="debug-emotion sk-transparent sk-text-18-7500-963 sk-text" style="background-position-x: 50%;">😟 焦虑</text>
+                    </view>
+                  </view>
+                  <view class="data-point" data-date="2025-10-11" data-index="4" data-intensity="8" style="left: 100%; top: 20%">
+                    <view class="point-dot" style="background-color: "></view>
+                    <view class="point-tooltip">
+                      <text class="tooltip-date"></text>
+                      <text class="tooltip-intensity sk-transparent sk-text-18-7500-410 sk-text">强度: 8</text>
+                    </view>
+                    <view class="debug-point-info sk-image">
+                      <text class="debug-emotion sk-transparent sk-text-18-7500-787 sk-text" style="background-position-x: 50%;">🥰 满足</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class="x-axis">
+                <text class="x-label sk-transparent sk-text-18-7500-104 sk-text" style="left: 0%; background-position-x: 50%;">2025-10-01</text>
+                <text class="x-label sk-transparent sk-text-18-7500-335 sk-text" style="left: 25%; background-position-x: 50%;">2025-10-02</text>
+                <text class="x-label sk-transparent sk-text-18-7500-599 sk-text" style="left: 50%; background-position-x: 50%;">2025-10-04</text>
+                <text class="x-label sk-transparent sk-text-18-7500-123 sk-text" style="left: 75%; background-position-x: 50%;">2025-10-08</text>
+                <text class="x-label sk-transparent sk-text-18-7500-555 sk-text" style="left: 100%; background-position-x: 50%;">2025-10-11</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="ai-insight-section">
+        <view class="insight-header">
+          <view class="insight-title sk-transparent sk-text-18-7500-945 sk-text sk-pseudo sk-pseudo-circle">AI趋势洞察</view>
+          <button class="analyze-btn sk-transparent sk-button sk-pseudo sk-pseudo-circle">
+            获取AI分析
+          </button>
+        </view>
+        <view class="insight-content">
+          <text selectable="true" class="sk-transparent sk-text-22-2222-78 sk-text">1) 情绪趋势总结:  
+在2025年9月17日至10月17日期间，您的情绪呈现明显的波动性，整体以负面情绪为主。初期（10月1日）您处于中性情绪状态（强度5），但随后迅速转为高强度愤怒（10月2日，强度8），可能由短期挫折触发。中期（10月4日、8日）持续出现中度焦虑（强度6），与学业压力和不良应对方式（如吸烟）相关，显示压力累积。后期（10月11日）情绪短暂改善为高强度满足（强度8），可能与休息放松有关，但积极状态未持续。总体趋势显示：情绪稳定性较低，易受外部事件影响，焦虑和愤怒交替出现，且缺乏长期积极基调。2) 专业心理建议:  首先，建立情绪调节机制：当愤怒或焦虑出现时（如游戏失利或学业压力），尝试“暂停-呼吸-反思”练习——立即停止当前活动，深呼吸5次，再客观评估事件的影响，避免冲动反应（如过度游戏或吸烟）。其次，制定结构化计划：针对焦虑源（如作业堆积），使用时间管理工具（如番茄工作法），将任务分解为小目标，并设置固定休息时段，以增强控制感。最后，培养积极应对习惯：利用满足感高的时刻（如休息日）进行规律运动或兴趣爱好，逐步替代不良宣泄方式（如吸烟），并每周记录3件积极小事，以平衡负面情绪倾向。</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

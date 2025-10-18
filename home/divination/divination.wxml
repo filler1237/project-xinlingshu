@@ -1,7 +1,7 @@
 <!--home/divination/divination.wxml-->
-<navigation-bar title="周易占卜" back="{{true}}" color="black" background="white"></navigation-bar>
+<navigation-bar title="周易智慧" back="{{true}}" color="black" background="white"></navigation-bar>
 <view class="container">
-  <view class="description">心诚则灵，默念所问之事，投掷六次。</view>
+  <view class="description">静心思考，投掷六次，探索《周易》的智慧。</view>
 
   <view class="hexagram-area">
     <block wx:if="{{hexagram.length > 0}}">
@@ -41,13 +41,13 @@
       loading="{{isDivining}}">
       {{throwCount < 6 ? '第 ' + (throwCount + 1) + ' 次投掷' : '查看结果'}}
     </button>
-    <button class="reset-button" bindtap="reset" wx:if="{{throwCount > 0}}">重新占卜</button>
+    <button class="reset-button" bindtap="reset" wx:if="{{throwCount > 0}}">重新探索</button>
   </view>
 
   <view class="result-area" wx:if="{{result}}">
     <!-- 结构化展示 -->
     <block wx:if="{{isResultObject}}">
-      <view class="result-title">占卜结果</view>
+      <view class="result-title">探索结果</view>
       
       <view class="hexagram-display">
         <view class="hexagram-item">
