@@ -4,9 +4,9 @@
 
 <view class="articles-list">
   <!-- 文章卡片循环开始 -->
-  <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="gotoDetail" data-id="{{item._id}}">
+  <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="goToDetail" data-id="{{item._id}}">
 
-    <view class="card-header">
+    <view class="card-header" catch:tap="goToUserProfile" data-userid="{{item._openid}}">
       <image class="author-avatar" src="{{item.authorAvatarUrl}}" mode="aspectFill"></image>
       <view class="author-info">
         <view class="author-nickname">{{item.authorNickName}}</view>
@@ -20,12 +20,12 @@
     </view>
 
     <view class="card-footer">
-      <view class="footer-item">
-        <image class="footer-icon" src="/image/like.png"></image>
+      <view class="footer-item" catch:tap="onToggleLike" data-id="{{item._id}}" data-index="{{index}}">
+        <image class="footer-icon" src="{{item.liked ? 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/likeup.png' : 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png'}}"></image>
         <text>{{item.likes}}</text>
       </view>
       <view class="footer-item">
-        <image class="footer-icon" src="/image/comment.png"></image>
+        <image class="footer-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/comment.png"></image>
         <text>{{item.commentsCount}}</text>
       </view>
     </view>

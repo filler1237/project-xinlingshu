@@ -1,18 +1,144 @@
+/* home/read/detail/detail.wxss */
+
+page {
+  background-color: #f7f7f7;
+  padding-bottom: 120rpx; /* 为底部输入框留出空间 */
+}
+
 .container {
-  padding: 20rpx;
+  padding: 30rpx 0;
 }
 
-.title {
-  font-size: 40rpx;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-}
+/* 文章区域 */
+.article-wrapper {
+  background-color: #fff;
+  padding: 30rpx;
 
-.content {
-  font-size: 32rpx;
-  line-height: 1.6;
 }
 
 .delete-button {
   margin-top: 40rpx;
+}
+
+/* 分隔线 */
+.divider {
+  height: 1rpx;
+  background-color: #e0e0e0;
+  margin: 20rpx 0;
+}
+
+/* 评论区域 */
+.comments-section {
+  background-color: #fff;
+  padding-bottom: 30rpx;
+  border-radius: 16rpx;
+  width: 750rpx;
+}
+
+.comments-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  padding: 30rpx 30rpx 10rpx 30rpx; /* 统一设置内边距 */
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+/* 评论条目 - 核心样式 */
+.comment-item {
+  display: flex;
+  padding: 20rpx 30rpx; /* 为评论条目添加左右边距 */
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex-shrink: 0; /* 防止头像被压缩 */
+}
+
+.comment-main {
+  flex-grow: 1;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.comment-author-time {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-author {
+  font-size: 28rpx;
+  color: #555;
+  font-weight: bold;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comment-like-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.comment-content {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+}
+
+/* 底部评论输入框 */
+.comment-input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #e0e0e0;
+}
+
+.comment-input {
+  flex-grow: 1;
+  height: 70rpx;
+  background-color: #f2f2f2;
+  border-radius: 35rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+}
+
+.send-button {
+  margin-left: 20rpx;
+  background-color: #07c160;
+  color: white;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.send-button[disabled] {
+  background-color: #9ae6b6;
+  color: #e0e0e0;
 }

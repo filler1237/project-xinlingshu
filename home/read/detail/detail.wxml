@@ -1,12 +1,69 @@
 <navigation-bar title="{{article.title}}"></navigation-bar>
+
 <view class="container">
-  <view class="title">{{article.title}}</view>
-  <view class="content">{{article.content}}</view>
-  <button 
-    class="delete-button" 
-    wx:if="{{article._openid === userOpenid}}" 
-    bind:tap="deleteArticle"
-    type="warn">
-    删除文章
-  </button>
+  <!-- 文章内容区域 -->
+  <view class="article-wrapper">
+    <view class="comment-item">
+      <image class="comment-avatar" src="{{article.authorAvatarUrl}}" mode="aspectFill"></image>
+      <view class="comment-main">
+        <view class="comment-header">
+          <view class="comment-author-time">
+            <view class="comment-author">{{article.authorNickname}}</view>
+            <view class="comment-time">{{article.createTime}}</view>
+          </view>
+        </view>
+        <view class="comment-content">{{article.content}}</view>
+      </view>
+    </view>
+
+    <button 
+      class="delete-button" 
+      wx:if="{{article._openid === userOpenid}}" 
+      bind:tap="deleteArticle"
+      type="warn">
+      删除文章
+    </button>
+  </view>
+
+    <!-- 评论列表区域 -->
+    <view class="comments-section">
+      <view class="comments-title">全部评论</view>
+    
+      <!-- 使用 wx:if 和 wx:else 来确保只显示一种状态 -->
+      <block wx:if="{{comments.length > 0}}">
+        <!-- 评论循环 -->
+        <view wx:for="{{comments}}" wx:key="_id" class="comment-item">
+          <image class="comment-avatar" src="{{item.authorAvatarUrl}}" mode="aspectFill"></image>
+          <view class="comment-main">
+            <view class="comment-header">
+              <view class="comment-author-time">
+                <view class="comment-author">{{item.authorNickName}}</view>
+                <view class="comment-time">{{item.createTime}}</view>
+              </view>
+              <image class="comment-like-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
+            </view>
+            <view class="comment-content">{{item.content}}</view>
+          </view>
+        </view>
+      </block>
+
+    <!-- 空状态 -->
+    <view wx:else class="empty-tip">
+      <text>还没有评论，快来抢个沙发吧！</text>
+    </view>
+  </view>
+
+
+<!-- 底部评论输入框 -->
+<view class="comment-input-bar">
+  <input 
+    class="comment-input" 
+    placeholder="郑锐荣好帅..." 
+    value="{{commentContent}}"
+    bindinput="onCommentInput"
+    confirm-type="send"
+    bindconfirm="submitComment"
+  />
+  <button class="send-button" bind:tap="submitComment" disabled="{{!commentContent}}">发送</button>
+</view>
 </view>

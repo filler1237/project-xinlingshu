@@ -1,0 +1,70 @@
+/* home/profile/profile.wxss */
+@import "/home/read/read.wxss"; /* 关键：导入文章卡片样式 */
+
+.profile-page {
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+/* 头部样式 */
+.profile-header {
+  position: relative;
+  height: 400rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.user-info-box {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.user-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.8);
+  margin-bottom: 20rpx;
+}
+
+.user-nickname {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
+}
+
+/* "TA的分享" 标题 */
+.section-title {
+  padding: 30rpx 20rpx 10rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 加载和空状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  color: #999;
+}
+
+/* .article-list 样式已从 read.wxss 导入 */
+/* .empty-tip 样式已从 read.wxss 导入 */
+

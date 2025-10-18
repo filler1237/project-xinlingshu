@@ -34,7 +34,9 @@
         "read/create/create",
         "tools/tools",
         "tools/breathing/breathing",
-        "tools/whitenoise/whitenoise"
+        "tools/whitenoise/whitenoise",
+        "profile",
+        "profile/profile"
       ]
     },
     {

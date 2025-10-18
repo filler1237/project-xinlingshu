@@ -1,0 +1,44 @@
+<!-- home/profile/profile.wxml -->
+<navigation-bar title="{{userInfo.nickName || '用户主页'}}"></navigation-bar>
+
+<view class="profile-page" wx:if="{{!isLoading}}">
+  <!-- 1. 用户信息头部 -->
+  <view class="profile-header">
+    <image class="header-bg" src="/image/profile-bg.jpg" mode="aspectFill"></image> <!-- 您需要提供一张背景图 -->
+    <view class="user-info-box">
+      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-nickname">{{userInfo.nickName}}</view>
+    </view>
+  </view>
+
+  <!-- 2. 文章列表 -->
+  <view class="section-title">TA的分享</view>
+  <view class="article-list">
+    <!-- 复用 read 页面的文章卡片样式 -->
+    <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="gotoDetail" data-id="{{item._id}}">
+      <view class="card-body">
+        <view class="article-title">{{item.title}}</view>
+        <view class="article-summary">{{item.content}}</view> <!-- 这里直接用 content，也可以再处理成 summary -->
+      </view>
+      <view class="card-footer">
+        <view class="footer-item">
+          <image class="footer-icon" src="/image/like.png"></image>
+          <text>{{item.likes}}</text>
+        </view>
+        <view class="footer-item">
+          <image class="footer-icon" src="/image/comment.png"></image>
+          <text>{{item.commentsCount}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view wx:if="{{articles.length === 0}}" class="empty-tip">
+      <text>TA还没有发布任何内容哦</text>
+    </view>
+  </view>
+</view>
+
+<!-- 加载动画 -->
+<view class="loading-container" wx:if="{{isLoading}}">
+  <text>加载中...</text>
+</view>

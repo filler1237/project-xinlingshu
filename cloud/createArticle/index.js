@@ -13,7 +13,9 @@ exports.main = async (event, context) => {
         _openid: wxContext.OPENID, // 记录创建者的openid
         title: title,
         content: content,
-        createTime: db.serverDate() // 记录服务器时间
+        createTime: db.serverDate(), // 记录服务器时间
+        likes: 0,
+        commentsCount: 0
       }
     })
     await cloud.callFunction({
