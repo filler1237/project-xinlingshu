@@ -5,7 +5,7 @@ const db = wx.cloud.database();
 Page({
   data: {
     // 页面显示的最终数据
-    avatarUrl: "/assets/默认头像.jpeg", // 使用本地默认头像
+    avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg", // 使用本地默认头像
     nickName: "游客，点击登录",
     
     // 内部状态数据
