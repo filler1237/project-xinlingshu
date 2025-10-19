@@ -2,7 +2,7 @@
   <!-- 自定义导航栏 -->
   <view class="header" style="padding-top: {{statusBarHeight}}px; height: {{headerHeight}}px;">
     <view class="back-button" bindtap="onBackTap" style="height: {{headerHeight}}px;">
-      <image class="back-icon" src="/image/back.svg"></image>
+      <image class="back-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/back.svg"></image>
     </view>
     <view class="title">倾谈</view>
   </view>

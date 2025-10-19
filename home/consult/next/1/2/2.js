@@ -2,7 +2,7 @@
 Page({
   saveImage: function() {
     wx.downloadFile({
-      url: '/image/QRcode.png',
+      url: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QRcode.png',
       success: function(res) {
         if (res.statusCode === 200) {
           wx.saveImageToPhotosAlbum({

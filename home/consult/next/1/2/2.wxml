@@ -1,28 +1,28 @@
 <!--home/consult/next/2/2.wxml-->
 <view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+    <image class='back' src='cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/back.svg' style="width: 18rpx;"></image>
 </view>
 <view class="title">心理咨询</view>
 <view class="bottom">
-  <image class="down" src="/image/down.png" style="width: 100%;"/>
-  <image class="up"src="/image/up.png" style="width: 100%;"/>
-  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
+  <image class="down" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/down.png" style="width: 100%;"/>
+  <image class="up"src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/up.png" style="width: 100%;"/>
+  <image class="girl"src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/girl.png" style="width: 200rpx;"/>
 </view>
 <view class="logo">
-<image class="logo_1" src="/image/logo1.png" >
+<image class="logo_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
 </image>
 <view class="value_1"  >预约信息</view>
-<image class="rail_1" src="/image/railgreen.png"></image>
+<image class="rail_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
 
-<image class="logo_2" src="/image/logo1.png" >
+<image class="logo_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
 </image>
 <view class="value_2"  >预约信息</view>
-<image class="rail_2" src="/image/railgreen.png"></image>
+<image class="rail_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
 
-<image class="logo_3" src="/image/logo1.png" >
+<image class="logo_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
 </image>
 <view class="value_3"  >预约信息</view>
-<image class="rail_3" src="/image/railgreen.png"></image>
+<image class="rail_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
 </view>
 <view class="page" data-weui-theme="{{theme}}">
   <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
@@ -31,7 +31,7 @@
    
     <mp-cells class="start" title="To:树树我啊"></mp-cells>
     <view class="message">
-    <image class="code" src="/image/QRcode.png"></image>
+    <image class="code" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QRcode.png"></image>
   </view>
 
   

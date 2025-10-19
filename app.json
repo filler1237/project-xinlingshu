@@ -35,7 +35,6 @@
         "tools/tools",
         "tools/breathing/breathing",
         "tools/whitenoise/whitenoise",
-        "profile",
         "profile/profile"
       ]
     },

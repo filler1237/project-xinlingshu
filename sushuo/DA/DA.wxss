@@ -141,7 +141,7 @@
 .send-icon {
   width: 40rpx;
   height: 40rpx;
-  background-image: url('/image/QingSu-con.png');
+  background-image: url('cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

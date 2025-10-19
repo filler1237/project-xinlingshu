@@ -1,75 +1,109 @@
-// pages/home/resourse/next/1/1.js
+const app = getApp(); // 获取小程序实例对象
+
 Page({
-onBackTap: function(e) {
-  var pages = getCurrentPages();                       //获取当前页面
-  var prePage = pages[pages.length - 2];               //获取上一页面
-  prePage.setData({
-    'search.page': 1                                   //给上一页面的变量赋值
-  })
-  wx.navigateBack({                                    //返回上一页面
-    delta: 1,
-  })
-},
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    formData: {}, // 用于存储从上一步获取的表单数据
+    detail: '', // 用于存储本页textarea的输入
+    length: 0, // 当前输入的字数
+    teacherList: ['王贞贞', '姚双雁', '李亚玲'], // 与第一页保持一致的咨询师列表
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
+    // 页面加载时，从本地缓存读取第一步的表单数据
+    const step1Data = wx.getStorageSync('appointment_step1_data');
+    if (step1Data) {
+      this.setData({
+        formData: step1Data
+      });
+    } else {
+      // 如果没有数据，提示用户并返回上一页
+      wx.showToast({
+        title: '数据加载失败，请重试',
+        icon: 'none',
+        duration: 2000,
+        complete: () => {
+          wx.navigateBack();
+        }
+      });
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  // 监听textarea输入
+  textareaInput: function (e) {
+    const { value } = e.detail;
+    this.setData({
+      detail: value,
+      length: value.length,
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  // 提交预约
+  submitAppointment() {
+    // 检查是否已登录，改为检查 openid 是否存在，更可靠
+    if (!app.globalData.userInfo || !app.globalData.userInfo._openid) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+      });
+      // 跳转到登录页面
+      wx.switchTab({
+        url: '/pages/mine/mine'
+      });
+      return;
+    }
 
+    // 检查是否输入了内容
+    if (this.data.length === 0) {
+      wx.showToast({
+        title: '请简述您的问题',
+        icon: 'none',
+      });
+      return;
+    }
+
+    // 显示加载提示
+    wx.showLoading({
+      title: '正在提交...',
+    });
+
+    // 准备提交到云函数的完整数据
+    const finalData = {
+      ...this.data.formData,
+      detail: this.data.detail,
+      openid: app.globalData.userInfo._openid, // 确保使用 _openid
+      teacher: this.data.teacherList[this.data.formData.teacherId]
+    };
+
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'createAppointment',
+      data: finalData,
+      success: res => {
+        wx.hideLoading();
+        // 提交成功后，清除缓存并跳转到成功页面
+        wx.removeStorageSync('appointment_step1_data');
+        wx.showToast({
+          title: '预约成功',
+          icon: 'success',
+        });
+        wx.navigateTo({
+          url: './2/2',
+        });
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error('[云函数] [createAppointment] 调用失败', err);
+        wx.showToast({
+          title: '预约失败，请重试',
+          icon: 'none',
+        });
+      },
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  onBackTap: function(e) {
+    wx.navigateBack({
+      delta: 1,
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+});

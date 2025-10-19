@@ -165,9 +165,11 @@ onDateChange: function(e) {
           formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
         });
 
-        this.setData({
-          [`formData.availabilityId`]: res.result.formData.availabilityId
-        });
+        if(res.result.formData && res.result.formData.availabilityId) {
+          this.setData({
+            [`formData.availabilityId`]: res.result.formData.availabilityId
+          });
+        }
         console.log(this.data.formData); 
         console.log(this.data.hourList); 
       } else {
@@ -232,7 +234,6 @@ submitForm() {
       name: 'createAppointment',   //这里要调用createAppointment云函数
       data: {
         availabilityId: this.data.formData.availabilityId,
-        startTime: this.data.hourList[this.data.hourIndex],
         teacherId: this.data.formData.teacherId,
         openid: app.globalData.userInfo.openid,
         date: this.data.formData.date,
@@ -270,6 +271,24 @@ submitForm() {
       icon: 'none',
     });
   }
+},
+goToNextStep() {
+  // 检查是否已选择老师、日期和时间
+  if (this.data.teacherIndex === -1 || this.data.selectedDateIndex === -1 || this.data.hourIndex === -1) {
+    wx.showToast({
+      title: '请先选择咨询师、日期和时间',
+      icon: 'none',
+    });
+    return;
+  }
+
+  // 将第一步的表单数据保存到本地缓存
+  wx.setStorageSync('appointment_step1_data', this.data.formData);
+
+  // 跳转到第二步
+  wx.navigateTo({
+    url: './next/1/1',
+  });
 },
 /**
 * 用户点击右上角分享

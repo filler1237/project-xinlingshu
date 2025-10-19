@@ -12,8 +12,8 @@ Page({
     
     // --- 新增：头像地址 ---
     // 你可以替换成真实的图片路径或网络链接
-    userAvatarUrl: '/assets/默认头像.jpeg', // 使用项目中的默认头像
-    aiAvatarUrl: '/image/logo1.png', // 使用项目中的 logo 作为 AI 头像
+    userAvatarUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg', // 使用项目中的默认头像
+    aiAvatarUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png', // 使用项目中的 logo 作为 AI 头像
     
     // --- 新增：适配自定义导航栏 ---
     statusBarHeight: 0,

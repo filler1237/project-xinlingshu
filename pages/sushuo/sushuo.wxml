@@ -1,8 +1,8 @@
 <!--pages/speak/speak.wxml-->
 <view class="TreeBack">
   <view class="TreeBack">
-    <image src="/image/TreeBack.jpg" mode="widthFix" class="Back"/>
-    <image src="/image/CePing.png" mode="widthFix" class="Tree"/>
+    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TreeBack.jpg" mode="widthFix" class="Back"/>
+    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/CePing.png" mode="widthFix" class="Tree"/>
   </view>
 </view>
 
@@ -11,11 +11,11 @@
   <view class="QingSu" bindtap="gotoXIE">
     <view class="Choice" style="background: #93DF5D;">
       <view class="Pic">
-        <image src="/image/QingSu.png" mode="widthFix" class="Pic" style="width: 220rpx; top: -50rpx;"/>
-        <image src="/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="top: -85rpx; left: 24rpx;"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu.png" mode="widthFix" class="Pic" style="width: 220rpx; top: -50rpx;"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="top: -85rpx; left: 24rpx;"/>
       </view>
       <view class="BoxCon">
-        <image src="/image/QingSu-con.png" mode="widthFix"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png" mode="widthFix"/>
       </view>
       <view class="FontBox">
         <text class="Font">倾诉</text>
@@ -29,11 +29,11 @@
   <view class="QingTan" bindtap="gotoDA">
     <view class="Choice"> 
       <view class="Pic">
-        <image src="/image/QingTan.png" mode="widthFix" class="Pic" style="left: 2rpx;"/>
-        <image src="/image/QingTan-reflection.png" mode="widthFix" class="Pic" style="top: -70rpx; left: 5rpx;"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingTan.png" mode="widthFix" class="Pic" style="left: 2rpx;"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingTan-reflection.png" mode="widthFix" class="Pic" style="top: -70rpx; left: 5rpx;"/>
       </view>
       <view class="BoxCon">
-        <image src="/image/QingTan-con.png" mode="widthFix"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingTan-con.png" mode="widthFix"/>
       </view>
       <view class="FontBox">
         <text class="Font">倾谈</text>
