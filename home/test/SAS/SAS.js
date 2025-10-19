@@ -1,16 +1,10 @@
 const AddRes = wx.cloud.database().collection('Scales')
-var SumArr = new Array()
-var Sum = 0
+
 Page({
   Goresult(){
-    for(var i=0; i < 20; i++)
-    {
-        console.log("ans.i:",this.data.SumArr[i])
-        Sum += this.data.SumArr[i]
-        console.log("soa:" ,Sum)
-    }
-    var RES
-    if(this.data.Sum<50){
+    let Sum = this.data.SumArr.reduce((a, b) => a + b, 0);
+    let RES;
+    if(Sum < 50){
       this.setData({  
         RES : this.data.result[0],
       })
@@ -22,25 +16,23 @@ Page({
       this.setData({  
         RES : this.data.result[2],
       })
-    }else if(this.data.Sum >=70){
+    }else if(Sum >=70){
       this.setData({  
-        RES : this.data.result[4],
+        RES : this.data.result[3],
       })
     }
 
     /* 上传结果 */
     AddRes.add({
       data:{
-        open_id: this.open_id,
-        Time: new Date().toJSON().substring(0, 10) + ' ' + new Date().toTimeString().substring(0,8),
+        Time: new Date().toLocaleString(),
         RES: this.data.RES,
         title: this.data.title
       }
     })
 
-    console.log(RES)
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
+      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${this.data.RES}&ReturnAddressId=${this.data.RAI}`,
     })
   },
 
@@ -128,8 +120,7 @@ data: {
   color: '',
   RAI: "",
   id:0,
-  SumArr:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  Sum:0,
+  SumArr: new Array(20).fill(0),
   OptionA:'没有或很少时间',
   OptionB:'少部分时间',
   OptionC:'相当多时间',

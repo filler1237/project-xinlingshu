@@ -65,29 +65,13 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/slideshow-3-line.jpg" style="width: 53.33rpx;"/>
       <text>预约码</text>
     </navigator>
-    <navigator url="../sushuo/sushuo" class="item" style="width:112rpx ;">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/chat-3-line.jpg" style="width: 53.33rpx;"/>
-      <text>设置</text>
-    </navigator>
     <navigator url="/mine/record/record" class="item" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/building-2-line.jpg" style="width: 53.33rpx;"/>
       <text>测评记录</text>
     </navigator>
-    <navigator url="/mine/evaluate/evaluate" class="item" style="width:112rpx ;">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/mail-line.jpg" style="width: 53.33rpx;"/>
-      <text>评价</text>
-    </navigator>
-    <navigator url="" class="item" style="width:112rpx ;">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/task-line.jpg" style="width: 53.33rpx;"/>
-      <text>联系客服</text>
-    </navigator>
     <navigator url="/mine/list/list" class="item" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx;"/>
       <text>查询列表</text>
-    </navigator>
-    <navigator url="" class="item" style="width:112rpx ;">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/stack-line.jpg" style="width: 53.33rpx;"/>
-      <text>更多功能</text>
     </navigator>
   </view>
 </view>
