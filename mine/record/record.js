@@ -1,17 +1,14 @@
 // pages/mine/record/record.js
 const sc = wx.cloud.database().collection('Scales');
-var RECORD = new Array;
+
 Page({
 
   /**
    * 页面的初始数据
    */
-  data:
-   {
-     title: "测评记录",
-     record1:"/image/a.jpg",
-     record2:"/image/a.jpg",
-     RECORD:[0,0,0,0,0],
+  data: {
+    title: "测评记录",
+    RECORD: [],
   },
   onBackTap: function(e) {
     var pages = getCurrentPages();                       //获取当前页面
@@ -26,23 +23,39 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-    sc.get({
-      //如果查询成功的话    
-      success: res => {
-        console.log(res.data)
-        //这一步很重要，给ne赋值，没有这一步的话，前台就不会显示值   
-        let count = sc.count();
-        count = count.total;
-        for(var i = 0;i < count;i ++) 
-        {
-          this.setData({
-          RECORD: RECORD.concat(res[this.data.count-i-1].data)
-        })
-        console.log(this.data.RECORD)
+  async onLoad(options) {
+    this.fetchScalesRecord();
+  },
+
+  async fetchScalesRecord() {
+    this.setData({ loading: true, error: null });
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'getScalesRecord'
+      });
+
+      if (result.result.ok) {
+        const backgroundColors = ["#ccdcb4", "#bac6e1", "#98b86a", "#f4cbb2", "#fefef5"];
+        const processedData = result.result.data.map((item, index) => ({
+          date: item.Time,
+          title: item.title,
+          result: item.RES,
+          backgroundColor: backgroundColors[index % backgroundColors.length],
+          imgSrc: item.imgSrc || "/image/a.jpg"
+        }));
+        this.setData({
+          RECORD: processedData.reverse(), // 显示最新的记录在最上面
+          loading: false
+        });
+      } else {
+        throw new Error(result.result.error || '加载失败');
       }
-      }
-    })
+    } catch (e) {
+      this.setData({
+        loading: false,
+        error: e.message
+      });
+    }
   },
 
   /**
