@@ -48,7 +48,7 @@ swiper image{
   font-family: PingFang SC;
   font-weight: 375;
   font-size: 27rpx;
-  line-height: 20rpx;
+  line-height: 32rpx;
   letter-spacing: 0rpx;
 }
 .pageall{
@@ -158,7 +158,7 @@ swiper image{
 }
 .Game{
   width: 220rpx;
-  height: 270rpx;
+  /* height: 280rpx; */
   box-shadow: 0rpx 0rpx 8rpx 0rpx #00000019;
   border-radius: 20rpx;
   backdrop-filter: blur(40rpx);
@@ -175,5 +175,11 @@ swiper image{
   width: 170rpx;
   height: 210rpx;
   border-radius: 20rpx;
-  margin-top: 5rpx;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+}
+
+.GameIma image {
+  width: 100%;
+  height: 100%;
 }

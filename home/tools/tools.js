@@ -15,7 +15,7 @@ Page({
   // 跳转到音频资源管理页面
   gotoAudioUpload() {
     wx.navigateTo({
-      url: '/audioUpload/audioUpload'
+      url: '/home/tools/user_self_upload/user_self_upload'
     })
   },
   

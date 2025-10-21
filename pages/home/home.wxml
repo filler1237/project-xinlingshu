@@ -68,29 +68,29 @@
       <text class="Font_s">Emotion Diary</text>
     </view>
     <view class="Diary_i" style="justify-content: flex-end; align-items: flex-end; margin-right: 25rpx;">
-      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu.png" mode="widthFix"/>
+      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/屏幕截图 2025-10-21 170644.png" mode="widthFix"/>
     </view>
   </view>
 </view>
 
 <text class="Font" style="margin-left: 50rpx;">心灵工具</text>
 <view class="GameBox">
-  <view class="Game" bind:tap="gotoTools">
+<view class="Game" bind:tap="gotoTools">
     <view class="GameIma">
-      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/service-line.jpg" mode="widthFix" class="GameIma"/>
+      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/service-line.jpg" mode="aspectFill"/>
     </view>
     <text class="Font_G">减压工具箱</text>
   </view>
   <view class="Game" bind:tap="gotoTaLuo">
     <view class="GameIma">
-      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
+      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/background4.jpg" mode="aspectFill"/>
     </view>
     <text class="Font_G">塔罗牌</text>
   </view>
   <view class="Game" bind:tap="gotoDivination">
-  <view class="GameIma">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TaLuo.jpg" mode="widthFix" class="GameIma"/>
-  </view>
+    <view class="GameIma">
+      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/屏幕截图 2025-10-21 172801.png" mode="aspectFill"/>
+    </view>
     <text class="Font_G">周易智慧</text>
   </view>
 </view>

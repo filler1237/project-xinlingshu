@@ -1,4 +1,14 @@
 /* home/tools/breathing/breathing.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  background-color: #f0f9ff;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
 .header {
   margin-bottom: 40rpx;
   width: 100%;
@@ -189,7 +199,7 @@
 }
 
 .start-btn, .stop-btn, .reset-btn {
-  width: 80%;
+  padding: 0 60rpx;
   height: 100rpx;
   line-height: 100rpx;
   border-radius: 50rpx;
@@ -218,7 +228,7 @@
 .continue-btn {
   background-color: #4ecdc4;
   color: white;
-  width: 80%;
+  padding: 0 60rpx;
   height: 100rpx;
   line-height: 100rpx;
   border-radius: 50rpx;
@@ -247,7 +257,7 @@
   padding: 40rpx;
   box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
   border: 4rpx dashed #E0E0E0;
-  margin-top: auto;
+  margin-top: 40rpx; /* 修改为固定的上外边距 */
 }
 
 .instruction-title {

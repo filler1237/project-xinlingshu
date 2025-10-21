@@ -7,8 +7,7 @@
     "pages/auth/usercenter/usercenter",
     "pages/index/index",
     "pages/growth/growth",
-    "pages/echoWall/echoWall",
-    "audioUpload/audioUpload"
+    "pages/echoWall/echoWall"
   ],
   "subPackages": [
     {
@@ -35,6 +34,7 @@
         "tools/tools",
         "tools/breathing/breathing",
         "tools/whitenoise/whitenoise",
+        "tools/user_self_upload/user_self_upload",
         "profile/profile"
       ]
     },
