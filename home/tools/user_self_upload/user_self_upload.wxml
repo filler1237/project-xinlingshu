@@ -8,8 +8,9 @@
   </view>
   <text class="subtitle">上传和管理云存储中的音频文件</text>
 
-  <view class="upload-section">
-    <view class="upload-card">
+  <view class="main-content">
+    <!-- 上传模块 -->
+    <view class="upload-section">
       <view class="select-section">
         <text class="section-title">选择音频文件</text>
         <button type="primary" bindtap="chooseAudio" disabled="{{isUploading}}">选择MP3文件</button>
@@ -36,30 +37,32 @@
         上传音频
       </button>
     </view>
-  </view>
 
-  <view class="resource-list">
-    <text class="list-title">已上传的音频资源</text>
-    
-    <block wx:if="{{audioList.length > 0}}">
-      <view class="resource-item" wx:for="{{audioList}}" wx:key="index">
-        <view class="item-info">
-          <text class="item-name">{{item.fileName}}</text>
-          <text class="item-type">类型：{{item.soundType}}</text>
-          <text class="item-time">上传时间：{{item.createTime}}</text>
+    <!-- 资源列表模块 -->
+    <view class="resource-list">
+      <text class="list-title">已上传的音频资源</text>
+      
+      <block wx:if="{{audioList.length > 0}}">
+        <view class="resource-item" wx:for="{{audioList}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.fileName}}</text>
+            <text class="item-type">类型：{{item.soundType}}</text>
+            <text class="item-time">上传时间：{{item.createTime}}</text>
+          </view>
+          <view class="item-actions">
+            <button size="mini" bindtap="previewAudio" data-id="{{item.fileID}}">预览</button>
+            <button size="mini" type="warn" bindtap="deleteAudio" data-id="{{item.fileID}}" data-index="{{index}}">删除</button>
+          </view>
         </view>
-        <view class="item-actions">
-          <button size="mini" bindtap="previewAudio" data-id="{{item.fileID}}">预览</button>
-          <button size="mini" type="warn" bindtap="deleteAudio" data-id="{{item.fileID}}" data-index="{{index}}">删除</button>
-        </view>
+      </block>
+      
+      <view class="empty-tip" wx:else>
+        <text>暂无音频资源，请先上传</text>
       </view>
-    </block>
-    
-    <view class="empty-tip" wx:else>
-      <text>暂无音频资源，请先上传</text>
     </view>
   </view>
 
+  <!-- 使用指南模块 -->
   <view class="guide-section">
     <text class="guide-title">使用指南</text>
     <view class="guide-content">

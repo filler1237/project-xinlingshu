@@ -1,5 +1,5 @@
 <!-- home/tools/breathing/breathing.wxml -->
-<view style="height: 100%; display: flex; flex-direction: column; align-items: center; padding: 40rpx; background-color: #f0f9ff;">
+<view class="container">
   <view class="header">
     <view class="back-button" bind:tap="navigateBack">
       <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>

@@ -172,7 +172,7 @@ Page({
           
           // 调用云函数将文件移动到正式音频目录并保存信息
           wx.cloud.callFunction({
-            name: 'uploadAudioFiles',
+            name: 'audioUpload',
             data: {
               fileID: res.fileID,
               fileName: that.data.audioNames[that.data.selectedType] || 'audio.mp3',

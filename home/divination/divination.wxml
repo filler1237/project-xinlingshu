@@ -3,6 +3,15 @@
 <view class="container">
   <view class="description">静心思考，投掷六次，探索《周易》的智慧。</view>
 
+  <view class="instructions-panel">
+    <view class="instructions-title">💡玩法简介</view>
+    <view class="instructions-text">《周易》是中国古老的智慧经典，它通过六十四卦象，揭示事物变化的规律。本工具旨在通过模拟古代的占卜过程，为你提供一种独特的内省和思考工具。</view>
+    <view class="instructions-step">1. 提出问题：在心中默念你所困惑的问题。</view>
+    <view class="instructions-step">2. 投掷硬币：点击“投掷”按钮六次，每一次投掷都代表了卦象的一爻。</view>
+    <view class="instructions-step">3. 解读卦象：六次投掷后，系统将为你生成对应的卦象，并结合现代心理学知识，为你提供多角度的思考和建议。</view>
+    <view class="instructions-tip">提示：请将此过程视为一种激发思考和获得启发的方式，而非预知未来的手段。</view>
+  </view>
+
   <view class="hexagram-area">
     <block wx:if="{{hexagram.length > 0}}">
       <view wx:for="{{hexagram}}" wx:key="index" class="line-container">
