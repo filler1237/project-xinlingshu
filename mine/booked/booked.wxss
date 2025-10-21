@@ -119,3 +119,18 @@ page{
   height: 20%;
   font-size:50rpx;
 }
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 让按钮靠右显示 */
+  padding-right: 20rpx;
+}
+.cancel-btn {
+  background-color: #e64340; /* 红色背景 */
+  color: white;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 30rpx;
+  margin-top: 10rpx;
+  width: auto; /* 宽度自适应 */
+}

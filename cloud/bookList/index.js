@@ -4,10 +4,11 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }) // 使用当前云环境
 const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { openid } = event
+  const wxContext = cloud.getWXContext();
+  const openid = wxContext.OPENID;
   const now = new Date()
 
-  try {
+  try { 
     const res = await db
       .collection('Appointments')
       .where({
@@ -32,7 +33,7 @@ exports.main = async (event, context) => {
           },
         })
       }
-      return { data: [{ ...appointment, status }] }
+      return { data: [{ ...appointment, _id:appointment._id, status }] }
     } else {
       // 查询到多条记录的情况
       const appointments = res.data.map((appointment) => {
@@ -48,7 +49,7 @@ exports.main = async (event, context) => {
           })
         }
 
-        return { ...appointment, status, appointmentTimestamp }
+        return { ...appointment, _id:appointment._id , status, appointmentTimestamp }
       })
       appointments.sort((a, b) => b.appointmentTimestamp - a.appointmentTimestamp) // 按照时间戳降序排列
       return { data: appointments }

@@ -26,6 +26,8 @@ exports.main = async (event, context) => {
         evaluate:"0",
         score:"0",
         feedback:"",
+        availabilityId: availabilityId,
+        timeSlotIndex: timeSlotIndex
       }
     })
 
