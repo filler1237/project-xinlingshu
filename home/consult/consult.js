@@ -110,7 +110,7 @@ initDateList: function() {
    // 创建时间列表
    const hourList = [];
    // 循环添加每隔两个小时的时间
-   for (let i = 9; i < 16; i += 2) {
+   for (let i = 9; i < 16; i += 1) {
      // 将时间格式化为字符串，添加到时间列表中
      const hourString = this.formatNumber(i) + ':00';
      hourList.push(hourString);
@@ -143,12 +143,20 @@ onDateChange: function(e) {
     selectedDateIndex: e.detail.value
   });
 
-  const currentTime = new Date().toISOString(); // 获取当前日期和时间的字符串表示
+  // 获取本地时间并格式化
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = this.formatNumber(now.getMonth() + 1);
+  const day = this.formatNumber(now.getDate());
+  const hours = this.formatNumber(now.getHours());
+  const minutes = this.formatNumber(now.getMinutes());
+  const seconds = this.formatNumber(now.getSeconds());
+  const currentTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
   wx.cloud.callFunction({
     name: 'getAvailableTimeSlots',
     data: {
-      teacherId: this.data.teacherIndex,
+      teacherId: this.data.teacherIndex, 
       date: this.data.dateList[e.detail.value],
       currentTime: currentTime, // 传递当前日期和时间
     },
