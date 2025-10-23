@@ -54,6 +54,7 @@ Page({
       const freshUserInfo = res.data;
       console.log("刷新用户信息成功", freshUserInfo);
       this.updateUserInfo(freshUserInfo); // 使用统一的函数来更新数据
+      this.checkIdentityBound(freshUserInfo);
     }).catch(err => {
       console.error("刷新用户信息失败", err);
     });
@@ -153,7 +154,7 @@ Page({
             wx.navigateTo({
               url: '/pages/auth/usercenter/usercenter',
             });
-          }
+          } 
         }
       });
     }
