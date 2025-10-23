@@ -7,7 +7,7 @@
   <view class="level">
     心灵等级{{fuyuanli.Level}}
   </view>
-  <view class="bianji">
+  <view class="bianji" bindtap="onEditProfileTap">
   编辑
   </view>
   <image class="array" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Vector 1.jpg" style="width: 6rpx;"/>
@@ -73,6 +73,10 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx;"/>
       <text>查询列表</text>
     </navigator>
+    <navigator url="/competition/pages/bindldentity/bindldentity" class="item" style="width:112rpx ;">
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx; "/>
+      <text>比赛评分系统</text>
+    </navigator>
   </view>
 </view>
 <view class="forus" style="width: 360rpx;">
@@ -88,3 +92,33 @@
     <text>寻求帮助</text>
   </navigator>
 </view>
+
+<!-- 编辑个人信息弹窗 (原生实现) -->
+<view class="popup-overlay" wx:if="{{ showEditProfilePopup }}" bindtap="onCloseEditProfilePopup">
+  <view class="popup-container" catchtap="doNothing"> <!-- catchtap 防止点击弹窗内容导致弹窗关闭 -->
+    <view class="popup-header">
+      <text class="cancel-btn" bindtap="onCloseEditProfilePopup">取消</text>
+      <text class="popup-title">编辑资料</text>
+      <text class="save-btn" bindtap="onSaveProfile">保存</text>
+    </view>
+    <view class="popup-content">
+      <view class="avatar-edit" bindtap="onChangeAvatar">
+        <image class="editing-avatar" src="{{tempAvatarUrl || '/image/默认头像.jpeg'}}" />
+        <text class="change-avatar-text">更换头像</text>
+      </view>
+      <view class="nickname-edit">
+        <!-- 这里我们用一个普通的 view 和 input 来代替 van-field -->
+        <view class="input-wrapper">
+          <text class="input-label">昵称</text>
+          <input 
+            class="input-field" 
+            value="{{ editingNickName }}" 
+            placeholder="请输入昵称" 
+            bindinput="onNickNameInput"
+          />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

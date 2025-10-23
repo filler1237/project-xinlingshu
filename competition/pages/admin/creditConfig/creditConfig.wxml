@@ -1,0 +1,218 @@
+<!-- pages/admin/creditConfig/creditConfig.wxml -->
+<view class="credit-container">
+  <!-- 顶部标题 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <text class="header-title">学分配置</text>
+      <text class="header-desc">设置活动学分奖励规则</text>
+    </view>
+  </view>
+
+  <!-- 活动选择 -->
+  <view class="activity-selector">
+    <text class="selector-label">选择活动：</text>
+    <picker 
+      mode="selector" 
+      range="{{activityOptions}}"
+      range-key="name"
+      value="{{selectedActivityIndex}}"
+      bindchange="onActivityChange"
+    >
+      <view class="picker-display">
+        {{activityOptions[selectedActivityIndex] ? activityOptions[selectedActivityIndex].name : '请选择活动'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 学分配置区域 -->
+  <view class="config-section" wx:if="{{selectedActivity}}">
+    <!-- 基础参与学分 -->
+    <view class="config-card">
+      <view class="config-header">
+        <text class="config-title">基础参与学分</text>
+        <text class="config-desc">只要提交作品即可获得</text>
+      </view>
+      <view class="config-content">
+        <view class="credit-input-group">
+          <text class="input-label">参与学分：</text>
+          <input 
+            class="credit-input"
+            type="number"
+            value="{{participationCredit}}"
+            bindinput="onParticipationCreditChange"
+            placeholder="0.5"
+          />
+          <text class="credit-unit">学分</text>
+        </view>
+        <text class="config-tip">学生提交作品后自动获得此学分</text>
+      </view>
+    </view>
+
+    <!-- 获奖学分配置 -->
+    <view class="config-card">
+      <view class="config-header">
+        <text class="config-title">获奖学分配置</text>
+        <text class="config-desc">根据评审结果发放</text>
+      </view>
+      <view class="config-content">
+        <view 
+          class="award-item"
+          wx:for="{{awardCredits}}"
+          wx:key="level"
+          wx:for-item="award"
+          wx:for-index="index"
+        >
+          <view class="award-header">
+            <text class="award-level">{{award.level}}</text>
+            <text class="remove-award" bindtap="onRemoveAward" data-index="{{index}}">删除</text>
+          </view>
+          <view class="credit-input-group">
+            <text class="input-label">学分奖励：</text>
+            <input 
+              class="credit-input"
+              type="number"
+              value="{{award.credit}}"
+              data-level="{{award.level}}"
+              bindinput="onAwardCreditChange"
+              placeholder="1.0"
+            />
+            <text class="credit-unit">学分</text>
+          </view>
+          <view class="score-range" wx:if="{{award.minScore !== undefined}}">
+            <text class="range-label">评分范围：</text>
+            <text class="range-value">{{award.minScore}}分以上</text>
+          </view>
+        </view>
+
+        <!-- 添加获奖等级 -->
+        <view class="add-award-section">
+          <input 
+            class="award-input"
+            value="{{newAwardLevel}}"
+            bindinput="onNewAwardLevelChange"
+            placeholder="输入获奖等级（如：一等奖）"
+          />
+          <button class="add-btn" bindtap="onAddAward">添加等级</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 学分发放规则 -->
+    <view class="config-card">
+      <view class="config-header">
+        <text class="config-title">学分发放规则</text>
+        <text class="config-desc">设置学分发放条件</text>
+      </view>
+      <view class="config-content">
+        <view class="rule-item">
+          <text class="rule-label">自动发放参与学分</text>
+          <switch checked="{{autoParticipationCredit}}" bindchange="onAutoParticipationChange" />
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">评审结束后自动发放获奖学分</text>
+          <switch checked="{{autoAwardCredit}}" bindchange="onAutoAwardChange" />
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">允许重复获得学分</text>
+          <switch checked="{{allowDuplicateCredit}}" bindchange="onDuplicateCreditChange" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 预览和统计 -->
+    <view class="preview-card">
+      <view class="preview-header">
+        <text class="preview-title">学分预览</text>
+      </view>
+      <view class="preview-content">
+        <view class="preview-stats">
+          <view class="stat-item">
+            <text class="stat-value">{{totalCreditLevels}}</text>
+            <text class="stat-label">奖励等级</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{maxAwardCredit}}</text>
+            <text class="stat-label">最高奖励</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{participationCredit}}</text>
+            <text class="stat-label">参与学分</text>
+          </view>
+        </view>
+        <view class="credit-summary">
+          <text class="summary-text">学生最多可获得：{{maxTotalCredit}} 学分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="action-btn save" bindtap="onSaveConfig">保存配置</button>
+      <button class="action-btn reset" bindtap="onResetConfig">重置</button>
+      <button class="action-btn preview" bindtap="onPreviewEffect">预览效果</button>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!selectedActivity}}">
+    <text class="empty-icon">🎓</text>
+    <text class="empty-text">请先选择活动</text>
+    <text class="empty-desc">选择要配置学分的活动</text>
+  </view>
+
+  <!-- 预览模态框 -->
+  <view class="modal {{showPreviewModal ? 'show' : ''}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">学分配置预览</text>
+        <text class="modal-close" bindtap="onCloseModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="preview-detail">
+          <text class="preview-activity">{{selectedActivity ? selectedActivity.name : ''}}</text>
+          
+          <view class="preview-section">
+            <text class="section-title">参与奖励</text>
+            <view class="preview-item">
+              <text class="item-label">提交作品：</text>
+              <text class="item-value">{{participationCredit}} 学分</text>
+            </view>
+          </view>
+
+          <view class="preview-section">
+            <text class="section-title">获奖奖励</text>
+            <view 
+              class="preview-item"
+              wx:for="{{awardCredits}}"
+              wx:key="level"
+              wx:for-item="award"
+            >
+              <text class="item-label">{{award.level}}：</text>
+              <text class="item-value">{{award.credit}} 学分</text>
+            </view>
+          </view>
+
+          <view class="preview-section">
+            <text class="section-title">发放规则</text>
+            <view class="preview-item">
+              <text class="item-label">自动发放参与学分：</text>
+              <text class="item-value {{autoParticipationCredit ? 'enabled' : 'disabled'}}">
+                {{autoParticipationCredit ? '是' : '否'}}
+              </text>
+            </view>
+            <view class="preview-item">
+              <text class="item-label">自动发放获奖学分：</text>
+              <text class="item-value {{autoAwardCredit ? 'enabled' : 'disabled'}}">
+                {{autoAwardCredit ? '是' : '否'}}
+              </text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn confirm" bindtap="onCloseModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -32,15 +32,7 @@ exports.main=async(event,context)=>{
         growthValue:0,
         treeLevel:1,
         unlockedAchievements:[],
-        fuyuanli:{
-          max:10,
-          gap:10,
-          Level:1,
-          shengli:0,
-          xinli:0,
-          qingxu:0,
-          shejiao:0
-        }
+        isIdentityBound: false
       }
     })
     userInfo=(await db.collection('users').doc(addUserRes._id).get()).data;
@@ -54,6 +46,10 @@ exports.main=async(event,context)=>{
       }
     })
     userInfo = (await db.collection('users').doc(userId).get()).data;
+
+    if(userInfo.isIdentityBound === undefined) {
+      userInfo.isIdentityBound = false;
+    }
   }
   return {
     userInfo:userInfo

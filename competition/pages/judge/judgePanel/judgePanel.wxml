@@ -1,0 +1,74 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">返回</view>
+    <text class="title">心理活动评审</text>
+  </view>
+
+  <!-- 活动信息 -->
+  <view class="card">
+    <text class="card-title">活动信息</text>
+    <view class="info-item">
+      <text class="label">活动名称：</text>
+      <text class="value">{{activityInfo.title}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">组织者：</text>
+      <text class="value">{{activityInfo.organizer}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">活动编号：</text>
+      <text class="value">{{activityInfo.id}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">活动描述：</text>
+      <text class="value">{{activityInfo.description}}</text>
+    </view>
+    <view class="download-btn" bindtap="downloadMaterial">下载活动资料</view>
+  </view>
+
+  <!-- 评分区域 -->
+  <view class="card">
+    <text class="card-title">活动评分</text>
+    
+    <view class="score-item" wx:for="{{scoreItems}}" wx:key="id">
+      <view class="score-info">
+        <text class="score-name">{{item.name}}</text>
+        <text class="score-desc">{{item.description}}</text>
+      </view>
+      <view class="score-input-wrapper">
+        <input 
+          class="score-input" 
+          type="number" 
+          placeholder="0" 
+          value="{{currentScores[item.id]}}" 
+          data-id="{{item.id}}"
+          bindinput="onScoreInput"
+          max="{{item.maxScore}}"
+          min="0"
+        />
+        <text class="score-max">/ {{item.maxScore}}分</text>
+      </view>
+    </view>
+
+    <view class="total-score">
+      <text class="total-text">总分：{{totalScore}}分</text>
+    </view>
+  </view>
+
+  <!-- 评价区域 -->
+  <view class="card">
+    <text class="card-title">活动评价</text>
+    <textarea 
+      class="comment-input" 
+      placeholder="请输入活动评价和建议..." 
+      value="{{comment}}" 
+      bindinput="onCommentInput"
+      maxlength="500"
+    ></textarea>
+    <text class="word-count">{{comment.length}}/500</text>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-btn" bindtap="submitScore">提交评审</view>
+</view>

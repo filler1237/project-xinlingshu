@@ -1,82 +1,86 @@
-<!--pages/auth/usercenter/usercenter.wxml-->
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
-</view>
-<view class="title">个人信息</view>
-<view class="bottom">
-  <image class="down"src="/image/up.png" style="width: 100%;"/>
-  <image class="up" src="/image/down.png" style="width: 100%;"/>
-  <image class="girl"src="/image/girl.png" style="width: 200rpx;"/>
-</view>
+<!-- pages/auth/usercenter/usercenter.wxml -->
+<view class="container">
+  <view class="header">
+    <view class="title">身份信息绑定</view>
+    <view class="subtitle">为了提供更完整的服务，请绑定您的身份信息</view>
+  </view>
 
-<view class="page">
-<view class="touxiangbox">
-  <view bindtap="ChangeImage">
-    <image class="touxiang" src="{{ImageSrc}}" mode="widthFix"/>
-  </view>
-  <view style="color: #91c789;">
-    点击更换头像
-  </view>
-</view>
+  <view class="form-group">
+    <van-cell-group inset>
+      <!-- 身份选择 -->
+      <van-field name="radio" label="选择身份">
+        <!-- 修正这里：使用 slot="input" 替代 #input -->
+        <template slot="input">
+          <van-radio-group value="{{ role }}" bind:change="onRoleChange" direction="horizontal">
+            <van-radio name="student">学生</van-radio>
+            <van-radio name="judge">评委</van-radio>
+            <van-radio name="admin">管理员</van-radio>
+          </van-radio-group>
+        </template>
+      </van-field>
 
+      <van-field
+        value="{{ realName }}"
+        label="真实姓名"
+        placeholder="请输入您的真实姓名"
+        bind:input="onInput"
+        data-field="realName"
+        required
+        clearable
+      />
+      <van-field
+        value="{{ studentId }}"
+        label="学号/工号"
+        placeholder="请输入您的学号或工号"
+        bind:input="onInput"
+        data-field="studentId"
+        required
+        clearable
+      />
+      <van-field
+        value="{{ phoneNumber }}"
+        label="手机号"
+        type="number"
+        placeholder="请输入您的手机号码"
+        bind:input="onInput"
+        data-field="phoneNumber"
+        required
+        clearable
+      />
+      <van-field
+        value="{{ college }}"
+        label="所在学院"
+        placeholder="请输入您的学院"
+        bind:input="onInput"
+        data-field="college"
+        required
+        clearable
+      />
+      <van-field
+        value="{{ major }}"
+        label="专业"
+        placeholder="请输入您的专业"
+        bind:input="onInput"
+        data-field="major"
+        required
+        clearable
+      />
+    </van-cell-group>
+  </view>
 
-<view class="Area">
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      姓名
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Namevalue}}" placeholder="请输入姓名" bindinput="NameChange"/>
+  <view class="submit-button-wrapper">
+    <van-button 
+      type="primary" 
+      block 
+      round 
+      bind:click="submitIdentity"
+      disabled="{{ !role || !realName || !studentId || !phoneNumber || !college || !major }}"
+    >
+      确认绑定
+    </van-button>
   </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      个性签名
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Sign}}" placeholder="请输入个性签名" bindinput="SignChange"/>
-  </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      性别
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Sex}}" placeholder="请输入性别"/>
-  </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      联系电话
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{PhoneNumber}}" placeholder="请输入手机号" bindinput="PNChange"/>
-  </view>
-</view>
 
-<view class="Area">
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      院校
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{School}}" disabled="disabled"/>
+  <view class="footer-tips">
+    <text>信息仅用于身份核实，我们将严格保密。</text>
   </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      学号
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{StuNum}}" placeholder="请输入学号" bindinput="STUNChange"/>
-  </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      学院
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{SchoolP}}" placeholder="请输入学院" bindinput="SPChange"/>
-  </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      专业
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Project}}" placeholder="请输入专业" bindinput="PJChange"/>
-  </view>
-  <view class="Each">
-    <view class="label" style="margin-bottom: 8rpx;">
-      年级
-    </view>
-    <input class="put" style="margin-bottom: 8rpx;" type="text" value="{{Class}}" placeholder="请输入年级" bindinput="ClassChange"/>
-  </view>
-</view>
 </view>

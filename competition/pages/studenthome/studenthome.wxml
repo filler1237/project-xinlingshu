@@ -1,0 +1,85 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="container">
+  <view class="header">
+    <view class="user-info">
+      <text class="welcome">欢迎回来，{{userInfo.username}}！</text>
+      <text class="role">学生身份</text>
+      <text class="department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
+      <text class="student-id" wx:if="{{userInfo.studentId}}">学号：{{userInfo.studentId}}</text>
+    </view>
+    <view class="header-actions">
+      <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+    </view>
+  </view>
+
+  <!-- 功能网格 -->
+  <view class="function-grid">
+    <view class="function-card" bindtap="toActivityList">
+      <view class="card-icon">📋</view>
+      <text class="card-title">活动列表</text>
+      <text class="card-desc">查看已发布活动</text>
+    </view>
+
+    <view class="function-card" bindtap="toSubmitWork">
+      <view class="card-icon">📤</view>
+      <text class="card-title">提交作品</text>
+      <text class="card-desc">上传参赛作品</text>
+    </view>
+
+    <view class="function-card" bindtap="toViewResult">
+      <view class="card-icon">📊</view>
+      <text class="card-title">查看评价</text>
+      <text class="card-desc">查看评分与评语</text>
+    </view>
+
+    <view class="function-card" bindtap="toCreditReward">
+      <view class="card-icon">⭐</view>
+      <text class="card-title">学分奖励</text>
+      <text class="card-desc">查看获得的学分</text>
+    </view>
+  </view>
+
+  <!-- 最新活动 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">最新活动</text>
+      <text class="section-more" bindtap="toActivityList">查看更多 ></text>
+    </view>
+    <view class="activity-list">
+      <view wx:for="{{activities}}" wx:key="id" class="activity-card" bindtap="onActivityTap" data-id="{{item.id}}">
+        <view class="activity-header">
+          <text class="activity-title">{{item.title}}</text>
+          <text class="activity-status {{item.status}}">{{item.status}}</text>
+        </view>
+        <text class="activity-desc">{{item.description}}</text>
+        <view class="activity-info">
+          <text class="info-item">📅 {{item.startTime}} 至 {{item.endTime}}</text>
+          <text class="info-item">🏢 {{item.organizer}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的作品 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">我的作品</text>
+      <text class="section-more" bindtap="toViewResult">查看全部 ></text>
+    </view>
+    <view class="work-list">
+      <view wx:for="{{myWorks}}" wx:key="id" class="work-card" bindtap="onWorkTap" data-id="{{item.id}}">
+        <view class="work-header">
+          <text class="work-title">{{item.title}}</text>
+          <text class="work-status {{item.status}}">{{item.status}}</text>
+        </view>
+        <text class="work-activity">{{item.activity}}</text>
+        <view class="work-info">
+          <text class="info-item">📅 {{item.submitTime}}</text>
+          <text class="info-item" wx:if="{{item.score}}">🎯 得分：{{item.score}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,334 @@
+<!-- pages/admin/workOverview/workOverview.wxml -->
+<view class="work-container">
+  <!-- 顶部标题和统计 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <text class="header-title">作品总览</text>
+      <text class="header-desc">查看与管理所有参赛作品</text>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-number">{{stats.total}}</text>
+          <text class="stat-label">总作品</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.pendingReview}}</text>
+          <text class="stat-label">待评审</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.reviewed}}</text>
+          <text class="stat-label">已评审</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.awarded}}</text>
+          <text class="stat-label">已获奖</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选和搜索 -->
+  <view class="filter-section">
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        placeholder="搜索作品名称、作者..."
+        placeholder-class="search-placeholder"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+      <text class="search-icon">🔍</text>
+    </view>
+    
+    <view class="filter-row">
+      <view class="filter-group">
+        <text class="filter-label">活动筛选</text>
+        <picker 
+          mode="selector" 
+          range="{{activityOptions}}"
+          range-key="name"
+          value="{{activityIndex}}"
+          bindchange="onActivityChange"
+        >
+          <view class="picker-display">
+            {{activityOptions[activityIndex] ? activityOptions[activityIndex].name : '选择活动'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="filter-group">
+        <text class="filter-label">状态筛选</text>
+        <picker 
+          mode="selector" 
+          range="{{statusOptions}}"
+          value="{{statusIndex}}"
+          bindchange="onStatusChange"
+        >
+          <view class="picker-display">
+            {{statusOptions[statusIndex] ? statusOptions[statusIndex] : '选择状态'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!-- 批量操作栏 -->
+  <view class="batch-actions" wx:if="{{selectedWorks.length > 0}}">
+    <text class="batch-text">已选择 {{selectedWorks.length}} 个作品</text>
+    <view class="batch-buttons">
+      <button class="batch-btn export" bindtap="onBatchExport">导出选中</button>
+      <button class="batch-btn delete" bindtap="onBatchDelete">批量删除</button>
+      <button class="batch-btn clear" bindtap="onClearSelection">取消选择</button>
+    </view>
+  </view>
+
+  <!-- 作品列表 -->
+  <view class="work-list">
+    <block wx:for="{{filteredWorks}}" wx:key="workId">
+      <view 
+        class="work-card {{selectedWorks.indexOf(item.workId) !== -1 ? 'selected' : ''}}"
+        bindtap="onWorkSelect"
+        data-work="{{item}}"
+      >
+        <!-- 选择框 -->
+        <view 
+          class="select-checkbox {{selectedWorks.indexOf(item.workId) !== -1 ? 'checked' : ''}}"
+          bindtap="onToggleSelect"
+          data-work="{{item}}"
+        >
+          <text class="check-icon">✓</text>
+        </view>
+
+        <!-- 作品类型图标 -->
+        <view class="work-type {{item.workType}}">
+          <text class="type-icon">
+            <text wx:if="{{item.workType === 'document'}}">📄</text>
+            <text wx:elif="{{item.workType === 'image'}}">🖼️</text>
+            <text wx:elif="{{item.workType === 'video'}}">🎬</text>
+            <text wx:else>📝</text>
+          </text>
+        </view>
+
+        <!-- 作品内容 -->
+        <view class="work-content">
+          <view class="work-header">
+            <text class="work-title">{{item.title}}</text>
+            <view class="work-status {{item.reviewStatus}}">
+              <text wx:if="{{item.reviewStatus === 'pending'}}">待评审</text>
+              <text wx:elif="{{item.reviewStatus === 'reviewed'}}">已评审</text>
+              <text wx:elif="{{item.reviewStatus === 'awarded'}}">已获奖</text>
+              <text wx:else>{{item.reviewStatus}}</text>
+            </view>
+          </view>
+
+          <view class="work-info">
+            <view class="info-row">
+              <text class="info-label">作者：</text>
+              <text class="info-value">{{item.authorName}} ({{item.studentId}})</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">所属活动：</text>
+              <text class="info-value">{{item.activityName}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">提交时间：</text>
+              <text class="info-value">{{item.submitTime}}</text>
+            </view>
+          </view>
+
+          <!-- 评分信息 -->
+          <view class="score-section" wx:if="{{item.reviewStatus !== 'pending'}}">
+            <view class="score-display">
+              <text class="score-label">综合评分：</text>
+              <text class="score-value {{getScoreLevel(item.totalScore)}}">
+                {{item.totalScore || 0}}
+              </text>
+              <text class="score-total">/100</text>
+            </view>
+            
+            <view class="dimension-scores" wx:if="{{item.dimensionScores && item.dimensionScores.length}}">
+              <view 
+                class="dimension-score" 
+                wx:for="{{item.dimensionScores}}" 
+                wx:for-item="dimension"
+                wx:key="name"
+              >
+                <text class="dimension-name">{{dimension.name}}：</text>
+                <text class="dimension-value">{{dimension.score}}</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 评语预览 -->
+          <view class="comment-preview" wx:if="{{item.comment}}">
+            <text class="comment-label">评语：</text>
+            <text class="comment-text">{{item.comment}}</text>
+          </view>
+
+          <!-- 操作按钮 -->
+          <view class="work-actions">
+            <button 
+              class="action-btn view"
+              bindtap="onViewWork"
+              data-work="{{item}}"
+            >
+              <text class="btn-icon">👁️</text>
+              查看详情
+            </button>
+            <button 
+              class="action-btn download"
+              bindtap="onDownloadWork"
+              data-work="{{item}}"
+            >
+              <text class="btn-icon">📥</text>
+              下载作品
+            </button>
+            <button 
+              class="action-btn delete"
+              bindtap="onDeleteWork"
+              data-work="{{item}}"
+            >
+              <text class="btn-icon">🗑️</text>
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredWorks.length === 0}}">
+    <text class="empty-icon">🎨</text>
+    <text class="empty-text">暂无作品数据</text>
+    <text class="empty-desc">当前筛选条件下没有找到作品</text>
+    <button class="empty-btn" bindtap="onResetFilters">重置筛选条件</button>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-actions">
+    <button class="bottom-btn export" bindtap="onExportAll">
+      <text class="btn-icon">📊</text>
+      导出全部
+    </button>
+    <button class="bottom-btn refresh" bindtap="onRefresh">
+      <text class="btn-icon">🔄</text>
+      刷新数据
+    </button>
+  </view>
+
+  <!-- 作品详情模态框 -->
+  <view class="modal {{showDetailModal ? 'show' : ''}}">
+    <view class="modal-content large">
+      <view class="modal-header">
+        <text class="modal-title">作品详情</text>
+        <text class="modal-close" bindtap="onCloseModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="detail-section" wx:if="{{selectedWork}}">
+          <view class="detail-header">
+            <text class="detail-title">{{selectedWork.title}}</text>
+            <view class="detail-status {{selectedWork.reviewStatus}}">
+              <text wx:if="{{selectedWork.reviewStatus === 'pending'}}">待评审</text>
+              <text wx:elif="{{selectedWork.reviewStatus === 'reviewed'}}">已评审</text>
+              <text wx:elif="{{selectedWork.reviewStatus === 'awarded'}}">已获奖</text>
+              <text wx:else>{{selectedWork.reviewStatus}}</text>
+            </view>
+          </view>
+
+          <view class="detail-info">
+            <view class="info-group">
+              <text class="info-label">作者信息</text>
+              <text class="info-value">{{selectedWork.authorName}} ({{selectedWork.studentId}})</text>
+            </view>
+            <view class="info-group">
+              <text class="info-label">所属活动</text>
+              <text class="info-value">{{selectedWork.activityName}}</text>
+            </view>
+            <view class="info-group">
+              <text class="info-label">提交时间</text>
+              <text class="info-value">{{selectedWork.submitTime}}</text>
+            </view>
+            <view class="info-group">
+              <text class="info-label">作品类型</text>
+              <text class="info-value">
+                <text wx:if="{{selectedWork.workType === 'document'}}">文档</text>
+                <text wx:elif="{{selectedWork.workType === 'image'}}">图片</text>
+                <text wx:elif="{{selectedWork.workType === 'video'}}">视频</text>
+                <text wx:else>其他</text>
+              </text>
+            </view>
+          </view>
+
+          <!-- 作品内容 -->
+          <view class="work-content-section">
+            <text class="section-title">作品内容</text>
+            <view class="content-preview">
+              <text class="content-text" wx:if="{{selectedWork.contentType === 'text'}}">
+                {{selectedWork.content}}
+              </text>
+              <image 
+                wx:elif="{{selectedWork.contentType === 'image'}}" 
+                class="content-image" 
+                src="{{selectedWork.fileUrl}}" 
+                mode="aspectFit"
+                bindtap="onPreviewImage"
+              />
+              <view wx:else class="file-preview">
+                <text class="file-name">{{selectedWork.fileName}}</text>
+                <button class="preview-btn" bindtap="onPreviewFile">预览文件</button>
+              </view>
+            </view>
+          </view>
+
+          <!-- 评分详情 -->
+          <view class="score-detail-section" wx:if="{{selectedWork.reviewStatus !== 'pending'}}">
+            <text class="section-title">评审详情</text>
+            <view class="total-score">
+              <text class="total-label">综合评分：</text>
+              <text class="total-value {{getScoreLevel(selectedWork.totalScore)}}">
+                {{selectedWork.totalScore}}
+              </text>
+              <text class="total-total">/100</text>
+            </view>
+            
+            <view class="dimensions-detail" wx:if="{{selectedWork.dimensionScores && selectedWork.dimensionScores.length}}">
+              <view 
+                class="dimension-row" 
+                wx:for="{{selectedWork.dimensionScores}}" 
+                wx:for-item="dimension"
+                wx:key="name"
+              >
+                <text class="dimension-name">{{dimension.name}}</text>
+                <view class="dimension-progress">
+                  <view 
+                    class="progress-fill" 
+                    style="{{'width: ' + dimension.score + '%'}}"
+                  ></view>
+                </view>
+                <text class="dimension-score">{{dimension.score}}分</text>
+              </view>
+            </view>
+
+            <view class="comments-detail" wx:if="{{selectedWork.comments && selectedWork.comments.length}}">
+              <text class="comments-label">评委评语：</text>
+              <view 
+                class="comment-item" 
+                wx:for="{{selectedWork.comments}}" 
+                wx:for-item="comment"
+                wx:key="judgeName"
+              >
+                <text class="judge-name">{{comment.judgeName}}：</text>
+                <text class="judge-comment">{{comment.content}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn secondary" bindtap="onCloseModal">关闭</button>
+        <button class="modal-btn primary" bindtap="onDownloadCurrent">下载作品</button>
+      </view>
+    </view>
+  </view>
+</view>                         

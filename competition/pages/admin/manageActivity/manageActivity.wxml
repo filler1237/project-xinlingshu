@@ -1,0 +1,229 @@
+<!-- pages/admin/manageActivity/manageActivity.wxml -->
+<view class="manage-container">
+  <!-- 顶部标题和统计 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <text class="header-title">活动管理</text>
+      <text class="header-desc">发布与管理所有活动</text>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-number">{{stats.total}}</text>
+          <text class="stat-label">总活动</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.pending_review}}</text>
+          <text class="stat-label">待审核</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.pending}}</text>
+          <text class="stat-label">待发布</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.running}}</text>
+          <text class="stat-label">进行中</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.ended}}</text>
+          <text class="stat-label">已结束</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选和搜索 -->
+  <view class="filter-section">
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        placeholder="搜索活动名称..."
+        placeholder-class="search-placeholder"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+      <text class="search-icon">🔍</text>
+    </view>
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="all"
+      >
+        全部
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'pending_review' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="pending_review"
+      >
+        待审核
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'pending' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="pending"
+      >
+        待发布
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'running' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="running"
+      >
+        进行中
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'ended' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="ended"
+      >
+        已结束
+      </view>
+    </view>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="activity-list">
+    <block wx:for="{{filteredList}}" wx:key="activityId">
+      <view 
+        class="activity-card {{item.status === 'ended' ? 'ended' : ''}}"
+        bindtap="onActivityDetail"
+        data-activity="{{item}}"
+      >
+        <!-- 活动状态标签 -->
+        <view class="status-badge {{item.status}} {{item.reviewStatus}}">
+          <text wx:if="{{item.status === 'pending_review'}}">待审核</text>
+          <text wx:elif="{{item.status === 'pending'}}">待发布</text>
+          <text wx:elif="{{item.status === 'running'}}">进行中</text>
+          <text wx:elif="{{item.status === 'ended'}}">已结束</text>
+          <text wx:else>{{item.status}}</text>
+          <text wx:if="{{item.reviewStatus === 'rejected'}}">(未通过)</text>
+        </view>
+
+        <view class="activity-header">
+          <text class="activity-title">{{item.title}}</text>
+          <text class="activity-time">{{item.startTime}} - {{item.endTime}}</text>
+        </view>
+
+        <view class="activity-info">
+          <view class="info-item">
+            <text class="info-label">主题：</text>
+            <text class="info-value">{{item.theme}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">形式：</text>
+            <text class="info-value">{{item.formType}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">参与人数：</text>
+            <text class="info-value">{{item.participantCount}}人</text>
+          </view>
+          <view class="info-item" wx:if="{{item.reviewComment}}">
+            <text class="info-label">审核意见：</text>
+            <text class="info-value">{{item.reviewComment}}</text>
+          </view>
+        </view>
+
+        <!-- 进度条 - 使用修复后的语法 -->
+        <view class="progress-section">
+          <view class="progress-info">
+            <text class="progress-label">活动进度</text>
+            <text class="progress-percent">{{item.progress}}%</text>
+          </view>
+          <view class="progress-bar">
+            <view 
+              class="progress-fill {{item.status}}"
+              style="{{'width: ' + item.progress + '%'}}"
+            ></view>
+          </view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <!-- 审核相关按钮 -->
+          <button 
+            class="action-btn review"
+            bindtap="onReviewActivity"
+            data-activity="{{item}}"
+            wx:if="{{item.status === 'pending_review'}}"
+          >
+            {{item.reviewStatus === 'approved' ? '已审核' : '审核'}}
+          </button>
+          
+          <!-- 发布相关按钮 -->
+          <button 
+            class="action-btn primary"
+            bindtap="onPublishActivity"
+            data-activity="{{item}}"
+            wx:if="{{item.status === 'pending' && item.reviewStatus === 'approved'}}"
+          >
+            发布活动
+          </button>
+          
+          <!-- 状态管理 -->
+          <button 
+            class="action-btn secondary"
+            bindtap="onChangeStatus"
+            data-activity="{{item}}"
+            wx:if="{{item.status !== 'ended' && item.status !== 'pending_review'}}"
+          >
+            修改状态
+          </button>
+          
+          <!-- 编辑按钮 -->
+          <button 
+            class="action-btn edit"
+            bindtap="onEditActivity"
+            data-activity="{{item}}"
+          >
+            编辑
+          </button>
+          
+          <!-- 删除按钮 -->
+          <button 
+            class="action-btn delete"
+            bindtap="onDeleteActivity"
+            data-activity="{{item}}"
+            wx:if="{{item.status === 'pending_review' || item.status === 'pending'}}"
+          >
+            删除
+          </button>
+          
+          <!-- 查看相关 -->
+          <button 
+            class="action-btn view"
+            bindtap="onViewWorks"
+            data-activity="{{item}}"
+            wx:if="{{item.status === 'running' || item.status === 'ended'}}"
+          >
+            查看作品
+          </button>
+          
+          <button 
+            class="action-btn manage"
+            bindtap="onManageJudges"
+            data-activity="{{item}}"
+            wx:if="{{item.status === 'running' || item.status === 'pending'}}"
+          >
+            评委管理
+          </button>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无活动数据</text>
+    <text class="empty-desc">点击下方按钮创建第一个活动</text>
+    <button class="empty-btn" bindtap="onCreateActivity">创建活动</button>
+  </view>
+
+  <!-- 悬浮操作按钮 -->
+  <view class="floating-action" bindtap="onCreateActivity">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <!-- 模态框保持不变 -->
+</view>

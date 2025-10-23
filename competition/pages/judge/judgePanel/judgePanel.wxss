@@ -1,0 +1,170 @@
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+}
+
+.back-btn {
+  padding: 15rpx 25rpx;
+  background: #26a69a;
+  color: white;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 卡片 */
+.card {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.card-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #26a69a;
+  margin-bottom: 25rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #e0f2f1;
+}
+
+/* 活动信息 */
+.info-item {
+  margin-bottom: 20rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: bold;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 10rpx;
+}
+
+.download-btn {
+  background: #4db6ac;
+  color: white;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+
+/* 评分项目 */
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #e0f2f1;
+}
+
+.score-item:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.score-info {
+  flex: 1;
+}
+
+.score-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx;
+}
+
+.score-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.score-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.score-input {
+  width: 120rpx;
+  padding: 15rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+
+.score-max {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.total-score {
+  text-align: center;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 2rpx solid #e0f2f1;
+}
+
+.total-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* 评价区域 */
+.comment-input {
+  width: 50%;
+  min-height: 200rpx;
+  padding: 300rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+
+.word-count {
+  text-align: right;
+  font-size: 40rpx;
+  color: #999;
+}
+
+/* 提交按钮 */
+.submit-btn {
+  background: #26a69a;
+  color: white;
+  text-align: center;
+  padding: 25rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 20rpx 0 40rpx;
+}

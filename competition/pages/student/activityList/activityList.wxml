@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="title-section">
+        <text class="title">活动列表</text>
+        <view class="back-btn" bindtap="onBack">返回</view>
+      </view>
+      <view class="welcome-section">
+        <text class="welcome-text">欢迎查看已发布的活动</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 页面内容 -->
+  <view class="content">
+    <!-- 活动列表 -->
+    <view class="activity-list">
+      <view class="activity-item" wx:for="{{activities}}" wx:key="id">
+        <text class="activity-title">{{item.title}}</text>
+        <text class="activity-desc">{{item.description}}</text>
+        <view class="activity-info">
+          <text class="info-item">状态：{{item.status}}</text>
+          <text class="info-item">时间：{{item.startTime}} 至 {{item.endTime}}</text>
+          <text class="info-item">主办：{{item.organizer}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{activities.length === 0}}">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无活动</text>
+      <text class="empty-desc">当前没有可参与的活动</text>
+    </view>
+  </view>
+</view>

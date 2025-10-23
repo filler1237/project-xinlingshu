@@ -1,273 +1,91 @@
-const app=getApp(); // 获取小程序实例
-const defaultAvatarUrl = 'https://i.postimg.cc/qqWgStbK/a.jpg' // 默认头像的 URL
+
 
 Page({
   
-  ChangeImage:function(){ // 更换头像的函数
-    var that = this;
-    wx.chooseMedia({
-      count:1,
-      mediaType: ['image'], // 只能选择图片
-      success:function(res){ 
-        var avatar = res.tempFiles.tempFilePath; // 获取选择的图片
-        wx.setStorageSync('ImageSrc', avatar) // 将图片路径存入缓存
-      }
-    })
-  },
-  onBackTap: function(e) {
-    var pages = getCurrentPages();                       //获取当前页面
-    var prePage = pages[pages.length - 2];               //获取上一页面
-    prePage.setData({
-      'search.page': 1                                   //给上一页面的变量赋值
-    })
-    wx.navigateBack({                                    //返回上一页面
-      delta: 1,
-    })
-  },
-  SPChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('SchoolP', temp)
-      console.log('写入SP成功')
-    }catch(e){
-      console.log('写入SP发生错误')
-    }
-  },
-  PJChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Project', temp)
-      console.log('写入PJ成功')
-    }catch(e){
-      console.log('写入PJ发生错误')
-    }
-  },
-  ClassChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Class', temp)
-      console.log('写入Class成功')
-    }catch(e){
-      console.log('写入Class发生错误')
-    }
-  },
-
-  
-  
   data: { // 页面的初始数据
-    nickName:'游客', // 昵称
-    avatarUrl:defaultAvatarUrl, // 头像 URL
-    ImageSrc:"/assets/默认头像.jpeg", // 用户选择的头像图片路径
-    Namevalue: "", // 姓名
-    Sign:"", // 个性签名
-    PhoneNumber:"", // 手机号码
-    School:"深圳技术大学", // 学校
-    StuNum:"", // 学号
-    SchoolP:"", // 学院专业
-    Project:"", // 项目
-    Class:"" // 班级
-  },
-  
-  NameChange:function(res){ // 姓名输入框的值改变时触发的函数
-    var Name = res.detail
-    try{
-      wx.setStorageSync('Namevalue', Name) // 存储姓名到缓存
-      console.log('写入Name成功')
-    }catch(e){
-      console.log('写入Name发生错误')
-    }
-  },
-  SignChange:function(res){ // 个性签名输入框的值改变时触发的函数
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Sign', temp) // 存储个性签名到缓存
-      console.log('写入Sign成功')
-    }catch(e){
-      console.log('写入Sign发生错误')
-    }
-  },
-  PNChange:function(res){ // 手机号码输入框的值改变时触发的函数
-    var temp = res.detail
-    try{
-      wx.setStorageSync('PN', temp) // 存储手机号码到缓存
-      console.log('写入PN成功')
-    }catch(e){
-      console.log('写入PN发生错误')
-    }
-  },
-  STUNChange:function(res){ // 学号输入框的值改变时触发的函数
-    var temp = res.detail
-    try{
-      wx.setStorageSync('StuNum', temp) // 存储学号到缓存
-      console.log('写入STUN成功')
-    }catch(e){
-      console.log('写入STUN发生错误')
-    }
-  },
-  SPChange:function(res){ // 学院专业输入框的值改变时触发的函数
-    var temp = res.detail
-    try{
-      wx.setStorageSync('SchoolP', temp) // 存储学院专业到缓存
-      console.log('写入SP成功')
-    }catch(e){
-      console.log('写入SP发生错误')
-    }
-  },
-  PJChange:function(res){ // 项目输入框的值改变时触发的函数
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Project', temp) // 存储项目到缓存
-      console.log('写入PJ成功')
-    }catch(e){
-      console.log('写入PJ发生错误')
-    }
-  },
-  ClassChange:function(res){ // 班级输入框的值改变时触发的函数
-    var temp = res.detail
-   try{
-      wx.setStorageSync('Class', temp) // 存储班级到缓存
-      console.log('写入Class成功')
-    }catch(e){
-      console.log('写入Class发生错误')
-    }
-  },
-  SPChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('SchoolP', temp)
-      console.log('写入SP成功')
-    }catch(e){
-      console.log('写入SP发生错误')
-    }
-  },
-  PJChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Project', temp)
-      console.log('写入PJ成功')
-    }catch(e){
-      console.log('写入PJ发生错误')
-    }
-  },
-  ClassChange:function(res){
-    var temp = res.detail
-    try{
-      wx.setStorageSync('Class', temp)
-      console.log('写入Class成功')
-    }catch(e){
-      console.log('写入Class发生错误')
-    }
+    role: 'student', // 默认角色为学生
+    realName: '',
+    studentId: '',
+    phoneNumber: '',
+    college: '',
+    major: '',
   },
 
   
   
-  onChooseAvatar(e) { // 点击更改头像时触发的函数
-    console.log(e)
-    const { avatarUrl } = e.detail 
+  
+  onLoad:function (options) { 
+    wx.setNavigationBarTitle({
+      title:'身份绑定'
+    });
+
+  },
+
+  onRoleChange(event) {
     this.setData({
-      avatarUrl,
-    })
-    app.globalData.userInfo=e.detail
+      role:event.detail,
+    });
   },
-  
-  // onChangename(e){
-  //   console.log(e)
-  //   const { nickName } = e.detail 
-  //   this.setData({
-  //     nickName,
-  //   })
-  //   app.globalData.userInfo=e.detail
-  // },
-  formsubmit(e){
-    const nickName = e.detail.value.nickname
-    console.log("nickName", nickName)
-    // do something
+
+  onInput(e){
+    const{ field } = e.currentTarget.dataset;
+    this.setData({
+      [field]:e.detail.trim()
+    });
   },
-  
-  login(){ // 登录时触发的函数
-    var that = this
-    wx.getUserProfile({
-      desc: '用于完善信息',
-      success(res){
-        console.log(res)
-        var user=res.userInfo
-        app.globalData.userInfo=user
-        app.globalData.userInfo.isLogin=true
-        console.log(app.globalData)
-        that.setData({
-          userInfo:user
-        })
-        wx.showToast({
-          title: '登录成功',
-        })
+
+  submitIdentity() {
+    const { role, realName, studentId, phoneNumber, college, major } = this.data;
+
+    // 完整性校验
+    if (!role || !realName || !studentId || !phoneNumber || !college || !major) {
+      wx.showToast({ title: '请填写所有必填项', icon: 'none' });
+      return;
+    }
+
+    // 手机号格式简单校验
+    if (!/^1[3-9]\d{9}$/.test(phoneNumber)) {
+      wx.showToast({ title: '请输入正确的手机号码', icon: 'none' });
+      return;
+    }
+
+    wx.showLoading({ title: '正在绑定...' });
+
+    // 准备要发送到云函数的数据
+    const identityInfo = {
+      role,
+      realName,
+      studentId,
+      phoneNumber,
+      college,
+      major
+    };
+
+    wx.cloud.callFunction({
+      name: 'updateUserProfile',
+      data: {
+        isBindingIdentity: true,
+        identityInfo: identityInfo
+      },
+    }).then(res => {
+      wx.hideLoading();
+      if (res.result && res.result.success) {
+        wx.showToast({ title: '绑定成功！', icon: 'success', duration: 1500 });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1500);
+      } else {
+        wx.showToast({ title: res.result.message || '绑定失败，请重试', icon: 'none' });
       }
-    })
-  },
-  
-  onLoad(options) { // 页面加载时触发的函数
-    var name = wx.getStorageSync('Namevalue') // 获取缓存中存储的姓名
-    var sign = wx.getStorageSync('Sign') // 获取缓存中存储的个性签名
-    var PN = wx.getStorageSync('PhoneNumber') // 获取缓存中存储的手机号码
-    var stu = wx.getStorageSync('StuNum') // 获取缓存中存储的学号
-    var SP = wx.getStorageSync('SchoolP') // 获取缓存中存储的学院专业
-    var PJ = wx.getStorageSync('Project') // 获取缓存中存储的项目
-    var clas = wx.getStorageSync('Class') // 获取缓存中存储的班级
-    var IS = wx.getStorageSync('ImageSrc') // 获取缓存中存储的头像图片路径
-    if(IS){
-      this.setData({
-        ImageSrc : IS // 如果缓存中存储了头像图片路径，将其设置为页面的 ImageSrc 数据
-      })
-    }
-    if(name){
-      this.setData({
-        Namevalue : name.value // 如果缓存中存储了姓名，将其设置为页面的 Namevalue 数据
-      })
-    }
-    if(sign){
-      this.setData({
-        Sign : sign.value // 如果缓存中存储了个性签名，将其设置为页面的 Sign 数据
-      })
-    }
-    if(PN){
-      this.setData({
-        PhoneNumber: PN.value // 如果缓存中存储了手机号码，将其设置为页面的 PhoneNumber 数据
-      })
-    }
-    if(stu){
-      this.setData({
-        StuNum : stu.value // 如果缓存中存储了学号，将其设置为页面的 StuNum 数据
-      })
-    }
-    if(SP){
-      this.setData({
-        SchoolP : SP.value // 如果缓存中存储了学院专业，将其设置为页面的 SchoolP 数据
-      })
-    }
-    if(PJ){
-      this.setData({
-        Project : PJ.value // 如果缓存中存储了项目，将其设置为页面的 Project 数据
-      })
-    }
-    if(clas){
-      this.setData({
-        Class : clas.value // 如果缓存中存储了班级，将其设置为页面的 Class 数据
-      })
-    }
+    }).catch(err => {
+      wx.hideLoading();
+      wx.showToast({ title: '请求失败，请检查网络', icon: 'none' });
+      console.error("调用身份绑定云函数失败", err);
+    });
   },
 
   onReady() { // 生命周期函数--监听页面初次渲染完成
-    wx.setNavigationBarTitle({
-      title: '个人中心', // 设置导航栏标题
-    })
-  },
-
-  onShow() { // 生命周期函数--监听页面显示
-    this.avatarUrl=app.globalData.userInfo.avatarUrl // 获取全局变量中存储的用户头像 URL
-
-    const self = this
-    let userText = wx.getStorageSync('nickName') // 获取```
-    this.data.inputText = nickName // 将姓名存入页面的 inputText 数据
-    self.setData(self.data) // 更新页面数据
+    
   },
 
   onHide() { // 生命周期函数--监听页面隐藏

@@ -1,0 +1,71 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">返回</view>
+    <text class="title">活动列表</text>
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view 
+      class="tab-item {{currentFilter === 'all' ? 'active' : ''}}" 
+      bindtap="switchFilter" 
+      data-filter="all"
+    >
+      全部活动
+    </view>
+    <view 
+      class="tab-item {{currentFilter === 'pending' ? 'active' : ''}}" 
+      bindtap="switchFilter" 
+      data-filter="pending"
+    >
+      待评审
+    </view>
+    <view 
+      class="tab-item {{currentFilter === 'reviewed' ? 'active' : ''}}" 
+      bindtap="switchFilter" 
+      data-filter="reviewed"
+    >
+      已评审
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-bar">
+    <text class="stat-text">共 {{totalCount}} 个活动，{{pendingCount}} 个待评审</text>
+  </view>
+
+  <!-- 活动列表 -->
+  <scroll-view class="work-list" scroll-y>
+    <view class="work-item" wx:for="{{workList}}" wx:key="id">
+      <view class="work-header">
+        <text class="work-title">{{item.title}}</text>
+        <view class="work-status {{item.status}}">
+          {{item.status === 'reviewed' ? '已评审' : '待评审'}}
+        </view>
+      </view>
+      
+      <view class="work-info">
+        <text class="info-item">组织者：{{item.organizer}}</text>
+        <text class="info-item">类型：{{item.type}}</text>
+      </view>
+
+      <view class="work-meta">
+        <text class="meta-item">时间：{{item.createTime}}</text>
+        <text class="meta-item score" wx:if="{{item.score}}">评分：{{item.score}}分</text>
+      </view>
+
+      <view class="work-desc">{{item.description}}</view>
+
+      <view class="work-actions">
+        <view class="action-btn detail" bindtap="viewWorkDetail" data-id="{{item.id}}">查看详情</view>
+        <view class="action-btn review" bindtap="startReview" data-id="{{item.id}}" wx:if="{{item.status === 'pending'}}">开始评审</view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{workList.length === 0}}">
+      <text class="empty-text">暂无活动数据</text>
+    </view>
+  </scroll-view>
+</view>

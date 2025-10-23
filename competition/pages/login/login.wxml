@@ -1,0 +1,50 @@
+<view class="login-container">
+  <view class="login-header">
+    <text class="title">活动管理系统</text>
+    <text class="subtitle">请选择身份登录</text>
+  </view>
+
+  <view class="login-type">
+    <radio-group bindchange="onLoginTypeChange">
+      <label class="radio-item">
+        <radio value="student" checked="{{loginType === 'student'}}"/> 学生
+      </label>
+      <label class="radio-item">
+        <radio value="admin" checked="{{loginType === 'admin'}}"/> 管理员
+      </label>
+      <label class="radio-item">
+        <radio value="judge" checked="{{loginType === 'judge'}}"/> 评委
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="login-form">
+    <view class="input-group">
+      <text class="label">用户名</text>
+      <input 
+        class="input" 
+        placeholder="请输入用户名" 
+        value="{{username}}"
+        bindinput="onUsernameInput"
+      />
+    </view>
+
+    <view class="input-group">
+      <text class="label">密码</text>
+      <input 
+        class="input" 
+        password 
+        placeholder="请输入密码" 
+        value="{{password}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+
+    <button class="login-btn" bindtap="onLogin">登录</button>
+    
+    <view class="register-link">
+      <text>还没有账号？</text>
+      <text class="link" bindtap="onRegister">立即注册</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,183 @@
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+}
+
+.back-btn {
+  padding: 15rpx 25rpx;
+  background: #26a69a;
+  color: white;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 筛选标签 */
+.filter-tabs {
+  display: flex;
+  background: white;
+  border-radius: 12rpx;
+  padding: 10rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 8rpx;
+}
+
+.tab-item.active {
+  background: #26a69a;
+  color: white;
+  font-weight: bold;
+}
+
+/* 统计信息 */
+.stats-bar {
+  background: white;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.stat-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 活动列表 */
+.work-list {
+  height: calc(100vh - 300rpx);
+}
+
+.work-item {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.work-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.work-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.work-status.pending {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.work-status.reviewed {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+.work-info {
+  display: flex;
+  gap: 30rpx;
+  margin-bottom: 15rpx;
+}
+
+.info-item {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.work-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.meta-item.score {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.work-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 20rpx;
+}
+
+.work-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.action-btn {
+  padding: 15rpx 25rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.action-btn.detail {
+  background: #e0f2f1;
+  color: #26a69a;
+  flex: 1;
+}
+
+.action-btn.review {
+  background: #26a69a;
+  color: white;
+  flex: 1;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

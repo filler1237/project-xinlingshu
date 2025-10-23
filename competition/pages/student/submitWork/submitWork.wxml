@@ -1,0 +1,84 @@
+<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+</view>
+<view class="container">
+  <view class="header">
+    <text class="title">提交作品</text>
+  </view>
+
+  <view class="form">
+    <!-- 选择活动 -->
+    <view class="form-section">
+      <text class="section-title">选择活动 *</text>
+      <view class="activity-selector">
+        <view 
+          wx:for="{{activities}}" 
+          wx:key="id" 
+          class="activity-option {{selectedActivity && selectedActivity.id === item.id ? 'selected' : ''}}"
+          bindtap="onActivitySelect"
+          data-id="{{item.id}}"
+        >
+          <view class="activity-info">
+            <text class="activity-name">{{item.title}}</text>
+            <text class="activity-deadline">截止时间：{{item.deadline}}</text>
+          </view>
+          <view class="checkmark" wx:if="{{selectedActivity && selectedActivity.id === item.id}}">✓</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 作品信息 -->
+    <view class="form-section">
+      <text class="section-title">作品信息</text>
+      <view class="input-group">
+        <text class="input-label">作品标题 *</text>
+        <input 
+          class="input" 
+          placeholder="请输入作品标题" 
+          value="{{workTitle}}"
+          bindinput="onTitleInput"
+        />
+      </view>
+      
+      <view class="input-group">
+        <text class="input-label">作品描述</text>
+        <textarea 
+          class="textarea" 
+          placeholder="请输入作品描述（选填）" 
+          value="{{workDescription}}"
+          bindinput="onDescriptionInput"
+          maxlength="500"
+        />
+        <text class="char-count">{{workDescription.length}}/500</text>
+      </view>
+    </view>
+
+    <!-- 文件上传 -->
+    <view class="form-section">
+      <text class="section-title">作品文件 *</text>
+      <view class="file-upload">
+        <view wx:if="{{files.length === 0}}" class="upload-area" bindtap="onChooseFile">
+          <text class="upload-icon">📎</text>
+          <text class="upload-text">点击上传作品文件</text>
+          <text class="upload-hint">支持文档、图片、压缩包等格式</text>
+        </view>
+        
+        <view wx:else class="file-list">
+          <view class="file-item">
+            <text class="file-icon">📄</text>
+            <view class="file-info">
+              <text class="file-name">{{files[0].name}}</text>
+              <text class="file-size">{{files[0].size}}</text>
+            </view>
+            <text class="file-remove" bindtap="onRemoveFile">×</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button class="submit-btn" bindtap="onSubmit">提交作品</button>
+    </view>
+  </view>
+</view>

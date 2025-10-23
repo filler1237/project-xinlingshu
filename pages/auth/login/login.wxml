@@ -1,0 +1,24 @@
+<!--pages/auth/login/login.wxml-->
+<text>pages/auth/login/login.wxml</text>
+<view class="container">
+  <view class="login-header">
+    <text class="title">欢迎登录</text>
+  </view>
+
+  <view class="form-group">
+    <text class="label">账号</text>
+    <input class="input" placeholder="请输入账号" bindinput="onAccountInput" value="{{account}}" />
+  </view>
+
+  <view class="form-group">
+    <text class="label">密码</text>
+    <input class="input" placeholder="请输入密码" password bindinput="onPasswordInput" value="{{password}}" />
+  </view>
+
+  <button class="login-button" bindtap="onLogin">登录</button>
+
+  <view class="register-link">
+    <text>还没有账号？</text>
+    <text class="link-text" bindtap="toRegister">立即注册</text>
+  </view>
+</view>

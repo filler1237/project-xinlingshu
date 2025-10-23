@@ -7,7 +7,8 @@
     "pages/auth/usercenter/usercenter",
     "pages/index/index",
     "pages/growth/growth",
-    "pages/echoWall/echoWall"
+    "pages/echoWall/echoWall",
+    "pages/auth/login/login"
   ],
   "subPackages": [
     {
@@ -35,6 +36,28 @@
         "tools/whitenoise/whitenoise",
         "tools/user_self_upload/user_self_upload",
         "profile/profile"
+      ]
+    },
+    {
+      "root": "competition",
+      "pages": [
+        "pages/login/login",
+        "pages/register/register",
+        "pages/studenthome/studenthome",
+        "pages/adminhome/adminhome",
+        "pages/judgehome/judgehome",
+        "pages/student/activityList/activityList",
+        "pages/student/submitWork/submitWork",
+        "pages/student/viewResult/viewResult",
+        "pages/student/creditReward/creditReward",
+        "pages/admin/applyActivity/applyActivity",
+        "pages/admin/manageActivity/manageActivity",
+        "pages/admin/workOverview/workOverview",
+        "pages/admin/judgeManage/judgeManage",
+        "pages/admin/creditConfig/creditConfig",
+        "pages/judge/judgePanel/judgePanel",
+        "pages/judge/workList/workList",
+        "pages/bindldentity/bindldentity"
       ]
     },
     {

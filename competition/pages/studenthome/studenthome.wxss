@@ -1,0 +1,263 @@
+.container {
+  padding: 40rpx;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #26c6da 0%, #00acc1 100%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60rpx;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  margin-left: 20rpx;
+}
+
+.action-btn {
+  padding: 15rpx 25rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  text-align: center;
+  min-width: 120rpx;
+  font-weight: 500;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 1rpx solid rgba(255, 255, 255, 0.4);
+}
+
+.logout-btn {
+  background: rgba(239, 83, 80, 0.25);
+  color: white;
+  border: 1rpx solid rgba(255, 255, 255, 0.4);
+}
+
+.back-btn:active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.logout-btn:active {
+  background: rgba(239, 83, 80, 0.4);
+}
+
+.welcome {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10rpx;
+}
+
+.role {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 5rpx;
+}
+
+.department {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.student-id {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.function-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30rpx;
+  margin-bottom: 60rpx;
+}
+
+.function-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.function-card:active {
+  transform: translateY(4rpx);
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: 60rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  color: #00695c;
+}
+
+.card-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #4db6ac;
+  line-height: 1.4;
+}
+
+.section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #00695c;
+}
+
+.section-more {
+  font-size: 28rpx;
+  color: #00796b;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.activity-card {
+  border: 1rpx solid #e0f2f1;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.work-card {
+  border: 1rpx solid #e0f2f1;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.activity-card:active {
+  background-color: #e0f2f1;
+  transform: scale(0.98);
+}
+
+.work-card:active {
+  background-color: #e0f2f1;
+  transform: scale(0.98);
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15rpx;
+}
+
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15rpx;
+}
+
+.activity-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #004d40;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.work-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #004d40;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.activity-status {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: bold;
+}
+
+.work-status {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: bold;
+}
+
+.activity-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #00796b;
+  margin-bottom: 20rpx;
+  line-height: 1.5;
+}
+
+.work-activity {
+  display: block;
+  font-size: 28rpx;
+  color: #00796b;
+  margin-bottom: 20rpx;
+  line-height: 1.5;
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.work-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.info-item {
+  font-size: 24rpx;
+  color: #4db6ac;
+}
