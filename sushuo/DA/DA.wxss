@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #F7F8FA; /* 更柔和的背景色 */
+  background-color: #F0F2F5; /* 更柔和的背景色 */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -19,7 +19,7 @@
   left: 0;
   right: 0;
   background-color: #FFFFFF;
-  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
   z-index: 100;
 }
 
@@ -49,7 +49,7 @@
   flex: 1;
   padding: 20rpx;
   padding-bottom: 40rpx; /* 增加底部内边距 */
-  background-color: #F7F8FA;
+  background-color: #F0F2F5; /* 与页面背景色保持一致 */
   overflow-y: auto;
   /* padding-top 将由 WXML 内联样式动态设置 */
 }
@@ -58,7 +58,7 @@
 .message-row {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx; /* 调整消息间距 */
   width: 100%;
 }
 
@@ -75,6 +75,7 @@
   height: 80rpx;
   border-radius: 50%;
   flex-shrink: 0;
+  border: 2rpx solid rgba(0, 0, 0, 0.05); /* 添加头像边框 */
 }
 
 /* --- 消息气泡 --- */
@@ -83,26 +84,34 @@
   padding: 24rpx;
   border-radius: 24rpx;
   word-wrap: break-word;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08); /* 保持阴影 */
+  line-height: 1.6; /* 确保行高一致 */
 }
 
 .ai-bubble {
   background-color: #FFFFFF;
   color: #333333;
   margin-left: 20rpx;
-  border-top-left-radius: 4rpx; /* 调整圆角以形成气泡尖角 */
+  border-radius: 24rpx 24rpx 24rpx 4rpx; /* 调整圆角以形成气泡尖角 */
 }
 
 .user-bubble {
-  background-image: linear-gradient(to right, #88d75f, #96CE74); /* 渐变色 */
+  background-image: linear-gradient(to right, #6FCF97, #88D75F); /* 调整渐变色，更柔和 */
   color: #ffffff;
   margin-right: 20rpx;
-  border-top-right-radius: 4rpx;
+  border-radius: 24rpx 24rpx 4rpx 24rpx; /* 调整圆角以形成气泡尖角 */
 }
 
 .message-text {
   font-size: 30rpx;
-  line-height: 1.6;
+}
+
+.ai-bubble .message-text {
+  color: #333333; /* AI 消息字体颜色 */
+}
+
+.user-bubble .message-text {
+  color: #ffffff; /* 用户消息字体颜色 */
 }
 
 /* --- 输入栏 --- */
@@ -111,40 +120,42 @@
   align-items: center;
   padding: 20rpx 24rpx;
   background-color: #FFFFFF;
-  box-shadow: 0 -2rpx 4rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08); /* 调整阴影 */
 }
 
 .input-box {
   flex: 1;
   height: 80rpx;
   padding: 0 30rpx;
-  background-color: #F7F8FA;
+  background-color: #F0F2F5; /* 与页面背景色保持一致 */
   border-radius: 40rpx; /* 圆角输入框 */
   font-size: 28rpx;
   margin-right: 20rpx;
   border: none; /* 移除边框 */
+  color: #333333; /* 确保输入字体颜色 */
 }
 
 .send-button {
   width: 80rpx;
   height: 80rpx;
-  background-color: #96CE74;
+  background-color: #6FCF97; /* 更柔和的绿色 */
   border-radius: 50%; /* 圆形按钮 */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   border: none;
-  box-shadow: 0 4rpx 12rpx rgba(150, 206, 116, 0.4);
+  box-shadow: 0 4rpx 12rpx rgba(111, 207, 151, 0.4); /* 调整阴影颜色 */
 }
 
 .send-icon {
   width: 40rpx;
   height: 40rpx;
-  background-image: url('cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png');
-  background-size: contain;
+  background-image: url('cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png'); /* 假设这个图标是白色的，如果不是可能需要替换 */
+  background-size: 60%; /* 调整图标大小 */
   background-repeat: no-repeat;
   background-position: center;
+  filter: brightness(0) invert(1); /* 将图标变为白色 */
 }
 
 /* --- 思考中动画 --- */
@@ -157,7 +168,7 @@
 .typing-indicator .dot {
   width: 16rpx;
   height: 16rpx;
-  background-color: #999;
+  background-color: #BBBBBB; /* 调整思考中点的颜色 */
   border-radius: 50%;
   margin: 0 6rpx;
   animation: typing-blink 1.4s infinite both;

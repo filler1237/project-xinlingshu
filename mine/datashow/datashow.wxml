@@ -1,0 +1,36 @@
+<view class="page-container">
+
+  <!-- 日期选择器 -->
+  <picker mode="date" value="{{currentDate}}" start="2020-01-01" end="2025-12-31" bindchange="onDateChange">
+    <view class="date-picker">
+      <text>{{currentDate}}</text>
+      <image class="down-icon" src="/image/down.png" />
+    </view>
+  </picker>
+
+  <!-- 图表容器 -->
+  <view class="chart-container">
+    <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+  </view>
+  
+  <!-- 数据摘要 -->
+  <view class="summary-container">
+    <view class="summary-title">
+      <text>{{summary.title}}</text>
+      <!-- 返回上一级按钮，仅在第二层级显示 -->
+      <text wx:if="{{isDrilledDown}}" class="drill-back" bindtap="onDrillBack">返回上一级</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">总人数：</text>
+      <text class="summary-value">{{summary.total}} 人</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">主要情绪：</text>
+      <text class="summary-value">{{summary.majorEmotion}}</text>
+    </view>
+    <view class="summary-item suggestion">
+      <text class="summary-label">专业建议：</text>
+      <text class="summary-text">{{summary.suggestion}}</text>
+    </view>
+  </view>
+</view>

@@ -48,7 +48,7 @@
   <view class="input-bar">
     <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange" confirm-type="send" bindconfirm="sendMessage"/>
     <view class="send-button" bindtap="sendMessage">
-      <view class="send-icon"></view>
+      <view class="send-icon">发送消息</view>
     </view>
   </view>
 </view>

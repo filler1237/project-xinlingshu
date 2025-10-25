@@ -77,6 +77,10 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx; "/>
       <text>比赛评分系统</text>
     </navigator>
+    <navigator url="/mine/datashow/datashow" class="item" style="width:112rpx ;">
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx; "/>
+      <text>全校学生心理状态饼图</text>
+    </navigator>
   </view>
 </view>
 <view class="forus" style="width: 360rpx;">

@@ -79,7 +79,9 @@
         "list/list",
         "setting/setting",
         "mycomment/mycomment",
-        "record/record"
+        "record/record",
+        "datashow/datashow",
+        "datashow1/datashow1"
       ]
     },
     {
