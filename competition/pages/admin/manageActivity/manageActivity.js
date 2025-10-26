@@ -25,6 +25,13 @@ Page({
     reviewComment: ''
   },
 
+  // 返回 ，放js文件
+  goBack: function() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+  
   onLoad() {
     console.log('页面加载');
     this.loadActivityData();

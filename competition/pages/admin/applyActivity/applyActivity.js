@@ -10,6 +10,13 @@ Page({
     canSubmit: false
   },
 
+  // 返回 ，放js文件
+  goBack: function() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+  
   // 监听输入变化
   onActivityNameInput(e) {
     this.setData({ activityName: e.detail.value });
@@ -84,9 +91,11 @@ Page({
             duration: 2000
           });
           
-          // 延迟返回上一页
+          // 延迟返回adminhome页面
           setTimeout(() => {
-            wx.navigateBack();
+            wx.redirectTo({
+              url: '/pages/adminhome/adminhome'
+            });
           }, 1500);
         } else {
           wx.showToast({
@@ -102,6 +111,13 @@ Page({
           icon: 'none'
         });
       }
+    });
+  },
+
+  // 返回功能 - 返回到adminhome页面
+  onBack() {
+    wx.redirectTo({
+      url: '/pages/adminhome/adminhome'
     });
   },
 

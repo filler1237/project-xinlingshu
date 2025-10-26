@@ -1,11 +1,12 @@
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
+<!-- <view class='partone' style="width:82rpx" bindtap='onBackTap'>
     <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
-</view>
+</view> -->
 <view class="container">
-  <view class="header">
+   <view class="header">
     <text class="title">提交作品</text>
   </view>
-
+  <view class="back-btn partone" bindtap="onBackTap">返回</view>
+  
   <view class="form">
     <!-- 选择活动 -->
     <view class="form-section">

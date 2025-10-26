@@ -18,6 +18,13 @@ Page({
     files: []
   },
 
+  // 返回 ，放js文件
+  goBack: function() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+  
   onLoad() {
     console.log('提交作品页面加载');
   },

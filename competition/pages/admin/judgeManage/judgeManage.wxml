@@ -5,7 +5,9 @@
     <view class="header-bg"></view>
     <view class="header-content">
       <text class="header-title">评委管理</text>
+      <text class="back-btn header-desc" bindtap="goBack">返回◀  </text>
       <text class="header-desc">管理活动评委任命与权限</text>
+
       <view class="stats-grid">
         <view class="stat-item">
           <text class="stat-number">{{stats.totalTeachers}}</text>

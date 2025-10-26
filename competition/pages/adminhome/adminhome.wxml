@@ -4,6 +4,7 @@
       <text class="welcome">管理员面板</text>
       <text class="username">{{userInfo.username}}</text>
       <text class="department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
+      <view class="back-btn" bindtap="goBack">返回</view>
     </view>
     <view class="header-actions">
       <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>

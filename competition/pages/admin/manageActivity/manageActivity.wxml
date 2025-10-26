@@ -6,6 +6,8 @@
     <view class="header-content">
       <text class="header-title">活动管理</text>
       <text class="header-desc">发布与管理所有活动</text>
+      
+      <view class="back-btn" bindtap="goBack">返回</view>
       <view class="stats-grid">
         <view class="stat-item">
           <text class="stat-number">{{stats.total}}</text>

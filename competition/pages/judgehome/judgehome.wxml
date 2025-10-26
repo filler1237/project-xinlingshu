@@ -8,6 +8,7 @@
         {{isChiefJudge ? '总评委' : '评委'}}
       </text>
     </view>
+    <view class="back-btn" bindtap="goBack">返回</view>
     <view class="header-actions">
       <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
     </view>

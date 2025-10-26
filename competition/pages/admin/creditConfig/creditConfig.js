@@ -23,6 +23,13 @@ Page({
     showPreviewModal: false
   },
 
+  // 返回 ，放js文件
+  goBack: function() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+  
   onLoad(options) {
     console.log('学分配置页面加载');
     this.loadActivityOptions();

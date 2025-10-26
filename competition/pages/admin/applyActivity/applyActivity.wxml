@@ -1,11 +1,13 @@
 <!-- pages/admin/applyActivity/applyActivity.wxml -->
 <view class="apply-container">
-  <!-- 顶部标题 -->
+  <!-- 顶部标题 - 添加返回按钮 -->
   <view class="page-header">
     <view class="header-bg"></view>
     <view class="header-content">
-      <text class="header-title">申请新活动</text>
-      <text class="header-desc">创建心理主题创作活动</text>
+      <view class="header-titles">
+        <text class="header-title">申请新活动</text>
+        <text class="header-desc">创建心理主题创作活动</text>
+      </view>
     </view>
   </view>
 
@@ -124,6 +126,7 @@
           <text class="btn-icon">→</text>
         </button>
       </view>
+      <view class="back-btn" bindtap="goBack">返回</view>
     </view>
   </view>
 </view>

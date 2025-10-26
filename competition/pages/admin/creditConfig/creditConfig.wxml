@@ -6,6 +6,7 @@
     <view class="header-content">
       <text class="header-title">学分配置</text>
       <text class="header-desc">设置活动学分奖励规则</text>
+      <view class="back-btn" bindtap="goBack">返回</view>
     </view>
   </view>
 

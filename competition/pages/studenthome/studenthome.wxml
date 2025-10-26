@@ -1,6 +1,3 @@
-<view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
-</view>
 <view class="container">
   <view class="header">
     <view class="user-info">
@@ -11,6 +8,7 @@
     </view>
     <view class="header-actions">
       <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+      <view class="back-btn" bindtap="onBack">返回</view>
     </view>
   </view>
 

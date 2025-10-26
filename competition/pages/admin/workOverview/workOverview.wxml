@@ -5,6 +5,7 @@
     <view class="header-bg"></view>
     <view class="header-content">
       <text class="header-title">作品总览</text>
+      <text class="back-btn header-desc" bindtap="goBack">返回◀  </text>
       <text class="header-desc">查看与管理所有参赛作品</text>
       <view class="stats-grid">
         <view class="stat-item">

@@ -39,122 +39,42 @@ Page({
         score: null
       }
     ]
+    
   },
-
-  /**
-   * 页面加载时，立即检查登录和身份状态
-   */
-  onLoad() {
-    // onLoad 阶段可以先不用检查，因为 onShow 会立即执行
-    // this.checkLoginAndRole(); 
-  },
-
-  /**
-   * 每次页面显示时，都严格检查登录和身份状态
-   * 这是统一登录的核心
-   */
-  onShow() {
-    this.checkLoginAndRole();
-  },
-
-  /**
-   * [重写] 检查登录状态、身份绑定和角色权限
-   */
-  checkLoginAndRole() {
-    const userInfo = wx.getStorageSync('userInfo');
-
-    // 1. 检查是否登录
-    if (!userInfo) {
-      wx.showModal({
-        title: '尚未登录',
-        content: '您需要先登录才能访问比赛系统，是否前往登录页面？',
-        confirmText: '去登录',
-        success: (res) => {
-          if (res.confirm) {
-            // 跳转到主项目的“我的”页面进行统一登录
-            wx.switchTab({
-              url: '/pages/mine/mine'
-            });
-          } else {
-            // 用户取消登录，可以返回上一页或停留在当前页（但功能受限）
-            wx.navigateBack({ delta: 1 });
-          }
-        }
-      });
-      return; // 终止后续操作
-    }
-
-    // 2. 检查是否已绑定身份
-    if (!userInfo.isIdentityBound) {
-      wx.showModal({
-        title: '尚未绑定身份',
-        content: '您需要先绑定身份才能访问比赛系统，是否前往绑定页面？',
-        confirmText: '去绑定',
-        success: (res) => {
-          if (res.confirm) {
-            // 同样跳转到“我的”页面，登录后会自动弹出绑定提示
-            wx.switchTab({
-              url: '/pages/auth/usercenter/usercenter'
-            });
-          } else {
-            wx.navigateBack({ delta: 1 });
-          }
-        }
-      });
-      return; // 终止后续操作
-    }
-
-    // 3. 检查角色是否为学生
-    if (userInfo.role !== 'student') {
-      wx.showModal({
-        title: '权限不足',
-        content: '此页面仅限学生访问。',
-        showCancel: false,
-        confirmText: '返回',
-        success: () => {
-          // 可以跳转到主页或“我的”页面
-          wx.switchTab({
-            url: '/pages/mine/mine'
-          });
-        }
-      });
-      return; // 终止后续操作
-    }
-
-    // 4. 所有检查通过，加载页面数据
-    this.setData({ userInfo });
-    this.loadData(); // 调用您原来的数据加载函数
-  },
-
-  /**
-   * [重写] 退出登录逻辑
-   */
-  onLogout() {
-    wx.showModal({
-      title: '确认退出',
-      content: '确定要退出登录吗？',
-      success: (res) => {
-        if (res.confirm) {
-          wx.removeStorageSync('userInfo');
-          wx.removeStorageSync('openid'); // 建议也清除 openid
-          // 退出后，跳转到主项目的“我的”页面
-          wx.switchTab({
-            url: '/pages/mine/mine'
-          });
-        }
-      }
+  onBack() {
+    wx.navigateBack({
+      delta: 1
     });
+  },
+
+  onLoad() {
+    this.getUserInfo();
+    this.loadData();
+  },
+
+  onShow() {
+    this.getUserInfo();
+  },
+
+  onPullDownRefresh() {
+    this.loadData();
+    wx.stopPullDownRefresh();
+  },
+
+  getUserInfo() {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (!userInfo) {
+      wx.redirectTo({
+        url: '/competition/pages/login/login'
+      });
+      return;
+    }
+    this.setData({ userInfo });
   },
 
   loadData() {
     console.log('加载学生数据...');
   },
-
-  onBackTap() {
-    // 处理点击返回的逻辑
-    wx.navigateBack();
-  },
-
 
   // 学生功能跳转
   toActivityList() {
