@@ -1,0 +1,62 @@
+<view class="container">
+  <view class="header">
+    <view class="user-info">
+      <text class="welcome">管理员面板</text>
+      <text class="username">{{userInfo.username}}</text>
+      <text class="department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
+      <view class="back-btn" bindtap="goBack">返回</view>
+    </view>
+    <view class="header-actions">
+      <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+    </view>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-number">{{stats.activityCount}}</text>
+      <text class="stat-label">活动总数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{stats.workCount}}</text>
+      <text class="stat-label">作品总数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{stats.pendingCount}}</text>
+      <text class="stat-label">待处理</text>
+    </view>
+  </view>
+
+  <!-- 功能网格 -->
+  <view class="function-grid">
+    <view class="function-card" bindtap="toApplyActivity">
+      <view class="card-icon">📝</view>
+      <text class="card-title">申请活动</text>
+      <text class="card-desc">创建新的活动</text>
+    </view>
+
+    <view class="function-card" bindtap="toManageActivity">
+      <view class="card-icon">📢</view>
+      <text class="card-title">活动管理</text>
+      <text class="card-desc">发布与管理活动</text>
+    </view>
+
+    <view class="function-card" bindtap="toWorkOverview">
+      <view class="card-icon">📂</view>
+      <text class="card-title">作品总览</text>
+      <text class="card-desc">查看所有作品</text>
+    </view>
+
+    <view class="function-card" bindtap="toJudgeManage">
+      <view class="card-icon">👥</view>
+      <text class="card-title">评委管理</text>
+      <text class="card-desc">指定活动评委</text>
+    </view>
+
+    <view class="function-card" bindtap="toCreditConfig">
+      <view class="card-icon">⚙️</view>
+      <text class="card-title">学分配置</text>
+      <text class="card-desc">设置学分奖励</text>
+    </view>
+  </view>
+</view>

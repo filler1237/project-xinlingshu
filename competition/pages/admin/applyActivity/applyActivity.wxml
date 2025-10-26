@@ -1,0 +1,132 @@
+<!-- pages/admin/applyActivity/applyActivity.wxml -->
+<view class="apply-container">
+  <!-- 顶部标题 - 添加返回按钮 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="header-titles">
+        <text class="header-title">申请新活动</text>
+        <text class="header-desc">创建心理主题创作活动</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-section">
+    <view class="form-card">
+      <!-- 活动名称 -->
+      <view class="form-item">
+        <text class="form-label">活动名称</text>
+        <input 
+          class="form-input" 
+          placeholder="请输入活动名称"
+          placeholder-class="placeholder-style"
+          bindinput="onActivityNameInput"
+          value="{{activityName}}"
+        />
+      </view>
+
+      <!-- 活动时间 -->
+      <view class="form-item">
+        <text class="form-label">活动时间</text>
+        <view class="time-picker-group">
+          <view class="time-picker">
+            <text class="time-label">开始时间</text>
+            <picker 
+              mode="date" 
+              bindchange="onStartDateChange"
+              value="{{startDate}}"
+            >
+              <view class="picker-display">{{startDate || '选择开始日期'}}</view>
+            </picker>
+          </view>
+          <view class="time-separator">至</view>
+          <view class="time-picker">
+            <text class="time-label">结束时间</text>
+            <picker 
+              mode="date" 
+              bindchange="onEndDateChange"
+              value="{{endDate}}"
+            >
+              <view class="picker-display">{{endDate || '选择结束日期'}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+      <!-- 活动主题 -->
+      <view class="form-item">
+        <text class="form-label">活动主题</text>
+        <input 
+          class="form-input" 
+          placeholder="如：心理健康、情绪管理、人际关系等"
+          placeholder-class="placeholder-style"
+          bindinput="onThemeInput"
+          value="{{activityTheme}}"
+        />
+      </view>
+
+      <!-- 活动形式 -->
+      <view class="form-item">
+        <text class="form-label">活动形式</text>
+        <view class="radio-group">
+          <view 
+            class="radio-item {{formType === '征文' ? 'active' : ''}}"
+            bindtap="onFormTypeSelect"
+            data-type="征文"
+          >
+            <text class="radio-text">征文比赛</text>
+          </view>
+          <view 
+            class="radio-item {{formType === '绘画' ? 'active' : ''}}"
+            bindtap="onFormTypeSelect"
+            data-type="绘画"
+          >
+            <text class="radio-text">绘画创作</text>
+          </view>
+          <view 
+            class="radio-item {{formType === '视频' ? 'active' : ''}}"
+            bindtap="onFormTypeSelect"
+            data-type="视频"
+          >
+            <text class="radio-text">视频制作</text>
+          </view>
+          <view 
+            class="radio-item {{formType === '其他' ? 'active' : ''}}"
+            bindtap="onFormTypeSelect"
+            data-type="其他"
+          >
+            <text class="radio-text">其他形式</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 活动描述 -->
+      <view class="form-item">
+        <text class="form-label">活动描述</text>
+        <textarea 
+          class="form-textarea"
+          placeholder="请详细描述活动内容、参与要求、评审标准等..."
+          placeholder-class="placeholder-style"
+          bindinput="onDescriptionInput"
+          value="{{activityDescription}}"
+          maxlength="500"
+        ></textarea>
+        <text class="word-count">{{activityDescription.length}}/500</text>
+      </view>
+
+      <!-- 提交按钮 -->
+      <view class="submit-section">
+        <button 
+          class="submit-btn {{canSubmit ? 'active' : ''}}"
+          bindtap="onSubmit"
+          disabled="{{!canSubmit}}"
+        >
+          <text class="btn-text">提交申请</text>
+          <text class="btn-icon">→</text>
+        </button>
+      </view>
+      <view class="back-btn" bindtap="goBack">返回</view>
+    </view>
+  </view>
+</view>

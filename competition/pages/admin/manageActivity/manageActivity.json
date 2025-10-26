@@ -1,0 +1,9 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "活动管理",
+  "navigationBarBackgroundColor": "#00c6a7",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f0f9f0",
+  "backgroundTextStyle": "dark"
+}

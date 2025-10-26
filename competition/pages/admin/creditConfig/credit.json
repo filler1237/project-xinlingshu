@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "学分配置",
+  "navigationBarBackgroundColor": "#00c6a7",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false
+}
