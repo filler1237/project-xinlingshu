@@ -73,10 +73,12 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx;"/>
       <text>查询列表</text>
     </navigator>
-    <navigator url="/competition/pages/bindldentity/bindldentity" class="item" style="width:112rpx ;">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx; "/>
-      <text>比赛评分系统</text>
-    </navigator>
+     <!--改成view绑定事件了-->
+     <view class="item" bindtap="onActivitySystemTap" style="width:112rpx ;">
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/activity.png" style="width: 53.33rpx; "/>
+      <text>活动系统</text>
+    </view>
+
     <navigator url="/mine/datashow/datashow" class="item" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx; "/>
       <text>全校学生心理状态饼图</text>
@@ -126,3 +128,33 @@
   </view>
 </view>
 
+<!-- 身份选择弹窗 - 修复版本 -->
+<view class="popup-overlay" wx:if="{{ showIdentityPopup }}" bindtap="onCloseIdentityPopup">
+  <view class="popup-container identity-popup" catchtap="doNothing">
+    <view class="popup-header">
+      <text class="popup-title">选择您的身份</text>
+    </view>
+    <view class="popup-content identity-options">
+      <view class="identity-option" bindtap="onChooseIdentity" data-identity="student">
+        <view class="identity-icon-placeholder">🎓</view>
+        <text class="identity-text">学生</text>
+        <text class="identity-desc">使用心灵树洞功能，参与活动</text>
+      </view>
+      
+      <view class="identity-option" bindtap="onChooseIdentity" data-identity="admin">
+        <view class="identity-icon-placeholder">⚙️</view>
+        <text class="identity-text">管理员</text>
+        <text class="identity-desc">管理活动系统，审核内容</text>
+      </view>
+      
+      <view class="identity-option" bindtap="onChooseIdentity" data-identity="judge">
+        <view class="identity-icon-placeholder">⭐</view>
+        <text class="identity-text">评委</text>
+        <text class="identity-desc">评审活动作品，打分评价</text>
+      </view>
+    </view>
+    <view class="popup-footer">
+      <button class="cancel-btn" bindtap="onCloseIdentityPopup">取消</button>
+    </view>
+  </view>
+</view>
