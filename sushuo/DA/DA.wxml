@@ -7,6 +7,34 @@
     <view class="title">倾谈</view>
   </view>
 
+  <!-- 移出并修改：话题菜单按钮，使其悬浮在左上角下方 -->
+  <view class="topics-menu-button" bindtap="toggleTopicsPanel" style="top: calc({{statusBarHeight + headerHeight}}px + 30rpx);">
+    <image class="topics-menu-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxsaW5lIHgxPSIzIiB5MT0iMTIiIHgyPSIyMSIgeTI9IjEyIj48L2xpbmU+PGxpbmUgeDE9IjMiIHkxPSI2IiB4Mj0iMjEiIHkyPSI2Ij48L2xpbmU+PGxpbmUgeDE9IjMiIHkxPSIxOCIgeDI9IjIxIiB5Mj0iMTgiPjwvbGluZT48L3N2Zz4="></image>
+  </view>
+
+  <!-- 新增：话题列表面板 (添加 statusBarHeight 内边距) -->
+  <view class="topics-panel {{isTopicsPanelOpen ? 'open' : ''}}" style="padding-top: {{statusBarHeight}}px;">
+    <view class="panel-header">
+      <text class="panel-title">对话话题</text>
+      <view class="new-topic-btn" bindtap="createNewTopic">+ 新建话题</view>
+    </view>
+    <scroll-view scroll-y="true" class="topics-list">
+      <!-- 修复：将 topicId 相关的字段全部修正为 _id -->
+      <view 
+        wx:for="{{topics}}" 
+        wx:key="_id" 
+        class="topic-item {{item._id === currentTopicId ? 'active' : ''}}"
+        bindtap="switchTopic"
+        data-topic-id="{{item._id}}"
+      >
+        <text class="topic-name">{{item.name}}</text>
+        <view class="delete-topic-btn" catchtap="deleteTopic" data-topic-id="{{item._id}}">删除</view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- 遮罩层 -->
+  <view class="overlay {{isTopicsPanelOpen ? 'show' : ''}}" bindtap="toggleTopicsPanel"></view>
+
   <!-- 聊天内容区域 -->
   <scroll-view 
     class="chat-container" 
@@ -48,7 +76,8 @@
   <view class="input-bar">
     <input class="input-box" placeholder="请输入内容..." value="{{inputText}}" bindinput="inputChange" confirm-type="send" bindconfirm="sendMessage"/>
     <view class="send-button" bindtap="sendMessage">
-      <view class="send-icon">发送消息</view>
+      <!-- 修复：直接使用 text 并调整样式，确保“发送”二字完整显示 -->
+      <text class="send-text">发送</text>
     </view>
   </view>
 </view>

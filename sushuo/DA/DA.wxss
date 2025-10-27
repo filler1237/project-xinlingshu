@@ -1,32 +1,31 @@
 /* pages/sushuo/DA/DA.wxss */
-
-/* --- 全局样式 --- */
 .page {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #F0F2F5; /* 更柔和的背景色 */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f4f4f4;
+  position: relative;
+  overflow: hidden; /* 防止页面滚动 */
 }
 
-/* --- 顶部导航栏 --- */
+/* --- 自定义导航栏 --- */
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* 标题居中 */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #FFFFFF;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 标题居中 */
+  background-color: #ffffff;
+  border-bottom: 1rpx solid #e0e0e0;
   z-index: 100;
 }
 
 .back-button {
   position: absolute;
   left: 20rpx;
-  /* top and height are set via inline styles in WXML */
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,40 +33,150 @@
 }
 
 .back-icon {
-  width: 36rpx;
-  height: 36rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .title {
   font-size: 34rpx;
-  font-weight: 600;
-  color: #333333;
+  font-weight: bold;
+  color: #333;
 }
 
-/* --- 聊天容器 --- */
+/* --- 话题菜单按钮 (修改为悬浮按钮) --- */
+.topics-menu-button {
+  position: fixed; /* 使用 fixed 定位 */
+  right: 30rpx; /* 改为距离右边 30rpx */
+  width: 90rpx;
+  height: 90rpx;
+  background-color: #ffffff;
+  border-radius: 50%; /* 圆形 */
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15); /* 添加阴影 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101; /* 确保在聊天内容之上 */
+}
+
+.topics-menu-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* --- 话题侧边栏 --- */
+.topics-panel {
+  position: fixed;
+  top: 0;
+  left: -70vw; /* 初始状态下隐藏在左侧 */
+  width: 70vw;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: 4rpx 0 12rpx rgba(0, 0, 0, 0.1);
+  z-index: 201;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.topics-panel.open {
+  left: 0; /* open 状态下显示 */
+}
+
+.panel-header {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.new-topic-btn {
+  padding: 10rpx 20rpx;
+  background-color: #07c160;
+  color: white;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+.topics-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.topic-item {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topic-item.active {
+  background-color: #eefaf4;
+  color: #07c160;
+}
+
+.topic-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 28rpx;
+}
+
+.delete-topic-btn {
+  margin-left: 20rpx;
+  padding: 8rpx 16rpx;
+  background-color: #f56c6c;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+/* 遮罩层 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- 聊天区域 --- */
 .chat-container {
   flex: 1;
-  padding: 20rpx;
-  padding-bottom: 40rpx; /* 增加底部内边距 */
-  background-color: #F0F2F5; /* 与页面背景色保持一致 */
-  overflow-y: auto;
-  /* padding-top 将由 WXML 内联样式动态设置 */
-}
-
-/* --- 消息行 --- */
-.message-row {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 30rpx; /* 调整消息间距 */
+  padding-bottom: 120rpx; /* 为输入框留出空间 */
+  box-sizing: border-box;
   width: 100%;
 }
 
-.ai-row {
-  justify-content: flex-start;
+.message-row {
+  display: flex;
+  padding: 20rpx;
+  align-items: flex-start;
 }
 
 .user-row {
   justify-content: flex-end;
+}
+
+.ai-row {
+  justify-content: flex-start;
 }
 
 .avatar {
@@ -75,121 +184,106 @@
   height: 80rpx;
   border-radius: 50%;
   flex-shrink: 0;
-  border: 2rpx solid rgba(0, 0, 0, 0.05); /* 添加头像边框 */
 }
 
-/* --- 消息气泡 --- */
-.message-bubble {
-  max-width: calc(100% - 180rpx); /* 调整宽度以留出更多空间 */
-  padding: 24rpx;
-  border-radius: 24rpx;
-  word-wrap: break-word;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08); /* 保持阴影 */
-  line-height: 1.6; /* 确保行高一致 */
-}
-
-.ai-bubble {
-  background-color: #FFFFFF;
-  color: #333333;
+.user-row .avatar {
   margin-left: 20rpx;
-  border-radius: 24rpx 24rpx 24rpx 4rpx; /* 调整圆角以形成气泡尖角 */
+}
+
+.ai-row .avatar {
+  margin-right: 20rpx;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  word-break: break-all;
 }
 
 .user-bubble {
-  background-image: linear-gradient(to right, #6FCF97, #88D75F); /* 调整渐变色，更柔和 */
-  color: #ffffff;
-  margin-right: 20rpx;
-  border-radius: 24rpx 24rpx 4rpx 24rpx; /* 调整圆角以形成气泡尖角 */
+  background-color: #95ec69;
+  color: #333;
+}
+
+.ai-bubble {
+  background-color: #ffffff;
+  color: #333;
 }
 
 .message-text {
   font-size: 30rpx;
+  line-height: 1.5;
 }
 
-.ai-bubble .message-text {
-  color: #333333; /* AI 消息字体颜色 */
-}
-
-.user-bubble .message-text {
-  color: #ffffff; /* 用户消息字体颜色 */
-}
-
-/* --- 输入栏 --- */
-.input-bar {
-  display: flex;
-  align-items: center;
-  padding: 20rpx 24rpx;
-  background-color: #FFFFFF;
-  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08); /* 调整阴影 */
-}
-
-.input-box {
-  flex: 1;
-  height: 80rpx;
-  padding: 0 30rpx;
-  background-color: #F0F2F5; /* 与页面背景色保持一致 */
-  border-radius: 40rpx; /* 圆角输入框 */
-  font-size: 28rpx;
-  margin-right: 20rpx;
-  border: none; /* 移除边框 */
-  color: #333333; /* 确保输入字体颜色 */
-}
-
-.send-button {
-  width: 80rpx;
-  height: 80rpx;
-  background-color: #6FCF97; /* 更柔和的绿色 */
-  border-radius: 50%; /* 圆形按钮 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  box-shadow: 0 4rpx 12rpx rgba(111, 207, 151, 0.4); /* 调整阴影颜色 */
-}
-
-.send-icon {
-  width: 40rpx;
-  height: 40rpx;
-  background-image: url('cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png'); /* 假设这个图标是白色的，如果不是可能需要替换 */
-  background-size: 60%; /* 调整图标大小 */
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0) invert(1); /* 将图标变为白色 */
-}
-
-/* --- 思考中动画 --- */
+/* AI 思考中 */
 .typing-indicator {
   display: flex;
   align-items: center;
   padding: 10rpx 0;
 }
 
-.typing-indicator .dot {
+.dot {
   width: 16rpx;
   height: 16rpx;
-  background-color: #BBBBBB; /* 调整思考中点的颜色 */
+  background-color: #aaa;
   border-radius: 50%;
   margin: 0 6rpx;
-  animation: typing-blink 1.4s infinite both;
+  animation: typing 1.2s infinite ease-in-out;
 }
 
-.typing-indicator .dot:nth-child(2) {
+.dot:nth-child(2) {
   animation-delay: 0.2s;
 }
 
-.typing-indicator .dot:nth-child(3) {
+.dot:nth-child(3) {
   animation-delay: 0.4s;
 }
 
-@keyframes typing-blink {
-  0% {
-    opacity: 0.2;
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0);
   }
-  20% {
-    opacity: 1;
+  40% {
+    transform: scale(1.0);
   }
-  100% {
-    opacity: 0.2;
-  }
+}
+
+/* --- 输入栏 --- */
+.input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-top: 1rpx solid #e0e0e0;
+}
+
+.input-box {
+  flex: 1;
+  height: 80rpx;
+  background-color: #fff;
+  border-radius: 40rpx;
+  padding: 0 30rpx;
+  font-size: 30rpx;
+}
+
+.send-button {
+  margin-left: 20rpx;
+  width: 120rpx;
+  height: 80rpx;
+  background-color: #07c160;
+  color: #fff;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-text {
+  font-size: 30rpx;
+  font-weight: bold;
 }
