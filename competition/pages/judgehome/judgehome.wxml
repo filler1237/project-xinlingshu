@@ -1,31 +1,40 @@
 <view class="container">
-  <view class="header">
-    <view class="user-info">
-      <text class="welcome">{{isChiefJudge ? '总评委' : '评委'}}工作台</text>
-      <text class="username">{{userInfo.username}}</text>
-      <text class="department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
-      <text class="badge {{isChiefJudge ? 'chief' : 'normal'}}">
-        {{isChiefJudge ? '总评委' : '评委'}}
-      </text>
-    </view>
-    <view class="back-btn" bindtap="goBack">返回</view>
-    <view class="header-actions">
-      <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+  <!-- 头部区域 -->
+  <view class="header-card">
+    <view class="header-content">
+      <!-- 用户信息 -->
+      <view class="user-main-info">
+        <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+        <view class="user-details">
+          <text class="welcome">{{isChiefJudge ? '总评委' : '评委'}}工作台</text>
+          <text class="username">{{userInfo.username || '评委用户'}}</text>
+          <text class="user-department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
+          <text class="badge {{isChiefJudge ? 'chief' : 'normal'}}">
+            {{isChiefJudge ? '总评委' : '评委'}}
+          </text>
+        </view>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <view class="action-btn back-btn" bindtap="goBack">返回</view>
+        <view class="action-btn logout-btn" bindtap="onLogout">退出</view>
+      </view>
     </view>
   </view>
 
   <!-- 统计卡片 -->
   <view class="stats-grid">
     <view class="stat-card">
-      <text class="stat-number">{{stats.assignedWorks}}</text>
+      <text class="stat-number">{{stats.assignedWorks || 0}}</text>
       <text class="stat-label">分配作品</text>
     </view>
     <view class="stat-card">
-      <text class="stat-number">{{stats.reviewedWorks}}</text>
+      <text class="stat-number">{{stats.reviewedWorks || 0}}</text>
       <text class="stat-label">已评审</text>
     </view>
     <view class="stat-card">
-      <text class="stat-number">{{stats.pendingWorks}}</text>
+      <text class="stat-number">{{stats.pendingWorks || 0}}</text>
       <text class="stat-label">待评审</text>
     </view>
   </view>
@@ -54,21 +63,6 @@
       <view class="card-icon">📊</view>
       <text class="card-title">评分汇总</text>
       <text class="card-desc">查看所有评分结果</text>
-    </view>
-  </view>
-
-  <!-- 快速任务 -->
-  <view class="quick-task">
-    <text class="section-title">快速任务</text>
-    <view class="task-list">
-      <view class="task-item" bindtap="toJudgePanel">
-        <text>继续评审作品 ({{stats.pendingWorks}}个待处理)</text>
-        <text class="arrow">></text>
-      </view>
-      <view wx:if="{{isChiefJudge}}" class="task-item" bindtap="toScoreSummary">
-        <text>查看评分汇总报告</text>
-        <text class="arrow">></text>
-      </view>
     </view>
   </view>
 </view>

@@ -1,254 +1,126 @@
 .container {
+  background: linear-gradient(135deg, #F8FCF9 0%, #F0F7F2 100%);
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 50%, #e0f2eb 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
+/* 页面头部 - 添加文本框效果 */
 .header {
-  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-  padding: 60rpx 40rpx;
-  border-bottom-left-radius: 30rpx;
-  border-bottom-right-radius: 30rpx;
-  box-shadow: 0 8rpx 30rpx rgba(76, 175, 80, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30rpx);
+  border-radius: 0 0 24rpx 24rpx;
+  padding: 40rpx 32rpx 32rpx;
+  margin-bottom: 32rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4rpx 20rpx rgba(126, 211, 33, 0.08);
 }
 
 .header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 30rpx;
-  position: relative;
-  z-index: 2;
+  text-align: center;
 }
 
 .title-section {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
 }
 
 .title {
-  font-size: 44rpx;
+  font-size: 52rpx;
   font-weight: 700;
-  color: white;
-  text-shadow: 0 4rpx 12rpx rgba(0,0,0,0.2);
-  letter-spacing: -0.5rpx;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
+  color: #1B5E20;
+  flex: 1;
+  text-align: center;
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  padding: 20rpx 35rpx;
-  border-radius: 50rpx;
   font-size: 28rpx;
-  font-weight: 600;
-  border: 2rpx solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10rpx);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.1);
-  letter-spacing: 0.5rpx;
-}
-
-.back-btn:active {
-  background: rgba(255, 255, 255, 0.4);
-  transform: scale(0.95);
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
-}
-
-.welcome-section {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 30rpx;
-  border-radius: 20rpx;
-  backdrop-filter: blur(15rpx);
-  border: 1rpx solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.1);
+  color: #4CAF50;
+  padding: 16rpx 24rpx;
+  border: 1rpx solid rgba(126, 211, 33, 0.3);
+  border-radius: 12rpx;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .welcome-text {
-  display: block;
-  font-size: 32rpx;
-  color: white;
-  text-align: center;
+  font-size: 30rpx;
+  color: #4CAF50;
   font-weight: 500;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
-  letter-spacing: 0.3rpx;
+  opacity: 0.85;
 }
 
-.content {
-  padding: 40rpx 30rpx;
-  margin-top: -20rpx;
-  position: relative;
-  z-index: 1;
-}
-
-/* 总学分卡片 */
+/* 总学分展示 - 添加文本框效果 */
 .total-credits-section {
-  margin-bottom: 40rpx;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30rpx);
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin: 0 32rpx 32rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4rpx 20rpx rgba(126, 211, 33, 0.08);
 }
 
 .total-credits-card {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(25rpx);
-  border-radius: 28rpx;
-  padding: 50rpx 40rpx;
-  box-shadow: 
-    0 10rpx 45rpx rgba(76, 175, 80, 0.18),
-    0 4rpx 20rpx rgba(0,0,0,0.06);
-  border: 2rpx solid rgba(76, 175, 80, 0.12);
   display: flex;
   align-items: center;
-  gap: 35rpx;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.total-credits-card:active {
-  transform: translateY(-2rpx);
-  box-shadow: 
-    0 12rpx 50rpx rgba(76, 175, 80, 0.25),
-    0 6rpx 25rpx rgba(0,0,0,0.08);
-}
-
-.total-credits-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10rpx;
-  height: 100%;
-  background: linear-gradient(180deg, #4CAF50, #81C784, #C8E6C9);
+  justify-content: center;
+  gap: 32rpx;
 }
 
 .credit-icon {
-  font-size: 100rpx;
-  width: 120rpx;
-  text-align: center;
-  filter: drop-shadow(0 4rpx 8rpx rgba(0,0,0,0.1));
+  font-size: 80rpx;
 }
 
 .credit-info {
-  flex: 1;
+  text-align: left;
 }
 
 .credit-label {
   display: block;
-  font-size: 32rpx;
-  color: #66BB6A;
-  font-weight: 600;
-  margin-bottom: 15rpx;
-  letter-spacing: 0.3rpx;
+  font-size: 28rpx;
+  color: #4CAF50;
+  margin-bottom: 8rpx;
 }
 
 .credit-value {
-  display: block;
   font-size: 64rpx;
-  font-weight: 800;
-  color: #2E7D32;
-  letter-spacing: -2rpx;
-  font-family: 'Courier New', Courier, monospace;
-  text-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  font-weight: 700;
+  color: #1B5E20;
 }
 
-/* 学分列表区域 */
+/* 学分明细列表 - 添加文本框效果 */
 .credit-list-section {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(25rpx);
-  border-radius: 28rpx;
-  padding: 45rpx 40rpx;
-  box-shadow: 
-    0 10rpx 45rpx rgba(76, 175, 80, 0.18),
-    0 4rpx 20rpx rgba(0,0,0,0.06);
-  border: 2rpx solid rgba(76, 175, 80, 0.12);
-  position: relative;
-  overflow: hidden;
-}
-
-.credit-list-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10rpx;
-  height: 100%;
-  background: linear-gradient(180deg, #4CAF50, #81C784, #C8E6C9);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30rpx);
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin: 0 32rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4rpx 20rpx rgba(126, 211, 33, 0.08);
 }
 
 .section-title {
-  display: block;
   font-size: 36rpx;
-  font-weight: 700;
-  color: #1B5E20;
-  margin-bottom: 40rpx;
-  position: relative;
-  padding-left: 25rpx;
-  letter-spacing: -0.3rpx;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
-}
-
-.section-title::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8rpx;
-  height: 35rpx;
-  background: linear-gradient(180deg, #4CAF50, #2E7D32);
-  border-radius: 4rpx;
+  font-weight: 600;
+  color: #2E7D32;
+  margin-bottom: 32rpx;
+  text-align: center;
 }
 
 .credit-list {
-  display: flex;
-  flex-direction: column;
-  gap: 25rpx;
+  margin-top: 24rpx;
 }
 
 .credit-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 35rpx 30rpx;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 255, 250, 0.9) 100%);
-  border-radius: 20rpx;
-  border: 2rpx solid rgba(200, 230, 201, 0.6);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 3rpx 12rpx rgba(76, 175, 80, 0.1);
+  justify-content: space-between;
+  padding: 32rpx 0;
+  border-bottom: 1rpx solid rgba(126, 211, 33, 0.1);
 }
 
-.credit-item:active {
-  transform: translateY(-2rpx);
-  box-shadow: 0 6rpx 20rpx rgba(76, 175, 80, 0.2);
-}
-
-.credit-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 6rpx;
-  background: linear-gradient(180deg, #4CAF50, #81C784);
+.credit-item:last-child {
+  border-bottom: none;
 }
 
 .activity-info {
@@ -256,140 +128,59 @@
 }
 
 .activity-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2E7D32;
+  margin-bottom: 8rpx;
   display: block;
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #1B5E20;
-  margin-bottom: 12rpx;
-  letter-spacing: -0.3rpx;
-  line-height: 1.3;
 }
 
 .obtain-time {
-  display: block;
   font-size: 26rpx;
-  color: #66BB6A;
-  font-weight: 500;
-  font-family: 'Courier New', Courier, monospace;
+  color: #4CAF50;
+  opacity: 0.7;
+  display: block;
 }
 
 .credit-value-section {
-  display: flex;
-  align-items: baseline;
-  gap: 8rpx;
+  text-align: right;
 }
 
 .credit-value {
-  font-size: 38rpx;
-  font-weight: 800;
-  color: #4CAF50;
-  font-family: 'Courier New', Courier, monospace;
-  letter-spacing: -1rpx;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #7ED321;
+  margin-right: 8rpx;
 }
 
 .credit-unit {
   font-size: 24rpx;
-  color: #81C784;
-  font-weight: 600;
+  color: #4CAF50;
 }
 
-/* 空状态 */
+/* 空状态 - 添加文本框效果 */
 .empty-state {
   text-align: center;
-  padding: 120rpx 40rpx;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 25rpx;
-  margin-top: 40rpx;
-  backdrop-filter: blur(10rpx);
-  border: 2rpx solid rgba(76, 175, 80, 0.15);
-  box-shadow: 0 6rpx 25rpx rgba(76, 175, 80, 0.1);
+  padding: 80rpx 40rpx;
 }
 
 .empty-icon {
-  font-size: 100rpx;
-  margin-bottom: 35rpx;
-  opacity: 0.7;
-  color: #4CAF50;
-  filter: drop-shadow(0 4rpx 8rpx rgba(0,0,0,0.1));
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 24rpx;
 }
 
 .empty-text {
-  display: block;
-  font-size: 36rpx;
+  font-size: 32rpx;
   color: #2E7D32;
-  margin-bottom: 25rpx;
-  font-weight: 700;
-  letter-spacing: -0.3rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 16rpx;
 }
 
 .empty-desc {
+  font-size: 28rpx;
+  color: #4CAF50;
+  opacity: 0.7;
   display: block;
-  font-size: 30rpx;
-  color: #66BB6A;
-  line-height: 1.5;
-  font-weight: 500;
-}
-
-/* 动画效果 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50rpx) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.total-credits-card, .credit-list-section {
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
-}
-
-.total-credits-card { animation-delay: 0.1s; }
-.credit-list-section { animation-delay: 0.2s; }
-
-.credit-item {
-  animation: fadeInUp 0.5s ease forwards;
-  opacity: 0;
-}
-
-.credit-item:nth-child(1) { animation-delay: 0.3s; }
-.credit-item:nth-child(2) { animation-delay: 0.4s; }
-.credit-item:nth-child(3) { animation-delay: 0.5s; }
-.credit-item:nth-child(4) { animation-delay: 0.6s; }
-.credit-item:nth-child(5) { animation-delay: 0.7s; }
-
-/* 响应式调整 */
-@media (max-width: 480rpx) {
-  .header {
-    padding: 50rpx 30rpx 30rpx;
-  }
-  
-  .content {
-    padding: 30rpx 20rpx;
-  }
-  
-  .total-credits-card, .credit-list-section {
-    padding: 35rpx 25rpx;
-    border-radius: 24rpx;
-  }
-  
-  .credit-icon {
-    font-size: 80rpx;
-    width: 100rpx;
-  }
-  
-  .credit-value {
-    font-size: 56rpx;
-  }
-  
-  .activity-name {
-    font-size: 30rpx;
-  }
-  
-  .credit-value {
-    font-size: 34rpx;
-  }
 }

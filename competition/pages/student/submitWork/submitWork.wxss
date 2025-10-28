@@ -1,12 +1,18 @@
-.container {
-  padding: 0;
+/* pages/teacher/home/teacherHome.wxss
+ * 静态顶尖UI | 整体浅绿渐变 | 毛玻璃卡片
+-------------------------------------------------- */
+page{
+  background: linear-gradient(180deg, #F8F9FA 0%, #E8F5E9 100%); /* 整体浅绿渐变 */
+  font-family: PingFang SC;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 50%, #e0f2eb 100%);
 }
 
-.header {
-  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+.container{ padding: 0; }
+
+/* 顶部导航区 - 深绿渐变（保留） */
+.header{
   padding: 60rpx 40rpx;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
   text-align: center;
   border-bottom-left-radius: 30rpx;
   border-bottom-right-radius: 30rpx;
@@ -14,20 +20,15 @@
   position: relative;
   overflow: hidden;
 }
-
-.header::before {
+.header::before{
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: 
     radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
     radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
 }
-
-.title {
+.title{
   font-size: 44rpx;
   font-weight: bold;
   color: white;
@@ -36,13 +37,12 @@
   z-index: 2;
 }
 
-.form {
-  padding: 40rpx 30rpx;
-}
+.form{ padding: 40rpx 30rpx; }
 
-.form-section {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20rpx);
+/* 毛玻璃卡片 - 静态 */
+.form-section{
+  background: rgba(255, 255, 255, 0.75);   /* 半透底 */
+  backdrop-filter: blur(20rpx);            /* 毛玻璃核心 */
   border-radius: 24rpx;
   padding: 40rpx;
   margin-bottom: 35rpx;
@@ -53,18 +53,15 @@
   position: relative;
   overflow: hidden;
 }
-
-.form-section::before {
+.form-section::before{
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 8rpx;
-  height: 100%;
+  top: 0; left: 0;
+  width: 8rpx; height: 100%;
   background: linear-gradient(180deg, #4CAF50, #81C784);
 }
 
-.section-title {
+.section-title{
   display: block;
   font-size: 34rpx;
   font-weight: bold;
@@ -73,26 +70,21 @@
   position: relative;
   padding-left: 20rpx;
 }
-
-.section-title::before {
+.section-title::before{
   content: '';
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6rpx;
-  height: 30rpx;
+  left: 0; top: 50%; transform: translateY(-50%);
+  width: 6rpx; height: 30rpx;
   background: #4CAF50;
   border-radius: 3rpx;
 }
 
-.activity-selector {
+.activity-selector{
   display: flex;
   flex-direction: column;
   gap: 25rpx;
 }
-
-.activity-option {
+.activity-option{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,72 +96,52 @@
   position: relative;
   overflow: hidden;
 }
-
-.activity-option::before {
+.activity-option::before{
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
+  top: 0; left: -100%; width: 100%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
   transition: left 0.6s ease;
 }
-
-.activity-option:active::before {
-  left: 100%;
-}
-
-.activity-option.selected {
+.activity-option:active::before{ left: 100%; }
+.activity-option.selected{
   border-color: #4CAF50;
   background: rgba(76, 175, 80, 0.05);
   box-shadow: 0 6rpx 25rpx rgba(76, 175, 80, 0.2);
   transform: translateY(-2rpx);
 }
 
-.activity-info {
-  flex: 1;
-}
-
-.activity-name {
+.activity-info{ flex: 1; }
+.activity-name{
   display: block;
   font-size: 32rpx;
   font-weight: 600;
   color: #2E7D32;
   margin-bottom: 12rpx;
 }
-
-.activity-deadline {
+.activity-deadline{
   display: block;
   font-size: 26rpx;
   color: #66BB6A;
   font-family: 'Courier New', monospace;
 }
-
-.checkmark {
+.checkmark{
   color: #4CAF50;
   font-size: 36rpx;
   font-weight: bold;
   text-shadow: 0 2rpx 8rpx rgba(76, 175, 80, 0.3);
 }
 
-.input-group {
-  margin-bottom: 45rpx;
-}
-
-.input-group:last-child {
-  margin-bottom: 0;
-}
-
-.input-label {
+.input-group{ margin-bottom: 45rpx; }
+.input-group:last-child{ margin-bottom: 0; }
+.input-label{
   display: block;
   font-size: 30rpx;
   color: #1B5E20;
   margin-bottom: 25rpx;
   font-weight: 600;
 }
-
-.input, .textarea {
+.input, .textarea{
   border: 2rpx solid #A5D6A7;
   border-radius: 16rpx;
   padding: 28rpx;
@@ -178,19 +150,16 @@
   transition: all 0.3s ease;
   box-shadow: 0 2rpx 12rpx rgba(165, 214, 167, 0.1);
 }
-
-.input:focus, .textarea:focus {
+.input:focus, .textarea:focus{
   border-color: #4CAF50;
   box-shadow: 0 4rpx 20rpx rgba(76, 175, 80, 0.2);
   background: white;
 }
-
-.textarea {
+.textarea{
   height: 240rpx;
   line-height: 1.6;
 }
-
-.char-count {
+.char-count{
   display: block;
   text-align: right;
   font-size: 26rpx;
@@ -199,7 +168,7 @@
   font-family: 'Courier New', monospace;
 }
 
-.file-upload {
+.file-upload{
   border: 2rpx dashed #81C784;
   border-radius: 20rpx;
   padding: 50rpx 40rpx;
@@ -208,41 +177,34 @@
   background: rgba(129, 199, 132, 0.03);
   position: relative;
 }
-
-.file-upload:active {
+.file-upload:active{
   background: rgba(129, 199, 132, 0.1);
   border-color: #4CAF50;
   transform: scale(0.98);
 }
-
-.upload-icon {
+.upload-icon{
   display: block;
   font-size: 72rpx;
   margin-bottom: 25rpx;
   opacity: 0.8;
   color: #4CAF50;
 }
-
-.upload-text {
+.upload-text{
   display: block;
   font-size: 32rpx;
   color: #2E7D32;
   margin-bottom: 15rpx;
   font-weight: 600;
 }
-
-.upload-hint {
+.upload-hint{
   display: block;
   font-size: 26rpx;
   color: #66BB6A;
   line-height: 1.5;
 }
 
-.file-list {
-  padding: 25rpx 0;
-}
-
-.file-item {
+.file-list{ padding: 25rpx 0; }
+.file-item{
   display: flex;
   align-items: center;
   padding: 25rpx;
@@ -254,8 +216,7 @@
   position: relative;
   overflow: hidden;
 }
-
-.file-item::before {
+.file-item::before{
   content: '';
   position: absolute;
   left: 0;
@@ -264,55 +225,43 @@
   width: 6rpx;
   background: #4CAF50;
 }
-
-.file-item:last-child {
-  margin-bottom: 0;
-}
-
-.file-icon {
+.file-item:last-child{ margin-bottom: 0; }
+.file-icon{
   font-size: 44rpx;
   margin-right: 25rpx;
   color: #4CAF50;
 }
-
-.file-info {
-  flex: 1;
-}
-
-.file-name {
+.file-info{ flex: 1; }
+.file-name{
   display: block;
   font-size: 30rpx;
   color: #1B5E20;
   margin-bottom: 8rpx;
   font-weight: 500;
 }
-
-.file-size {
+.file-size{
   display: block;
   font-size: 26rpx;
   color: #66BB6A;
   font-family: 'Courier New', monospace;
 }
-
-.file-remove {
+.file-remove{
   font-size: 44rpx;
   color: #E57373;
   padding: 15rpx;
   border-radius: 12rpx;
   transition: all 0.3s ease;
 }
-
-.file-remove:active {
+.file-remove:active{
   background: rgba(229, 115, 115, 0.1);
   transform: scale(0.9);
 }
 
-.submit-section {
+.submit-section{
   margin-top: 70rpx;
   padding: 0 10rpx;
 }
-
-.submit-btn {
+.submit-btn{
   background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
   color: white;
   border-radius: 20rpx;
@@ -327,8 +276,7 @@
   position: relative;
   overflow: hidden;
 }
-
-.submit-btn::before {
+.submit-btn::before{
   content: '';
   position: absolute;
   top: 0;
@@ -338,36 +286,18 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.6s ease;
 }
-
-.submit-btn:active {
+.submit-btn:active{
   transform: translateY(4rpx);
   box-shadow: 
     0 4rpx 15rpx rgba(76, 175, 80, 0.3),
     0 2rpx 8rpx rgba(46, 125, 50, 0.2);
 }
-
-.submit-btn:active::before {
+.submit-btn:active::before{
   left: 100%;
 }
 
-/* 添加科技感的光效和动效 */
-@keyframes glow {
-  0%, 100% { box-shadow: 0 8rpx 30rpx rgba(76, 175, 80, 0.4); }
-  50% { box-shadow: 0 8rpx 40rpx rgba(76, 175, 80, 0.6); }
-}
-
-.submit-btn {
-  animation: glow 3s ease-in-out infinite;
-}
-
 /* 响应式调整 */
-@media (max-width: 480rpx) {
-  .form {
-    padding: 30rpx 20rpx;
-  }
-  
-  .form-section {
-    padding: 30rpx;
-    border-radius: 20rpx;
-  }
+@media (max-width: 480rpx){
+  .form{ padding: 30rpx 20rpx; }
+  .form-section{ padding: 30rpx; border-radius: 20rpx; }
 }

@@ -1,230 +1,302 @@
+/* 评委工作台统一样式 - 与整体设计系统统一 */
+
+/* 页面基础样式 */
+page {
+  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%); /* 渐变背景，从上到下由浅黄色过渡到白色 */
+  min-height: 100vh; /* 确保页面至少占满整个视口高度 */
+}
+
+/* 主容器 */
 .container {
-  padding: 40rpx;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #00897b 0%, #00695c 100%);
+  padding: 30rpx; /* 内边距 */
+  position: relative; /* 相对定位，用于子元素的绝对定位参考 */
+  min-height: 100vh; /* 最小高度为整个视口 */
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 60rpx;
+/* 背景装饰元素 - 色块1 */
+.sekuai1 {
+  background: #50b6ff14; /* 浅蓝色背景，带透明度 */
+  filter: blur(100rpx); /* 模糊效果，创建毛玻璃质感 */
+  height: 384rpx; /* 固定高度 */
+  position: absolute; /* 绝对定位，脱离文档流 */
+  left: -120.63rpx; /* 向左偏移，部分超出容器 */
+  top: 28rpx; /* 距离顶部位置 */
+  z-index: 1; /* 层级在背景层 */
 }
 
+/* 背景装饰元素 - 色块2 */
+.sekuai2 {
+  background: #42FF0019; /* 浅绿色背景，带透明度 */
+  filter: blur(100rpx); /* 模糊效果 */
+  height: 384rpx; /* 固定高度 */
+  position: absolute; /* 绝对定位 */
+  left: 312rpx; /* 水平位置 */
+  top: 662.22rpx; /* 垂直位置 */
+  z-index: 1; /* 背景层级 */
+}
+
+/* 头部用户信息卡片 */
+.header-card {
+  background-color: rgba(255, 255, 255, 0.69); /* 半透明白色背景 */
+  border-radius: 20rpx; /* 圆角 */
+  backdrop-filter: blur(20rpx); /* 背景模糊，毛玻璃效果 */
+  box-shadow: 4rpx 4rpx 4rpx 0rpx #00000026; /* 阴影效果 */
+  padding: 100rpx; /* 内边距 */
+  margin-bottom: 50rpx; /* 底部外边距 */
+  position: relative; /* 相对定位 */
+  z-index: 2; /* 层级高于背景元素 */
+}
+
+/* 头部内容布局 */
+.header-content {
+  display: flex; /* 弹性布局 */
+  align-items: flex-start; /* 项部对齐 */
+}
+
+/* 用户头像样式 */
+.user-avatar {
+  width: 120rpx; /* 固定宽度 */
+  height: 120rpx; /* 固定高度 */
+  border-radius: 15rpx; /* 圆角 */
+  border: 3rpx solid #FFFFFFE2; /* 白色边框 */
+  box-shadow: 4rpx 4rpx 4rpx 0rpx #88C16F38; /* 绿色调阴影 */
+  margin-right: 30rpx; /* 右边距 */
+}
+
+/* 用户信息区域 */
 .user-info {
-  flex: 1;
+  flex: 1; /* 占据剩余空间 */
 }
 
-.header-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 15rpx;
-  margin-left: 20rpx;
-}
-
-.action-btn {
-  padding: 15rpx 25rpx;
-  border-radius: 10rpx;
-  font-size: 26rpx;
-  text-align: center;
-  min-width: 120rpx;
-  font-weight: 500;
-}
-
-.back-btn {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  border: 1rpx solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10rpx);
-}
-
-.logout-btn {
-  background: rgba(239, 83, 80, 0.25);
-  color: white;
-  border: 1rpx solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10rpx);
-}
-
-.back-btn:active {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.logout-btn:active {
-  background: rgba(239, 83, 80, 0.4);
-}
-
+/* 欢迎文本 */
 .welcome {
-  display: block;
-  font-size: 40rpx;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 10rpx;
-  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+  color: #3F3F3F; /* 深灰色文字 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: bold; /* 粗体 */
+  font-size: 40rpx; /* 字号 */
+  line-height: 48rpx; /* 行高 */
+  letter-spacing: 1rpx; /* 字间距 */
+  margin-bottom: 10rpx; /* 底部外边距 */
+  display: block; /* 块级显示 */
 }
 
+/* 用户名样式 */
 .username {
-  display: block;
-  font-size: 28rpx;
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 5rpx;
+  color: #3F3F3F; /* 深灰色 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: regular; /* 常规字重 */
+  font-size: 30rpx; /* 字号 */
+  line-height: 36rpx; /* 行高 */
+  letter-spacing: 0rpx; /* 无字间距 */
+  margin-bottom: 8rpx; /* 底部外边距 */
+  display: block; /* 块级显示 */
 }
 
-.department {
-  display: block;
-  font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 10rpx;
+/* 用户部门信息 */
+.user-department {
+  color: #3F3F3F; /* 深灰色 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: regular; /* 常规字重 */
+  font-size: 26rpx; /* 较小字号 */
+  line-height: 32rpx; /* 行高 */
+  letter-spacing: 0rpx; /* 无字间距 */
+  margin-bottom: 15rpx; /* 底部外边距 */
+  display: block; /* 块级显示 */
 }
 
+/* 徽章样式 */
 .badge {
-  display: inline-block;
-  font-size: 20rpx;
-  padding: 8rpx 16rpx;
-  border-radius: 20rpx;
-  font-weight: bold;
+  display: inline-block; /* 行内块元素 */
+  padding: 10rpx 16rpx; /* 内边距 */
+  border-radius: 20rpx; /* 圆角 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: bold; /* 粗体 */
+  font-size: 30rpx; /* 小字号 */
+  text-align: center; /* 文字居中 */
 }
 
+/* 普通评委徽章 */
 .badge.normal {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(130, 255, 158, 0.3); /* 浅绿色半透明背景 */
+  color: #3F3F3F; /* 深灰色文字 */
 }
 
+/* 首席评委徽章 */
 .badge.chief {
-  background: #ffd700;
-  color: #333;
+  background: linear-gradient(135deg, #FFD700 0%, #FFED4E 100%); /* 金色渐变 */
+  color: #7d6608; /* 暗金色文字 */
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20rpx;
-  margin-bottom: 60rpx;
+/* 头部操作按钮区域 */
+.header-actions {
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 垂直排列 */
+  gap: 30rpx; /* 按钮间距 */
 }
 
-.stat-card {
-  background: white;
-  border-radius: 16rpx;
-  padding: 30rpx 20rpx;
-  text-align: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-  border: 1rpx solid rgba(255, 255, 255, 0.5);
+/* 操作按钮基础样式 */
+.action-btn {
+  padding: 12rpx 20rpx; /* 内边距 */
+  border-radius: 10rpx; /* 圆角 */
+  font-size: 24rpx; /* 字号 */
+  text-align: center; /* 文字居中 */
+  min-width: 100rpx; /* 最小宽度 */
+  font-weight: 500; /* 中等字重 */
+  font-family: PingFang SC; /* 字体 */
 }
 
-.stat-number {
-  display: block;
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #00695c;
-  margin-bottom: 10rpx;
+/* 返回按钮 */
+.back-btn {
+  background: rgba(255, 255, 255, 0.25); /* 半透明白色背景 */
+  color: #3F3F3F; /* 深灰色文字 */
+  border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
+  backdrop-filter: blur(20rpx); /* 背景模糊 */
 }
 
-.stat-label {
-  display: block;
-  font-size: 24rpx;
-  color: #4db6ac;
-}
-
-.function-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30rpx;
-  margin-bottom: 40rpx;
-}
-
-.function-card {
-  background: white;
-  border-radius: 20rpx;
-  padding: 40rpx 30rpx;
-  text-align: center;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
-  border: 1rpx solid rgba(255, 255, 255, 0.5);
-}
-
-.function-card:active {
-  transform: translateY(4rpx);
-  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
-}
-
-.card-icon {
-  font-size: 60rpx;
-  margin-bottom: 20rpx;
-}
-
-.card-title {
-  display: block;
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
-  color: #00695c;
-}
-
-.card-desc {
-  display: block;
-  font-size: 24rpx;
-  color: #4db6ac;
-  line-height: 1.4;
-}
-
-.quick-task {
-  background: white;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  margin-bottom: 40rpx;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
-  border: 1rpx solid rgba(255, 255, 255, 0.5);
-}
-
-.section-title {
-  display: block;
-  font-size: 34rpx;
-  font-weight: bold;
-  margin-bottom: 30rpx;
-  color: #00695c;
-}
-
-.task-list {
-  border-radius: 12rpx;
-  overflow: hidden;
-}
-
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30rpx 0;
-  border-bottom: 1rpx solid #e0f2f1;
-  font-size: 30rpx;
-  color: #00796b;
-}
-
-.task-item:active {
-  background-color: #e0f2f1;
-}
-
-.task-item:last-child {
-  border-bottom: none;
-}
-
-.arrow {
-  color: #4db6ac;
-  font-size: 28rpx;
-}
-
-.logout-section {
-  text-align: center;
-}
-
+/* 退出登录按钮 */
 .logout-btn {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  border: 2rpx solid rgba(255, 255, 255, 0.5);
-  border-radius: 12rpx;
-  padding: 20rpx 40rpx;
-  font-size: 30rpx;
-  backdrop-filter: blur(10rpx);
+  background: rgba(239, 83, 80, 0.25); /* 浅红色半透明背景 */
+  color: #3F3F3F; /* 深灰色文字 */
+  border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
+  backdrop-filter: blur(20rpx); /* 背景模糊 */
 }
 
-.logout-btn:active {
-  background: rgba(255, 255, 255, 0.4);
+/* 统计卡片网格布局 */
+.stats-grid {
+  display: grid; /* 网格布局 */
+  grid-template-columns: 1fr 1fr 1fr; /* 三列等宽 */
+  gap: 40rpx; /* 网格间距 */
+  margin-bottom: 60rpx; /* 底部外边距 */
+  z-index: 2; /* 层级 */
+  position: relative; /* 相对定位 */
+}
+
+/* 单个统计卡片 */
+.stat-card {
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%); /* 渐变背景 */
+  border-radius: 20rpx; /* 圆角 */
+  backdrop-filter: blur(20rpx); /* 背景模糊 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 阴影 */
+  padding: 60rpx 50rpx; /* 内边距 */
+  text-align: center; /* 文字居中 */
+  border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
+  height: 140rpx; /* 固定高度 */
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 垂直排列 */
+  justify-content: center; /* 垂直居中 */
+}
+
+/* 统计数字 */
+.stat-number {
+  display: block; /* 块级显示 */
+  font-size: 50rpx; /* 较大字号 */
+  font-weight: bold; /* 粗体 */
+  color: #3F3F3F; /* 深灰色 */
+  margin-bottom: 8rpx; /* 底部外边距 */
+  font-family: PingFang SC; /* 字体 */
+}
+
+/* 统计标签 */
+.stat-label {
+  display: block; /* 块级显示 */
+  font-size: 30rpx; /* 较小字号 */
+  color: #3F3F3F; /* 深灰色 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: regular; /* 常规字重 */
+}
+
+/* 功能网格布局 */
+.function-grid {
+  display: grid; /* 网格布局 */
+  grid-template-columns: 1fr 1fr; /* 两列等宽 */
+  gap: 40rpx; /* 网格间距 */
+  margin-bottom: 40rpx; /* 底部外边距 */
+  z-index: 2; /* 层级 */
+  position: relative; /* 相对定位 */
+}
+
+/* 功能卡片 */
+.function-card {
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%); /* 渐变背景 */
+  border-radius: 20rpx; /* 圆角 */
+  backdrop-filter: blur(20rpx); /* 背景模糊 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 阴影 */
+  padding: 50rpx 40rpx; /* 内边距 */
+  text-align: center; /* 文字居中 */
+  border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
+  height: 300rpx; /* 固定高度 */
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 垂直排列 */
+  justify-content: center; /* 垂直居中 */
+}
+
+/* 卡片图标 */
+.card-icon {
+  font-size: 54rpx; /* 较大字号用于图标 */
+  margin-bottom: 15rpx; /* 底部外边距 */
+  background: linear-gradient(135deg, #00897b 0%, #4db6ac 100%); /* 渐变背景 */
+  -webkit-background-clip: text; /* 背景裁剪为文字形状 */
+  -webkit-text-fill-color: transparent; /* 文字颜色透明，显示背景渐变 */
+  background-clip: text; /* 标准属性 */
+}
+
+/* 卡片标题 */
+.card-title {
+  display: block; /* 块级显示 */
+  font-size: 30rpx; /* 字号 */
+  font-weight: bold; /* 粗体 */
+  margin-bottom: 8rpx; /* 底部外边距 */
+  color: #3F3F3F; /* 深灰色 */
+  font-family: PingFang SC; /* 字体 */
+}
+
+/* 卡片描述 */
+.card-desc {
+  display: block; /* 块级显示 */
+  font-size: 22rpx; /* 较小字号 */
+  color: #3F3F3F; /* 深灰色 */
+  line-height: 1.4; /* 行高 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: regular; /* 常规字重 */
+}
+
+
+/* 底部信息区域 */
+.bottom-info {
+  height: 56rpx; /* 固定高度 */
+  background-color: rgba(255, 255, 255, 0.6); /* 半透明白色背景 */
+  display: flex; /* 弹性布局 */
+  flex-direction: row; /* 水平排列 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 0 30rpx; /* 水平内边距 */
+  border-radius: 10rpx; /* 圆角 */
+  z-index: 2; /* 层级 */
+  position: relative; /* 相对定位 */
+}
+
+/* 底部信息文字 */
+.bottom-info .info-text {
+  color: #000000; /* 黑色文字 */
+  font-family: PingFang SC; /* 字体 */
+  font-weight: regular; /* 常规字重 */
+  font-size: 24rpx; /* 较小字号 */
+  line-height: 56rpx; /* 行高等于容器高度，垂直居中 */
+  letter-spacing: 0rpx; /* 无字间距 */
+  text-align: center; /* 文字居中 */
+}
+
+/* 交互效果 */
+
+/* 卡片按下效果 */
+.function-card:active,
+.stat-card:active,
+.quick-action-card:active {
+  transform: translateY(2rpx); /* 向下轻微移动，模拟按下效果 */
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a; /* 减小阴影，增强按下感 */
+}
+
+/* 按钮按下效果 */
+.action-btn:active {
+  background: rgba(255, 255, 255, 0.4); /* 背景变亮，提供视觉反馈 */
 }

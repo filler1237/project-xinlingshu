@@ -1,7 +1,25 @@
 /* pages/admin/applyActivity/applyActivity.wxss */
+/* 活动申请页面样式 - 与评委工作台设计系统统一 */
+
 .apply-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9f0 0%, #e6f7e6 100%);
+  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%); /* 统一渐变背景 */
+  position: relative; /* 相对定位，用于背景装饰元素 */
+}
+
+/* 背景装饰元素 - 保持统一风格 */
+.apply-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at -20% 20%, rgba(80, 182, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 120% 80%, rgba(66, 255, 0, 0.08) 0%, transparent 50%);
+  pointer-events: none; /* 确保不影响交互 */
+  z-index: 1;
 }
 
 /* 顶部标题区域 */
@@ -9,6 +27,7 @@
   position: relative;
   height: 200rpx;
   overflow: hidden;
+  z-index: 2; /* 确保在背景之上 */
 }
 
 .header-bg {
@@ -17,27 +36,76 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #00c6a7 0%, #00a886 100%);
+  background: linear-gradient(135deg, #26a69a 0%, #4db6ac 100%); /* 统一主题绿色渐变 */
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
 }
 
 .header-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   padding: 60rpx 40rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120rpx;
+}
+
+.header-titles {
+  text-align: center;
 }
 
 .header-title {
   display: block;
-  font-size: 48rpx;
-  font-weight: 600;
+  font-size: 40rpx; /* 统一字号 */
+  font-weight: bold; /* 统一字重 */
   color: #ffffff;
   margin-bottom: 10rpx;
+  font-family: PingFang SC; /* 统一字体 */
+  letter-spacing: 1rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 .header-desc {
-  font-size: 28rpx;
-  color: rgba(255,255,255,0.8);
+  font-size: 26rpx; /* 统一字号 */
+  color: rgba(255,255,255,0.9);
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: regular;
+}
+
+/* 返回按钮样式 - 统一风格 */
+.back-button {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 16rpx 24rpx;
+  border-radius: 15rpx; /* 统一圆角 */
+  background: rgba(255, 255, 255, 0.25); /* 半透明白色背景 */
+  backdrop-filter: blur(20rpx); /* 毛玻璃效果 */
+  border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
+  z-index: 10;
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 统一阴影 */
+}
+
+.back-button:active {
+  transform: translateY(-50%) translateY(2rpx); /* 按下效果 */
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+.back-icon {
+  font-size: 32rpx; /* 统一图标大小 */
+  margin-right: 12rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.back-text {
+  font-size: 26rpx; /* 统一字号 */
+  color: #fff;
+  font-weight: 500; /* 中等字重 */
+  font-family: PingFang SC; /* 统一字体 */
 }
 
 /* 表单区域 */
@@ -49,44 +117,52 @@
 }
 
 .form-card {
-  background: #ffffff;
-  border-radius: 20rpx;
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%); /* 统一渐变背景 */
+  border-radius: 20rpx; /* 统一圆角 */
+  backdrop-filter: blur(20rpx); /* 毛玻璃效果 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 统一阴影 */
   padding: 40rpx;
-  box-shadow: 0 10rpx 30rpx rgba(0, 198, 167, 0.1);
-  border: 1rpx solid #e0f2e9;
+  border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
 }
 
 .form-item {
-  margin-bottom: 50rpx;
+  margin-bottom: 40rpx;
 }
 
 .form-label {
   display: block;
-  font-size: 32rpx;
-  font-weight: 500;
-  color: #2d3748;
+  font-size: 30rpx; /* 统一字号 */
+  font-weight: bold; /* 统一字重 */
+  color: #3F3F3F; /* 统一深灰色 */
   margin-bottom: 20rpx;
+  font-family: PingFang SC; /* 统一字体 */
+  letter-spacing: 0.5rpx;
 }
 
 .form-input, .form-textarea {
   width: 100%;
   padding: 24rpx;
-  border: 2rpx solid #e2e8f0;
-  border-radius: 12rpx;
-  font-size: 28rpx;
-  background: #fafafa;
+  border: 2rpx solid rgba(255, 255, 255, 0.8); /* 半透明边框 */
+  border-radius: 15rpx; /* 统一圆角 */
+  font-size: 28rpx; /* 统一字号 */
+  background: rgba(255, 255, 255, 0.6); /* 半透明背景 */
+  backdrop-filter: blur(10rpx); /* 毛玻璃效果 */
+  font-family: PingFang SC; /* 统一字体 */
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a; /* 内阴影 */
   transition: all 0.3s ease;
 }
 
 .form-input:focus, .form-textarea:focus {
-  border-color: #00c6a7;
-  background: #ffffff;
-  box-shadow: 0 0 0 3rpx rgba(0, 198, 167, 0.1);
+  border-color: #26a69a; /* 主题绿色 */
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a, 0 0 0 3rpx rgba(38, 166, 154, 0.1); /* 聚焦阴影 */
 }
 
 .placeholder-style {
-  color: #a0aec0;
-  font-size: 28rpx;
+  color: #666; /* 稍浅的灰色 */
+  font-size: 28rpx; /* 统一字号 */
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: regular;
 }
 
 /* 时间选择器 */
@@ -103,25 +179,32 @@
 
 .time-label {
   display: block;
-  font-size: 26rpx;
-  color: #718096;
+  font-size: 26rpx; /* 统一字号 */
+  color: #3F3F3F; /* 统一深灰色 */
   margin-bottom: 10rpx;
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: regular;
 }
 
 .picker-display {
   padding: 24rpx;
-  border: 2rpx solid #e2e8f0;
-  border-radius: 12rpx;
-  background: #fafafa;
-  color: #2d3748;
+  border: 2rpx solid rgba(255, 255, 255, 0.8); /* 半透明边框 */
+  border-radius: 15rpx; /* 统一圆角 */
+  background: rgba(255, 255, 255, 0.6); /* 半透明背景 */
+  color: #3F3F3F; /* 统一深灰色 */
   text-align: center;
-  font-size: 28rpx;
+  font-size: 28rpx; /* 统一字号 */
+  font-family: PingFang SC; /* 统一字体 */
+  backdrop-filter: blur(10rpx); /* 毛玻璃效果 */
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a; /* 内阴影 */
 }
 
 .time-separator {
-  color: #a0aec0;
-  font-size: 26rpx;
+  color: #666; /* 稍浅的灰色 */
+  font-size: 26rpx; /* 统一字号 */
   margin-top: 40rpx;
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: bold;
 }
 
 /* 单选按钮组 */
@@ -135,111 +218,164 @@
   flex: 1;
   min-width: 150rpx;
   padding: 20rpx;
-  border: 2rpx solid #e2e8f0;
-  border-radius: 12rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.8); /* 半透明边框 */
+  border-radius: 15rpx; /* 统一圆角 */
   text-align: center;
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.6); /* 半透明背景 */
+  backdrop-filter: blur(10rpx); /* 毛玻璃效果 */
   transition: all 0.3s ease;
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a; /* 内阴影 */
 }
 
 .radio-item.active {
-  border-color: #00c6a7;
-  background: rgba(0, 198, 167, 0.1);
-  color: #00c6a7;
+  border-color: #26a69a; /* 主题绿色 */
+  background: rgba(38, 166, 154, 0.15); /* 主题色半透明背景 */
+  color: #26a69a; /* 主题绿色 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 激活状态阴影 */
 }
 
 .radio-text {
-  font-size: 26rpx;
+  font-size: 26rpx; /* 统一字号 */
   color: inherit;
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: 500; /* 中等字重 */
 }
 
 /* 文本域 */
 .form-textarea {
   height: 200rpx;
   resize: none;
+  line-height: 1.4;
 }
 
 .word-count {
   display: block;
   text-align: right;
-  font-size: 24rpx;
-  color: #a0aec0;
+  font-size: 24rpx; /* 统一字号 */
+  color: #666; /* 稍浅的灰色 */
   margin-top: 10rpx;
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: regular;
 }
 
-/* 提交按钮 */
+/* 提交按钮区域 */
 .submit-section {
-  margin-top: 60rpx;
+  margin-top: 40rpx;
+  position: relative;
+  z-index: 2;
 }
 
 .submit-btn {
   width: 100%;
   padding: 28rpx;
-  background: #cbd5e0;
-  border: none;
-  border-radius: 16rpx;
+  background: rgba(203, 213, 224, 0.8); /* 禁用状态背景 */
+  border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
+  border-radius: 20rpx; /* 统一圆角 */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15rpx;
   transition: all 0.3s ease;
+  backdrop-filter: blur(20rpx); /* 毛玻璃效果 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 统一阴影 */
 }
 
 .submit-btn.active {
-  background: linear-gradient(135deg, #00c6a7 0%, #00a886 100%);
-  box-shadow: 0 8rpx 20rpx rgba(0, 198, 167, 0.3);
+  background: linear-gradient(135deg, #26a69a 0%, #4db6ac 100%); /* 主题绿色渐变 */
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026, 0 8rpx 20rpx rgba(38, 166, 154, 0.3); /* 激活状态阴影 */
+}
+
+.submit-btn:active {
+  transform: translateY(2rpx); /* 按下效果 */
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
 }
 
 .btn-text {
-  font-size: 32rpx;
-  font-weight: 500;
+  font-size: 32rpx; /* 统一字号 */
+  font-weight: bold; /* 统一字重 */
   color: #ffffff;
+  font-family: PingFang SC; /* 统一字体 */
+  letter-spacing: 1rpx;
 }
 
 .btn-icon {
-  font-size: 32rpx;
+  font-size: 32rpx; /* 统一图标大小 */
   color: #ffffff;
   font-weight: bold;
 }
 
-/* pages/admin/applyActivity/applyActivity.wxss */
-
-/* 返回按钮样式 */
-.back-button {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 30rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 16rpx 24rpx;
-  border-radius: 12rpx;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10rpx);
-  z-index: 10;
+/* 底部信息区域 - 与工作台统一 */
+.bottom-info {
+  height: 56rpx; /* 固定高度 */
+  background-color: rgba(255, 255, 255, 0.6); /* 半透明白色背景 */
+  display: flex; /* 弹性布局 */
+  flex-direction: row; /* 水平排列 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 0 30rpx; /* 水平内边距 */
+  border-radius: 10rpx; /* 圆角 */
+  z-index: 2; /* 层级 */
+  position: relative; /* 相对定位 */
+  margin: 40rpx 30rpx 30rpx;
 }
 
-.back-icon {
-  font-size: 36rpx;
-  margin-right: 12rpx;
-  color: #fff;
+.bottom-info .info-text {
+  color: #000000; /* 黑色文字 */
+  font-family: PingFang SC; /* 统一字体 */
+  font-weight: regular; /* 常规字重 */
+  font-size: 24rpx; /* 较小字号 */
+  line-height: 56rpx; /* 行高等于容器高度，垂直居中 */
+  letter-spacing: 0rpx; /* 无字间距 */
+  text-align: center; /* 文字居中 */
 }
 
-.back-text {
-  font-size: 28rpx;
-  color: #fff;
-  font-weight: 500;
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .time-picker-group {
+    flex-direction: column;
+    gap: 15rpx;
+  }
+  
+  .time-separator {
+    margin-top: 0;
+    transform: rotate(90deg);
+  }
+  
+  .radio-group {
+    flex-direction: column;
+  }
+  
+  .radio-item {
+    min-width: auto;
+  }
+  
+  .header-content {
+    padding: 60rpx 80rpx 0;
+  }
+  
+  .back-button {
+    padding: 12rpx 20rpx;
+  }
+  
+  .back-text {
+    display: none; /* 在小屏幕上隐藏文字 */
+  }
+  
+  .back-icon {
+    margin-right: 0;
+  }
 }
 
-/* 调整标题布局 */
-.header-content {
-  position: relative;
+/* 加载状态 */
+.loading-state {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 120rpx;
+  padding: 60rpx;
 }
 
-.header-titles {
-  text-align: center;
+.loading-text {
+  font-size: 28rpx;
+  color: #666;
+  font-family: PingFang SC;
 }

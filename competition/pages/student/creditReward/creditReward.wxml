@@ -43,7 +43,7 @@
       </view>
 
       <!-- 空状态 -->
-      <view class="empty-state" wx:if="{{cred0itList.length === 0}}">
+      <view class="empty-state" wx:if="{{creditList.length === 0}}">
         <text class="empty-icon">📚</text>
         <text class="empty-text">暂无学分记录</text>
         <text class="empty-desc">您还没有获得任何学分</text>
