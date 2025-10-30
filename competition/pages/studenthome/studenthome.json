@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "学生主页",
-  "enablePullDownRefresh": true,
-  "backgroundColor": "#667eea",
-  "backgroundTextStyle": "light"
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
 }

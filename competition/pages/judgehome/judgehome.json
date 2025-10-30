@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "评委工作台",
-  "enablePullDownRefresh": true,
-  "backgroundColor": "#4facfe",
-  "backgroundTextStyle": "light"
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
 }

@@ -10,7 +10,7 @@ page{
 }
 
 .container{
-  padding: 40rpx;
+  padding: 120rpx 40rpx 40rpx;
   min-height: 100vh;
   background: transparent;
 }

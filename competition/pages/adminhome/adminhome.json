@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "管理员面板",
-  "enablePullDownRefresh": true,
-  "backgroundColor": "#ff6b6b",
-  "backgroundTextStyle": "light"
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
 }

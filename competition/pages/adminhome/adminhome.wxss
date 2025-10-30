@@ -1,7 +1,7 @@
 /* 个人中心页面样式 - 与评委工作台设计系统统一 */
 
 .container {
-  padding: 30rpx; /* 统一内边距 */
+  padding: 120rpx 30rpx 30rpx; /* 统一内边距 */
   min-height: 100vh; /* 最小高度为整个视口 */
   background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%); /* 统一渐变背景 */
   position: relative; /* 相对定位，用于背景装饰元素 */
@@ -138,10 +138,9 @@
   border-radius: 20rpx; /* 统一圆角 */
   backdrop-filter: blur(20rpx); /* 毛玻璃效果 */
   box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 统一阴影 */
-  padding: 25rpx 15rpx; /* 内边距 */
+  padding: 35rpx 20rpx; /* 内边距 */
   text-align: center; /* 文字居中 */
   border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
-  height: 140rpx; /* 固定高度 */
   display: flex; /* 弹性布局 */
   flex-direction: column; /* 垂直排列 */
   justify-content: center; /* 垂直居中 */
@@ -155,7 +154,7 @@
 /* 统计数字 */
 .stat-number {
   display: block;
-  font-size: 36rpx;
+  font-size: 44rpx;
   font-weight: bold;
   color: #3F3F3F; /* 统一深灰色 */
   margin-bottom: 8rpx;
@@ -165,7 +164,7 @@
 /* 统计标签 */
 .stat-label {
   display: block;
-  font-size: 22rpx;
+  font-size: 26rpx;
   color: #3F3F3F; /* 统一深灰色 */
   font-family: PingFang SC;
   font-weight: regular;
@@ -176,7 +175,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr; /* 两列等宽 */
   gap: 25rpx; /* 网格间距 */
-  margin-bottom: 40rpx; /* 底部外边距 */
+  margin-bottom: 0; /* 底部外边距 */
   z-index: 2; /* 层级 */
   position: relative; /* 相对定位 */
 }
@@ -187,10 +186,9 @@
   border-radius: 20rpx; /* 统一圆角 */
   backdrop-filter: blur(20rpx); /* 毛玻璃效果 */
   box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 统一阴影 */
-  padding: 35rpx 25rpx; /* 内边距 */
+  padding: 45rpx 30rpx; /* 内边距 */
   text-align: center; /* 文字居中 */
   border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
-  height: 200rpx; /* 固定高度 */
   display: flex; /* 弹性布局 */
   flex-direction: column; /* 垂直排列 */
   justify-content: center; /* 垂直居中 */
@@ -203,7 +201,7 @@
 
 /* 卡片图标 */
 .card-icon {
-  font-size: 54rpx; /* 较大字号用于图标 */
+  font-size: 64rpx; /* 较大字号用于图标 */
   margin-bottom: 15rpx; /* 底部外边距 */
   background: linear-gradient(135deg, #00897b 0%, #4db6ac 100%); /* 渐变背景 */
   -webkit-background-clip: text; /* 背景裁剪为文字形状 */
@@ -214,7 +212,7 @@
 /* 卡片标题 */
 .card-title {
   display: block;
-  font-size: 30rpx; /* 统一字号 */
+  font-size: 36rpx; /* 统一字号 */
   font-weight: bold;
   margin-bottom: 8rpx;
   color: #3F3F3F; /* 统一深灰色 */
@@ -224,7 +222,7 @@
 /* 卡片描述 */
 .card-desc {
   display: block;
-  font-size: 22rpx; /* 较小字号 */
+  font-size: 26rpx; /* 较小字号 */
   color: #3F3F3F; /* 统一深灰色 */
   line-height: 1.4;
   font-family: PingFang SC;

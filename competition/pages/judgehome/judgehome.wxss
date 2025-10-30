@@ -8,9 +8,9 @@ page {
 
 /* 主容器 */
 .container {
-  padding: 30rpx; /* 内边距 */
+  padding:80rpx 40rpx 40rpx; /* 顶部内边距为导航栏留出空间 */
   position: relative; /* 相对定位，用于子元素的绝对定位参考 */
-  min-height: 100vh; /* 最小高度为整个视口 */
+  min-height: 60vh; /* 最小高度为整个视口 */
 }
 
 /* 背景装饰元素 - 色块1 */
@@ -41,8 +41,8 @@ page {
   border-radius: 20rpx; /* 圆角 */
   backdrop-filter: blur(20rpx); /* 背景模糊，毛玻璃效果 */
   box-shadow: 4rpx 4rpx 4rpx 0rpx #00000026; /* 阴影效果 */
-  padding: 100rpx; /* 内边距 */
-  margin-bottom: 50rpx; /* 底部外边距 */
+  padding: 40rpx; /* 优化内边距 */
+  margin-bottom: 40rpx; /* 优化外边距 */
   position: relative; /* 相对定位 */
   z-index: 2; /* 层级高于背景元素 */
 }
@@ -50,7 +50,14 @@ page {
 /* 头部内容布局 */
 .header-content {
   display: flex; /* 弹性布局 */
-  align-items: flex-start; /* 项部对齐 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: space-between;
+  width: 100%;
+}
+
+.user-main-info {
+  display: flex;
+  align-items: center;
 }
 
 /* 用户头像样式 */
@@ -64,7 +71,7 @@ page {
 }
 
 /* 用户信息区域 */
-.user-info {
+.user-details {
   flex: 1; /* 占据剩余空间 */
 }
 
@@ -107,12 +114,13 @@ page {
 /* 徽章样式 */
 .badge {
   display: inline-block; /* 行内块元素 */
-  padding: 10rpx 16rpx; /* 内边距 */
-  border-radius: 20rpx; /* 圆角 */
+  padding: 4rpx 12rpx; /* 减小内边距，让背景更贴合文字 */
+  border-radius: 8rpx; /* 调整圆角以匹配新尺寸 */
   font-family: PingFang SC; /* 字体 */
   font-weight: bold; /* 粗体 */
-  font-size: 30rpx; /* 小字号 */
+  font-size: 24rpx; /* 适当减小字号 */
   text-align: center; /* 文字居中 */
+  line-height: 1.5; /* 确保文字垂直居中 */
 }
 
 /* 普通评委徽章 */
@@ -128,7 +136,7 @@ page {
 }
 
 /* 头部操作按钮区域 */
-.header-actions {
+.action-buttons {
   display: flex; /* 弹性布局 */
   flex-direction: column; /* 垂直排列 */
   gap: 30rpx; /* 按钮间距 */
@@ -145,14 +153,6 @@ page {
   font-family: PingFang SC; /* 字体 */
 }
 
-/* 返回按钮 */
-.back-btn {
-  background: rgba(255, 255, 255, 0.25); /* 半透明白色背景 */
-  color: #3F3F3F; /* 深灰色文字 */
-  border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
-  backdrop-filter: blur(20rpx); /* 背景模糊 */
-}
-
 /* 退出登录按钮 */
 .logout-btn {
   background: rgba(239, 83, 80, 0.25); /* 浅红色半透明背景 */
@@ -165,8 +165,8 @@ page {
 .stats-grid {
   display: grid; /* 网格布局 */
   grid-template-columns: 1fr 1fr 1fr; /* 三列等宽 */
-  gap: 40rpx; /* 网格间距 */
-  margin-bottom: 60rpx; /* 底部外边距 */
+  gap: 30rpx; /* 优化网格间距 */
+  margin-bottom: 40rpx; /* 优化底部外边距 */
   z-index: 2; /* 层级 */
   position: relative; /* 相对定位 */
 }
@@ -177,10 +177,9 @@ page {
   border-radius: 20rpx; /* 圆角 */
   backdrop-filter: blur(20rpx); /* 背景模糊 */
   box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 阴影 */
-  padding: 60rpx 50rpx; /* 内边距 */
+  padding: 40rpx 20rpx; /* 优化内边距 */
   text-align: center; /* 文字居中 */
   border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
-  height: 140rpx; /* 固定高度 */
   display: flex; /* 弹性布局 */
   flex-direction: column; /* 垂直排列 */
   justify-content: center; /* 垂直居中 */
@@ -209,7 +208,7 @@ page {
 .function-grid {
   display: grid; /* 网格布局 */
   grid-template-columns: 1fr 1fr; /* 两列等宽 */
-  gap: 40rpx; /* 网格间距 */
+  gap: 30rpx; /* 优化网格间距 */
   margin-bottom: 40rpx; /* 底部外边距 */
   z-index: 2; /* 层级 */
   position: relative; /* 相对定位 */
@@ -221,10 +220,9 @@ page {
   border-radius: 20rpx; /* 圆角 */
   backdrop-filter: blur(20rpx); /* 背景模糊 */
   box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026; /* 阴影 */
-  padding: 50rpx 40rpx; /* 内边距 */
+  padding: 40rpx; /* 优化内边距 */
   text-align: center; /* 文字居中 */
   border: 1rpx solid rgba(255, 255, 255, 0.5); /* 半透明边框 */
-  height: 300rpx; /* 固定高度 */
   display: flex; /* 弹性布局 */
   flex-direction: column; /* 垂直排列 */
   justify-content: center; /* 垂直居中 */
@@ -243,7 +241,7 @@ page {
 /* 卡片标题 */
 .card-title {
   display: block; /* 块级显示 */
-  font-size: 30rpx; /* 字号 */
+  font-size: 34rpx; /* 字号 */
   font-weight: bold; /* 粗体 */
   margin-bottom: 8rpx; /* 底部外边距 */
   color: #3F3F3F; /* 深灰色 */
@@ -253,45 +251,18 @@ page {
 /* 卡片描述 */
 .card-desc {
   display: block; /* 块级显示 */
-  font-size: 22rpx; /* 较小字号 */
+  font-size: 26rpx; /* 较小字号 */
   color: #3F3F3F; /* 深灰色 */
   line-height: 1.4; /* 行高 */
   font-family: PingFang SC; /* 字体 */
   font-weight: regular; /* 常规字重 */
 }
 
-
-/* 底部信息区域 */
-.bottom-info {
-  height: 56rpx; /* 固定高度 */
-  background-color: rgba(255, 255, 255, 0.6); /* 半透明白色背景 */
-  display: flex; /* 弹性布局 */
-  flex-direction: row; /* 水平排列 */
-  justify-content: space-between; /* 两端对齐 */
-  align-items: center; /* 垂直居中 */
-  padding: 0 30rpx; /* 水平内边距 */
-  border-radius: 10rpx; /* 圆角 */
-  z-index: 2; /* 层级 */
-  position: relative; /* 相对定位 */
-}
-
-/* 底部信息文字 */
-.bottom-info .info-text {
-  color: #000000; /* 黑色文字 */
-  font-family: PingFang SC; /* 字体 */
-  font-weight: regular; /* 常规字重 */
-  font-size: 24rpx; /* 较小字号 */
-  line-height: 56rpx; /* 行高等于容器高度，垂直居中 */
-  letter-spacing: 0rpx; /* 无字间距 */
-  text-align: center; /* 文字居中 */
-}
-
 /* 交互效果 */
 
 /* 卡片按下效果 */
 .function-card:active,
-.stat-card:active,
-.quick-action-card:active {
+.stat-card:active {
   transform: translateY(2rpx); /* 向下轻微移动，模拟按下效果 */
   box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a; /* 减小阴影，增强按下感 */
 }
