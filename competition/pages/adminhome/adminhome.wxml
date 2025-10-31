@@ -8,7 +8,7 @@
       <view class="back-btn" bindtap="goBack">返回</view>
     </view>
     <view class="header-actions">
-      <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+     <!-- 删了-->
     </view>
   </view>
 

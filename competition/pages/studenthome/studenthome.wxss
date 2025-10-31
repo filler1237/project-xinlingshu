@@ -56,9 +56,6 @@ page{
   background: #6AC210;
   transform: scale(.96);
 }
-.logout-btn{ background: rgba(244,67,54,.25); color: #fff; }
-.back-btn:active{ background: rgba(255,255,255,.4); }
-.logout-btn:active{ background: rgba(244,67,54,.4); }
 
 .welcome{
   display: block;

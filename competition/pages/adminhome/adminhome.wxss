@@ -72,12 +72,6 @@
   border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
 }
 
-/* 退出登录按钮 */
-.logout-btn {
-  background: rgba(239, 83, 80, 0.25); /* 浅红色半透明背景 */
-  color: #3F3F3F; /* 统一深灰色 */
-  border: 1rpx solid rgba(255, 255, 255, 0.4); /* 半透明边框 */
-}
 
 /* 按钮交互效果 */
 .back-btn:active,

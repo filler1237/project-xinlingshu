@@ -8,7 +8,7 @@
       <text class="student-id" wx:if="{{userInfo.studentId}}">学号：{{userInfo.studentId}}</text>
     </view>
     <view class="header-actions">
-      <view class="action-btn logout-btn" bindtap="onLogout">退出登录</view>
+      
       <view class="back-btn" bindtap="onBack">返回</view>
     </view>
   </view>
