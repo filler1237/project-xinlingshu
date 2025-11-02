@@ -160,6 +160,7 @@
 /* --- 聊天区域 --- */
 .chat-container {
   flex: 1;
+  height: 0; /* 保留此行以确保 flex: 1 在父容器高度固定时正确计算，从而启用滚动 */
   padding-bottom: 120rpx; /* 为输入框留出空间 */
   box-sizing: border-box;
   width: 100%;

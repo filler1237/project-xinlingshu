@@ -16,9 +16,6 @@ page {
 
 }
 
-.delete-button {
-  margin-top: 40rpx;
-}
 
 /* 分隔线 */
 .divider {

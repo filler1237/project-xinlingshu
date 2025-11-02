@@ -26,6 +26,12 @@ exports.main = async (event, context) => {
         foreignField: '_openid',
         as: 'authorInfo',
       })
+      .lookup({
+        from: 'comments',
+        localField: '_id',
+        foreignField: 'articleId',
+        as: 'comments',
+      })
       .end()
 
     let articles = articlesRes.list;
@@ -58,7 +64,7 @@ exports.main = async (event, context) => {
       
       // 初始化计数字段
       item.likes = item.likes || 0;
-      item.commentsCount = item.commentsCount || 0;
+      item.commentsCount = item.comments ? item.comments.length : 0;
 
       // 添加点赞状态
       item.liked = userLikedArticleIds.has(item._id);

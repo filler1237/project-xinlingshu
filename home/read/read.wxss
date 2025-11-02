@@ -1,5 +1,22 @@
 /* home/read/read.wxss */
 
+.add-button {
+  position: fixed; /* 固定定位 */
+  right: 40rpx; /* 距离右边 40rpx */
+  bottom: 40rpx; /* 距离底部 40rpx */
+  font-size: 48rpx; /* 增大字体大小 */
+  color: #ffffff; /* 白色字体 */
+  background-color: #07c160; /* 绿色背景 */
+  width: 100rpx; /* 设置宽度 */
+  height: 100rpx; /* 设置高度 */
+  border-radius: 50%; /* 圆形 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1); /* 添加阴影 */
+  z-index: 1000; /* 确保在顶层 */
+}
+
 .article-list {
   padding: 20rpx;
   background-color: #f7f7f7; /* 给列表一个浅灰色背景 */
@@ -19,6 +36,21 @@
   display: flex;
   align-items: center;
   margin-bottom: 20rpx;
+  position: relative;
+}
+
+.actions-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 5rpx;
+  cursor: pointer;
+}
+
+.dot {
+  color: #999;
+  font-size: 24rpx;
 }
 
 .author-avatar {

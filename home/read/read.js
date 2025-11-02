@@ -9,14 +9,30 @@ Page({
     page: 1,
     pageSize: 10,
     hasMoreData: true,
-    isLoading: false
+    isLoading: false,
+    userOpenid: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.getLoginOpenid();
     this.getArticles(true); // 首次加载
+  },
+
+  getLoginOpenid() {
+    wx.cloud.callFunction({
+      name: 'login',
+      success: res => {
+        this.setData({
+          userOpenid: res.result.openid
+        })
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
   },
 
   getArticles(isRefresh = false) {
@@ -33,7 +49,7 @@ Page({
         pageSize: this.data.pageSize
       },
       success: res => {
-        const newArticles = res.result.data;
+        const newArticles = res.result.data || [];
         const oldArticles = isRefresh ? [] : this.data.articles;
         
         this.setData({
@@ -136,6 +152,51 @@ Page({
   goToCreatePage() {
     wx.navigateTo({
       url: '/home/read/create/create',
+    })
+  },
+
+  deleteArticle(event) {
+    const articleId = event.currentTarget.dataset.id;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这篇文章吗？',
+      success: res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中...',
+          })
+          wx.cloud.callFunction({
+            name: 'deleteArticle',
+            data: {
+              id: articleId
+            },
+            success: res => {
+              wx.hideLoading()
+              if (res.result.code === 0) {
+                wx.showToast({
+                  title: '删除成功',
+                })
+                // Refresh the articles list
+                this.getArticles(true);
+              } else {
+                wx.showToast({
+                  title: res.result.msg || '删除失败',
+                  icon: 'none'
+                })
+              }
+            },
+            fail: err => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '删除失败',
+                icon: 'none'
+              })
+              console.error('[云函数] [deleteArticle] 调用失败', err)
+            }
+          })
+        }
+      }
     })
   }
 })

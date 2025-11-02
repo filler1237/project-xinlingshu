@@ -1,8 +1,12 @@
 <!-- home/card/card.wxml -->
 <view class="container">
-  <view class='partone' style="width:82rpx" bindtap='onBackTap'>
-      <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+  <!-- Loading Overlay -->
+  <view class="loading-overlay" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">正在为您解读塔罗牌...</view>
+    <view class="tarot-fact">{{currentFact}}</view>
   </view>
+
   <view class="title">请点击牌堆抽取塔罗牌</view>
   <view class="navigation-hint">从牌堆中抽取三张牌以获取解读</view>
 

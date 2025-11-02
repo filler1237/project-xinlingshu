@@ -1,6 +1,13 @@
 <!--home/divination/divination.wxml-->
 <navigation-bar title="周易智慧" back="{{true}}" color="black" background="white"></navigation-bar>
 <view class="container">
+  <!-- Loading Overlay -->
+  <view class="loading-overlay" wx:if="{{isDivining}}">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">正在为您解读卦象...</view>
+    <view class="tarot-fact">{{currentFact}}</view>
+  </view>
+
   <view class="description">静心思考，投掷六次，探索《周易》的智慧。</view>
 
   <view class="instructions-panel">
@@ -18,7 +25,6 @@
         <view class="line-symbol">{{item.symbol}}</view>
         <view class="line-type">
           <block wx:if="{{item.isChanging}}">
-            <text class="changing-indicator">{{item.value === 6 ? 'x' : 'o'}}</text>
             (动爻)
           </block>
           <block wx:else>
@@ -75,7 +81,7 @@
       </view>
 
       <view class="moving-lines" wx:if="{{result.movingLineInfos.length > 0}}">
-        动爻：{{result.movingLineInfos.join('、')}}
+        {{result.movingLineInfos.join('、')}}
       </view>
 
       <view class="interpretation-divider"></view>

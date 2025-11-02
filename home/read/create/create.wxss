@@ -1,55 +1,99 @@
 /* home/read/create/create.wxss */
 .container {
   padding: 40rpx;
-  background-color: #f7f7f7;
+  background-color: #f8f9fa;
   min-height: 100vh;
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header {
+  margin-bottom: 0rpx;
+  text-align: center;
+}
+
+.header-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  font-size: 28rpx;
+  color: #868e96;
 }
 
 .card {
   background-color: #ffffff;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  border-radius: 24rpx;
+  padding: 10rpx 40rpx;
+  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.08);
 }
 
 .form-item {
-  margin-bottom: 40rpx;
+  display: flex;
+  align-items: center;
 }
 
-.form-label {
-  display: block;
+.title-wrapper {
+  padding: 30rpx 0;
+}
+
+
+.title-input {
   font-size: 32rpx;
-  color: #333;
-  margin-bottom: 20rpx;
+  color: #343a40;
+  flex: 1;
   font-weight: bold;
 }
 
-.title-input {
-  border: 1rpx solid #e0e0e0;
-  padding: 20rpx;
-  border-radius: 10rpx;
-  font-size: 30rpx;
-  width: 100%;
-  box-sizing: border-box;
+.title-input::placeholder {
+  color: #adb5bd;
+  font-weight: normal;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #e9ecef;
+  margin: 0;
+}
+
+.content-wrapper {
+  padding: 30rpx 0;
 }
 
 .content-textarea {
   width: 100%;
-  height: 400rpx;
-  border: 1rpx solid #e0e0e0;
-  padding: 20rpx;
-  border-radius: 10rpx;
-  box-sizing: border-box;
+  height: 500rpx;
   font-size: 30rpx;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.textarea-placeholder {
+  color: #adb5bd;
+}
+
+.button-wrapper {
+  margin-top: 80rpx;
+  padding: 0 20rpx;
 }
 
 .publish-button {
-  margin-top: 60rpx;
-  background-color: #07c160;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, #a8e6cf, #dcedc1);
+  color: #333;
   border-radius: 50rpx;
   font-size: 34rpx;
   font-weight: bold;
-  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.2);
+  box-shadow: 0 10rpx 30rpx rgba(168, 230, 207, 0.4);
+  transition: all 0.3s ease;
+}
+
+.publish-button:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 6rpx 20rpx rgba(168, 230, 207, 0.5);
 }

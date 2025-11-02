@@ -16,6 +16,18 @@ Page({
       { value: 0, animationClass: '' },
       { value: 0, animationClass: '' }
     ], // 存储三枚硬币的状态
+    factInterval: null,
+    currentFact: '',
+    yijingFacts: [
+      "《周易》是中国最古老的经典之一，被誉为“群经之首”。",
+      "“爻”是构成卦的基本单位，分为阳爻（⚊）和阴爻（⚋）。",
+      "六十四卦由两个八卦（经卦）相叠而成。",
+      "“动爻”是占卜中变化的关键，它预示着事物发展的趋势。",
+      "“本卦”代表当前状况，“变卦”则指向未来的可能性。",
+      "《周易》的核心思想是“变”，它揭示了宇宙万物生生不息的规律。",
+      "“天行健，君子以自强不息”出自乾卦的象辞。",
+      "“地势坤，君子以厚德载物”出自坤卦的象辞。"
+    ]
   },
 
   /**
@@ -26,7 +38,7 @@ Page({
       return;
     }
 
-    this.setData({ isDivining: true, canThrow: false });
+    this.setData({ canThrow: false });
 
     // 重置动画
     this.setData({
@@ -78,11 +90,24 @@ Page({
       this.setData({
         hexagram: newHexagram,
         throwCount: newThrowCount,
-        isDivining: false,
         canThrow: newThrowCount < 6,
       });
 
       if (newThrowCount === 6) {
+        this.setData({ isDivining: true }); // 开始显示加载动画
+        // Start showing yijing facts
+        const facts = this.data.yijingFacts;
+        this.setData({
+          currentFact: facts[Math.floor(Math.random() * facts.length)]
+        });
+
+        const factInterval = setInterval(() => {
+          this.setData({
+            currentFact: facts[Math.floor(Math.random() * facts.length)]
+          });
+        }, 3000);
+
+        this.setData({ factInterval: factInterval });
         this.analyzeHexagram(newHexagram);
       }
     }, 1200); // 增加延迟以等待动画完成
@@ -92,10 +117,6 @@ Page({
    * 解析卦象 - 调用云函数
    */
   analyzeHexagram(hexagram) {
-    wx.showLoading({
-      title: 'AI 正在解读...',
-    });
-
     const movingLinesCount = hexagram.filter(line => line.isChanging).length;
 
     // 1. 获取本卦的爻符号 (数组顺序已经是初爻到上爻，无需反转)
@@ -128,7 +149,6 @@ Page({
       name: 'analyzeHexagram',
       data: cloudCallData
     }).then(res => {
-      wx.hideLoading();
       if (res.result && res.result.success) {
         this.setData({
           result: res.result.analysis, // 现在 analysis 是一个对象
@@ -142,11 +162,13 @@ Page({
         });
       }
     }).catch(err => {
-      wx.hideLoading();
       console.error('调用云函数失败', err);
       this.setData({
         result: '网络错误，调用云函数失败，请检查网络连接或稍后再试。'
       });
+    }).finally(() => {
+      clearInterval(this.data.factInterval);
+      this.setData({ isDivining: false, factInterval: null });
     });
   },
 
