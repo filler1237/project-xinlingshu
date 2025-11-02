@@ -22,7 +22,7 @@ gotoEchoWall (){
 },
 gotoTaLuo (){
   wx.navigateTo({
-    url: '/home/card/card'
+    url: '/home/card/question'
   })
 },
 gotoDivination (){

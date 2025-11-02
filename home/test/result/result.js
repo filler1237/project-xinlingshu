@@ -26,20 +26,12 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      title : options.title
-    })
-    this.setData({  
-      icontitle : options.it
-    })
-    this.setData({  
-      advise : options.advise
-    })
-    this.setData({
-      color : options.color
-    })
-    this.setData({
-      ReturnAddressId : options.ReturnAddressId
-    })
+      title: options.title,
+      icontitle: options.it,
+      advise: decodeURIComponent(options.advise),
+      color: options.color,
+      ReturnAddressId: options.ReturnAddressId
+    });
   },
 
   /**

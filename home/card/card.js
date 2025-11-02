@@ -7,6 +7,7 @@ Page({
     selectedCards: [],
     analysisResult: '',
     isLoading: false,
+    userQuestion: '',
     factInterval: null,
     currentFact: '',
     tarotFacts: [
@@ -24,7 +25,12 @@ Page({
     ]
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
+    if (options.question) {
+      this.setData({
+        userQuestion: decodeURIComponent(options.question)
+      });
+    }
     this.initGame();
   },
 
@@ -108,6 +114,7 @@ Page({
       name: 'analyzeTarot',
       data: {
         selectedCards: this.data.selectedCards,
+        question: this.data.userQuestion
       },
       success: res => {
         this.setData({

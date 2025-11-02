@@ -2,25 +2,21 @@ const AddRes = wx.cloud.database().collection('Scales')
 
 Page({
   Goresult(){
-    let Sum = this.data.SumArr.reduce((a, b) => a + b, 0);
+    let rawScore = this.data.SumArr.reduce((a, b) => a + b, 0);
+    let standardScore = Math.floor(rawScore * 1.25);
     let RES;
-    if(Sum < 50){
-      this.setData({  
-        RES : this.data.result[0],
-      })
-    }else if(this.data.Sum >= 50 && this.data.Sum <= 59){
-      this.setData({  
-        RES : this.data.result[1],
-      })
-    }else if(this.data.Sum >= 60 && this.data.Sum <= 69){
-      this.setData({  
-        RES : this.data.result[2],
-      })
-    }else if(Sum >=70){
-      this.setData({  
-        RES : this.data.result[3],
-      })
+    if(standardScore < 50){
+      RES = this.data.result[0];
+    } else if(standardScore <= 59){
+      RES = this.data.result[1];
+    } else if(standardScore <= 69){
+      RES = this.data.result[2];
+    } else if(standardScore >= 70){
+      RES = this.data.result[3];
     }
+    this.setData({
+      RES: `您的标准分是：${standardScore}\n\n${RES}`
+    });
 
     /* 上传结果 */
     AddRes.add({
@@ -32,7 +28,7 @@ Page({
     })
 
     wx.redirectTo({
-      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${this.data.RES}&ReturnAddressId=${this.data.RAI}`,
+      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${encodeURIComponent(this.data.RES)}&ReturnAddressId=${this.data.RAI}`,
     })
   },
 
@@ -54,62 +50,46 @@ Page({
     },
   
     OpA:function(){
-      
-      if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-        this.data.SumArr[this.data.id] = 4
+      let score = 1;
+      if([5, 9, 13, 17, 19].includes(this.data.id + 1)){
+        score = 4;
       }
-      else{
-        this.data.SumArr[this.data.id] = 1
-      }
+      this.data.SumArr[this.data.id] = score;
       if (this.data.id <= 19){
-        this.setData({
-          id : this.data.id + 1 
-        })
+        this.setData({ id : this.data.id + 1 });
       }
     },
 
     OpB:function(){
-      
-      if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-        this.data.SumArr[this.data.id] = 3
+      let score = 2;
+      if([5, 9, 13, 17, 19].includes(this.data.id + 1)){
+        score = 3;
       }
-      else{
-        this.data.SumArr[this.data.id] = 2
-      }
-      if (this.data.id < 20){
-        this.setData({
-          id : this.data.id + 1 
-        })
+      this.data.SumArr[this.data.id] = score;
+      if (this.data.id <= 19){
+        this.setData({ id : this.data.id + 1 });
       }
     },
 
     OpC:function(){
-      
-      if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18){
-        this.data.SumArr[this.data.id] = 2
+      let score = 3;
+      if([5, 9, 13, 17, 19].includes(this.data.id + 1)){
+        score = 2;
       }
-      else{
-        this.data.SumArr[this.data.id] = 3
-      }
-      if (this.data.id < 20){
-        this.setData({
-          id : this.data.id + 1 
-        })
+      this.data.SumArr[this.data.id] = score;
+      if (this.data.id <= 19){
+        this.setData({ id : this.data.id + 1 });
       }
     },
     
     OpD:function(){
-      
-      if(this.data.id == 4||this.data.id == 8||this.data.id == 12||this.data.id == 16||this.data.id == 18 ){
-        this.data.SumArr[this.data.id] = 1
+      let score = 4;
+      if([5, 9, 13, 17, 19].includes(this.data.id + 1)){
+        score = 1;
       }
-      else{
-        this.data.SumArr[this.data.id] = 4
-      }
+      this.data.SumArr[this.data.id] = score;
       if (this.data.id <= 19){
-        this.setData({
-          id : this.data.id + 1 
-        })
+        this.setData({ id : this.data.id + 1 });
       }
     },
 /**
@@ -149,10 +129,10 @@ data: {
       {question:"20、我做恶梦."},
   ],
   result: [
-    "您没有焦虑症状\n你是一个心态不错的人，身心都比较放松，相信在这样的状态下，你的好运就要到来了哦。",
-    "您可能有轻度焦虑症状\n基本上你能处理好各种的压力，但是也有可能会被突如其来的坏消息打到，让情绪产生扰动，要相信自己的能力。",
-    "您可能有中度焦虑症状\n你自己也感觉到了吧，焦虑的情绪无时无刻如影随形跟着你，慢慢吞噬你，迫使大脑超负荷运转的不是别人，正是你自己。",
-    "您可能有重度焦虑症状\n焦虑已经严重影响到你的生活了，持久性焦虑情绪和植物神经活动障碍的脑机能失调，赶紧自救吧！"
+    "无焦虑：情绪稳定，无明显焦虑体验。",
+    "轻度焦虑：有明显紧张、担忧或生理症状，但尚能自我调节。",
+    "中度焦虑：持续焦虑，伴随明显的身体不适或睡眠障碍，影响生活或学习。",
+    "重度焦虑：焦虑情绪强烈且持续，伴随显著的生理症状（如心慌、出汗、失眠），需专业干预。"
   ]
 },
 

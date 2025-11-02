@@ -3,43 +3,34 @@ const db = wx.cloud.database();
 const cloud = wx.cloud.init(); // 初始化云开发
 Page({
   data: {
-    showTopTips: false, // 是否显示顶部提示
-    // userInfo: {
-    //   openid,
-    //   nickName,
-    //   sex,
-    //   age,
-    //   class:0
-    // }, // 用户信息
-    hourIndex: -1, // 选择的时间索引
-    teacherIndex: -1, // 选择的咨询师索引
-    length: 0, // 文本框输入的字符数
-    availabilityId: '' ,
-    availabilitySlot:[],
+    showTopTips: false,
+    hourIndex: -1,
+    teacherIndex: -1,
+    length: 0,
+    availabilityId: '',
+    availabilitySlot: [],
+    phone: '',
+    isFormValid: false,
     formData: {
       timeSlotIndex: -1,
       timeSlot: '',
-      teacherId:-1, 
-      userId:0,
-      date:0, 
-      startTime:0, 
-      endTime:0, 
-      availabilityId:0, 
-      timeSlotIndex:0, 
-      status:0, 
-      detail:0,
-      length: 0, // 添加一个名为 length 的字段
-    },// 表单数据
-    // 咨询师列表
-    teacherList: ['王贞贞', '姚双雁', '李亚玲'],
+      teacherId: -1,
+      userId: 0,
+      date: 0,
+      startTime: 0,
+      endTime: 0,
+      availabilityId: 0,
+      timeSlotIndex: 0,
+      status: 0,
+      detail: 0,
+      length: 0,
+    },
+    teacherList: [],
     selectedDateIndex: -1,
-    // 日期列表，格式为 ['yyyy-MM-dd', 'yyyy-MM-dd', ... ]
     dateList: [],
-    // 时间列表，格式为 ['hh:mm', 'hh:mm', ... ]
     hourList: [],
-    // 选择的时间索引
-    hourIndex: -1,
-},
+    availabilityData: [], // Store all availability data
+  },
 onBackTap: function(e) {
   var pages = getCurrentPages();                       //获取当前页面
   var prePage = pages[pages.length - 2];               //获取上一页面
@@ -50,13 +41,43 @@ onBackTap: function(e) {
     delta: 1,
   })
 },
-onLoad: function (options) { // 页面加载时执行的函数
-var that = this; // 保存当前页面的上下文
-this.initDateList();
-this.initHourList();
-this.setData({
+
+// 检查表单是否有效
+checkFormValidity: function() {
+  const { teacherIndex, selectedDateIndex, hourIndex, phone } = this.data;
+  const isFormValid = teacherIndex !== -1 &&
+                      selectedDateIndex !== -1 &&
+                      hourIndex !== -1 &&
+                      phone.length === 11;
+  this.setData({ isFormValid });
+},
+
+// 处理手机号码输入
+onPhoneInput: function(e) {
+  this.setData({
+    phone: e.detail.value
   });
-  },
+  this.checkFormValidity();
+},
+
+onLoad: function (options) {
+  wx.showLoading({ title: '加载中...' });
+  wx.cloud.callFunction({
+    name: 'getInitialAvailability',
+    success: res => {
+      this.setData({
+        availabilityData: res.result,
+        teacherList: res.result.map(t => t.teacherName)
+      });
+      wx.hideLoading();
+    },
+    fail: err => {
+      console.error(err);
+      wx.hideLoading();
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    }
+  });
+},
    
   textareaInput: function (e) {
     const { value } = e.detail; // 使用对象解构语法获取输入框的值
@@ -68,58 +89,18 @@ this.setData({
       length: length, // 更新 length 的值
     });
   },
-bindTeacherChange: function (e) {  // 绑定老师选择器的change事件处理函数
-  var that = this;  // 缓存this指针
-  const db = wx.cloud.database();
-  this.setData({  // 更新页面数据
-    teacherIndex: e.detail.value,  // 更新老师选择器的选中项
-    selectedDateIndex: -1,  // 重置日期选择器的选中项
-    hourIndex: -1,  // 重置时间选择器的选中项
-  //  [`formData.teacher`]: teacher[e.detail.value],  // 更新表单数据中的老师字段
+bindTeacherChange: function (e) {
+  const teacherIndex = e.detail.value;
+  const teacherData = this.data.availabilityData[teacherIndex];
+  this.setData({
+    teacherIndex: teacherIndex,
+    selectedDateIndex: -1,
+    hourIndex: -1,
+    dateList: teacherData ? Object.keys(teacherData.dates) : [],
+    hourList: [],
   });
-  db.collection('Appointment').where({
-    teacher:this.data.teacherList[this.data.teacherIndex]
-  })
-  .get({
-   success:function(res){
-     console.log(res)
-   }
- })
+  this.checkFormValidity();
 },
-initDateList: function() {
-   // 创建日期列表
-   const dateList = [];
-   // 获取当前日期
-   const today = new Date();
-   // 循环添加后7天的日期
-   for (let i = 0; i < 7; i++) {
-     // 获取日期对象
-     const date = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
-     // 将日期格式化为字符串，添加到日期列表中
-     const dateString = date.getFullYear() + '-' + this.formatNumber(date.getMonth() + 1) + '-' + this.formatNumber(date.getDate());
-     dateList.push(dateString);
-   }
-   // 将日期列表设置到页面数据中
-   this.setData({
-     dateList: dateList
-   });
- },
- 
- // 初始化时间列表
- initHourList: function() {
-   // 创建时间列表
-   const hourList = [];
-   // 循环添加每隔两个小时的时间
-   for (let i = 9; i < 16; i += 1) {
-     // 将时间格式化为字符串，添加到时间列表中
-     const hourString = this.formatNumber(i) + ':00';
-     hourList.push(hourString);
-   }
-   // 将时间列表设置到页面数据中
-   this.setData({
-     hourList: hourList
-   });
- },
   formInputChange(e) {  // 表单输入框的输入事件处理函数
      const {
         field
@@ -137,60 +118,30 @@ formatNumber: function(n) {
   n = n.toString();
   return n[1] ? n : '0' + n;
 },
-// 日期选择器改变时触发
 onDateChange: function(e) {
+  const selectedDateIndex = e.detail.value;
+  const teacherData = this.data.availabilityData[this.data.teacherIndex];
+  const selectedDate = this.data.dateList[selectedDateIndex];
+  const dateData = teacherData.dates[selectedDate];
+
   this.setData({
-    selectedDateIndex: e.detail.value
+    selectedDateIndex: selectedDateIndex,
+    hourIndex: -1,
+    hourList: dateData ? dateData.slots.map(s => s.startTime) : [],
+    availabilitySlot: dateData ? dateData.slots : [],
+    'formData.availabilityId': dateData ? dateData.availabilityId : null,
+    'formData.date': selectedDate,
+    'formData.teacherId': teacherData.teacherId,
   });
-
-  // 获取本地时间并格式化
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = this.formatNumber(now.getMonth() + 1);
-  const day = this.formatNumber(now.getDate());
-  const hours = this.formatNumber(now.getHours());
-  const minutes = this.formatNumber(now.getMinutes());
-  const seconds = this.formatNumber(now.getSeconds());
-  const currentTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-  wx.cloud.callFunction({
-    name: 'getAvailableTimeSlots',
-    data: {
-      teacherId: this.data.teacherIndex, 
-      date: this.data.dateList[e.detail.value],
-      currentTime: currentTime, // 传递当前日期和时间
-    },
-    fail: err => {
-      console.error('[云函数] [getAvailableTimeSlots] 调用失败', err);
-      if (err) return;
-    },
-    success: res => {
-      console.log(res.result);
-      if (Array.isArray(res.result.data)) {
-        this.setData({
-          availabilitySlot: res.result.data,
-          hourList: res.result.data.map(slot => slot.startTime),
-          formData: res.result.formData || {} // 添加 "|| {}" 以确保 formData 总是一个对象
-        });
-
-        if(res.result.formData && res.result.formData.availabilityId) {
-          this.setData({
-            [`formData.availabilityId`]: res.result.formData.availabilityId
-          });
-        }
-        console.log(this.data.formData); 
-        console.log(this.data.hourList); 
-      } else {
-        console.error('getAvailableTimeSlots 返回的结果不是数组对象');
-      }
-    }
-  });
+  this.checkFormValidity();
 },
 // 时间选择器改变时触发
 onHourChange: function(e) {
   // 将选择的时间索引设置到页面数据中
   this.setData({
     hourIndex: e.detail.value
+  }, () => {
+    this.checkFormValidity();
   });
 
   // 调用云函数查询时间段索引
@@ -233,31 +184,33 @@ submitForm() {
   formdata.detail = this.data.formData.detail; // 添加文本内容到formData
   formdata.length = this.data.formData.length; // 添加文本内容到formData
   // 保存 this 的值,以便在回调函数中使用
-  var that = this;  
+  var that = this;
 
   // 判断老师选择器、日期选择器和时间选择器的当前选择的索引是否为-1,以及表单输入框是否有输入
-  if (that.data.teacherIndex !== -1 && that.data.selectedDateIndex !== -1 && that.data.hourIndex !== -1 && this.data.formData.length) {      
+  if (that.data.teacherIndex !== -1 && that.data.selectedDateIndex !== -1 && that.data.hourIndex !== -1 && this.data.formData.length) {
+    const appointmentData = {
+      availabilityId: this.data.formData.availabilityId,
+      teacherId: this.data.formData.teacherId,
+      openid: app.globalData.userInfo.openid,
+      date: this.data.formData.date,
+      startTime: this.data.formData.timeSlot.startTime,
+      endTime: this.data.formData.timeSlot.endTime,
+      timeSlotIndex: this.data.formData.timeSlotIndex,
+      status: this.data.formData.timeSlot.status,
+      detail: this.data.formData.detail,
+      teacher: this.data.teacherList[this.data.teacherIndex]
+    };
+
     // 调用云函数更新可预约时间段状态
     wx.cloud.callFunction({
-      name: 'createAppointment',   //这里要调用createAppointment云函数
-      data: {
-        availabilityId: this.data.formData.availabilityId,
-        teacherId: this.data.formData.teacherId,
-        openid: app.globalData.userInfo.openid,
-        date: this.data.formData.date,
-        startTime: this.data.formData.timeSlot.startTime,
-        endTime: this.data.formData.timeSlot.endTime, 
-        timeSlotIndex: this.data.formData.timeSlotIndex, 
-        status: this.data.formData.timeSlot.status,
-        detail: this.data.formData.detail,
-        teacher:this.data.teacherList[this.data.formData.teacherId]
-      },
+      name: 'createAppointment', //这里要调用createAppointment云函数
+      data: appointmentData,
       success: res => {
         console.log(res.result);
         this.setData({
-          teacherIndex: -1,  // 更新老师选择器的选中项
-          selectedDateIndex: -1,  // 重置日期选择器的选中项
-          hourIndex: -1,  // 重置时间选择器的选中项
+          teacherIndex: -1, // 更新老师选择器的选中项
+          selectedDateIndex: -1, // 重置日期选择器的选中项
+          hourIndex: -1, // 重置时间选择器的选中项
         })
         wx.showToast({
           title: '预约成功',
@@ -282,9 +235,9 @@ submitForm() {
 },
 goToNextStep() {
   // 检查是否已选择老师、日期和时间
-  if (this.data.teacherIndex === -1 || this.data.selectedDateIndex === -1 || this.data.hourIndex === -1) {
+  if (!this.data.isFormValid) {
     wx.showToast({
-      title: '请先选择咨询师、日期和时间',
+      title: '请填写所有信息',
       icon: 'none',
     });
     return;

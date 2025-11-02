@@ -90,6 +90,18 @@ page{
     color: #B5B5B5;
     
   }
+  .weui-btn:not(.weui-btn_disabled) {
+    background-color: #07C160 !important; /* 绿色 */
+    color: white !important;
+  }
+  
+  .weui-btn.weui-btn_disabled .character {
+    color: #B5B5B5;
+  }
+  
+  .weui-btn:not(.weui-btn_disabled) .character {
+    color: white;
+  }
   .form{
     border-radius: 10rpx;
     background-color: transparent;
@@ -180,5 +192,3 @@ page{
     left: 70%;
     height: 0.5%;
   }
-  
-  

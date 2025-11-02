@@ -10,11 +10,11 @@ Page({
       this.setData({  
         RES : this.data.result[0],
       })
-    }else if(this.data.Sum >= 42 && this.data.Sum <= 49){
+    }else if(Sum >= 42 && Sum <= 49){
       this.setData({  
         RES : this.data.result[1],
       })
-    }else if(this.data.Sum >= 50 && this.data.Sum <= 57){
+    }else if(Sum >= 50 && Sum <= 57){
       this.setData({  
         RES : this.data.result[2],
       })
@@ -34,7 +34,7 @@ Page({
     })
 
     wx.redirectTo({
-      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${this.data.RES}&ReturnAddressId=${this.data.RAI}`,
+      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${encodeURIComponent(this.data.RES)}&ReturnAddressId=${this.data.RAI}`,
     })
   },
 

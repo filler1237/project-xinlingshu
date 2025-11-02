@@ -1,31 +1,25 @@
 // pages/home/function/1/AIS/AIStext/AIStext.js
 const AddRes = wx.cloud.database().collection('Scales')
-var Ans = new Array()
-var SUMofANS = 0
 Page({
 
   /*查看结果*/
   Goresult(){
-    for(var i=0; i < 8; i++)
-    {
-        console.log("ans.i:",this.data.Ans[i])
-        SUMofANS += this.data.Ans[i]
-        console.log("soa:" ,SUMofANS)
+    let SUMofANS = this.data.Ans.reduce((a, b) => a + b, 0);
+    var RES;
+    if(SUMofANS <= 3){
+      RES = this.data.result[0];
+    } else if(SUMofANS <= 5){
+      RES = this.data.result[1];
+    } else if(SUMofANS <= 10){
+      RES = this.data.result[2];
+    } else if(SUMofANS <= 15){
+      RES = this.data.result[3];
+    } else if(SUMofANS >= 16){
+      RES = this.data.result[4];
     }
-    var RES
-    if(SUMofANS<=3){
-      this.setData({  
-        RES : "您的测评得分是：" + SUMofANS + "\n\n" + this.data.result[0],
-      })
-    }else if(SUMofANS<=5){
-      this.setData({  
-        RES : "您的测评得分是：" + SUMofANS + "\n\n" + this.data.result[1],
-      })
-    }else if(SUMofANS>=6){
-      this.setData({  
-        RES : "您的测评得分是：" + SUMofANS + "\n\n" + this.data.result[2],
-      })
-    }
+    this.setData({
+      RES: `您的测评得分是：${SUMofANS}\n\n${RES}`
+    });
     /* 上传结果 */
     AddRes.add({
       data:{
@@ -38,7 +32,7 @@ Page({
 
     /* 跳转至结果页 */
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
+      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + encodeURIComponent(this.data.RES) + '&ReturnAddressId=' + this.data.RAI,
     })
   },
     /**
@@ -65,9 +59,12 @@ Page({
        {question:"7. 白天身体功能低下（体力或精神：如记忆力、认知力和注意力等）"},
        {question:"8. 白天思睡"}
      ],
-     result: ["祝贺你，你没有睡眠障碍",
-      "你可能有睡眠问题，请尽快调整作息或请求专业人士帮助",
-      "你最近有一些失眠症状，请尽快向专业人士求助"
+     result: [
+      "无失眠：睡眠正常，无明显睡眠障碍。偶有入睡困难或早醒，但不影响日常功能。",
+      "可疑失眠（临界状态）：轻度入睡困难、夜间觉醒次数略增或主观睡眠质量下降，但白天功能影响不大。建议观察或改善睡眠卫生。",
+      "轻度失眠：明显入睡困难、夜间易醒、早醒或睡眠不深，可能伴随轻微疲劳、注意力下降等日间影响。若持续超过1个月建议干预。",
+      "中度失眠：入睡困难明显、睡眠时间短且恢复感差，白天出现显著的困倦、情绪波动、工作学习效率下降。常需心理或医学干预。",
+      "重度失眠：长期睡眠障碍严重影响生活质量，伴随焦虑、抑郁等情绪问题，需专业诊治与系统治疗。"
     ]
    },
 

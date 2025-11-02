@@ -1,0 +1,15 @@
+var formatHour = function(hour) {
+  if (hour === null || hour === undefined) {
+    return '';
+  }
+  var h = parseInt(hour, 10);
+  if (isNaN(h) || h < 0 || h > 23) {
+    return '无效时间';
+  }
+  var hourStr = h < 10 ? '0' + h : h;
+  return hourStr + ':00';
+}
+
+module.exports = {
+  formatHour: formatHour
+};

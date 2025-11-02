@@ -14,19 +14,17 @@
 
 
 <view class="IntroBox">
-<text class="Font" style="color: #96CE74; top: 20rpx;">您的测评结果</text>
-
-<view >
-<text class="Font" style="color: #000000;">{{advise}}</text>
+  <text class="Font" style="color: #96CE74; top: 20rpx;">您的测评结果</text>
+  <view>
+    <text class="Font" style="color: #000000;">{{advise}}</text>
+  </view>
 </view>
 
-<view style="display: flex; justify-content: center;">
-  <text class="Font" style="color: #96CE74; align-items: center;" bind:tap="OneMore">
-  再测一次
+<view class="button-container">
+  <text class="Font" style="color: #96CE74;" bind:tap="OneMore">
+    再测一次
   </text>
-</view>
-
-<button style="color: #ffffff;" bind:tap="BackTo">返回</button>
+  <button style="color: #ffffff;" bind:tap="BackTo">返回</button>
 </view>
 
 

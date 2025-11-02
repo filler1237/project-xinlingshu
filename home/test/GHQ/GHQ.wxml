@@ -10,7 +10,7 @@
   </view>
 </view>
 
-<view class="quesbox" wx:if="{{id<=19}}">
+<view class="quesbox" wx:if="{{id<12}}">
 
 <swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
   <block wx:for="{{GHQQuestion}}" >
@@ -24,6 +24,8 @@
         <view  class="item" >
           <label bindtap="OpA">{{OptionA}}</label>
           <label bindtap="OpB">{{OptionB}}</label>
+          <label bindtap="OpC">{{OptionC}}</label>
+          <label bindtap="OpD">{{OptionD}}</label>
         </view>
       </view>
       
@@ -36,14 +38,14 @@
     上一题
   </view>
 </view>
-<view class="tips" style="color: #FEDB03;" wx:if="{{id<=19}}">
-    {{id+1}}/20
+<view class="tips" style="color: #FEDB03;" wx:if="{{id<12}}">
+    {{id+1}}/12
 </view>
 </view>
 
 
 
-<view wx:if="{{id==20}}" class="quesbox"  >
+<view wx:if="{{id==12}}" class="quesbox"  >
    <view class="select flex" bindtap="Goresult">
     <label >查看结果</label>
     </view> 

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #f5f5dc; /* 淡米白色 */
   min-height: 100vh;
   box-sizing: border-box;
   padding-top: 120rpx; /* 为导航栏预留空间 */
@@ -176,9 +176,19 @@
   margin-top: 40rpx;
 }
 
-.retry-btn, .result-btn {
+.retry-btn {
   width: 40%;
   font-size: 32rpx;
+  background-color: #ffffff;
+  color: #333333;
+  border: 1rpx solid #dddddd;
+}
+
+.result-btn {
+  width: 40%;
+  font-size: 32rpx;
+  background-color: #4CAF50; /* 绿色 */
+  color: white;
 }
 
 .result-btn[disabled] {
@@ -253,4 +263,11 @@
   padding: 0 40rpx;
   text-align: center;
   line-height: 1.5;
+}
+
+.disclaimer {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 40rpx;
+  padding-bottom: 40rpx;
 }

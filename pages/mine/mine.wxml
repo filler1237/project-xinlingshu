@@ -1,4 +1,6 @@
 
+<wxs src="../../utils/format.wxs" module="formatter" />
+
 <image class="avatar" src="{{avatarUrl}}" style="width: 166rpx;"  bindtap="toLogin"></image>
 <view class='ucenter' style="width: 678rpx;">
   <view>
@@ -38,19 +40,30 @@
 <view class="sekuai2" style="width: 550rpx;"></view>
 <view class="myBook" style="width: 690rpx;">
   <view class="title">我的预约</view>
-  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Rectangle 1004.jpg" style="width:172rpx"/> 
-  <navigator url="" class="information" style="width: 354rpx;">
-    <view class="label" style="width: 354rpx;">服务：
-      <view class="data">还未预约哦~</view>
+  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Rectangle 1004.jpg" style="width:172rpx"/>
+  
+  <block wx:if="{{ nextAppointment }}">
+    <navigator url="/mine/booked/booked" class="information" style="width: 354rpx;">
+      <view class="label" style="width: 354rpx;">咨询师：
+        <view class="data">{{nextAppointment.teacher}}</view>
+      </view>
+      <view class="label" style="width: 354rpx;">地点：
+        <view class="data">{{nextAppointment.teacher}}_占位符</view>
+      </view>
+      <view class="label" style="width: 354rpx;">时间：
+        <view class="data">{{nextAppointment.date}} {{formatter.formatHour(nextAppointment.startTime)}}-{{formatter.formatHour(nextAppointment.endTime)}}</view>
+      </view>
+    </navigator>
+  </block>
+  <block wx:else>
+    <view class="information" style="width: 354rpx;">
+      <view class="label" style="width: 354rpx;">
+        <view class="data">还未预约哦~</view>
+      </view>
     </view>
-    <view class="label" style="width: 354rpx;">地点：
-      <view class="data">还未预约哦~</view>
-    </view>
-    <view class="label" style="width: 354rpx;">时间：
-      <view class="data">还未预约哦~</view>
-    </view>
-  </navigator>
-  <navigator url="" style="width: 50rpx;">
+  </block>
+
+  <navigator url="/mine/booked/booked" style="width: 50rpx;">
     <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Vector 1.jpg" class="array1" style="width:14rpx"/>
   </navigator>
 </view>

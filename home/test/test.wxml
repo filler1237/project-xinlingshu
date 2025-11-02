@@ -38,20 +38,6 @@
       <text>GHD-12</text>
     </view>
   </view>
-  <view class="QesIn" style="background: #FEF4FF;"  data-id="1" bind:tap="GoToIntro">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>焦虑自评量表</text>
-      <text>SAS</text>
-    </view>
-  </view>
-  <view class="QesIn" style="background: #F9FFE3;" data-id="2" bind:tap="GoToIntro">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>阿森斯失眠量表</text>
-      <text>AIS</text>
-    </view>
-  </view>
 </view>
 
 <view>

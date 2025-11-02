@@ -55,4 +55,9 @@
     <view class="analysis-title">AI解读</view>
     <view class="analysis-content">{{analysisResult}}</view>
   </view>
+
+  <!-- 免责声明 -->
+  <view class="disclaimer">
+    结果仅供娱乐
+  </view>
 </view>

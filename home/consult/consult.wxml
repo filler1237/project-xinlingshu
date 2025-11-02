@@ -51,13 +51,13 @@
         </mp-cell>
         <mp-cell prop="phonenumber" title="联系方式" ext-class="">
         <input type="number" placeholder="填写手机号码"
-        maxlength="11"/>
+        maxlength="11" bindinput="onPhoneInput" value="{{phone}}"/>
         </mp-cell>
       </mp-cells>
     </mp-form>
   </mp-form-page>
   <view slot="button">
-    <button class="weui-btn" bindtap="goToNextStep">
+    <button class="weui-btn {{!isFormValid ? 'weui-btn_disabled' : ''}}" bindtap="goToNextStep" disabled="{{!isFormValid}}">
         <view class="character">下一步
       </view>
     </button>

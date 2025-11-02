@@ -22,6 +22,7 @@ Page({
     showIdentityPopup: false, // 身份选择弹窗
     selectedIdentity: '', // 用户选择的身份
     tempUserProfile: null, // 临时保存用户信息
+    nextAppointment: null, // 下一次的预约信息
   },
 
   /**
@@ -48,7 +49,44 @@ Page({
       app.globalData.isLogin = true;
       // 刷新用户信息，以同步最新的身份绑定状态等
       this.refreshUserInfo(userInfo._id);
+      this.fetchNextAppointment(); // 获取下一次预约
+    } else {
+      this.setData({ nextAppointment: null }); // 未登录则清除预约信息
     }
+  },
+
+  /**
+   * 获取下一次的预约信息
+   */
+  fetchNextAppointment() {
+    wx.cloud.callFunction({
+      name: 'bookList',
+    }).then(res => {
+      if (res.result && res.result.data) {
+        const now = new Date().getTime();
+        const upcomingAppointments = res.result.data
+          .filter(appt => {
+            const endTimeString = `${String(appt.endTime).padStart(2, '0')}:00`;
+            const apptTime = new Date(`${appt.date} ${endTimeString}`).getTime();
+            return apptTime >= now;
+          })
+          .sort((a, b) => {
+            const startTimeA = `${String(a.startTime).padStart(2, '0')}:00`;
+            const startTimeB = `${String(b.startTime).padStart(2, '0')}:00`;
+            const timeA = new Date(`${a.date} ${startTimeA}`).getTime();
+            const timeB = new Date(`${b.date} ${startTimeB}`).getTime();
+            return timeA - timeB;
+          });
+
+        if (upcomingAppointments.length > 0) {
+          this.setData({ nextAppointment: upcomingAppointments[0] });
+        } else {
+          this.setData({ nextAppointment: null });
+        }
+      }
+    }).catch(err => {
+      console.error("获取预约列表失败", err);
+    });
   },
 
   /**

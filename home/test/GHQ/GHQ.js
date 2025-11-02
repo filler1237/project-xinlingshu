@@ -1,149 +1,101 @@
 const AddRes = wx.cloud.database().collection('Scales')
-var AnsA = new Array()
-var AnsB = new Array()
-var AnsC = new Array()
-var A = 0, B = 0, C = 0
+
 Page({
   Goresult(){
-    for(var i=0; i < 20; i++)
-    {
-        console.log("ans.i:",this.data.AnsA[i])
-        A += this.data.AnsA[i]
-        B += this.data.AnsB[i]
-        C += this.data.AnsC[i]
-        console.log("soa:" ,A)
-        console.log("sob:" ,B)
-        console.log("soc:" ,C)
+    let sum = this.data.Ans.reduce((a, b) => a + b, 0);
+    let RES;
+    if (sum <= 11) {
+      RES = this.data.result[0];
+    } else if (sum <= 15) {
+      RES = this.data.result[1];
+    } else if (sum <= 20) {
+      RES = this.data.result[2];
+    } else {
+      RES = this.data.result[3];
     }
-    var RES
     this.setData({
-      RES : "自我肯定：" + A + "\n\n抑郁：" + B + "\n\n焦虑：" + C
-    })
-    /* 上传结果 */
+      RES: `您的测评总分是：${sum}\n\n${RES}`
+    });
+
     AddRes.add({
       data:{
-        open_id: this.open_id,
-        Time: new Date().toJSON().substring(0, 10) + ' ' + new Date().toTimeString().substring(0,8),
+        Time: new Date().toLocaleString(),
         RES: this.data.RES,
         title: this.data.title
       }
-    })
-    
-    /* 跳转至结果页 */
+    });
+
     wx.redirectTo({
-      url: '/home/test/result/result?title=' + this.data.title + '&color=' + this.data.color + '&it=' + this.data.title + '&advise=' + this.data.RES + '&ReturnAddressId=' + this.data.RAI,
-    })
-    },
+      url: `/home/test/result/result?title=${this.data.title}&color=${this.data.color}&it=${this.data.title}&advise=${encodeURIComponent(this.data.RES)}&ReturnAddressId=${this.data.RAI}`,
+    });
+  },
     
-    QueChange: function(q){
-      this.setData({
-        id : this.data.id
-      })
-      
-    },
+  QueChange: function(q){
+    this.setData({ id: this.data.id });
+  },
   
-    LastQ:function( ){
-      if (this.data.id > 0 ){
-        this.setData({
-          id : this.data.id - 1 
-        })
-      }
-      
-    },
+  LastQ:function(){
+    if (this.data.id > 0) {
+      this.setData({ id: this.data.id - 1 });
+    }
+  },
   
-    OpA:function(){
-      
-      if(this.data.id ==6 ){
-        this.data.AnsA[this.data.id] = 0
-        this.data.AnsB[this.data.id] = 0
-        this.data.AnsC[this.data.id] = 0
-      }
-      else if(this.data.id <=8 && this.data.id !=6){
-        this.data.AnsA[this.data.id] = 1
-        this.data.AnsB[this.data.id] = 0
-        this.data.AnsC[this.data.id] = 0
-      }
-      else if(this.data.id >8 && this.data.id <=14 && this.data.id ==9){
-        this.data.AnsA[this.data.id] = 0
-        this.data.AnsB[this.data.id] = 1
-        this.data.AnsC[this.data.id] = 0
-      }
-      else{
-        this.data.AnsA[this.data.id] = 0
-        this.data.AnsB[this.data.id] = 0
-        this.data.AnsC[this.data.id] = 1
-      }
-      if (this.data.id <= 19){
-        this.setData({
-          id : this.data.id + 1 
-        })
-      }
-    },
-    OpB:function(){
-      if(this.data.id ==6 ){
-        this.data.AnsA[this.data.id] = 1
-        this.data.AnsB[this.data.id] = 0
-        this.data.AnsC[this.data.id] = 0
-      }
-      else if(this.data.id ==9){
-        this.data.AnsA[this.data.id] = 0
-        this.data.AnsB[this.data.id] = 1
-        this.data.AnsC[this.data.id] = 0
-      }
-      else{
-        this.data.AnsA[this.data.id] = 0
-        this.data.AnsB[this.data.id] = 0
-        this.data.AnsC[this.data.id] = 0
-      }
-      if (this.data.id < 20){
-        this.setData({
-          id : this.data.id + 1 
-        })
-      }
-    },
+  OpA:function(){
+    this.data.Ans[this.data.id] = 0;
+    if (this.data.id < 12) {
+      this.setData({ id: this.data.id + 1 });
+    }
+  },
+  OpB:function(){
+    this.data.Ans[this.data.id] = 1;
+    if (this.data.id < 12) {
+      this.setData({ id: this.data.id + 1 });
+    }
+  },
+  OpC:function(){
+    this.data.Ans[this.data.id] = 2;
+    if (this.data.id < 12) {
+      this.setData({ id: this.data.id + 1 });
+    }
+  },
+  OpD:function(){
+    this.data.Ans[this.data.id] = 3;
+    if (this.data.id < 12) {
+      this.setData({ id: this.data.id + 1 });
+    }
+  },
    
-    
-/**
- * 页面的初始数据
- */
 data: {
   title: "一般健康问卷GHQ-12",
   color: "",
   RAI: "",
   id:0,
-  A:0,
-  B:0,
-  C:0,
-  AnsA : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  AnsB : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  AnsC : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  OptionA:'是的',
-  OptionB:'不是的',
-  
+  Ans: new Array(12).fill(0),
+  OptionA:'比平时好',
+  OptionB:'与平时一样',
+  OptionC:'比平时差',
+  OptionD:'比平时差很多',
   
   GHQQuestion:[
-      {question:"1.大致来说样样事情都很开心"},
-      {question:"2.你是不是做事情都能够集中精神"},
-      {question:"3.是不是很满意自己做事情的方式"},
-      {question:"4.最近是否忙碌及充分利用时间"},
-      {question:"5.处理日常事务是不是和别人一样好"},
-      {question:"6.是不是觉得自己在很多事情上都能帮手或提供一些意见"},
-      {question:"7.觉得很不开心及闷闷不乐"},
-      {question:"8.能够开心地过你平日正常的生活"},
-      {question:"9.是不是容易同人相处"},
-      {question:"10.觉得自己的将来还有希望"},
-      {question:"11.觉得做人没有什么意思"},
-      {question:"12.对自己失去信心"},
-      {question:"13.觉得人生完全没有希望"},
-      {question:"14.觉得自己是个无用的人"},
-      {question:"15.整天觉得人生好似战场一样"},
-      {question:"16.是不是因为担心而睡不着"},
-      {question:"17.是不是心情烦躁睡得不好"},
-      {question:"18.整天觉得心神不安与紧张"},
-      {question:"19.是不是觉得整天有精神压力"},
-      {question:"20.因为神经太过紧张觉得有时什么事情都做不到"},
+      {question:"1. 能集中精神处理问题吗？"},
+      {question:"2. 为忧虑而失眠吗？"},
+      {question:"3. 感到在处理事情中起着积极作用吗？"},
+      {question:"4. 对处理事情能做出决策吗？"},
+      {question:"5. 感到有压力吗？"},
+      {question:"6. 感到无法克服困难吗？"},
+      {question:"7. 能享受日常的生活吗？"},
+      {question:"8. 能面对困难吗？"},
+      {question:"9. 感到不开心和沮丧吗？"},
+      {question:"10. 对自己失去信心吗？"},
+      {question:"11. 认为自己是一个没有价值的人吗？"},
+      {question:"12. 感到生活美满，心情愉快吗？"},
+  ],
+  result: [
+    "心理健康良好：状态稳定，无明显心理压力。",
+    "轻度心理困扰：存在一定情绪紧张或疲惫感。",
+    "中度心理困扰：焦虑、压抑或睡眠问题开始影响日常生活。",
+    "重度心理困扰：明显焦虑或抑郁倾向，建议心理辅导或临床干预。"
   ]
-
 },
 
 /**

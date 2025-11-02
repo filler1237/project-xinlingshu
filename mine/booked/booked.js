@@ -31,19 +31,16 @@ Page({
       name: 'bookList',
     })
       .then((res) => {
-        console.log('预约记录', res.result.data)
-  
-        if (res.result.data.length === 0) {
-          // 没有查询到记录的情况
-          console.log('没有查询到记录')
-        } else {
+        if (res.result && res.result.data && res.result.data.length > 0) {
           const appointments = res.result.data
   
           for (const appointment of appointments) {
-            const appointmentTimestamp = new Date(appointment.date + ' ' + appointment.endTime).getTime()
+            const endTimeString = `${String(appointment.endTime).padStart(2, '0')}:00`;
+            const appointmentTimestamp = new Date(`${appointment.date} ${endTimeString}`).getTime();
             const now = new Date().getTime()
             const status = appointmentTimestamp < now ? '已结束' : '进行中' // 判断预约状态  
             appointment.status = status
+            appointment.appointmentTimestamp = appointmentTimestamp; // 保存时间戳用于排序
           }
   
           appointments.sort((a, b) => b.appointmentTimestamp - a.appointmentTimestamp) // 按照时间戳降序排列
@@ -51,6 +48,11 @@ Page({
           this.setData({
             Appointments: appointments,
             booklist: true,
+          })
+        } else {
+          this.setData({
+            Appointments: [],
+            booklist: false,
           })
         }
       })
@@ -76,22 +78,23 @@ Page({
   },
 
   cancel(e) {
-    const appointmentId = e.currentTarget.dataset.id;
-    console.log('获取到的 appointmentId:', appointmentId); 
+    const { id, availabilityid, timeslotindex } = e.currentTarget.dataset;
 
     wx.showModal({
-      title:'确认取消',
-      content:'确定要取消本次预约吗？',
-      success:(res)=> {
-        if(res.confirm) {
-          wx.showLoading({title:'正在取消...'});
+      title: '确认取消',
+      content: '确定要取消本次预约吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在取消...' });
 
           wx.cloud.callFunction({
-            name:'cancelAppointment',
-            data:{
-              appointmentId: appointmentId,
+            name: 'cancelAppointment',
+            data: {
+              appointmentId: id,
+              availabilityId: availabilityid,
+              timeSlotIndex: timeslotindex,
             },
-          }).then(res=> {
+          }).then(res => {
             wx.hideLoading();
             if(res.result && res.result.success) {
               wx.showToast({ title:'取消成功' });

@@ -6,16 +6,18 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }) // 使用当前云环境
 
 exports.main = async (event, context) => {
   const db = cloud.database()
+  const wxContext = cloud.getWXContext()
+  const openid = wxContext.OPENID
 
   // 从 event 中获取需要的字段
-  const { teacherId, openid, date, startTime, endTime, availabilityId, timeSlotIndex, status, detail, teacher } = event
+  const { teacherId, date, startTime, endTime, availabilityId, timeSlotIndex, status, detail, teacher } = event
 
   try {
     // 添加预约信息到 appointment 集合中
     const result = await db.collection('Appointments').add({
       data: {
         teacherId,
-        openid,
+        openid: openid, // 使用后端获取的 openid
         date,
         startTime,
         endTime,
