@@ -63,12 +63,16 @@ onPhoneInput: function(e) {
 onLoad: function (options) {
   wx.showLoading({ title: '加载中...' });
   wx.cloud.callFunction({
-    name: 'getInitialAvailability',
+    name: 'getAvailability', // 更新为新的云函数名称
     success: res => {
-      this.setData({
-        availabilityData: res.result,
-        teacherList: res.result.map(t => t.teacherName)
-      });
+      if (res.result && res.result.success) {
+        this.setData({
+          availabilityData: res.result.data, // 更新数据路径
+          teacherList: res.result.data.map(t => t.teacherName)
+        });
+      } else {
+        wx.showToast({ title: '加载失败', icon: 'none' });
+      }
       wx.hideLoading();
     },
     fail: err => {
@@ -96,7 +100,8 @@ bindTeacherChange: function (e) {
     teacherIndex: teacherIndex,
     selectedDateIndex: -1,
     hourIndex: -1,
-    dateList: teacherData ? Object.keys(teacherData.dates) : [],
+    // 新的数据结构中 dates 是一个对象数组，我们需要提取 date 字段
+    dateList: teacherData ? teacherData.dates.map(d => d.date) : [],
     hourList: [],
   });
   this.checkFormValidity();
@@ -121,8 +126,9 @@ formatNumber: function(n) {
 onDateChange: function(e) {
   const selectedDateIndex = e.detail.value;
   const teacherData = this.data.availabilityData[this.data.teacherIndex];
+  // dates 现在是数组，通过索引直接访问
+  const dateData = teacherData.dates[selectedDateIndex]; 
   const selectedDate = this.data.dateList[selectedDateIndex];
-  const dateData = teacherData.dates[selectedDate];
 
   this.setData({
     selectedDateIndex: selectedDateIndex,

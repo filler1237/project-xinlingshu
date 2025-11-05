@@ -8,7 +8,7 @@
 }
 
 .header {
-  margin-bottom: 0rpx;
+  margin-bottom: 50rpx;
   text-align: center;
 }
 

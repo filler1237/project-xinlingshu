@@ -1,7 +1,7 @@
 {
-  "name": "getInitialAvailability",
+  "name": "getAvailability",
   "version": "1.0.0",
-  "description": "",
+  "description": "获取咨询师可用性信息",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

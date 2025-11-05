@@ -10,7 +10,7 @@ exports.main=async(event,context)=>{
   const openid=wxContext.OPENID
 
   // 在前端接收用户授权的基本信息
-  const{nickName,avatarUrl}=event
+  const{nickName,avatarUrl,role}=event
 
   // 根据openid查询用户是否已存在
   const userRes=await db.collection('users').where({
@@ -27,6 +27,7 @@ exports.main=async(event,context)=>{
         _openid:openid,
         nickName:nickName,
         avatarUrl:avatarUrl,
+        role:role,
         createTime:db.serverDate(),
         // 初始化成长系统
         growthValue:0,
@@ -42,7 +43,8 @@ exports.main=async(event,context)=>{
     await db.collection('users').doc(userId).update({
       data:{
         nickName:nickName,
-        avatarUrl:avatarUrl
+        avatarUrl:avatarUrl,
+        role:role
       }
     })
     userInfo = (await db.collection('users').doc(userId).get()).data;

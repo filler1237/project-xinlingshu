@@ -20,7 +20,7 @@ Page({
     
     // 新增：身份选择相关
     showIdentityPopup: false, // 身份选择弹窗
-    selectedIdentity: '', // 用户选择的身份
+    selectedRole: '', // 用户选择的角色
     tempUserProfile: null, // 临时保存用户信息
     nextAppointment: null, // 下一次的预约信息
   },
@@ -148,38 +148,38 @@ Page({
    * 3. 选择身份
    */
   onChooseIdentity(e) {
-    const identity = e.currentTarget.dataset.identity;
+    const role = e.currentTarget.dataset.role;
     this.setData({
-      selectedIdentity: identity
+      selectedRole: role
     });
     
     // 确认选择并执行登录
     wx.showModal({
-      title: '身份确认',
-      content: `您选择的是${this.getIdentityText(identity)}身份，确认登录吗？`,
+      title: '角色确认',
+      content: `您选择的是${this.getRoleText(role)}角色，确认登录吗？`,
       success: (res) => {
         if (res.confirm) {
-          this.loginWithIdentity(identity);
+          this.loginWithRole(role);
         }
       }
     });
   },
 
   /**
-   * 4. 根据选择的身份执行登录
+   * 4. 根据选择的角色执行登录
    */
-  loginWithIdentity: function(identity) {
+  loginWithRole: function(role) {
     const that = this;
     wx.showLoading({ title: '登录中...' });
     
-    console.log("开始登录，身份:", identity);
+    console.log("开始登录，角色:", role);
     
     wx.cloud.callFunction({
       name: 'loginRegister',
       data: {
         avatarUrl: this.data.tempUserProfile.avatarUrl,
         nickName: this.data.tempUserProfile.nickName,
-        identity: identity
+        role: role
       }
     }).then(res => {
       wx.hideLoading();
@@ -192,8 +192,8 @@ Page({
         // 更新用户信息
         that.updateUserInfo(userInfo);
         
-        // 根据身份进行跳转
-        that.redirectAfterLogin(userInfo.identity);
+        // 根据角色进行跳转
+        that.redirectAfterLogin(userInfo.role);
       } else {
         wx.showToast({
           title: '登录失败，请重试',
@@ -212,10 +212,10 @@ Page({
   },
 
   /**
-   * 5. 登录后根据身份跳转
+   * 5. 登录后根据角色跳转
    */
-  redirectAfterLogin: function(identity) {
-    console.log("执行登录后跳转，身份:", identity);
+  redirectAfterLogin: function(role) {
+    console.log("执行登录后跳转，角色:", role);
     
     // 关闭身份选择弹窗
     this.setData({ 
@@ -223,7 +223,7 @@ Page({
       tempUserProfile: null 
     });
     
-    switch(identity) {
+    switch(role) {
       case 'student':
         wx.showToast({
           title: '学生登录成功',
@@ -277,7 +277,7 @@ Page({
         break;
         
       default:
-        console.log("未知身份，不跳转");
+        console.log("未知角色，不跳转");
         wx.showToast({
           title: '登录成功',
           icon: 'success'
@@ -286,15 +286,15 @@ Page({
   },
 
   /**
-   * 6. 获取身份文本
+   * 6. 获取角色文本
    */
-  getIdentityText(identity) {
-    const identityMap = {
+  getRoleText(role) {
+    const roleMap = {
       'student': '学生',
       'admin': '管理员', 
       'judge': '评委'
     };
-    return identityMap[identity] || '用户';
+    return roleMap[role] || '用户';
   },
 
   /**
@@ -304,7 +304,7 @@ Page({
     this.setData({
       showIdentityPopup: false,
       tempUserProfile: null,
-      selectedIdentity: ''
+      selectedRole: ''
     });
   },
 
@@ -495,13 +495,13 @@ Page({
       return;
     }
     
-    // 获取身份，如果没有身份字段则默认为学生
-    const identity = userInfo.identity || 'student';
-    console.log("用户身份:", identity);
+    // 获取角色，如果没有角色字段则默认为学生
+    const role = userInfo.role || 'student';
+    console.log("用户角色:", role);
     
     let targetUrl = '';
     
-    switch(identity) {
+    switch(role) {
       case 'student':
         targetUrl = '/competition/pages/studenthome/studenthome';
         break;
@@ -513,7 +513,7 @@ Page({
         break;
       default:
         wx.showToast({
-          title: '身份信息异常',
+          title: '角色信息异常',
           icon: 'none'
         });
         return;
@@ -528,7 +528,7 @@ Page({
       },
       fail: (err) => {
         console.error("页面跳转失败:", err);
-        this.showPathErrorDialog(identity, targetUrl, err);
+        this.showPathErrorDialog(role, targetUrl, err);
       }
     });
   },
@@ -536,10 +536,10 @@ Page({
   /**
    * 显示路径错误对话框
    */
-  showPathErrorDialog: function(identity, path, err) {
+  showPathErrorDialog: function(role, path, err) {
     wx.showModal({
       title: '跳转失败',
-      content: `${identity}页面跳转失败\n路径: ${path}\n错误: ${err.errMsg}\n请检查页面是否存在且路径正确`,
+      content: `${role}页面跳转失败\n路径: ${path}\n错误: ${err.errMsg}\n请检查页面是否存在且路径正确`,
       showCancel: false
     });
   },
@@ -620,11 +620,11 @@ Page({
     console.log("=== 用户状态检查 ===");
     console.log("登录状态:", this.data.isLogin);
     console.log("用户信息:", this.data.userInfo);
-    console.log("用户身份:", this.data.userInfo ? this.data.userInfo.identity : "未获取");
+    console.log("用户角色:", this.data.userInfo ? this.data.userInfo.role : "未获取");
     
     wx.showModal({
       title: '用户状态',
-      content: `登录: ${this.data.isLogin}\n身份: ${this.data.userInfo ? this.data.userInfo.identity : "未获取"}`,
+      content: `登录: ${this.data.isLogin}\n角色: ${this.data.userInfo ? this.data.userInfo.role : "未获取"}`,
       showCancel: false
     });
   }

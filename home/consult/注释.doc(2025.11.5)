@@ -1,0 +1,1 @@
+这一部分用到的云函数有三个：getAvailability createAppointment cancelAppointment

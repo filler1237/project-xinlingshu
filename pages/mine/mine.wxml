@@ -148,19 +148,19 @@
       <text class="popup-title">选择您的身份</text>
     </view>
     <view class="popup-content identity-options">
-      <view class="identity-option" bindtap="onChooseIdentity" data-identity="student">
+      <view class="identity-option" bindtap="onChooseIdentity" data-role="student">
         <view class="identity-icon-placeholder">🎓</view>
         <text class="identity-text">学生</text>
         <text class="identity-desc">使用心灵树洞功能，参与活动</text>
       </view>
       
-      <view class="identity-option" bindtap="onChooseIdentity" data-identity="admin">
+      <view class="identity-option" bindtap="onChooseIdentity" data-role="admin">
         <view class="identity-icon-placeholder">⚙️</view>
         <text class="identity-text">管理员</text>
         <text class="identity-desc">管理活动系统，审核内容</text>
       </view>
       
-      <view class="identity-option" bindtap="onChooseIdentity" data-identity="judge">
+      <view class="identity-option" bindtap="onChooseIdentity" data-role="judge">
         <view class="identity-icon-placeholder">⭐</view>
         <text class="identity-text">评委</text>
         <text class="identity-desc">评审活动作品，打分评价</text>
