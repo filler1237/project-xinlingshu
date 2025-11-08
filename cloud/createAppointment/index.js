@@ -31,7 +31,7 @@ exports.main = async (event, context) => {
     const result = await db.collection('Appointments').add({
       data: {
         teacherId,
-        openid: openid, // 使用后端获取的 openid
+        _openid: openid, // 手动添加 _openid
         date,
         startTime: event.timeSlot.startTime, // 修正：使用 timeSlot 内部的时间
         endTime: event.timeSlot.endTime,     // 修正：使用 timeSlot 内部的时间

@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
     const appointmentRes = await db.collection('Appointments').doc(appointmentId).get();
     const appointment = appointmentRes.data;
 
-    if(appointment.openid !== wxContext.OPENID) {
+    if(appointment._openid !== wxContext.OPENID) {
       return {success: false,message:'无权限操作' };
 
     }

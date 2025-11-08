@@ -6,6 +6,10 @@ Page({
     detail: '', // 用于存储本页textarea的输入
     length: 0, // 当前输入的字数
     teacherList: ['王贞贞', '姚双雁', '李亚玲'], // 与第一页保持一致的咨询师列表
+    isButtonActive: false, // 控制按钮状态
+    showQrCode: false, // 控制显示二维码
+    appointmentId: null,
+    qrCodeDataURL: '', // 用于存储二维码图片数据
   },
 
   onLoad(options) {
@@ -34,6 +38,7 @@ Page({
     this.setData({
       detail: value,
       length: value.length,
+      isButtonActive: value.length > 0
     });
   },
 
@@ -80,15 +85,15 @@ Page({
       data: finalData,
       success: res => {
         wx.hideLoading();
-        // 提交成功后，清除缓存并跳转到成功页面
+        // 提交成功后，清除缓存
         wx.removeStorageSync('appointment_step1_data');
-        wx.showToast({
-          title: '预约成功',
-          icon: 'success',
+        
+        const appointmentId = res.result._id; // 假设云函数返回结果中包含预约ID
+        this.setData({
+          showQrCode: true,
+          appointmentId: appointmentId
         });
-        wx.navigateTo({
-          url: './2/2',
-        });
+        this.generateQrCode(appointmentId);
       },
       fail: err => {
         wx.hideLoading();
@@ -106,4 +111,77 @@ Page({
       delta: 1,
     });
   },
+
+  generateQrCode: function(text) {
+    wx.showLoading({
+      title: '二维码生成中...',
+    });
+    wx.cloud.callFunction({
+      name: 'generateQrCode',
+      data: {
+        text: text
+      },
+      success: res => {
+        wx.hideLoading();
+        if (res.result.success) {
+          this.setData({
+            qrCodeDataURL: res.result.qrCodeDataURL
+          });
+        } else {
+          wx.showToast({
+            title: '二维码生成失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: err => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '二维码生成失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  saveQrCode: function() {
+    const fs = wx.getFileSystemManager();
+    const filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`;
+    const base64Data = this.data.qrCodeDataURL.replace(/^data:image\/\w+;base64,/, '');
+
+    fs.writeFile({
+      filePath: filePath,
+      data: base64Data,
+      encoding: 'base64',
+      success: () => {
+        wx.saveImageToPhotosAlbum({
+          filePath: filePath,
+          success: () => {
+            wx.showToast({
+              title: '保存成功',
+              icon: 'success'
+            });
+          },
+          fail: () => {
+            wx.showToast({
+              title: '保存失败',
+              icon: 'none'
+            });
+          }
+        });
+      },
+      fail: () => {
+        wx.showToast({
+          title: '保存失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  confirm: function() {
+    wx.switchTab({
+      url: '/pages/home/home',
+    });
+  }
 });

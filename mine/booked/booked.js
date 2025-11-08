@@ -1,5 +1,6 @@
 
 // pages/mine/booked/booked.js
+import drawQrcode from '../../utils/weapp.qrcode.esm.js';
 const app = getApp();
 const db = wx.cloud.database();
 
@@ -8,9 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
-    
-    
+
   },
   onBackTap: function(e) {
     var pages = getCurrentPages();                       //获取当前页面
@@ -77,6 +76,13 @@ Page({
     })
   },
 
+  showQrCode(e) {
+    const { id } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/mine/qrcode/qrcode?id=${id}`,
+    });
+  },
+
   cancel(e) {
     const { id, availabilityid, timeslotindex } = e.currentTarget.dataset;
 
@@ -115,6 +121,43 @@ Page({
       },
     });
 
+  },
+
+  deleteAppointment(e) {
+    const { id } = e.currentTarget.dataset;
+
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这条预约记录吗？此操作不可恢复。',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在删除...' });
+
+          wx.cloud.callFunction({
+            name: 'deleteAppointment',
+            data: {
+              appointmentId: id,
+            },
+          }).then(res => {
+            wx.hideLoading();
+            if (res.result && res.result.success) {
+              wx.showToast({ title: '删除成功' });
+              // 刷新列表
+              this.onLoad();
+            } else {
+              wx.showToast({
+                title: res.result.message || '删除失败',
+                icon: 'none',
+              });
+            }
+          }).catch(err => {
+            wx.hideLoading();
+            wx.showToast({ title: '删除失败', icon: 'none' });
+            console.error(err);
+          });
+        }
+      },
+    });
   },
 
   /**

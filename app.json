@@ -75,6 +75,8 @@
       "name": "mine",
       "pages": [
         "booked/booked",
+        "scan-result/scan-result",
+        "qrcode/qrcode",
         "evaluate/evaluate",
         "contact/contact",
         "list/list",

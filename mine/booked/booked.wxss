@@ -86,7 +86,8 @@ page{
 }
 
 .datasize{
-  font-size: 40rpx;
+  font-size: 36rpx;
+  font-weight: bold;
   margin: 20rpx;
 }
 
@@ -103,11 +104,9 @@ page{
 }
 
 .teacher{
-  font-size: 35rpx;
-}
-
-.detail{
-  margin: 10rpx;
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
 }
 .notBook{
   display: flex;
@@ -122,15 +121,29 @@ page{
 
 .button-container {
   display: flex;
-  justify-content: flex-end; /* 让按钮靠右显示 */
+  justify-content: flex-end;
+  width: 100%;
   padding-right: 20rpx;
+  box-sizing: border-box;
 }
-.cancel-btn {
-  background-color: #e64340; /* 红色背景 */
+
+.cancel-btn, .qrcode-btn {
   color: white;
   font-size: 24rpx;
-  padding: 10rpx 20rpx;
   border-radius: 30rpx;
   margin-top: 10rpx;
-  width: auto; /* 宽度自适应 */
+  width: auto;
+  padding: 0 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  margin-left: 10rpx;
+}
+
+.cancel-btn {
+  background-color: #e64340;
+}
+
+.qrcode-btn {
+  background-color: #4CAF50; /* 绿色背景 */
 }

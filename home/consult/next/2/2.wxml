@@ -1,0 +1,10 @@
+<!--pages/home/consult/next/2/2.wxml-->
+<view class="container">
+  <image class="success-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/success.png"></image>
+  <view class="success-text">预约成功</view>
+  <view class="tip-text">请凭此二维码进行线下咨询</view>
+  
+  <canvas canvas-id="qrcode" style="width: 200px; height: 200px;"></canvas>
+  
+  <button class="back-btn" bindtap="goBack">返回首页</button>
+</view>

@@ -627,5 +627,63 @@ Page({
       content: `登录: ${this.data.isLogin}\n角色: ${this.data.userInfo ? this.data.userInfo.role : "未获取"}`,
       showCancel: false
     });
+  },
+
+  /**
+   * 扫码核销功能
+   */
+  scanCode() {
+    wx.scanCode({
+      success: (res) => {
+        console.log('扫描结果', res.result);
+        const appointmentId = res.result; // 假设二维码内容直接就是预约ID
+
+        wx.showLoading({
+          title: '正在核销...',
+        });
+
+        // 调用云函数进行核销
+        wx.cloud.callFunction({
+          name: 'getScan', // 假设云函数名为 'getScan'
+          data: {
+            appointmentId: appointmentId
+          }
+        }).then(cloudRes => {
+          wx.hideLoading();
+          if (cloudRes.result.success) {
+            // 核销成功，跳转到结果页
+            const studentName = encodeURIComponent(cloudRes.result.studentName || '未知');
+            const studentId = encodeURIComponent(cloudRes.result.studentId || '未知');
+            const college = encodeURIComponent(cloudRes.result.college || '未提供');
+            const major = encodeURIComponent(cloudRes.result.major || '未提供');
+            const phoneNumber = encodeURIComponent(cloudRes.result.phoneNumber || '未提供');
+            wx.navigateTo({
+              url: `/mine/scan-result/scan-result?success=true&studentName=${studentName}&studentId=${studentId}&college=${college}&major=${major}&phoneNumber=${phoneNumber}`
+            });
+          } else {
+            // 核销失败，也跳转到结果页显示失败信息
+            const message = encodeURIComponent(cloudRes.result.message || '核销失败，请重试');
+            wx.navigateTo({
+              url: `/mine/scan-result/scan-result?success=false&message=${message}`
+            });
+          }
+        }).catch(err => {
+          wx.hideLoading();
+          // 网络错误等，跳转到结果页显示失败信息
+          const message = encodeURIComponent('请求失败，请检查网络');
+          wx.navigateTo({
+            url: `/mine/scan-result/scan-result?success=false&message=${message}`
+          });
+          console.error('调用核销云函数失败', err);
+        });
+      },
+      fail: (err) => {
+        wx.showToast({
+          title: '扫描失败',
+          icon: 'none'
+        });
+        console.error('扫描二维码失败', err);
+      }
+    });
   }
 });

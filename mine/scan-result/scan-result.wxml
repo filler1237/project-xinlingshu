@@ -1,0 +1,32 @@
+<view class="container">
+  <block wx:if="{{success}}">
+    <image class="icon" src="/image/success.png" mode="aspectFit"></image>
+    <view class="title">核对成功</view>
+    <view class="info-item">
+      <text class="label">学生姓名：</text>
+      <text class="value">{{studentName}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">学生ID：</text>
+      <text class="value">{{studentId}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">学院：</text>
+      <text class="value">{{college}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">专业：</text>
+      <text class="value">{{major}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">手机号：</text>
+      <text class="value">{{phoneNumber}}</text>
+    </view>
+  </block>
+  <block wx:else>
+    <image class="icon" src="/image/fail.png" mode="aspectFit"></image>
+    <view class="title error">核对失败</view>
+    <view class="message">{{message}}</view>
+  </block>
+  <button class="back-btn" bindtap="goBack">返回</button>
+</view>

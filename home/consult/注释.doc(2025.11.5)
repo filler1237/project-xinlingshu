@@ -1,1 +1,2 @@
-这一部分用到的云函数有三个：getAvailability createAppointment cancelAppointment
+这一部分用到的云函数有：getAvailability createAppointment cancelAppointment 
+deleteAppointment主要是为了用户能够自己删除掉已经结束的预约，但是必须操作数据库，所以必须写云函数

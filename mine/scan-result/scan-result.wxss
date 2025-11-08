@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx;
+  box-sizing: border-box;
+}
+
+.icon {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 60rpx;
+  color: #2cce7a;
+}
+
+.title.error {
+  color: #fa5151;
+}
+
+.info-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 32rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.label {
+  color: #666;
+}
+
+.value {
+  color: #333;
+  font-weight: bold;
+}
+
+.message {
+  font-size: 32rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.back-btn {
+  margin-top: 80rpx;
+  width: 100%;
+  background-color: #07c160;
+  color: white;
+  border-radius: 12rpx;
+}

@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
     const res = await db
       .collection('Appointments')
       .where({
-        openid: openid,
+        _openid: openid,
       })
       .get()
 

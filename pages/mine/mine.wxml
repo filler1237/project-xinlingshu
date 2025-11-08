@@ -86,6 +86,10 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Group.jpg" style="width: 53.33rpx;"/>
       <text>查询列表</text>
     </navigator>
+    <view wx:if="{{userInfo.role === 'admin'}}" class="item" style="width:112rpx ;" bindtap="scanCode">
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/scan-line.png" style="width: 53.33rpx;"/>
+      <text>扫码核销</text>
+    </view>
      <!--改成view绑定事件了-->
      <view class="item" bindtap="onActivitySystemTap" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/activity.png" style="width: 53.33rpx; "/>

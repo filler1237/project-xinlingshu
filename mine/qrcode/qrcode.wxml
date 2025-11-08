@@ -1,0 +1,14 @@
+<navigation-bar title="我的预约码" show-back-button="{{true}}"></navigation-bar>
+<!--mine/qrcode/qrcode.wxml-->
+<view class="container">
+  <view class="card">
+    <view class="title">请向管理员出示此二维码</view>
+    <view class="qrcode-wrapper">
+      <canvas canvas-id="qrcode" style="width: 200px; height: 200px;"></canvas>
+    </view>
+    <view class="tips">
+      <text>此二维码仅用于预约核销</text>
+      <text>请妥善保管，切勿泄露</text>
+    </view>
+  </view>
+</view>
