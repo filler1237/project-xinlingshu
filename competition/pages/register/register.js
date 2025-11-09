@@ -1,115 +1,66 @@
+// competition/pages/register/register.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    username: '',
-    password: '',
-    confirmPassword: '',
-    studentId: '',
-    department: '',
-    registerType: 'student'
+
   },
 
-  onRegisterTypeChange(e) {
-    this.setData({ registerType: e.detail.value });
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+
   },
 
-  onUsernameInput(e) {
-    this.setData({ username: e.detail.value });
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
   },
 
-  onPasswordInput(e) {
-    this.setData({ password: e.detail.value });
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
   },
 
-  onConfirmPasswordInput(e) {
-    this.setData({ confirmPassword: e.detail.value });
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
   },
 
-  onStudentIdInput(e) {
-    this.setData({ studentId: e.detail.value });
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
   },
 
-  onDepartmentInput(e) {
-    this.setData({ department: e.detail.value });
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
   },
 
-  onRegister() {
-    const { username, password, confirmPassword, registerType, studentId, department } = this.data;
-    
-    // 验证逻辑
-    if (!username || !password) {
-      wx.showToast({ title: '请输入用户名和密码', icon: 'none' });
-      return;
-    }
-    
-    if (password.length < 6) {
-      wx.showToast({ title: '密码至少6位', icon: 'none' });
-      return;
-    }
-    
-    if (password !== confirmPassword) {
-      wx.showToast({ title: '两次密码不一致', icon: 'none' });
-      return;
-    }
-    
-    if (registerType === 'student' && !studentId) {
-      wx.showToast({ title: '请输入学号', icon: 'none' });
-      return;
-    }
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
 
-    if (!department) {
-      wx.showToast({ title: '请输入院系或部门', icon: 'none' });
-      return;
-    }
-
-    wx.showLoading({ title: '注册中...' });
-
-    // 模拟注册成功
-    setTimeout(() => {
-      wx.hideLoading();
-      
-      const userInfo = {
-        username: username,
-        role: registerType,
-        department: department,
-        studentId: registerType === 'student' ? studentId : undefined
-      };
-      
-      wx.setStorageSync('userInfo', userInfo);
-      
-      wx.showToast({
-        title: '注册成功',
-        icon: 'success'
-      });
-      
-      setTimeout(() => {
-        this.redirectToHomePage(registerType);
-      }, 1000);
-    }, 1500);
   },
 
-  // 根据角色跳转到对应主页
-  redirectToHomePage(role) {
-    let targetPage = '';
-    switch(role) {
-      case 'student':
-        targetPage = '/pages/studenthome/studenthome';
-        break;
-      case 'admin':
-        targetPage = '/pages/adminhome/adminhome';
-        break;
-      case 'judge':
-        targetPage = '/pages/judgehome/judgehome';
-        break;
-      default:
-        targetPage = '/pages/login/login';
-    }
-    
-    wx.redirectTo({
-      url: targetPage
-    });
-  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
 
-  onBackToLogin() {
-    wx.navigateBack();
   }
 })

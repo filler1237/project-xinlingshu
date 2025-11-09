@@ -25,39 +25,45 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-  
     wx.cloud.callFunction({
       name: 'bookList',
     })
-      .then((res) => {
-        if (res.result && res.result.data && res.result.data.length > 0) {
-          const appointments = res.result.data
-  
-          for (const appointment of appointments) {
-            const endTimeString = `${String(appointment.endTime).padStart(2, '0')}:00`;
-            const appointmentTimestamp = new Date(`${appointment.date} ${endTimeString}`).getTime();
-            const now = new Date().getTime()
-            const status = appointmentTimestamp < now ? '已结束' : '进行中' // 判断预约状态  
-            appointment.status = status
-            appointment.appointmentTimestamp = appointmentTimestamp; // 保存时间戳用于排序
-          }
-  
-          appointments.sort((a, b) => b.appointmentTimestamp - a.appointmentTimestamp) // 按照时间戳降序排列
-  
-          this.setData({
-            Appointments: appointments,
-            booklist: true,
-          })
-        } else {
-          this.setData({
-            Appointments: [],
-            booklist: false,
-          })
+    .then((res) => {
+      if (res.result && res.result.data && res.result.data.length > 0) {
+        const appointments = res.result.data;
+        
+        console.log('原始预约数据:', appointments);
+
+        for (const appointment of appointments) {
+          // 确保 endTime 是字符串，并且只包含时间部分
+          const timeString = String(appointment.endTime).split(' ')[0];
+          const endTimeString = `${timeString.padStart(2, '0')}:00`;
+          const appointmentTimestamp = new Date(`${appointment.date} ${endTimeString}`).getTime();
+          const now = new Date().getTime();
+          const status = appointmentTimestamp < now ? '已结束' : '进行中';
+          
+          appointment.status = status;
+          appointment.appointmentTimestamp = appointmentTimestamp;
+
+          console.log(`预约ID: ${appointment._id}, 日期: ${appointment.date}, 结束时间: ${endTimeString}, 时间戳: ${appointmentTimestamp}, 状态: ${status}`);
         }
-      })
-      .catch((error) => {
-        console.error('获取预约记录失败', error)
-      })
+
+        appointments.sort((a, b) => b.appointmentTimestamp - a.appointmentTimestamp);
+
+        this.setData({
+          Appointments: appointments,
+          booklist: true,
+        });
+      } else {
+        this.setData({
+          Appointments: [],
+          booklist: false,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('获取预约记录失败', error);
+    });
   },
 
   /**

@@ -141,6 +141,8 @@
           />
         </view>
       </view>
+      <!-- 退出登录按钮的新位置 -->
+      <button class="popup-logout-btn" bindtap="handleLogout">退出登录</button>
     </view>
   </view>
 </view>

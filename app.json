@@ -42,8 +42,7 @@
     {
       "root": "competition",
       "pages": [
-        "pages/login/login",
-        "pages/register/register",
+
         "pages/studenthome/studenthome",
         "pages/adminhome/adminhome",
         "pages/judgehome/judgehome",

@@ -132,63 +132,30 @@ page{
   .phonenumber{
     color: #253858;
   }
-  .logo_1{
+  .logo {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
     position: absolute;
     top: 12.5%;
-    left: 4%;
-    width: 11%;
-    height: 5%;
+    left: 0;
+    right: 0;
+    padding: 0 10%;
   }
-  .value_1{
-    position: absolute;
-    top: 13.5%;
-    left: 16%;
-    height: 5%;
+  .logo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .rail_1{
-    position: absolute;
-    top: 20%;
-    width: 25%;
-    left: 6%;
-    height: 0.5%;
+  .logo_1, .logo_2 {
+    width: 82.5rpx;
+    height: 82.5rpx;
   }
-  .logo_2{
-    position: absolute;
-    top: 12.5%;
-    left: 36%;
-    width: 11%;
-    height: 5%;
+  .value_1, .value_2 {
+    margin-top: 8rpx;
   }
-  .value_2{
-    position: absolute;
-    top: 13.5%;
-    left: 49%;
-    height: 5%;
-  }
-  .rail_2{
-    position: absolute;
-    top: 20%;
-    width: 25%;
-    left: 38%;
-    height: 0.5%;
-  }
-  .logo_3{
-    position: absolute;
-    top: 12.5%;
-    left: 68%;
-    width: 11%;
-    height: 5%;
-  }
-  .value_3{
-    position: absolute;
-    top: 13.5%;
-    left: 81%;
-    height: 5%;
-  }
-  .rail_3{
-    position: absolute;
-    top: 20%;
-    width: 25%;
-    left: 70%;
-    height: 0.5%;
+  .rail_1, .rail_2 {
+    width: 187.5rpx;
+    height: 4rpx;
+    margin-top: 10rpx;
   }

@@ -7,9 +7,6 @@ Page({
     length: 0, // 当前输入的字数
     teacherList: ['王贞贞', '姚双雁', '李亚玲'], // 与第一页保持一致的咨询师列表
     isButtonActive: false, // 控制按钮状态
-    showQrCode: false, // 控制显示二维码
-    appointmentId: null,
-    qrCodeDataURL: '', // 用于存储二维码图片数据
   },
 
   onLoad(options) {
@@ -74,6 +71,8 @@ Page({
     // 准备提交到云函数的完整数据
     const finalData = {
       ...this.data.formData,
+      startTime: this.data.formData.timeSlot.startTime,
+      endTime: this.data.formData.timeSlot.endTime,
       detail: this.data.detail,
       openid: app.globalData.userInfo._openid, // 确保使用 _openid
       teacher: this.data.teacherList[this.data.formData.teacherId]
@@ -88,12 +87,18 @@ Page({
         // 提交成功后，清除缓存
         wx.removeStorageSync('appointment_step1_data');
         
-        const appointmentId = res.result._id; // 假设云函数返回结果中包含预约ID
-        this.setData({
-          showQrCode: true,
-          appointmentId: appointmentId
+        wx.showModal({
+          title: '预约成功',
+          content: '记得按时赴约哦！',
+          showCancel: false,
+          success: (res) => {
+            if (res.confirm) {
+              wx.redirectTo({
+                url: '/mine/booked/booked',
+              });
+            }
+          }
         });
-        this.generateQrCode(appointmentId);
       },
       fail: err => {
         wx.hideLoading();
@@ -112,76 +117,4 @@ Page({
     });
   },
 
-  generateQrCode: function(text) {
-    wx.showLoading({
-      title: '二维码生成中...',
-    });
-    wx.cloud.callFunction({
-      name: 'generateQrCode',
-      data: {
-        text: text
-      },
-      success: res => {
-        wx.hideLoading();
-        if (res.result.success) {
-          this.setData({
-            qrCodeDataURL: res.result.qrCodeDataURL
-          });
-        } else {
-          wx.showToast({
-            title: '二维码生成失败',
-            icon: 'none'
-          });
-        }
-      },
-      fail: err => {
-        wx.hideLoading();
-        wx.showToast({
-          title: '二维码生成失败',
-          icon: 'none'
-        });
-      }
-    });
-  },
-
-  saveQrCode: function() {
-    const fs = wx.getFileSystemManager();
-    const filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`;
-    const base64Data = this.data.qrCodeDataURL.replace(/^data:image\/\w+;base64,/, '');
-
-    fs.writeFile({
-      filePath: filePath,
-      data: base64Data,
-      encoding: 'base64',
-      success: () => {
-        wx.saveImageToPhotosAlbum({
-          filePath: filePath,
-          success: () => {
-            wx.showToast({
-              title: '保存成功',
-              icon: 'success'
-            });
-          },
-          fail: () => {
-            wx.showToast({
-              title: '保存失败',
-              icon: 'none'
-            });
-          }
-        });
-      },
-      fail: () => {
-        wx.showToast({
-          title: '保存失败',
-          icon: 'none'
-        });
-      }
-    });
-  },
-
-  confirm: function() {
-    wx.switchTab({
-      url: '/pages/home/home',
-    });
-  }
 });

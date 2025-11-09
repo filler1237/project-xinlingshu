@@ -11,20 +11,18 @@
   <image class="girl"src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/girl.png" style="width: 200rpx;"/>
 </view>
 <view class="logo">
-<image class="logo_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_1"  >预约信息</view>
-<image class="rail_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
-
-<image class="logo_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_2"  >预约信息</view>
-<image class="rail_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/tailwhite.png"></image>
-
-<image class="logo_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_3"  >预约信息</view>
-<image class="rail_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/tailwhite.png"></image>
+  <view class="logo-item">
+    <image class="logo_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
+    </image>
+    <view class="value_1"  >预约信息</view>
+    <image class="rail_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
+  </view>
+  <view class="logo-item">
+    <image class="logo_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
+    </image>
+    <view class="value_2"  >预约信息</view>
+    <image class="rail_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/tailwhite.png"></image>
+  </view>
 </view>
 
 <view class="page" data-weui-theme="{{theme}}">

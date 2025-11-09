@@ -123,25 +123,9 @@ Page({
    */
   handleLogin() {
     if (this.data.isLogin) return;
-    if (!this.data.openid) {
-      wx.showToast({ title: '网络繁忙，请稍后重试', icon: 'none' });
-      this.getOpenid();
-      return;
-    }
-    wx.getUserProfile({
-      desc: '用于完善会员资料',
-      success: (res) => {
-        // 保存用户信息，显示身份选择弹窗
-        this.setData({
-          tempUserProfile: res.userInfo,
-          showIdentityPopup: true
-        });
-      },
-      fail: () => {
-        wx.showToast({ title: '授权失败', icon: 'none' });
-      }
+    wx.navigateTo({
+      url: '/pages/auth/login/login',
     });
-    
   },
   
   /**
@@ -685,5 +669,44 @@ Page({
         console.error('扫描二维码失败', err);
       }
     });
-  }
+  },
+
+  /**
+   * 退出登录
+   */
+  handleLogout() {
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          // 清除本地缓存
+          wx.removeStorageSync('userInfo');
+          wx.removeStorageSync('openid');
+          
+          // 重置页面状态
+          this.setData({
+            isLogin: false,
+            userInfo: null,
+            avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
+            nickName: "游客，点击登录",
+            nextAppointment: null,
+          });
+          
+          // 重置全局状态
+          app.globalData.userInfo = null;
+          app.globalData.isLogin = false;
+          
+          wx.showToast({
+            title: '已退出登录',
+            icon: 'success'
+          });
+
+          // 关闭弹窗
+          this.onCloseEditProfilePopup();
+        }
+      }
+    });
+  },
+
 });

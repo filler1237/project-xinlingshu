@@ -24,19 +24,27 @@ Page({
   },
 
   getUserInfo() {
-    const userInfo = wx.getStorageSync('userInfo');
-    if (!userInfo) {
-      wx.redirectTo({
-        url: '/competition/pages/login/login'
+    const app = getApp();
+    const userInfo = app.globalData.userInfo;
+    if (userInfo) {
+      const isChiefJudge = userInfo.role === 'chief_judge';
+      this.setData({ 
+        userInfo,
+        isChiefJudge 
       });
-      return;
+    } else {
+      // 如果全局没有用户信息，可以给一个提示或者返回上一页
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 2000,
+        complete: () => {
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 2000);
+        }
+      });
     }
-    
-    const isChiefJudge = userInfo.role === 'chief_judge';
-    this.setData({ 
-      userInfo,
-      isChiefJudge 
-    });
   },
 
   loadStats() {
@@ -80,19 +88,4 @@ goBack: function() {
   // });
   wx.switchTab({ url: '/pages/home/home' });
 },
-  // 退出登录
-  onLogout() {
-    wx.showModal({
-      title: '确认退出',
-      content: '确定要退出登录吗？',
-      success: (res) => {
-        if (res.confirm) {
-          wx.removeStorageSync('userInfo');
-          wx.redirectTo({
-            url: '/competition/pages/login/login'
-          });
-        }
-      }
-    });
-  }
 })

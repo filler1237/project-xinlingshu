@@ -62,14 +62,23 @@ Page({
   },
 
   getUserInfo() {
-    const userInfo = wx.getStorageSync('userInfo');
-    if (!userInfo) {
-      wx.redirectTo({
-        url: '/competition/pages/login/login'
+    const app = getApp();
+    const userInfo = app.globalData.userInfo;
+    if (userInfo) {
+      this.setData({ userInfo });
+    } else {
+      // 如果全局没有用户信息，可以给一个提示或者返回上一页
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 2000,
+        complete: () => {
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 2000);
+        }
       });
-      return;
     }
-    this.setData({ userInfo });
   },
 
   loadData() {
@@ -133,19 +142,4 @@ Page({
     console.log('查看作品详情:', workId);
   },
 
-  // 退出登录
-  onLogout() {
-    wx.showModal({
-      title: '确认退出',
-      content: '确定要退出登录吗？',
-      success: (res) => {
-        if (res.confirm) {
-          wx.removeStorageSync('userInfo');
-          wx.redirectTo({
-            url: '/competition/pages/login/login'
-          });
-        }
-      }
-    });
-  }
 })

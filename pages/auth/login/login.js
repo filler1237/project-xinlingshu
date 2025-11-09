@@ -1,99 +1,111 @@
 // pages/auth/login/login.js
+
+
+//登录功能一共用到两个云函数：passwordLogin loginRegister 前者面向教师评委，后者面向学生（使用微信的授权登录）
 const app = getApp();
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    account:'',
-    password:''
-
+    loginStep: 1, // 1: 角色选择, 2: 账密登录
+    roles: ['教师', '评委'],
+    roleIndex: 0,
+    username: '',
+    password: ''
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
-  onAccountInput: function(e) {
-    this.setData({
-      account:e.detail.value
+  onStudentLogin() {
+    wx.getUserProfile({
+      desc: '用于完善会员资料',
+      success: (res) => {
+        this.loginWithWechat('student', res.userInfo);
+      },
+      fail: () => {
+        wx.showToast({ title: '授权失败', icon: 'none' });
+      }
     });
   },
 
-  onPasswordInput: function(e) {
+  showFormLogin() {
     this.setData({
-      password:e.detail.value
-    })
+      loginStep: 2
+    });
   },
 
-  onLogin: function() {
-    const { account,password } = this.data;
+  onRoleChange(e) {
+    this.setData({
+      roleIndex: e.detail.value
+    });
+  },
 
-    if(!account || !password) {
-      wx.showToast({
-        title:'账号或密码不能为空',
-        icon:'none'
-      });
+  onUsernameInput(e) {
+    this.setData({
+      username: e.detail.value
+    });
+  },
+
+  onPasswordInput(e) {
+    this.setData({
+      password: e.detail.value
+    });
+  },
+
+  onFormLogin() {
+    const { username, password } = this.data;
+    const role = this.data.roleIndex == 0 ? 'admin' : 'judge';
+
+    if (!username || !password) {
+      wx.showToast({ title: '请输入用户名和密码', icon: 'none' });
       return;
     }
 
-    wx.showLoading({
-      title:'登录中...',
+    wx.showLoading({ title: '登录中...' });
+
+    wx.cloud.callFunction({
+      name: 'passwordLogin',
+      data: { username, password, role }
+    }).then(res => {
+      wx.hideLoading();
+      if (res.result && res.result.success) {
+        const { userInfo } = res.result;
+        app.globalData.userInfo = userInfo;
+        app.globalData.isLogin = true;
+        wx.setStorageSync('userInfo', userInfo);
+        wx.showToast({ title: '登录成功', icon: 'success', duration: 1500 });
+        setTimeout(() => wx.navigateBack(), 1500);
+      } else {
+        wx.showToast({ title: res.result.message || '登录失败', icon: 'none' });
+      }
+    }).catch(err => {
+      wx.hideLoading();
+      wx.showToast({ title: '登录异常: ' + err.errMsg, icon: 'none' });
     });
+  },
 
+  loginWithWechat(role, userInfo) {
+    wx.showLoading({ title: '登录中...' });
     
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+    wx.cloud.callFunction({
+      name: 'loginRegister',
+      data: {
+        avatarUrl: userInfo.avatarUrl,
+        nickName: userInfo.nickName,
+        role: role
+      }
+    }).then(res => {
+      wx.hideLoading();
+      if (res.result && res.result.userInfo) {
+        const { userInfo } = res.result;
+        app.globalData.userInfo = userInfo;
+        app.globalData.isLogin = true;
+        wx.setStorageSync('userInfo', userInfo);
+        wx.showToast({ title: '登录成功', icon: 'success', duration: 1500 });
+        setTimeout(() => wx.navigateBack(), 1500);
+      } else {
+        wx.showToast({ title: '登录失败，请重试', icon: 'none' });
+      }
+    }).catch(err => {
+      wx.hideLoading();
+      wx.showToast({ title: '登录失败: ' + err.errMsg, icon: 'none' });
+    });
   }
-})
+});

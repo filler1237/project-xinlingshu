@@ -5,18 +5,20 @@ const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }) // 使用当前云环境
 
 exports.main = async (event, context) => {
-  const db = cloud.database()
-  const wxContext = cloud.getWXContext()
-  const openid = wxContext.OPENID
+  const db = cloud.database();
+  const wxContext = cloud.getWXContext();
+  const openid = wxContext.OPENID;
+
+  console.log('前端传递的完整数据:', event);
 
   // 从 event 中获取需要的字段
-  let { teacherId, date, startTime, endTime, availabilityId, timeSlotIndex, status, detail, teacher } = event
+  let { teacherId, date, startTime, endTime, availabilityId, timeSlotIndex, detail, teacher } = event;
 
   try {
     // 如果 availabilityId 不存在，意味着这是当天的第一个预约，需要先创建 Availability 记录
     if (!availabilityId) {
       // 注意：这里的默认时间段生成逻辑需要与 getAvailability 中的保持一致
-      const timeSlots = generateDefaultTimeSlots(date); 
+      const timeSlots = generateDefaultTimeSlots(date);
       const availabilityRes = await db.collection('Availability').add({
         data: {
           teacherId,
@@ -33,19 +35,19 @@ exports.main = async (event, context) => {
         teacherId,
         _openid: openid, // 手动添加 _openid
         date,
-        startTime: event.timeSlot.startTime, // 修正：使用 timeSlot 内部的时间
-        endTime: event.timeSlot.endTime,     // 修正：使用 timeSlot 内部的时间
+        startTime, // 直接从 event 获取
+        endTime,   // 直接从 event 获取
         createTime: new Date(),
         detail,
         teacher,
-        complete:"进行中",
-        evaluate:"0",
-        score:"0",
-        feedback:"",
+        complete: "进行中",
+        evaluate: "0",
+        score: "0",
+        feedback: "",
         availabilityId: availabilityId,
         timeSlotIndex: timeSlotIndex
       }
-    })
+    });
 
     // 如果添加成功
     if (result._id) {

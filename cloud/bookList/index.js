@@ -15,6 +15,8 @@ exports.main = async (event, context) => {
         _openid: openid,
       })
       .get()
+    
+    console.log('从数据库查询到的原始数据:', res.data);
 
     if (res.data.length === 0) {
       // 没有查询到记录的情况

@@ -403,3 +403,22 @@ page{
   font-size: 30rpx;
 }
 
+/* 弹窗内退出登录按钮样式 */
+.popup-logout-btn {
+  width: 90%;
+  margin-top: 60rpx;
+  height: 88rpx;
+  background-color: #fde3e3; /* 淡红色背景 */
+  color: #FF5C5C; /* 深红色文字 */
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
+.popup-logout-btn::after {
+  border: none;
+}

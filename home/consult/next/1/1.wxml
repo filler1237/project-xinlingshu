@@ -9,53 +9,37 @@
   <image class="girl"src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/girl.png" style="width: 200rpx;"/>
 </view>
 <view class="logo">
-<image class="logo_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_1"  >预约信息</view>
-<image class="rail_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
-
-<image class="logo_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_2"  >预约信息</view>
-<image class="rail_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
-
-<image class="logo_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
-</image>
-<view class="value_3"  >预约信息</view>
-<image class="rail_3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/tailwhite.png"></image>
+  <view class="logo-item">
+    <image class="logo_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
+    </image>
+    <view class="value_1"  >预约信息</view>
+    <image class="rail_1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
+  </view>
+  <view class="logo-item">
+    <image class="logo_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png" >
+    </image>
+    <view class="value_2"  >预约信息</view>
+    <image class="rail_2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/railgreen.png"></image>
+  </view>
 </view>
 
 <view class="page" data-weui-theme="{{theme}}">
   <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
   
-  <block wx:if="{{!showQrCode}}">
-    <mp-form-page class="message_1" title="致咨询老师的一封信"></mp-form-page>
-    <mp-cells class="start" title="To:">
-      <view class="message">
-          <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="">
-            <textarea date-field="detail" class="weui-textarea" placeholder="请简述目前遇到的困难和希望得到的帮助\n请输入文本（不多于140字）" style="height: 12em" bindinput="textareaInput" maxlength="140"></textarea>
-            <view class="weui-textarea-counter">{{length}}/140</view>
-          </mp-cell>
-    </view>
-  </mp-cells>
+  <mp-form-page class="message_1" title="致咨询老师的一封信"></mp-form-page>
+  <mp-cells class="start" title="To:">
+    <view class="message">
+        <mp-cell has-header="{{false}}" has-footer="{{false}}" title="" ext-class="">
+          <textarea date-field="detail" class="weui-textarea" placeholder="请简述目前遇到的困难和希望得到的帮助\n请输入文本（不多于140字）" style="height: 12em" bindinput="textareaInput" maxlength="140"></textarea>
+          <view class="weui-textarea-counter">{{length}}/140</view>
+        </mp-cell>
+  </view>
+</mp-cells>
 
-    <view slot="button">
-        <button class="weui-btn {{isButtonActive ? 'active' : ''}}" bindtap="submitAppointment">
-            <view class="character">提交预约
-          </view>
-        </button>
-      </view>
-  </block>
-
-  <block wx:else>
-    <mp-form-page class="message_1" title="我的预约码"></mp-form-page>
-    <view class="qr-container">
-      <image wx:if="{{qrCodeDataURL}}" src="{{qrCodeDataURL}}" style="width: 200px; height: 200px;"></image>
-      <view class="tip-text">请凭此二维码进行线下咨询</view>
-      <view class="button-group">
-        <button class="weui-btn active" bindtap="saveQrCode">保存预约码</button>
-        <button class="weui-btn active" bindtap="confirm">确定</button>
-      </view>
+  <view slot="button">
+      <button class="weui-btn {{isButtonActive ? 'active' : ''}}" bindtap="submitAppointment">
+          <view class="character">提交预约
+        </view>
+      </button>
     </view>
-  </block>
 </view>
