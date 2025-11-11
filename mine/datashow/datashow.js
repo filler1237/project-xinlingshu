@@ -9,6 +9,17 @@ const mainData = [
   { name: '消极', value: 259 }
 ];
 
+const positiveDetailData = [
+  { name: '快乐', value: 128 },
+  { name: '激动', value: 89 },
+  { name: '满足', value: 89 }
+];
+
+const neutralDetailData = [
+  { name: '平静', value: 235 },
+  { name: '其他', value: 217 }
+];
+
 const negativeDetailData = [
   { name: '疲惫', value: 49 },
   { name: '委屈', value: 67 },
@@ -105,8 +116,14 @@ Page({
 
       // 绑定点击事件
       chart.on('click', (params) => {
-        if (params.name === '消极' && !this.data.isDrilledDown) {
-          this.drillDown();
+        if (!this.data.isDrilledDown) {
+          if (params.name === '消极') {
+            this.drillDown('negative');
+          } else if (params.name === '积极') {
+            this.drillDown('positive');
+          } else if (params.name === '中性') {
+            this.drillDown('neutral');
+          }
         }
       });
 
@@ -114,12 +131,25 @@ Page({
     });
   },
 
-  // 下钻到消极情绪详情
-  drillDown() {
-    const option = getChartOption(negativeDetailData, '消极情绪详情');
+  // 下钻到情绪详情
+  drillDown(type) {
+    let detailData, detailTitle;
+    
+    if (type === 'negative') {
+      detailData = negativeDetailData;
+      detailTitle = '消极情绪详情';
+    } else if (type === 'positive') {
+      detailData = positiveDetailData;
+      detailTitle = '积极情绪详情';
+    } else if (type === 'neutral') {
+      detailData = neutralDetailData;
+      detailTitle = '中性情绪详情';
+    }
+    
+    const option = getChartOption(detailData, detailTitle);
     chart.setOption(option, true); // true 表示不合并，直接替换
     this.setData({ isDrilledDown: true });
-    this.calculateSummary(negativeDetailData, '消极情绪详情');
+    this.calculateSummary(detailData, detailTitle);
   },
 
   // 返回上一级
@@ -159,8 +189,12 @@ Page({
       } else {
         suggestion = '近期消极情绪占比较高，建议关注情绪变化。';
       }
-    } else {
+    } else if (title === '消极情绪详情') {
       suggestion = `在消极情绪中，"${majorEmotion}" 表现最为突出，请重点关注。`;
+    } else if (title === '积极情绪详情') {
+      suggestion = `在积极情绪中，"${majorEmotion}" 表现最为突出，这是一个很好的现象。`;
+    } else if (title === '中性情绪详情') {
+      suggestion = `在中性情绪中，"${majorEmotion}" 表现最为突出，情绪状态相对稳定。`;
     }
 
     this.setData({
