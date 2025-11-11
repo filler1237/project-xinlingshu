@@ -30,7 +30,7 @@ Page({
       status: 'inhaling',
       progress: 0,
       countdown: this.data.inhaleTime,
-      instruction: '吸气... 🌬️',
+      instruction: '缓慢吸气',
       animationType: 'inhaling',
       pausedStep: 0,
       pausedCycle: 1,
@@ -45,11 +45,12 @@ Page({
   resumeBreathing() {
     const { pausedStep, pausedCycle, pausedTotalSteps, pausedPhaseSteps } = this.data;
     const statusMap = ['inhaling', 'holding', 'exhaling'];
+    const instructionMap = ['缓慢吸气', '保持屏息', '缓缓呼气'];
     
     this.setData({
       status: statusMap[pausedStep],
       animationType: statusMap[pausedStep],
-      instruction: pausedStep === 0 ? '吸气... 🌬️' : pausedStep === 1 ? '屏息... ⏸️' : '呼气... 💨'
+      instruction: instructionMap[pausedStep]
     });
     
     this._continueBreathing(pausedStep, pausedCycle, pausedTotalSteps, pausedPhaseSteps);
@@ -89,7 +90,7 @@ Page({
           this.setData({
             status: 'holding',
             countdown: this.data.holdTime,
-            instruction: '屏息... ⏸️',
+            instruction: '保持屏息',
             animationType: 'holding'
           });
         }
@@ -103,7 +104,7 @@ Page({
           this.setData({
             status: 'exhaling',
             countdown: this.data.exhaleTime,
-            instruction: '呼气... 💨',
+            instruction: '缓缓呼气',
             animationType: 'exhaling'
           });
         }
@@ -131,7 +132,7 @@ Page({
           this.setData({
             status: 'inhaling',
             countdown: this.data.inhaleTime,
-            instruction: `第${currentCycle}次吸气... 🌬️`,
+            instruction: '缓慢吸气',
             animationType: 'inhaling'
           });
         }
@@ -150,10 +151,10 @@ Page({
     // 只有在练习进行中才更新为暂停状态
     if (this.data.status !== 'ready' && this.data.status !== 'paused') {
       this.setData({
-        status: 'paused',
-        instruction: '练习已暂停 ⏸️',
-        animationType: 'paused'
-      });
+            status: 'paused',
+            instruction: '练习已暂停',
+            animationType: 'paused'
+          });
     }
   },
 

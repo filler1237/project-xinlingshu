@@ -19,6 +19,16 @@
       </view>
     </view>
     
+    <view class="tool-item" bind:tap="gotoMeditation">
+      <view class="tool-icon">
+        <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">正念冥想</text>
+        <text class="tool-desc">放松身心，提升专注力的冥想练习</text>
+      </view>
+    </view>
+    
     <view class="tool-item" bind:tap="gotoWhiteNoise">
       <view class="tool-icon">
         <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>

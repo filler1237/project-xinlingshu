@@ -1,0 +1,111 @@
+<!-- home/tools/meditation/meditation.wxml -->
+<view class="container" style="background-image: {{selectedBackground ? 'url(' + selectedBackground + ')' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'}}; background-size: cover; background-position: center;">
+  <view class="header">
+    <view class="back-button" bind:tap="navigateBack">
+      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
+    </view>
+    <text class="header-title">🧘 正念冥想 🧘</text>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 冥想时间选择 -->
+  <view class="duration-selector" wx:if="{{status === 'ready' || status === 'completed'}}">
+    <text class="selector-title">选择冥想时长：</text>
+    <view class="duration-options">
+      <view class="duration-option {{selectedDuration === 3 ? 'selected' : ''}}" bind:tap="selectDuration" data-duration="3">3分钟</view>
+      <view class="duration-option {{selectedDuration === 5 ? 'selected' : ''}}" bind:tap="selectDuration" data-duration="5">5分钟</view>
+      <view class="duration-option {{selectedDuration === 10 ? 'selected' : ''}}" bind:tap="selectDuration" data-duration="10">10分钟</view>
+      <view class="duration-option {{selectedDuration === 15 ? 'selected' : ''}}" bind:tap="selectDuration" data-duration="15">15分钟</view>
+    </view>
+  </view>
+  
+  <!-- 背景选择 -->
+  <view class="background-selector" wx:if="{{status === 'ready' || status === 'completed'}}">
+    <text class="selector-title">选择背景：</text>
+    <view class="background-options">
+      <view class="background-option {{selectedBackgroundType === 'forest' ? 'selected' : ''}}" bind:tap="selectBackground" data-type="forest">
+        <text class="background-name">🌳 森林</text>
+      </view>
+      <view class="background-option {{selectedBackgroundType === 'ocean' ? 'selected' : ''}}" bind:tap="selectBackground" data-type="ocean">
+        <text class="background-name">🌊 海洋</text>
+      </view>
+      <view class="background-option {{selectedBackgroundType === 'mountain' ? 'selected' : ''}}" bind:tap="selectBackground" data-type="mountain">
+        <text class="background-name">⛰️ 山脉</text>
+      </view>
+      <view class="background-option {{selectedBackgroundType === 'none' ? 'selected' : ''}}" bind:tap="selectBackground" data-type="none">
+        <text class="background-name">🌈 默认</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 背景音乐选择 -->
+  <view class="music-selector" wx:if="{{status === 'ready' || status === 'completed'}}">
+    <text class="selector-title">选择背景音乐：</text>
+    <view class="music-options">
+      <view class="music-option {{selectedMusic === 'rain' ? 'selected' : ''}}" bind:tap="selectMusic" data-music="rain">
+        <image src="/image/rain.svg" class="music-icon" wx:if="{{false}}"/>
+        <text class="music-name">🌧️ 雨声</text>
+      </view>
+      <view class="music-option {{selectedMusic === 'forest' ? 'selected' : ''}}" bind:tap="selectMusic" data-music="forest">
+        <image src="/image/forest.svg" class="music-icon" wx:if="{{false}}"/>
+        <text class="music-name">🌳 森林</text>
+      </view>
+      <view class="music-option {{selectedMusic === 'waves' ? 'selected' : ''}}" bind:tap="selectMusic" data-music="waves">
+        <image src="/image/waves.svg" class="music-icon" wx:if="{{false}}"/>
+        <text class="music-name">🌊 海浪</text>
+      </view>
+      <view class="music-option {{selectedMusic === 'none' ? 'selected' : ''}}" bind:tap="selectMusic" data-music="none">
+        <image src="/image/mute.svg" class="music-icon" wx:if="{{false}}"/>
+        <text class="music-name">🔇 无音乐</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 冥想界面 -->
+  <view class="meditation-main">
+    <view class="meditation-circle-container">
+      <view class="meditation-circle" style="background: {{selectedBackgroundType !== 'none' ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, ' + currentColor1 + ', ' + currentColor2 + ')'}}; backdrop-filter: blur(10px); animation: pulse {{pulseSpeed}}s ease-in-out infinite;">
+        <text class="circle-icon" style="color: {{selectedBackgroundType !== 'none' ? '#333' : 'white'}};">{{currentEmoji}}</text>
+        <text class="circle-text" style="color: {{selectedBackgroundType !== 'none' ? '#333' : 'white'}};">{{instruction}}</text>
+        <text class="timer-text" style="color: {{selectedBackgroundType !== 'none' ? '#333' : 'white'}};">{{formattedTime}}</text>
+        
+        <!-- 呼吸提示 -->
+        <view class="breathing-guide" wx:if="{{showBreathingGuide}}">
+          <text class="breathing-text" style="color: {{selectedBackgroundType !== 'none' ? '#333' : 'white'}};">{{breathingInstruction}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="meditation-guidance">
+      <view class="guidance-text" style="color: {{selectedBackgroundType !== 'none' ? '#333' : 'white'}};">{{guidanceText}}</view>
+    </view>
+    
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%; background: linear-gradient(90deg, {{currentColor1}}, {{currentColor2}});"></view>
+    </view>
+    
+    <view class="controls">
+      <button wx:if="{{status === 'ready' || status === 'completed'}}" class="start-btn" bind:tap="startMeditation">✨ 开始冥想 ✨</button>
+      <button wx:elif="{{status === 'paused'}}" class="continue-btn" bind:tap="resumeMeditation">▶️ 继续冥想 ▶️</button>
+      <button wx:elif="{{status !== 'ready' && status !== 'paused' && status !== 'completed'}}" class="stop-btn" bind:tap="pauseMeditation">⏸️ 暂停冥想 ⏸️</button>
+      <button class="reset-btn" bind:tap="resetMeditation">🔄 重新开始 🔄</button>
+    </view>
+  </view>
+  
+  <!-- 冥想完成页面 -->
+  <view class="completion-message" wx:if="{{status === 'completed'}}">
+    <text class="completion-title">🌟 冥想完成 🌟</text>
+    <text class="completion-text">恭喜你完成了 {{selectedDuration}} 分钟的正念冥想</text>
+    <text class="completion-text">你今天已经冥想了 {{totalMinutes}} 分钟</text>
+    <text class="completion-text">保持这样的习惯，让心灵更加平静</text>
+  </view>
+  
+  <!-- 冥想提示 -->
+  <view class="instructions" wx:if="{{status === 'ready' || status === 'completed'}}">
+    <text class="instruction-title">🧠 冥想小贴士：</text>
+    <text class="instruction-text">• 找一个安静舒适的地方</text>
+    <text class="instruction-text">• 保持坐姿端正或躺卧放松</text>
+    <text class="instruction-text">• 闭上眼睛，专注于呼吸</text>
+    <text class="instruction-text">• 当思绪飘走时，温柔地将注意力带回</text>
+    <text class="instruction-text">• 享受这段属于自己的宁静时光</text>
+  </view>
+</view>

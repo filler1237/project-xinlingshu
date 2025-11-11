@@ -35,6 +35,7 @@
         "tools/tools",
         "tools/breathing/breathing",
         "tools/whitenoise/whitenoise",
+        "tools/meditation/meditation",
         "tools/user_self_upload/user_self_upload",
         "profile/profile"
       ]

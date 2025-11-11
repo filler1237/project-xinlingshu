@@ -12,6 +12,12 @@ Page({
     })
   },
   
+  gotoMeditation() {
+    wx.navigateTo({
+      url: '/home/tools/meditation/meditation'
+    })
+  },
+  
   // 跳转到音频资源管理页面
   gotoAudioUpload() {
     wx.navigateTo({
