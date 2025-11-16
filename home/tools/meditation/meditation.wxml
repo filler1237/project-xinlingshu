@@ -1,12 +1,6 @@
 <!-- home/tools/meditation/meditation.wxml -->
-<view class="container" style="background-image: {{selectedBackground ? 'url(' + selectedBackground + ')' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'}}; background-size: cover; background-position: center;">
-  <view class="header">
-    <view class="back-button" bind:tap="navigateBack">
-      <image src="/image/back.svg" mode="aspectFit" class="back-icon"/>
-    </view>
-    <text class="header-title">🧘 正念冥想 🧘</text>
-    <view class="header-right"></view>
-  </view>
+<navigation-bar title="🧘 正念冥想 🧘" back="{{true}}" background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" color="white"></navigation-bar>
+<view class="container" style="background-image: {{selectedBackground ? 'url(' + selectedBackground + ')' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'}}; background-size: cover; background-position: center; padding-top: {{navigationBarHeight}}px;">
   
   <!-- 冥想时间选择 -->
   <view class="duration-selector" wx:if="{{status === 'ready' || status === 'completed'}}">

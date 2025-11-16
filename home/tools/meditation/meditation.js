@@ -39,6 +39,13 @@ Page({
   },
   
   onLoad() {
+    // 计算导航栏高度
+    const systemInfo = wx.getSystemInfoSync();
+    const navigationBarHeight = systemInfo.statusBarHeight + 44;
+    this.setData({
+      navigationBarHeight: navigationBarHeight
+    });
+
     // 从本地存储获取今日冥想记录
     const today = new Date().toDateString();
     const meditationRecord = wx.getStorageSync('meditationRecord') || {};

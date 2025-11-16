@@ -48,5 +48,15 @@
         <text class="tool-desc">上传和管理白噪音音频文件</text>
       </view>
     </view>
+    
+    <view class="tool-item" bind:tap="gotoSandPainting">
+      <view class="tool-icon">
+        <image src="/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">沙画涂鸦</text>
+        <text class="tool-desc">随意涂画，释放压力</text>
+      </view>
+    </view>
   </view>
 </view>

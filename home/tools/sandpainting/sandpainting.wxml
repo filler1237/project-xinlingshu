@@ -1,0 +1,53 @@
+<!-- home/tools/sandpainting/sandpainting.wxml -->
+<view class="sandpainting-container">
+  <!-- 顶部导航 -->
+  <navigation-bar title="沙画涂鸦" back="{{true}}" background="#d4af37" color="#ffffff">
+    <view slot="right" class="header-right">
+      <view class="clear-button" bind:tap="clearCanvas">
+        <text class="clear-text">清空</text>
+      </view>
+    </view>
+  </navigation-bar>
+
+  <!-- 画布区域 -->
+  <view class="canvas-container">
+    <canvas id="sandCanvas" 
+            type="2d"
+            class="drawing-canvas" 
+            width="{{canvasWidth}}"
+            height="{{canvasHeight}}"
+            bindtouchstart="startDrawing"
+bindtouchmove="onDrawing"
+bindtouchend="stopDrawing"
+style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;">
+    </canvas>
+  </view>
+
+  <!-- 控制面板 -->
+  <view class="control-panel">
+    <!-- 颜色选择器 -->
+    <view class="color-palette">
+      <view class="color-item" 
+            wx:for="{{colors}}" 
+            wx:key="index"
+            style="background-color: {{item}}; border: {{selectedColor === item ? '4rpx solid white' : '2rpx solid #ccc'}}"
+            bind:tap="selectColor" 
+            data-color="{{item}}">
+      </view>
+    </view>
+
+    <!-- 画笔粗细选择 -->
+    <view class="brush-size">
+      <view class="size-label">画笔粗细</view>
+      <view class="size-options">
+        <view class="size-item" 
+              wx:for="{{brushSizes}}" 
+              wx:key="index"
+              style="width: {{item}}rpx; height: {{item}}rpx; border: {{selectedSize === item ? '4rpx solid white' : '2rpx solid #ccc'}}"
+              bind:tap="selectBrushSize"
+              data-size="{{item}}">
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

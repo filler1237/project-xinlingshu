@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "沙画涂鸦",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  },
+  "navigationStyle": "custom"
+}

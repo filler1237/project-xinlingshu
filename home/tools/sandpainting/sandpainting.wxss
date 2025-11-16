@@ -1,0 +1,103 @@
+/* home/tools/sandpainting/sandpainting.wxss */
+.sandpainting-container {
+  height: 100%;
+  background-color: #f0e6d6;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.clear-button {
+  padding: 8rpx 16rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
+}
+
+.clear-button:active {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+.clear-text {
+  font-size: 24rpx;
+  color: white;
+  font-weight: bold;
+}
+
+.canvas-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f0e6d6;
+}
+
+.drawing-canvas {
+  background-color: #fff8dc;
+  border-radius: 10rpx;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.control-panel {
+  padding: 20rpx;
+  background-color: #d4af37;
+  box-shadow: 0 -5rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.color-palette {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.color-item {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin: 0 10rpx;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
+}
+
+.color-item:active {
+  transform: scale(1.1);
+}
+
+.brush-size {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.size-label {
+  font-size: 24rpx;
+  color: white;
+  margin-bottom: 15rpx;
+  font-weight: bold;
+}
+
+.size-options {
+  display: flex;
+  justify-content: center;
+}
+
+.size-item {
+  background-color: #333;
+  border-radius: 50%;
+  margin: 0 15rpx;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
+}
+
+.size-item:active {
+  transform: scale(1.1);
+}

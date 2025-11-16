@@ -25,6 +25,13 @@ Page({
     })
   },
   
+  // 跳转到沙画涂鸦页面
+  gotoSandPainting() {
+    wx.navigateTo({
+      url: '/home/tools/sandpainting/sandpainting'
+    })
+  },
+  
   // 返回上一级页面
   navigateBack() {
     wx.navigateBack({
