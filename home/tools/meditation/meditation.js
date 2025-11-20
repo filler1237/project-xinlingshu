@@ -35,7 +35,12 @@ Page({
     breathingTimer: null,
     totalMinutes: 0, // 今日冥想总时长
     audioContext: null, // 音频上下文
-    isAudioPlaying: false
+    isAudioPlaying: false,
+    audioMap: {
+      waves: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/audio_music/waves.mp3',
+      rain: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/audio_music/rain.mp3',
+      forest: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/audio_music/forest.mp3'
+    }
   },
   
   onLoad() {
@@ -515,7 +520,7 @@ Page({
     
     // 确保selectedMusic有效
     const audioType = selectedMusic || 'rain';
-    const audioPath = `/audio/${audioType}.mp3`;
+    const audioPath = this.data.audioMap[audioType];
     
     try {
       // 移除之前可能存在的事件监听器（避免重复监听）
@@ -584,7 +589,7 @@ Page({
             
             try {
               if (typeof audioContext.src !== 'undefined') {
-                audioContext.src = `/audio/${firstFallback}.mp3`;
+                audioContext.src = this.data.audioMap[firstFallback];
                 
                 // 使用setTimeout避免立即触发错误
                 setTimeout(() => {
@@ -742,7 +747,7 @@ Page({
       // 检查是否已经有有效的src，如果没有则重新设置
       if (typeof audioContext.src === 'undefined' || !audioContext.src) {
         try {
-          audioContext.src = `/audio/${selectedMusic}.mp3`;
+          audioContext.src = this.data.audioMap[selectedMusic];
         } catch (srcErr) {
           console.log('设置音频源失败:', srcErr);
           return;

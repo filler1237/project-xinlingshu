@@ -33,35 +33,33 @@
   margin-bottom: 40rpx;
 }
 
-/* 发牌区 */
-.dealing-area {
+/* 主牌堆区域 */
+.deck-area {
   width: 100%;
-  height: 300rpx; /* Reduced height */
+  padding: 40rpx 0; /* 增加上下间距 */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40rpx;
 }
 
-.main-deck {
+.main-deck-image {
   width: 180rpx;
+  height: 315rpx; /* 根据标准塔罗牌比例明确设置高度 */
+  border-radius: 10rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.2);
   cursor: pointer;
   transition: transform 0.3s, opacity 0.3s;
+  position: relative; /* z-index 生效的前提 */
+  z-index: 1; /* 最终修复：确保层级高于可能的遮罩层 */
 }
 
-.main-deck:active {
+.main-deck-image:active {
   transform: scale(0.95);
 }
 
-.main-deck.disabled {
+.main-deck-image.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.main-deck image {
-  width: 100%;
-  border-radius: 10rpx;
-  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.2);
 }
 
 /* 已选牌区 */

@@ -1,4 +1,4 @@
-<!-- home/card/card.wxml -->
+<!-- home/card/card.wxml (Refactored) -->
 <view class="container">
   <!-- Loading Overlay -->
   <view class="loading-overlay" wx:if="{{isLoading}}">
@@ -10,11 +10,13 @@
   <view class="title">请点击牌堆抽取塔罗牌</view>
   <view class="navigation-hint">从牌堆中抽取三张牌以获取解读</view>
 
-  <!-- 主牌堆，用于发牌 -->
-  <view class="dealing-area">
-    <view class="main-deck {{selectedCards.length >= 3 ? 'disabled' : ''}}" bindtap="handleDealTap">
-      <image mode="widthFix" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/Cards-jpg/CardBacks.jpg" />
-    </view>
+  <!-- 主牌堆区域 -->
+  <view class="deck-area">
+    <image 
+      class="main-deck-image {{selectedCards.length >= 3 ? 'disabled' : ''}}" 
+      src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/Cards-jpg/CardBacks.jpg" 
+      bindtap="handleDealTap" 
+    />
   </view>
 
   <!-- 已选牌区 -->

@@ -10,7 +10,7 @@ exports.main=async(event,context)=>{
   const openid=wxContext.OPENID
 
   // 在前端接收用户授权的基本信息
-  const{nickName,avatarUrl,role}=event
+  const{nickName,avatarUrl}=event // 忽略前端传递的role
 
   // 根据openid查询用户是否已存在
   const userRes=await db.collection('users').where({
@@ -27,7 +27,7 @@ exports.main=async(event,context)=>{
         _openid:openid,
         nickName:nickName,
         avatarUrl:avatarUrl,
-        role:role,
+        role:'student', // 强制设置为学生角色
         createTime:db.serverDate(),
         // 初始化成长系统
         growthValue:0,
@@ -44,7 +44,7 @@ exports.main=async(event,context)=>{
       data:{
         nickName:nickName,
         avatarUrl:avatarUrl,
-        role:role
+        role:'student' // 强制设置为学生角色
       }
     })
     userInfo = (await db.collection('users').doc(userId).get()).data;

@@ -57,7 +57,7 @@
   margin-top: 100rpx;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
 }
 .Choice{
   width: 296rpx;
@@ -85,14 +85,6 @@
   align-items: flex-end;
   position: absolute; 
   z-index: 3;
-}
-.QingSu{
-  width: 296rpx;
-  height: 310rpx;
-  border-radius: 30rpx;
-  background: #93DF5D;
-  box-shadow: 0rpx 8rpx 20rpx 0rpx #0000003F;
-  position: relative;
 }
 .QingTan{
   width: 296rpx;

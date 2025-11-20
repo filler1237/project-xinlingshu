@@ -60,6 +60,33 @@ Page({
 
     wx.showLoading({ title: '登录中...' });
 
+    // --- 新增：本地测试账号登录 ---
+    const testUsers = [
+      { _id: 'test-admin-01', username: 'admin01', password: '123456', role: 'admin', nickName: '测试管理员' },
+      { _id: 'test-judge-01', username: 'judge01', password: '123456', role: 'judge', nickName: '测试评委' },
+      { _id: 'test-admin-02', username: 'wangzhenzhen', password: '123456', role: 'admin', nickName: '王贞贞' },
+      { _id: 'test-admin-03', username: 'yaoshuangyan', password: '123456', role: 'admin', nickName: '姚双雁' },
+      { _id: 'test-admin-04', username: 'liyaling', password: '123456', role: 'admin', nickName: '李亚玲' }
+    ];
+
+    const matchedUser = testUsers.find(user =>
+      user.username === username && user.password === password && user.role === role
+    );
+
+    if (matchedUser) {
+      // 匹配到测试用户，模拟登录
+      wx.hideLoading();
+      const userInfo = matchedUser;
+      app.globalData.userInfo = userInfo;
+      app.globalData.isLogin = true;
+      wx.setStorageSync('userInfo', userInfo);
+      wx.showToast({ title: '登录成功 (测试模式)', icon: 'success', duration: 1500 });
+      setTimeout(() => wx.navigateBack(), 1500);
+      return; // 结束函数执行
+    }
+    // --- 本地测试账号登录结束 ---
+
+    // 如果不是测试用户，则继续调用云函数
     wx.cloud.callFunction({
       name: 'passwordLogin',
       data: { username, password, role }
@@ -67,11 +94,24 @@ Page({
       wx.hideLoading();
       if (res.result && res.result.success) {
         const { userInfo } = res.result;
-        app.globalData.userInfo = userInfo;
-        app.globalData.isLogin = true;
-        wx.setStorageSync('userInfo', userInfo);
-        wx.showToast({ title: '登录成功', icon: 'success', duration: 1500 });
-        setTimeout(() => wx.navigateBack(), 1500);
+        
+        // 强制刷新用户信息，确保获取最新角色
+        const db = wx.cloud.database();
+        db.collection('users').doc(userInfo._id).get().then(userRes => {
+          const refreshedUserInfo = userRes.data;
+          app.globalData.userInfo = refreshedUserInfo;
+          app.globalData.isLogin = true;
+          wx.setStorageSync('userInfo', refreshedUserInfo);
+          wx.showToast({ title: '登录成功', icon: 'success', duration: 1500 });
+          setTimeout(() => wx.navigateBack(), 1500);
+        }).catch(err => {
+          // 如果刷新失败，仍然使用云函数返回的数据
+          app.globalData.userInfo = userInfo;
+          app.globalData.isLogin = true;
+          wx.setStorageSync('userInfo', userInfo);
+          wx.showToast({ title: '登录成功 (数据可能延迟)', icon: 'success', duration: 1500 });
+          setTimeout(() => wx.navigateBack(), 1500);
+        });
       } else {
         wx.showToast({ title: res.result.message || '登录失败', icon: 'none' });
       }
