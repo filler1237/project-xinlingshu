@@ -1,0 +1,8 @@
+<view class="task-item-container" style="opacity: {{done ? 0.5 : 1}}">
+  <view class="content">
+    <text class="title" style="color: {{done ? '#aaa' : '#333'}}">{{title}}</text>
+    <view class="line" animation="{{lineAnimation}}"></view>
+  </view>
+  <!-- 注意：请将 checkmark.png 放在项目的 image 目录下 -->
+  <image class="checkmark" src="/image/checkmark.png" animation="{{iconAnimation}}"></image>
+</view>

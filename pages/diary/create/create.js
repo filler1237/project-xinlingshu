@@ -163,9 +163,31 @@ Page({
 
       const entryId = createResult.result.id
 
+      // 标记日记创建成功，并暂存 entryId
+      let taskRewardResult = null;
+
+      // 异步调用任务完成函数，但不阻塞主流程
+      wx.cloud.callFunction({
+        name: 'taskSignIn',
+        data: {
+          taskId: 'completeDiary'
+        }
+      }).then(res => {
+        if (res.result.code === 0) {
+          // 任务完成成功，暂存奖励信息
+          taskRewardResult = res.result;
+        } else {
+          console.log('任务提示:', res.result.message);
+        }
+      }).catch(err => {
+        console.error('调用任务完成云函数失败:', err);
+      });
+
       // 2. 触发AI分析
-      this.setData({ isAnalyzing: true })
-      
+      this.setData({
+        isAnalyzing: true
+      })
+
       const analyzeResult = await wx.cloud.callFunction({
         name: 'analyzeDiaryEntry',
         data: {
@@ -176,15 +198,22 @@ Page({
       if (analyzeResult.result.ok) {
         wx.showToast({
           title: '日记保存成功，AI分析完成',
-          icon: 'success'
+          icon: 'success',
+          duration: 1500 // 缩短提示时间
         })
-        
+
         // 延迟跳转到详情页
         setTimeout(() => {
+          let navUrl = `/pages/diary/detail/detail?id=${entryId}`;
+          if (taskRewardResult) {
+            // 将奖励信息编码后附加到 URL
+            navUrl += `&reward=${encodeURIComponent(JSON.stringify(taskRewardResult))}`;
+          }
           wx.navigateTo({
-            url: `/pages/diary/detail/detail?id=${entryId}`
+            url: navUrl
           })
         }, 1500)
+
       } else {
         wx.showToast({
           title: '日记保存成功，AI分析失败',

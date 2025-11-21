@@ -36,6 +36,9 @@
     </view>
   </view>
 </view>
+
+<!-- 水滴奖励组件 -->
+<water-drop-effect id="waterDrop" />
 <view class="sekuai1" style="width: 555.7rpx;"></view>
 <view class="sekuai2" style="width: 550rpx;"></view>
 <view class="myBook" style="width: 690rpx;">

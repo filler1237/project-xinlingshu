@@ -2,7 +2,7 @@
 <view class="nav-bar-wrapper">
   <navigation-bar title="我的成长树" background="transparent"></navigation-bar>
 </view>
-<view class="container">
+<view class="container" style="padding-bottom: {{isPanelExpanded ? '350rpx' : '200rpx'}}">
   <!-- 1. 首屏区域：占满整个屏幕 -->
   <view class="hero-section">
     <image class="background-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/背景图.png" mode="aspectFill"></image>
@@ -41,3 +41,6 @@
     </view>
   </view>
 </view>
+
+<!-- 任务栏组件 -->
+<task-panel id="task-panel" tasks="{{todayTasks}}" bind:toggle="onPanelToggle" />

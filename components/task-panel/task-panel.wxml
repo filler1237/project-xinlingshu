@@ -1,0 +1,15 @@
+<view class="task-panel-wrapper">
+  <view class="task-panel {{ isExpanded ? 'expanded' : '' }}">
+    <view class="header" bind:tap="togglePanel">
+      <text class="header-title">今日任务 ({{tasks.length}})</text>
+      <image class="arrow {{ isExpanded ? 'up' : '' }}" src="/image/arrow.png"></image>
+    </view>
+    <view class="task-list-container">
+      <view class="task-list">
+        <block wx:for="{{tasks}}" wx:key="id">
+          <task-item title="{{item.title}}" done="{{item.done}}" />
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

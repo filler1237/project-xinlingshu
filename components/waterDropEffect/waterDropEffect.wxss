@@ -1,0 +1,54 @@
+/* components/waterDropEffect/waterDropEffect.wxss */
+.water-drop-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column; /* 修改为垂直布局 */
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 40rpx; /* 增大内边距 */
+  background-color: #e0f0ff; /* 浅蓝色背景 */
+  border-radius: 20rpx; /* 轻微调整圆角 */
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1); /* 添加阴影增加质感 */
+  z-index: 99999;
+  pointer-events: none;
+  
+  /* 使用 transition 实现平滑动画，并延长时长 */
+  transition: opacity 0.6s ease-out, transform 1s ease-out;
+  
+  /* 默认/隐藏状态 */
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.water-drop-wrapper.show {
+  /* 显示状态 */
+  opacity: 1;
+  transform: translate(-50%, -150%) scale(1); /* 上移效果更明显 */
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #007aff; /* 深蓝色字体 */
+  margin-bottom: 10rpx;
+}
+
+.reward-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.water-drop-icon {
+  width: 48rpx; /* 稍微增大图标 */
+  height: 48rpx;
+  margin-right: 8rpx;
+}
+
+.water-drop-count {
+  font-size: 30rpx;
+  color: #007aff; /* 深蓝色字体 */
+  font-weight: bold;
+}

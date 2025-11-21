@@ -1,0 +1,8 @@
+<!--components/waterDropEffect/waterDropEffect.wxml-->
+<view class="water-drop-wrapper {{isActive ? 'show' : ''}}" wx:if="{{visible}}">
+  <text class="title">签到成功</text>
+  <view class="reward-line">
+    <image class="water-drop-icon" src="{{icon}}" />
+    <text class="water-drop-count">水滴 +{{count}}</text>
+  </view>
+</view>

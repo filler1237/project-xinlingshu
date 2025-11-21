@@ -22,15 +22,34 @@ exports.main = async (event, context) => {
     const achievementsRes=await db.collection('achievements').where({
       _id:db.command.in(user.unlockedAchievements || [])
     }).get()
-  return {
-    code:0,
-    data:{
-      growthValue:user.growthValue,
-      treeLevel:user.treeLevel,
-      unlockedAchievements:achievementsRes.data,
-      waterdrops:user.waterDrops
+    // --- 检查每日任务完成状态 ---
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+    const tasks = [
+      { id: 'dailySignIn', name: '每日签到', dateField: 'lastSignInDate' },
+      { id: 'completeDiary', name: '记录心情日记', dateField: 'lastDiaryDate' }
+      // 可以在此添加更多需要检查的每日任务
+    ];
+
+    const taskStatus = tasks.map(task => {
+      const lastCompletionTimestamp = user[task.dateField] || 0;
+      return {
+        ...task,
+        completed: lastCompletionTimestamp >= startOfToday
+      };
+    });
+
+    return {
+      code: 0,
+      data: {
+        growthValue: user.growthValue,
+        treeLevel: user.treeLevel,
+        unlockedAchievements: achievementsRes.data,
+        waterdrops: user.waterDrops,
+        tasks: taskStatus // 新增任务状态列表
+      }
     }
-  }
 } catch(e){
   console.error(e)
   return { code : -1,msg:'查询失败',error: e}

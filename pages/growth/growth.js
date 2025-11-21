@@ -10,7 +10,9 @@ Page({
     unlockedAchievements: [],
     isWatering: false, // 新增：控制浇水动画的状态
     isAnimating: false, //新增控制树木升级动画播放效果
-    waterdrops:0
+    waterdrops: 0,
+    todayTasks: [], // 初始化为空数组，将由云函数填充
+    isPanelExpanded: false
   },
 
   /**
@@ -66,12 +68,17 @@ Page({
             }, 1000); 
 
           } else {
-            // 直接更新数据
+            // 直接更新数据，包括任务列表
             this.setData({
               growthValue: data.growthValue,
               treeLevel: data.treeLevel,
               unlockedAchievements: data.unlockedAchievements,
-              waterdrops: data.waterdrops
+              waterdrops: data.waterdrops,
+              todayTasks: data.tasks.map(task => ({
+                id: task.id,
+                title: task.name,
+                done: task.completed
+              }))
             });
           }
           wx.hideLoading();
@@ -181,5 +188,10 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+  onPanelToggle(e) {
+    this.setData({
+      isPanelExpanded: e.detail.isExpanded
+    });
   }
 })

@@ -431,10 +431,17 @@ Page({
     }).then(res => {
       wx.hideLoading();
       if (res.result.code === 0) {
-        wx.showToast({
-          title: `签到成功！+${res.result.reward}水滴`,
-          icon: 'success'
-        });
+        // --- 调试代码开始 ---
+        const waterDrop = this.selectComponent('#waterDrop');
+        console.log('获取到的组件实例:', waterDrop);
+        if (waterDrop) {
+          console.log('尝试播放动画...');
+          waterDrop.play(res.result.reward || 5);
+        } else {
+          console.error('获取水滴动画组件失败，请检查 WXML 中的 id 是否为 "waterDrop"');
+        }
+        // --- 调试代码结束 ---
+        
         // 可以在这里更新本地的水滴数量，如果需要实时显示的话
       } else {
         // 其他情况，例如已经签到或失败
