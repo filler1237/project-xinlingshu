@@ -25,14 +25,12 @@ Page({
     formattedTime: '00:00',
     instruction: '准备开始冥想',
     guidanceText: '开始您的冥想之旅',
-    currentEmoji: '🧘',
+    currentEmoji: '',
     currentColor1: '#6a11cb',
     currentColor2: '#2575fc',
     pulseSpeed: 5, // 呼吸动画速度（秒）
     showBreathingGuide: true,
     breathingInstruction: '深呼吸...',
-    breathingPhase: 0, // 0: 吸气, 1: 屏息, 2: 呼气
-    breathingTimer: null,
     totalMinutes: 0, // 今日冥想总时长
     audioContext: null, // 音频上下文
     isAudioPlaying: false,
@@ -174,9 +172,10 @@ Page({
         progress: 0,
         instruction: '保持专注，感受当下',
         guidanceText: '保持平静，专注呼吸',
-        currentEmoji: '🙏',
+        currentEmoji: '',
         formattedTime: this.formatTime(totalSeconds),
-        startTimestamp: Date.now()
+        startTimestamp: Date.now(),
+        showBreathingGuide: false
       });
       
       // 设置引导字幕定时更新
@@ -232,13 +231,6 @@ Page({
         }
       }
       
-      // 开始呼吸引导 - 包装在try-catch中
-      try {
-        this.startBreathingGuide();
-      } catch (breathingErr) {
-        console.log('呼吸引导启动失败:', breathingErr);
-        // 静默处理，继续执行
-      }
       
       // 启动计时器 - 这是核心功能，必须确保执行
       try {
@@ -255,9 +247,6 @@ Page({
               if (this.data.timer) {
                 clearInterval(this.data.timer);
               }
-              try {
-                this.stopBreathingGuide();
-              } catch (e) {}
               try {
                 this.stopBackgroundMusic();
               } catch (e) {}
@@ -277,7 +266,7 @@ Page({
                 wx.vibrateLong();
                 this.setData({
                   instruction: '即将结束，保持专注',
-                  currentEmoji: '🌟'
+                  currentEmoji: ''
                 });
               } catch (vibrateErr) {
                 console.log('振动提示失败:', vibrateErr);
@@ -316,13 +305,12 @@ Page({
   // 暂停冥想
   pauseMeditation() {
     clearInterval(this.data.timer);
-    this.stopBreathingGuide();
     this.pauseBackgroundMusic();
     
     this.setData({
       status: 'paused',
       instruction: '冥想已暂停',
-      currentEmoji: '⏸️'
+      currentEmoji: ''
     });
   },
   
@@ -331,14 +319,11 @@ Page({
     this.setData({
       status: 'meditating',
       instruction: '保持专注，感受当下',
-      currentEmoji: '🙏'
+      currentEmoji: ''
     });
     
     // 恢复背景音乐
     this.resumeBackgroundMusic();
-    
-    // 恢复呼吸引导
-    this.startBreathingGuide();
     
     // 恢复计时器
     this.data.timer = setInterval(() => {
@@ -348,7 +333,6 @@ Page({
       if (remainingSeconds <= 0) {
         // 冥想完成
         clearInterval(this.data.timer);
-        this.stopBreathingGuide();
         this.stopBackgroundMusic();
         this.completeMeditation();
         return;
@@ -370,7 +354,6 @@ Page({
       clearInterval(this.guidanceInterval);
       this.guidanceInterval = null;
     }
-    this.stopBreathingGuide();
     this.stopBackgroundMusic();
     
     this.setData({
@@ -378,8 +361,9 @@ Page({
       remainingSeconds: this.data.selectedDuration * 60,
       progress: 0,
       instruction: '准备开始冥想',
-      currentEmoji: '🧘',
-      formattedTime: this.formatTime(this.data.selectedDuration * 60)
+      currentEmoji: '',
+      formattedTime: this.formatTime(this.data.selectedDuration * 60),
+      showBreathingGuide: true
     });
   },
   
@@ -402,12 +386,6 @@ Page({
         console.log('清除计时器失败:', timerErr);
       }
       
-      // 停止呼吸引导 - 包装在独立的try-catch中
-      try {
-        this.stopBreathingGuide();
-      } catch (breathingErr) {
-        console.log('停止呼吸引导失败:', breathingErr);
-      }
       
       // 停止背景音乐 - 包装在独立的try-catch中
       try {
@@ -442,7 +420,7 @@ Page({
           status: 'completed',
           progress: 100,
           instruction: '冥想完成',
-          currentEmoji: '✨',
+          currentEmoji: '',
           totalMinutes: this.data.totalMinutes + this.data.selectedDuration,
           formattedTime: '00:00',
           isAudioPlaying: false
@@ -475,38 +453,6 @@ Page({
     }
   },
   
-  // 启动呼吸引导
-  startBreathingGuide() {
-    const breathingPattern = [
-      { phase: 'inhaling', text: '吸气...', duration: 4, emoji: '🌬️', color1: '#4facfe', color2: '#00f2fe' },
-      { phase: 'holding', text: '屏息...', duration: 4, emoji: '⏸️', color1: '#00f2fe', color2: '#4facfe' },
-      { phase: 'exhaling', text: '呼气...', duration: 6, emoji: '💨', color1: '#00c6ff', color2: '#0072ff' }
-    ];
-    
-    let currentPatternIndex = 0;
-    
-    this.data.breathingTimer = setInterval(() => {
-      const pattern = breathingPattern[currentPatternIndex];
-      
-      this.setData({
-        breathingInstruction: pattern.text,
-        currentEmoji: pattern.emoji,
-        currentColor1: pattern.color1,
-        currentColor2: pattern.color2,
-        pulseSpeed: pattern.duration
-      });
-      
-      currentPatternIndex = (currentPatternIndex + 1) % breathingPattern.length;
-    }, breathingPattern[currentPatternIndex].duration * 1000);
-  },
-  
-  // 停止呼吸引导
-  stopBreathingGuide() {
-    if (this.data.breathingTimer) {
-      clearInterval(this.data.breathingTimer);
-      this.data.breathingTimer = null;
-    }
-  },
   
   // 播放背景音乐
   playBackgroundMusic() {
@@ -862,17 +808,6 @@ Page({
         }
       }
       
-      // 停止呼吸引导 - 确保呼吸引导的定时器也被清理
-      try {
-        this.stopBreathingGuide();
-        // 额外确保呼吸引导的定时器被清理
-        if (this.data.breathingTimer && typeof this.data.breathingTimer === 'number') {
-          clearInterval(this.data.breathingTimer);
-          this.data.breathingTimer = null;
-        }
-      } catch (breathingErr) {
-        console.log('停止呼吸引导失败:', breathingErr);
-      }
       
       console.log('冥想组件资源已成功清理');
     } catch (mainCleanupErr) {

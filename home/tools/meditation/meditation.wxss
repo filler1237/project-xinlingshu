@@ -1,185 +1,89 @@
 /* home/tools/meditation/meditation.wxss */
+page {
+  background-color: #f7f8fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
 .container {
-  height: 100vh;
-  padding-top: 140rpx;
-  padding-right: 20rpx;
-  padding-bottom: 20rpx;
-  padding-left: 20rpx;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  padding: 40rpx;
+  min-height: 100vh;
+  background-color: #f7f8fa;
 }
 
-
-
-/* 背景选择器 */
-.background-selector {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin: 0 -20rpx 30rpx -20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+/* Card Base Style */
+.card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.05);
 }
 
-.background-options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-top: 20rpx;
-}
-
-.background-option {
-  flex: 1;
-  min-width: 22%;
-  padding: 20rpx 10rpx;
-  margin: 10rpx 5rpx;
-  text-align: center;
-  background: #f0f0f0;
-  border-radius: 15rpx;
-  transition: all 0.3s ease;
-  border: 2rpx solid transparent;
-}
-
-.background-option.selected {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-  transform: scale(1.05);
-  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.4);
-}
-
-.background-name {
-  font-size: 28rpx;
-  font-weight: 500;
-}
-
-/* 时长选择器 */
-.duration-selector {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin: 0 -20rpx 30rpx -20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.selector-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
+/* Card Titles */
+.card-title {
   display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 24rpx;
 }
 
-.duration-options {
+/* Setup Card */
+.setup-card .selector-row {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.duration-option {
-  flex: 1;
-  min-width: 140rpx;
-  text-align: center;
-  padding: 20rpx;
-  margin: 10rpx 5rpx;
-  border-radius: 10rpx;
-  background: #f0f0f0;
-  font-size: 28rpx;
-  color: #666;
-  transition: all 0.3s ease;
-}
-
-.duration-option.selected {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.4);
-}
-
-/* 音乐选择器 */
-.music-selector {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin: 0 -20rpx 30rpx -20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.music-options {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.music-option {
-  flex: 1;
-  min-width: 140rpx;
-  text-align: center;
-  padding: 20rpx;
-  margin: 10rpx 5rpx;
-  border-radius: 10rpx;
-  background: #f0f0f0;
-  font-size: 28rpx;
-  color: #666;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
 }
 
-.music-icon {
-  width: 60rpx;
-  height: 60rpx;
-  margin-bottom: 10rpx;
+.setup-card .selector-row:last-child {
+  margin-bottom: 0;
 }
 
-.music-name {
+.setup-card .selector-title {
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: 600;
+}
+
+.setup-card .options-group {
+  display: flex;
+  gap: 16rpx;
+}
+
+.option-btn {
+  padding: 12rpx 24rpx;
   font-size: 28rpx;
+  border-radius: 12rpx;
+  background-color: #f3f4f6;
+  color: #666666;
+  transition: all 0.2s ease-in-out;
+  height: auto;
+  line-height: 1.5;
+  text-align: center;
 }
 
-.music-option.selected {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-  box-shadow: 0 4rpx 15rpx rgba(240, 147, 251, 0.4);
+.option-btn.selected {
+  background-color: #A899E2; /* Soft Purple */
+  color: #ffffff;
+  font-weight: 600;
 }
 
-/* 冥想主界面 */
+/* Meditation Main Area */
 .meditation-main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 40rpx 0;
 }
 
 .meditation-circle-container {
-  width: 500rpx;
-  height: 500rpx;
-  margin-bottom: 40rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 400rpx;
+  height: 400rpx;
+  margin-bottom: 60rpx;
   position: relative;
-}
-
-.meditation-guidance {
-  position: absolute;
-  top: -120rpx;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.guidance-text {
-  font-size: 36rpx;
-  font-weight: 500;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
-  padding: 10rpx 40rpx;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 60rpx;
-  backdrop-filter: blur(10px);
-  transition: all 0.5s ease;
 }
 
 .meditation-circle {
@@ -191,260 +95,158 @@
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.1);
   border: 2rpx solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.2);
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-.circle-icon {
-  font-size: 120rpx;
-  margin-bottom: 20rpx;
+.meditation-emoji {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
 }
 
 .circle-text {
   font-size: 36rpx;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  margin-bottom: 16rpx;
 }
 
 .timer-text {
-  font-size: 60rpx;
-  color: white;
+  font-size: 72rpx;
   font-weight: bold;
-  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.3);
 }
 
 .breathing-guide {
   position: absolute;
-  bottom: 120rpx;
+  bottom: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breathing-emoji {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
 }
 
 .breathing-text {
-  font-size: 40rpx;
-  color: white;
-  font-weight: bold;
-  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.3);
-  padding: 15rpx 30rpx;
-  line-height: 1.8;
-  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
 }
 
-/* 进度条 */
-.progress-bar {
-  width: 80%;
+/* Progress Bar */
+.progress-bar-container {
+  width: 100%;
   height: 16rpx;
-  background: rgba(255, 255, 255, 0.5);
+  background-color: #e9ecef;
   border-radius: 8rpx;
-  margin-bottom: 50rpx;
+  margin-bottom: 40rpx;
   overflow: hidden;
 }
 
-.progress-fill {
+.progress-bar {
   height: 100%;
   border-radius: 8rpx;
   transition: width 0.5s ease;
 }
 
-/* 控制按钮 */
+/* Controls */
 .controls {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  align-items: center;
+  gap: 24rpx;
 }
 
-.start-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 100rpx;
-  padding: 25rpx;
+.control-btn {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
   font-size: 32rpx;
-  font-weight: bold;
-  box-shadow: 0 6rpx 25rpx rgba(102, 126, 234, 0.4);
-  transition: all 0.3s ease;
-}
-
-.start-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 3rpx 15rpx rgba(102, 126, 234, 0.3);
-}
-
-.continue-btn {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  color: white;
-  border: none;
+  font-weight: 600;
   border-radius: 100rpx;
-  padding: 25rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  box-shadow: 0 6rpx 25rpx rgba(250, 112, 154, 0.4);
-  transition: all 0.3s ease;
-}
-
-.continue-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 3rpx 15rpx rgba(250, 112, 154, 0.3);
-}
-
-.stop-btn {
-  background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
-  color: white;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
   border: none;
-  border-radius: 100rpx;
-  padding: 25rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  box-shadow: 0 6rpx 25rpx rgba(241, 39, 17, 0.4);
-  transition: all 0.3s ease;
+  padding: 0;
 }
 
-.stop-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 3rpx 15rpx rgba(241, 39, 17, 0.3);
-}
-
-.reset-btn {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+.control-btn.primary {
+  background-color: #A899E2;
   color: white;
-  border: none;
-  border-radius: 100rpx;
-  padding: 25rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  box-shadow: 0 6rpx 25rpx rgba(79, 172, 254, 0.4);
-  transition: all 0.3s ease;
 }
 
-.reset-btn:active {
+.control-btn.secondary {
+  background-color: #ffffff;
+  color: #A899E2;
+  border: 2rpx solid #A899E2;
+}
+
+.control-btn:active {
   transform: scale(0.98);
-  box-shadow: 0 3rpx 15rpx rgba(79, 172, 254, 0.3);
+  opacity: 0.9;
 }
 
-/* 完成提示 */
-.completion-message {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 30rpx;
-  padding: 40rpx;
-  margin: 30rpx 0;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.15);
+
+/* Completion Card */
+.completion-card {
   text-align: center;
 }
-
 .completion-title {
   font-size: 40rpx;
-  font-weight: bold;
-  color: #667eea;
+  font-weight: 600;
+  color: #333333;
   margin-bottom: 20rpx;
-  display: block;
 }
 
 .completion-text {
   font-size: 28rpx;
-  color: #666;
-  margin-bottom: 15rpx;
-  display: block;
-  line-height: 1.5;
-}
-
-/* 冥想提示 */
-.instructions {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin-top: 30rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.instruction-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
+  color: #666666;
+  line-height: 1.6;
   display: block;
 }
+.completion-text:last-child {
+  margin-top: 10rpx;
+}
 
-.instruction-text {
+
+/* Tips Card */
+.tips-card .tip-item {
   font-size: 28rpx;
-  color: #666;
+  color: #666666;
+  line-height: 1.8;
   margin-bottom: 12rpx;
-  display: block;
-  line-height: 1.5;
+}
+.tips-card .tip-item:last-child {
+  margin-bottom: 0;
 }
 
-/* 背景图文字颜色适配 */
-.container[style*="url("] .header-title {
-  color: white;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.5);
-}
-
-.container[style*="url("] .selector-title {
-  color: white;
-  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
-}
-
-.container[style*="url("] .duration-selector,
-.container[style*="url("] .background-selector,
-.container[style*="url("] .music-selector,
-.container[style*="url("] .instructions {
-  background: rgba(255, 255, 255, 0.8);
+/* Background Image Text Color Adapt */
+.container[style*="url("] .card {
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
 }
 
-.container[style*="url("] .instruction-text {
+.container[style*="url("] .card-title,
+.container[style*="url("] .selector-title,
+.container[style*="url("] .tip-item {
   color: #333;
 }
 
-/* 解决颜色绑定问题 */
-.meditation-circle text {
-  color: inherit;
+.container[style*="url("] .option-btn {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #333;
 }
 
-/* 适配不同屏幕 */
-@media screen and (max-width: 320px) {
-  .meditation-circle-container {
-    width: 400rpx;
-    height: 400rpx;
-  }
-  
-  .circle-icon {
-    font-size: 100rpx;
-  }
-  
-  .timer-text {
-    font-size: 50rpx;
-  }
-}
-
-@media screen and (min-width: 414px) {
-  .meditation-circle-container {
-    width: 550rpx;
-    height: 550rpx;
-  }
-  
-  .circle-icon {
-    font-size: 140rpx;
-  }
-  
-  .timer-text {
-    font-size: 70rpx;
-  }
+.container[style*="url("] .option-btn.selected {
+  background-color: #A899E2;
+  color: #ffffff;
 }
