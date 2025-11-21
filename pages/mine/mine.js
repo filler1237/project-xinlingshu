@@ -429,7 +429,7 @@ Page({
     wx.cloud.callFunction({
       name: 'taskSignIn',
     }).then(res => {
-      wx.hideLoading();
+      wx.hideLoading(); 
       if (res.result.code === 0) {
         // --- 调试代码开始 ---
         const waterDrop = this.selectComponent('#waterDrop');

@@ -19,7 +19,9 @@ Page({
     if (tab !== this.data.activeTab) {
       this.setData({ activeTab: tab });
       if (tab === 'listen') {
+        wx.showLoading({ title: '寻找中...' });
         this.getRandomVent();
+        wx.hideLoading();
       } else if (tab === 'myEchoes') {
         this.getMyVents();
       }
@@ -42,6 +44,22 @@ Page({
         if (res.result.code === 0) {
           wx.showToast({ title: '投入成功！', icon: 'success' });
           this.setData({ ventText: '' });
+
+          wx.cloud.callFunction({
+            name:'taskSignIn',
+            data:{ taskId:'ventInEchoWall' }
+          }).then(taskRes => {
+            if(taskRes.result.code === 0 && taskRes.result.reward > 0) {
+              const waterDrop = this.selectComponent('#waterDrop');
+              console.log('获取到的组件实例:', waterDrop);
+              if (waterDrop) {
+                console.log('尝试播放动画...');
+                waterDrop.play(taskRes.result.reward);
+              } else {
+                console.error('获取水滴动画组件失败，请检查 WXML 中的 id 是否为 "waterDrop"');
+              }
+                } 
+                  });
         } else {
           wx.showToast({ title: res.result.message || '提交失败', icon: 'none' });
         }
@@ -57,7 +75,6 @@ Page({
   },
 
   getRandomVent() {
-    wx.showLoading({ title: '寻找中...' });
     wx.cloud.callFunction({
       name: 'getRandomVent',
       success: res => {
@@ -72,7 +89,6 @@ Page({
         wx.showToast({ title: '获取失败，请重试', icon: 'none' });
       },
       complete: () => {
-        wx.hideLoading();
       }
     });
   },
@@ -94,17 +110,35 @@ Page({
       },
       success: res => {
         if (res.result.code === 0) {
+          wx.hideLoading();
           wx.showToast({ title: '回应成功！', icon: 'success' });
+
+          wx.cloud.callFunction({
+            name:'taskSignIn',
+            data:{taskId:'listenInEchoWall'}
+          }).then(taskRes => {
+            if(taskRes.result.code === 0 && taskRes.result.reward > 0) {
+              const waterDrop = this.selectComponent('#waterDrop');
+              console.log('获取到的组件实例:', waterDrop);
+              if (waterDrop) {
+                console.log('尝试播放动画...');
+                waterDrop.play(taskRes.result.reward);
+              } else {
+                console.error('获取水滴动画组件失败，请检查 WXML 中的 id 是否为 "waterDrop"');
+              }
+                } 
+          });
           this.getRandomVent(); // 自动获取下一个
+          wx.hideLoading();
         } else {
           wx.showToast({ title: res.result.message || '回应失败', icon: 'none' });
         }
       },
       fail: err => {
+        wx.hideLoading();
         wx.showToast({ title: '回应失败，请重试', icon: 'none' });
       },
       complete: () => {
-        wx.hideLoading();
         this.setData({ isSubmitting: false });
       }
     });
@@ -128,12 +162,13 @@ Page({
         wx.hideLoading();
       }
     });
-  },
+  }, 
 
   onShow() {
     // 每次进入页面时，根据当前Tab刷新数据
     if (this.data.activeTab === 'listen') {
       this.getRandomVent();
+      wx.hideLoading();
     } else if (this.data.activeTab === 'myEchoes') {
       this.getMyVents();
     }

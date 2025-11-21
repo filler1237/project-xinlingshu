@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "water-drop-effect": "/components/waterDropEffect/waterDropEffect"
+  },
   "navigationBarTitleText": "发表文章",
   "navigationStyle": "default"
 }

@@ -28,7 +28,11 @@ exports.main = async (event, context) => {
 
     const tasks = [
       { id: 'dailySignIn', name: '每日签到', dateField: 'lastSignInDate' },
-      { id: 'completeDiary', name: '记录心情日记', dateField: 'lastDiaryDate' }
+      { id: 'completeDiary', name: '记录心情日记', dateField: 'lastDiaryDate' },
+      { id: 'ventInEchoWall', name: '在心灵树洞中倾诉一次烦恼', dateField: 'lastVentDate'},
+      { id: 'listenInEchoWall', name: '聆听一次烦恼并回复', dateField: 'lastListenDate' },
+      { id: 'publishArticle', name: '发布一篇帖子', dateField: 'lastArticleDate' }
+
       // 可以在此添加更多需要检查的每日任务
     ];
 

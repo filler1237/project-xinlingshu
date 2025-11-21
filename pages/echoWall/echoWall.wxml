@@ -60,4 +60,5 @@
   <view class="bottom-bar" wx:if="{{activeTab === 'vent'}}">
     <button class="submit-btn" type="primary" bindtap="submitVent">投入树洞</button>
   </view>
+  <water-drop-effect id="waterDrop" />
 </view>

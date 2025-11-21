@@ -21,6 +21,13 @@ Page({
     this.getArticles(true); // 首次加载
   },
 
+  onShow(){
+    if (this.data.needsRefresh) {
+      this.getArticles(true);
+      this.setData({ needsRefresh: false });
+    }
+  },
+
   getLoginOpenid() {
     wx.cloud.callFunction({
       name: 'login',

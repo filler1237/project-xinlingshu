@@ -21,6 +21,24 @@ const TASKS_CONFIG = {
     dateField: 'lastDiaryDate',
     repeatable: 'daily'
   },
+  'ventInEchoWall': {
+    reward: 10,
+    message: '成功倾诉烦恼，获得 {reward} 点水滴！',
+    dateField: 'lastVentDate',
+    repeatable: 'daily'
+  },
+  'listenInEchoWall': {
+    reward: 10,
+    message: '成功聆听烦恼，感谢您暖心的回复，获得 {reward} 点水滴！',
+    dateField: 'lastListenDate',
+    repeatable: 'daily'
+  },
+  'publishArticle': {
+    reward: 10,
+    message: '成功发布一篇帖子，感谢您对社区做出的贡献，获得 {reward} 点水滴！',
+    dateField: 'lastArticleDate',
+    repeatable: 'daily'
+  }
   // 可以在这里添加更多任务配置
   // 'shareApp': { ... }
 };
