@@ -29,7 +29,8 @@ Page({
         setTimeout(() => {
           const waterDrop = this.selectComponent('#waterDropEffect');
           if (waterDrop) {
-            waterDrop.show(rewardData.message);
+            // 调用 play 方法，而不是 show
+            waterDrop.play(rewardData.message);
           } else {
             console.error('未找到 waterDropEffect 组件');
           }

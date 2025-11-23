@@ -120,6 +120,30 @@ Page({
         this.setData({
           analysisResult: res.result.analysisResult,
         });
+
+        // --- 任务签到 ---
+        wx.cloud.callFunction({
+          name: 'taskSignIn',
+          data: {
+            taskId: 'useTarot'
+          },
+          success: signInRes => {
+            console.log('塔罗牌任务签到结果:', signInRes);
+            // code: 0 表示成功获得奖励
+            if (signInRes.result && signInRes.result.code === 0) {
+              const waterDrop = this.selectComponent('#waterDropEffect');
+              if (waterDrop) {
+                // 使用 signInRes.result.message 获取完整的提示文字
+                waterDrop.play(signInRes.result.reward);
+              } else {
+                console.error('未找到 waterDropEffect 组件');
+              }
+            }
+          },
+          fail: signInErr => {
+            console.error('[云函数] [taskSignIn] 调用失败', signInErr);
+          }
+        });
       },
       fail: err => {
         console.error('[云函数] [analyzeTarot] 调用失败', err);

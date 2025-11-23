@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "waterDropEffect": "/components/waterDropEffect/waterDropEffect"
+  },
   "navigationBarTitleText": "塔罗牌",
   "navigationStyle": "default"
 }

@@ -154,6 +154,29 @@ Page({
           result: res.result.analysis, // 现在 analysis 是一个对象
           isResultObject: true
         });
+
+        // --- 任务签到 ---
+        wx.cloud.callFunction({
+          name: 'taskSignIn',
+          data: {
+            taskId: 'useDivination'
+          },
+          success: signInRes => {
+            console.log('周易占卜任务签到结果:', signInRes);
+            if (signInRes.result && signInRes.result.code === 0) {
+              const waterDrop = this.selectComponent('#waterDropEffect');
+              if (waterDrop) {
+                waterDrop.play(signInRes.result.reward);
+              } else {
+                console.error('未找到 waterDropEffect 组件');
+              }
+            }
+          },
+          fail: signInErr => {
+            console.error('[云函数] [taskSignIn] 调用失败', signInErr);
+          }
+        });
+
       } else {
         // 保持错误信息为字符串，以便前端可以区分
         this.setData({

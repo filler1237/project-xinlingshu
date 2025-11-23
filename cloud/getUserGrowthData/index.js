@@ -31,7 +31,9 @@ exports.main = async (event, context) => {
       { id: 'completeDiary', name: '记录心情日记', dateField: 'lastDiaryDate' },
       { id: 'ventInEchoWall', name: '在心灵树洞中倾诉一次烦恼', dateField: 'lastVentDate'},
       { id: 'listenInEchoWall', name: '聆听一次烦恼并回复', dateField: 'lastListenDate' },
-      { id: 'publishArticle', name: '发布一篇帖子', dateField: 'lastArticleDate' }
+      { id: 'publishArticle', name: '发布一篇帖子', dateField: 'lastArticleDate' },
+      { id: 'useTarot', name: '进行一次塔罗牌占卜', dateField: 'lastTarotDate' },
+      { id: 'useDivination', name: '进行一次周易占卜', dateField: 'lastDivinationDate' }
 
       // 可以在此添加更多需要检查的每日任务
     ];

@@ -100,3 +100,4 @@
     <text>-- 结果仅供娱乐 --</text>
   </view>
 </view>
+<waterDropEffect id="waterDropEffect" />

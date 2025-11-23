@@ -38,6 +38,19 @@ const TASKS_CONFIG = {
     message: '成功发布一篇帖子，感谢您对社区做出的贡献，获得 {reward} 点水滴！',
     dateField: 'lastArticleDate',
     repeatable: 'daily'
+  },
+  // 新增：使用塔罗牌任务，'repeatable: daily' 确保每天只奖励一次
+  'useTarot': {
+    reward: 10,
+    message: '完成一次塔罗牌占卜，获得 {reward} 点水滴！',
+    dateField: 'lastTarotDate',
+    repeatable: 'daily'
+  },
+  'useDivination': {
+    reward: 10,
+    message: '完成一次周易占卜，获得 {reward} 点水滴！',
+    dateField: 'lastDivinationDate',
+    repeatable: 'daily'
   }
   // 可以在这里添加更多任务配置
   // 'shareApp': { ... }
