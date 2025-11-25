@@ -153,7 +153,6 @@ page {
 .skip-btn::after {
   border: none;
 }
-
 /* 我的回声页面 */
 .echo-list {
   width: 100%;
@@ -203,3 +202,37 @@ page {
   width: 200rpx;
   font-size: 28rpx;
 }
+
+/* --- 以下为新增样式 --- */
+
+/* 卡片区分样式 */
+.my-vent {
+  border-left: 8rpx solid #6495ED; /* 我发布的，用蓝色边框 */
+}
+.my-echo {
+  border-left: 8rpx solid #4CAF50; /* 我回复的，用绿色边框 */
+}
+
+/* 卡片小标题 */
+.card-header {
+  font-size: 24rpx;
+  color: #aaa;
+  margin-bottom: 15rpx;
+}
+
+
+.original-vent-content {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx dashed #eee;
+}
+
+
+.my-echo-content {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+

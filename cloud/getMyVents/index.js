@@ -8,16 +8,27 @@ exports.main = async (event, context) => {
   const openid = wxContext.OPENID;
 
   try {
-    const result = await db.collection('vents')
+    const myVentsPromise = await db.collection('vents')
       .where({
         _openid: openid,
       })
       .orderBy('createdAt', 'desc') // 按创建时间倒序
       .get();
 
+    const myEchoesPromise = db.collection('vents')
+      .where({ echoer_openid: openid })
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    const [myVentsResult, myEchoesResult] = await Promise.all([myVentsPromise, myEchoesPromise]);
+    const myVentsData = myVentsResult.data.map(item => ({ ...item,type:'vent'}));
+    const myEchoesData = myEchoesResult.data.map(item => ({ ...item,type:'echo'}));
+    let allMyRelatedVents = [ ...myVentsData, ...myEchoesData];
+    allMyRelatedVents.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
     return {
       code: 0,
-      data: result.data,
+      data: allMyRelatedVents,
     };
   } catch (e) {
     console.error(e);

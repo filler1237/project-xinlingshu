@@ -2,6 +2,7 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
+const _ = db.command;
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
@@ -17,6 +18,21 @@ exports.main = async (event, context) => {
   }
 
   try {
+    const now = new Date();
+    const localDate = new Date(now.getTime() + (8 * 60 * 60 * 1000));
+    const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate());
+    const endOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate() + 1);
+
+    const countResult = await db.collection('vents').where({
+      echoer_openid: openid,
+      repliedAt: _.gte(startOfDay).and(_.lt(endOfDay))
+    }).count();
+    if(countResult.total >= 1) {
+      return {
+        code: 102,
+        message: '今天已经回应过了，明天再来吧',
+      }
+    }
     // 更新指定的烦恼记录
     const result = await db.collection('vents').doc(ventId).update({
       data: {
