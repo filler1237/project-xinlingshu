@@ -1,34 +1,53 @@
 <!-- pages/growth/growth.wxml -->
-<view class="nav-bar-wrapper">
-  <navigation-bar title="我的成长树" background="transparent"></navigation-bar>
-</view>
-<view class="container" style="padding-bottom: {{isPanelExpanded ? '350rpx' : '200rpx'}}">
-  <!-- 1. 首屏区域：占满整个屏幕 -->
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar-wrapper">
+    <navigation-bar title="我的成长树" background="transparent"></navigation-bar>
+  </view>
+
+  <!-- 1. 顶部背景区域 -->
   <view class="hero-section">
+    <!-- 背景图 -->
     <image class="background-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/背景图.png" mode="aspectFill"></image>
+    
+    <!-- 浮动云朵 -->
     <image class="cloud cloud1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵1.png" mode="aspectFit"></image>
     <image class="cloud cloud2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵2.png" mode="aspectFit"></image>
     <image class="cloud cloud3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵3.png" mode="aspectFit"></image>
-    <image class="cloud cloud4" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵3.png" mode="aspectFit"></image>
-    <view class="tree-animation-wrapper {{animationState}} {{isAnimating ? 'is-growing' : ''}}">
-      <image class="tree-image tree-level-{{treeLevel}}" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
+
+    <!-- 成长树 -->
+    <view class="tree-wrapper {{isAnimating ? 'is-growing' : ''}}">
+      <image class="tree-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
     </view>
-    <!-- 新增：浇水动画的水壶 -->
+    
+    <!-- 浇水动画的水壶 -->
     <image wx:if="{{isWatering}}" class="watering-can" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/水壶.png" mode="aspectFit"></image>
   </view>
 
   <!-- 2. 页面下方内容区域 -->
   <view class="content-section">
-    <!-- 成长信息面板 -->
-    <view class="growth-info">
-      <view class="growth-level">心理树等级: {{treeLevel}}</view>
-      <view class="growth-value">成长值: {{growthValue}}</view>
-      <button class="water-button" type="primary" bindtap="onWatering">浇水 (水滴数：{{waterdrops}})</button>
+    
+    <!-- 今日任务 -->
+    <view class="task-panel-wrapper">
+      <task-panel id="task-panel" tasks="{{todayTasks}}" />
+    </view>
+
+    <!-- 心理树等级模块 -->
+    <view class="card growth-info-card">
+      <view class="card-title">心理树等级</view>
+      <view class="growth-level-display">
+        <text class="level-text">Lv. {{treeLevel}}</text>
+        <text class="growth-value-text">成长值: {{growthValue}}</text>
+      </view>
+      <view class="water-button {{waterdrops <= 0 ? 'disabled' : ''}}" bindtap="onWatering">
+        <image class="water-drop-icon" src="/image/water-drop.png" /> <!-- 假设水滴图标路径 -->
+        <text>浇水 ({{waterdrops}})</text>
+      </view>
     </view>
 
     <!-- 我的徽章 -->
-    <view class="achievements-container">
-      <view class="section-title">我的徽章</view>
+    <view class="card achievements-card">
+      <view class="card-title">我的徽章</view>
       <view class="achievements-grid" wx:if="{{unlockedAchievements.length > 0}}">
         <view class="badge" wx:for="{{unlockedAchievements}}" wx:key="_id">
           <image class="badge-icon" src="{{item.iconUrl}}" />
@@ -39,8 +58,6 @@
         <text>暂未获得任何徽章，继续努力吧！</text>
       </view>
     </view>
+    
   </view>
 </view>
-
-<!-- 任务栏组件 -->
-<task-panel id="task-panel" tasks="{{todayTasks}}" bind:toggle="onPanelToggle" />

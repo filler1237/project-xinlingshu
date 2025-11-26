@@ -49,7 +49,7 @@
 }
 
 .task-panel.expanded .task-list-container {
-  max-height: 500rpx; /* 设置一个足够大的值 */
+  max-height: fit-content; /* 设置一个足够大的值 */
   opacity: 1;
 }
 

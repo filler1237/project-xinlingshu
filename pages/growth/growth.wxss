@@ -1,30 +1,23 @@
 /* pages/growth/growth.wxss */
 page {
-  background-color: #f7f7f7; /* 为页面滚动区域设置底色 */
+  background-color: #f4f8f7; /* 设置一个柔和的页面背景色 */
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.nav-bar-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 99;
+.page-container {
+  padding-bottom: 50rpx; /* 避免内容被底部遮挡 */
 }
 
-
-.container {
-  width: 100%;
-}
-
-/* 1. 首屏区域样式 */
+/* --- 顶部区域 --- */
 .hero-section {
-  height: 100vh; /* 关键：占满整个视口高度 */
-  width: 100%;
   position: relative;
-  overflow: hidden;
+  height: 48vh; /* 顶部背景高度为页面高度的48% */
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* 1. 改为底部对齐 */
+  align-items: flex-end;
+  overflow: hidden;
 }
 
 .background-image {
@@ -34,229 +27,216 @@ page {
   width: 100%;
   height: 100%;
   z-index: 1;
-  bottom: 10rpx;
 }
 
-.tree-animation-wrapper {
-  display: flex;
-  align-items:flex-end;
-  justify-content:center;
-  width: 60vw;
-  height: 70vh;
-  bottom: 20vh;
+.tree-wrapper {
   position: absolute;
+  bottom: -40rpx; /* 让树的一部分延伸到内容区，视觉上更融合 */
+  width: 450rpx; /* 放大树的尺寸 */
+  height: 450rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   z-index: 3;
-  transition: transform 1s ease-in-out;
-  transform-origin: bottom; 
+  transition: transform 0.5s ease-in-out;
+  transform-origin: bottom;
 }
 
 .is-growing {
-  transform: scaleY(1.1);
+  transform: scale(1.1);
 }
 
 .tree-image {
   width: 100%;
-  /* 应用新的摇摆动画 */
-  animation: sway-animation 4s ease-in-out infinite;
+  height: 100%;
+  animation: sway-animation 5s ease-in-out infinite;
   transform-origin: bottom center;
 }
 
-.tree-level-1 {
-  height: 20%;
-}
-
-.tree-level-2 {
-  height: 30%;
-}
-
-.tree-level-3 {
-  height: 60%
-}
-
-.tree-level-4 {
-  height: 70%
-}
-
-.tree-level-5 {
-  height: 80%
-}
-
-/* 2. 下方内容区域样式 */
+/* --- 内容区域 --- */
 .content-section {
-  padding: 40rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: #f4f8f7;
+  padding: 0 32rpx; /* 左右边距32rpx */
+  margin-top: -24rpx; /* 与顶部背景区域柔和过渡 */
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+  position: relative;
+  z-index: 2;
 }
 
-/* 成长信息面板 */
-.growth-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40rpx 30rpx;
+/* --- 通用卡片样式 --- */
+.card {
+  background-color: #fff;
   border-radius: 20rpx;
-  background-color: #ffffff;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
-  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 24rpx;
+  padding: 32rpx;
 }
 
-.growth-level {
-  font-size: 34rpx;
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 24rpx;
+  color: #2c3e50;
+}
+
+/* --- 今日任务 --- */
+.task-panel-wrapper {
+  margin-bottom: 24rpx; /* 与下方卡片间距 */
+  /* task-panel 组件样式在其内部定义，这里只控制外部容器 */
+}
+
+/* --- 心理树等级卡片 --- */
+.growth-info-card {
+  position: relative; /* 为按钮的绝对定位提供父容器 */
+  padding-bottom: 120rpx; /* 增加底部内边距，为按钮留出空间 */
+}
+
+.growth-level-display {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: baseline;
+  margin-bottom: 32rpx;
+  text-align: center; /* 确保文字居中 */
+  width: 100%;
+}
+
+.level-text {
+  font-size: 48rpx;
   font-weight: bold;
-  color: #333;
+  color: #58C9A3; /* 匹配主题的绿色 */
+  margin-right: 24rpx;
 }
 
-.growth-value {
-  margin-top: 10rpx;
-  font-size: 30rpx;
-  color: #888;
+.growth-value-text {
+  font-size: 28rpx;
+  color: #7f8c8d;
 }
 
 .water-button {
-  margin-top: 30rpx;
-  width: 300rpx;
-  background-color: #96CE74;
-  border-color: #96CE74;
+  position: absolute;
+  bottom: 32rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 88rpx;
+  border-radius: 44rpx;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
+  
+  /* 有水滴时为深绿色 */
+  background-color: #58C9A3;
+  box-shadow: 0 4rpx 12rpx rgba(88, 201, 163, 0.4);
+  cursor: pointer;
 }
 
-/* 我的徽章 */
-.achievements-container {
-  width: 100%;
-  background-color: #ffffff;
-  padding: 30rpx;
-  border-radius: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+.water-button.disabled {
+  background-color: #A8E6CF; /* 无水滴时为浅绿色 */
+  color: #fff;
+  box-shadow: none; /* 移除阴影 */
+  cursor: not-allowed;
 }
 
-.section-title {
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-  padding-left: 10rpx;
-  border-left: 8rpx solid #96CE74;
+.water-button .water-drop-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
 }
 
+.water-button text {
+  line-height: 1; /* 确保文字垂直居中 */
+}
+
+/* --- 我的徽章卡片 --- */
 .achievements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120rpx, 1fr));
-  gap: 20rpx;
+  grid-template-columns: repeat(4, 1fr); /* 4列布局 */
+  gap: 32rpx;
 }
 
 .badge {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10rpx;
+  text-align: center;
 }
 
 .badge-icon {
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background-color: #eee;
-  margin-bottom: 10rpx;
+  background-color: #ecf0f1;
+  margin-bottom: 12rpx;
 }
 
 .badge-name {
-  font-size: 24rpx;
-  color: #666;
+  font-size: 26rpx;
+  color: #34495e;
 }
 
 .no-achievements {
   text-align: center;
-  color: #999;
-  padding: 40rpx;
+  color: #95a5a6;
+  padding: 40rpx 0;
+  font-size: 28rpx;
 }
 
-/* 新增：树的摇摆动画 */
+/* --- 动画 --- */
+
+/* 树摇摆 */
 @keyframes sway-animation {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-1.5deg);
-  }
-  75% {
-    transform: rotate(1.5deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-1.2deg); }
+  75% { transform: rotate(1.2deg); }
 }
 
-/* 云朵动画 */
+/* 云朵漂浮 */
 @keyframes float-animation {
-  from { transform: translateX(100vw); }
+  from { transform: translateX(110vw); }
   to { transform: translateX(-200rpx); }
 }
 
 .cloud {
-  position: absolute; /* 相对于 hero-section 定位 */
+  position: absolute;
   z-index: 2;
   animation-name: float-animation;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.cloud1 {
-  width: 280rpx;
-  top: 5%; /* 3. 调高云朵位置 */
-  opacity: 0.9;
-  animation-duration: 25s;
-  animation-delay: -5s;
-}
+.cloud1 { width: 250rpx; top: 8%; opacity: 0.9; animation-duration: 30s; animation-delay: -5s; }
+.cloud2 { width: 200rpx; top: 15%; opacity: 0.7; animation-duration: 22s; animation-delay: -12s; }
+.cloud3 { width: 180rpx; top: 25%; opacity: 0.8; animation-duration: 25s; animation-delay: 0s; }
 
-.cloud2 {
-  width: 220rpx;
-  top: 3%; /* 3. 调高云朵位置 */
-  opacity: 0.7;
-  animation-duration: 18s;
-  animation-delay: -10s;
-}
-
-.cloud3 {
-  width: 150rpx;
-  top: 20%; /* 3. 调高云朵位置并错开 */
-  opacity: 0.8;
-  animation-duration: 22s;
-  animation-delay: 0s;
-}
-
-/* 新增：浇水动画和水壶样式 */
+/* 浇水动画 */
 @keyframes watering-animation {
-  0% {
-    opacity: 0;
-    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
-  }
-  25% {
-    opacity: 1;
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateX(0) translateY(0) rotate(45deg);
-  }
-  75% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
-  }
+  0% { opacity: 0; transform: translateX(150rpx) rotate(-20deg); }
+  25% { opacity: 1; transform: translateX(0) rotate(0deg); }
+  50% { transform: rotate(35deg); }
+  75% { transform: rotate(0deg); }
+  100% { opacity: 0; transform: translateX(150rpx) rotate(-20deg); }
 }
 
 .watering-can {
   position: absolute;
   width: 150rpx;
   height: 150rpx;
-  right: 150rpx; /* 根据树的位置微调 */
-  top: 50%;     /* 根据树的位置微调 */
+  right: 120rpx;
+  top: 45%;
   z-index: 10;
   animation: watering-animation 2s ease-in-out forwards;
 }
 
-.cloud4 {
-  width: 250rpx;
-  top: 18%; /* 3. 调高云朵位置并错开 */
-  opacity: 0.8;
-  animation-duration: 10s;
-  animation-delay: -4s;
+/* 自定义导航栏 */
+.nav-bar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
 }

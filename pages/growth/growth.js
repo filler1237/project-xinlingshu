@@ -63,7 +63,13 @@ Page({
                 treeLevel: data.treeLevel,
                 unlockedAchievements: data.unlockedAchievements,
                 waterdrops: data.waterdrops,
-                isAnimating: false
+                isAnimating: false,
+                // 补上任务列表的更新
+                todayTasks: data.tasks.map(task => ({
+                  id: task.id,
+                  title: task.name,
+                  done: task.completed
+                }))
               });
             }, 1000); 
 
@@ -102,8 +108,14 @@ Page({
 
 
   onWatering() {
-    // 如果正在浇水，则不重复触发
-    if (this.data.isWatering || this.data.isAnimating) {
+    // 如果正在浇水、生长动画播放中或水滴为0，则不触发
+    if (this.data.isWatering || this.data.isAnimating || this.data.waterdrops <= 0) {
+      if (this.data.waterdrops <= 0) {
+        wx.showToast({
+          title: '水滴不足',
+          icon: 'none'
+        });
+      }
       return;
     }
 
