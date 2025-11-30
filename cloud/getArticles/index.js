@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
 
   try {
     // 1. 聚合查询，获取文章列表和作者信息
-    let articlesRes = await db.collection('articles').aggregate()
+    const articlesPromise = db.collection('articles').aggregate()
       .sort({ createTime: -1 })
       .skip(skip)
       .limit(pageSize)
@@ -32,9 +32,50 @@ exports.main = async (event, context) => {
         foreignField: 'articleId',
         as: 'comments',
       })
-      .end()
+      .end();
+
+    // 同时查询 drawings 集合
+    const drawingsPromise = db.collection('drawings').aggregate()
+      .sort({ createTime: -1 })
+      .skip(skip)
+      .limit(pageSize)
+      .lookup({
+        from: 'users',
+        localField: '_openid', // 使用系统自动记录的 _openid 字段
+        foreignField: '_openid',
+        as: 'authorInfo',
+      })
+      .lookup({
+        from: 'comments', // 假设画作的评论也存在 aomments 集合
+        localField: '_id',
+        foreignField: 'articleId', // 假设画作评论也用 articleId
+        as: 'comments',
+      })
+      .end();
+      
+    const [articlesRes, drawingsRes] = await Promise.all([articlesPromise, drawingsPromise]);
 
     let articles = articlesRes.list;
+    let drawings = drawingsRes.list;
+
+    // 将 drawings 数据转换为 articles 相似的结构
+    drawings = drawings.map(item => ({
+      ...item,
+      content: item.description, // 使用 description 作为 content
+      // drawings 特有的字段
+      isDrawing: true,
+      imageUrl: item.fileID 
+    }));
+    
+    // 合并两个数据源并排序
+    let combinedList = [...articles, ...drawings];
+    combinedList.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+    
+    // 如果需要分页，合并后可能需要截取
+    // 为了简单起见，这里假设两个源各取 pageSize 然后合并，前端需要能处理重复数据
+    // 一个更优的方案是在数据库层面做 union，但小程序云数据库不支持
+    // 所以我们取了数据后再合并排序
+    articles = combinedList.slice(0, pageSize);
 
     // 2. 查询当前用户的所有点赞记录
     const userLikesRes = await db.collection('likes').where({
@@ -43,7 +84,7 @@ exports.main = async (event, context) => {
     
     const userLikedArticleIds = new Set(userLikesRes.data.map(like => like.articleId));
 
-    // 3. 遍历文章列表，处理数据并添加 liked 状态
+    // 3. 遍历合并后的列表，处理数据并添加 liked 状态
     articles = articles.map(item => {
 
       if (item.authorInfo && item.authorInfo.length > 0) {

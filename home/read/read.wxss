@@ -106,6 +106,14 @@
   text-overflow: ellipsis;
 }
 
+.drawing-image {
+  width: 60%; /* 缩小图片宽度 */
+  max-height: 400rpx; /* 限制最大高度 */
+  border-radius: 8rpx;
+  margin-top: 10rpx; /* 与上方文字的间距 */
+  margin-bottom: 10rpx;
+}
+
 /* 卡片底部 */
 .card-footer {
   display: flex;

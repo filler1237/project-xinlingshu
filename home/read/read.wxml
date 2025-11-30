@@ -18,8 +18,16 @@
     </view>
 
     <view class="card-body">
-      <view class="article-title">{{item.title}}</view>
-      <view class="article-summary">{{item.summary}}</view>
+      <!-- 如果是画作，显示文字和图片 -->
+      <block wx:if="{{item.isDrawing}}">
+        <view class="article-summary">{{item.content}}</view>
+        <image class="drawing-image" src="{{item.imageUrl}}" mode="widthFix"></image>
+      </block>
+      <!-- 否则，显示标题和摘要 -->
+      <block wx:else>
+        <view class="article-title">{{item.title}}</view>
+        <view class="article-summary">{{item.summary}}</view>
+      </block>
     </view>
 
     <view class="card-footer">

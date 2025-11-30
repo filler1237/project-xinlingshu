@@ -1,0 +1,176 @@
+page {
+  background-color: #F8F9FA;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-illustration {
+  width: 100%;
+}
+
+.content-wrapper {
+  padding: 0 50rpx;
+  width: 100%;
+  box-sizing: border-box;
+  transform: translateY(-80rpx);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #343A40;
+  margin-bottom: 40rpx;
+}
+
+.result-card {
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(168, 216, 184, 0.2);
+  padding: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60rpx;
+  min-height: 300rpx; /* 保持高度稳定 */
+}
+
+.chart-container {
+  width: 180rpx;
+  height: 180rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-placeholder {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background-color: #A8D8B8;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+.divider {
+  width: 2rpx;
+  height: 180rpx;
+  background-color: #E9ECEF;
+  margin: 0 40rpx;
+}
+
+.text-container {
+  flex: 1;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #A8D8B8;
+  margin-right: 20rpx;
+  margin-top: 12rpx;
+}
+
+.dot-advice {
+  background-color: #89CFF0; /* 建议使用不同的颜色 */
+}
+
+.result-item text {
+  font-size: 28rpx;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.button-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  width: 80%;
+  padding: 25rpx 0;
+  text-align: center;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  margin-bottom: 30rpx;
+  transition: all 0.3s ease;
+}
+
+.primary-button {
+  background-color: #A8D8B8;
+  color: #FFFFFF;
+}
+
+.secondary-button {
+  background-color: #FFFFFF;
+  color: #495057;
+  border: 1rpx solid #DEE2E6;
+}
+
+/* 动画效果 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: #121212;
+  }
+
+  .content-wrapper .title {
+    color: #E0E0E0;
+  }
+
+  .result-card {
+    background-color: #1E1E1E;
+    box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.2);
+  }
+  
+  .divider {
+    background-color: #333;
+  }
+
+  .result-item text {
+    color: #BDBDBD;
+  }
+
+  .secondary-button {
+    background-color: #2C2C2C;
+    color: #E0E0E0;
+    border-color: #444;
+  }
+}

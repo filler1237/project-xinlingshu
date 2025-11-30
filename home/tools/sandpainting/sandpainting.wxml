@@ -1,53 +1,113 @@
 <!-- home/tools/sandpainting/sandpainting.wxml -->
-<view class="sandpainting-container">
+<view class="page" catchtouchmove="true">
   <!-- 顶部导航 -->
-  <navigation-bar title="沙画涂鸦" back="{{true}}" background="#d4af37" color="#ffffff">
-    <view slot="right" class="header-right">
-      <view class="clear-button" bind:tap="clearCanvas">
-        <text class="clear-text">清空</text>
-      </view>
-    </view>
-  </navigation-bar>
+  <navigation-bar title="沙画涂鸦" back="{{true}}" background="#f7f7f7" color="#333333"></navigation-bar>
 
   <!-- 画布区域 -->
-  <view class="canvas-container">
-    <canvas id="sandCanvas" 
-            type="2d"
-            class="drawing-canvas" 
-            width="{{canvasWidth}}"
-            height="{{canvasHeight}}"
-            bindtouchstart="startDrawing"
-bindtouchmove="onDrawing"
-bindtouchend="stopDrawing"
-style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;">
+  <view class="canvas-wrapper" id="canvas-wrapper">
+    <canvas 
+      id="sandCanvas" 
+      type="2d"
+      class="drawing-canvas"
+      disable-scroll="true"
+      bindtouchstart="startDrawing"
+      bindtouchmove="onDrawing"
+      bindtouchend="stopDrawing">
     </canvas>
   </view>
 
-  <!-- 控制面板 -->
-  <view class="control-panel">
-    <!-- 颜色选择器 -->
-    <view class="color-palette">
-      <view class="color-item" 
-            wx:for="{{colors}}" 
-            wx:key="index"
-            style="background-color: {{item}}; border: {{selectedColor === item ? '4rpx solid white' : '2rpx solid #ccc'}}"
-            bind:tap="selectColor" 
-            data-color="{{item}}">
+  <!-- 底部抽屉工具栏 -->
+  <view 
+    class="drawer-container {{isDrawerExpanded ? 'expanded' : ''}}" 
+    bindtouchstart="drawerTouchStart" 
+    bindtouchmove="drawerTouchMove" 
+    bindtouchend="drawerTouchEnd"
+    style="bottom: {{drawerBottom}}px;"
+  >
+    <!-- 折叠状态显示的内容 -->
+    <view class="drawer-collapsed-content" bindtap="toggleDrawer">
+      <view class="drawer-handle-wrapper">
+        <view class="drawer-handle-arrow">↑</view>
+        <view class="drawer-handle-text">工具栏</view>
+      </view>
+      <view class="collapsed-tools">
+        <view class="collapsed-tool-item">🎨 颜色</view>
+        <view class="collapsed-tool-item">✏️ 画笔</view>
+        <view class="collapsed-tool-item">🧽 橡皮</view>
+        <view class="collapsed-tool-item" bindtap="saveCanvas" catchtap="doNothing">💾 保存</view>
+        <view class="collapsed-tool-item" bindtap="showActivityPopup" catchtap="doNothing">🎉 本期活动</view>
       </view>
     </view>
 
-    <!-- 画笔粗细选择 -->
-    <view class="brush-size">
-      <view class="size-label">画笔粗细</view>
-      <view class="size-options">
-        <view class="size-item" 
-              wx:for="{{brushSizes}}" 
-              wx:key="index"
-              style="width: {{item}}rpx; height: {{item}}rpx; border: {{selectedSize === item ? '4rpx solid white' : '2rpx solid #ccc'}}"
-              bind:tap="selectBrushSize"
-              data-size="{{item}}">
+    <!-- 展开状态显示的内容 -->
+    <view class="drawer-expanded-content">
+      <!-- 颜色选择 -->
+      <view class="color-palette-wrapper">
+        <scroll-view class="color-palette" scroll-x="true">
+          <view 
+            class="color-item {{selectedColor === item ? 'active' : ''}}" 
+            wx:for="{{colors}}" 
+            wx:key="index"
+            style="background-color: {{item}};"
+            bind:tap="selectColor" 
+            data-color="{{item}}">
+          </view>
+          <view class="color-item more-colors-btn" bind:tap="toggleColorPicker">
+            <image src="/image/more_colors_icon.png" class="more-colors-icon" />
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 工具和画笔粗细 -->
+      <view class="tools-and-size-wrapper">
+        <!-- 工具按钮 -->
+        <view class="tool-buttons">
+          <view class="tool-btn-text {{!isEraser ? 'active' : ''}}" bind:tap="toggleEraser">画笔</view>
+          <view class="tool-btn-text {{isEraser ? 'active' : ''}}" bind:tap="toggleEraser">橡皮</view>
+          <view class="tool-btn-text" bind:tap="undo">撤销</view>
+          <view class="tool-btn-text" bind:tap="clearCanvas">清空</view>
+        </view>
+        <!-- 画笔/橡皮擦粗细 -->
+        <view class="brush-size">
+          <slider 
+            class="size-slider" min="1" max="50" value="{{selectedSize}}"
+            bindchange="selectBrushSize" activeColor="#d4af37"
+            block-size="20" block-color="#d4af37" />
         </view>
       </view>
+      
+      <!-- 保存和活动按钮 -->
+      <view class="bottom-actions">
+        <button class="action-btn save-btn" bindtap="saveCanvas">保存画作</button>
+        <button class="action-btn upload-btn-main" bindtap="uploadDrawing">上传作品</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 调色板模态层 -->
+  <view class="color-picker-modal" wx:if="{{showColorPicker}}" bind:tap="toggleColorPicker">
+    <view class="color-picker-content" catch:tap="doNothing">
+      <color-picker bind:change="onColorChange" />
+    </view>
+  </view>
+
+  <!-- 本期活动弹窗 -->
+  <view class="activity-popup-mask" wx:if="{{showActivity}}" bindtap="hideActivityPopup">
+    <view class="activity-popup-content" catchtap="doNothing">
+      <view class="activity-title">本期心理绘画活动</view>
+      <view class="activity-section">
+        <view class="section-title">活动主题</view>
+        <view class="section-content">“心灵的色彩” - 用画笔探索你的内在世界。</view>
+      </view>
+      <view class="activity-section">
+        <view class="section-title">活动简介</view>
+        <view class="section-content">本次活动鼓励大家通过自由绘画，表达自己的情绪和想法，无需任何绘画技巧，只需跟随内心。</view>
+      </view>
+      <view class="activity-section">
+        <view class="section-title">参与方式</view>
+        <view class="section-content">完成画作后，点击下方的“上传作品”按钮，即可参与活动。</view>
+      </view>
+      <button class="upload-btn" bindtap="uploadDrawing">上传作品</button>
     </view>
   </view>
 </view>

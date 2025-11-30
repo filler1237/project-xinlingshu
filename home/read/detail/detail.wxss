@@ -97,6 +97,12 @@ page {
   word-break: break-all;
 }
 
+.drawing-image-detail {
+  width: 100%;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
 .empty-tip {
   text-align: center;
   color: #999;

@@ -10,7 +10,8 @@ exports.main = async (event, context) => {
   const { id } = event
   
   try {
-    const res = await db.collection('articles').aggregate()
+    let collectionName = 'articles';
+    let res = await db.collection(collectionName).aggregate()
     .match({
       _id: id
     })
@@ -19,23 +20,47 @@ exports.main = async (event, context) => {
       localField:'_openid',
       foreignField:'_openid',
       as:'authorInfo',
-    }).end()
+    }).end();
+
+    // 如果在 articles 集合中没找到，就去 drawings 集合中找
+    if (res.list.length === 0) {
+      collectionName = 'drawings';
+      res = await db.collection(collectionName).aggregate()
+        .match({
+          _id: id
+        })
+        .lookup({
+          from: 'users',
+          localField: '_openid',
+          foreignField: '_openid',
+          as: 'authorInfo',
+        }).end();
+    }
 
     if(res.list.length > 0) {
-      const article = res.list[0];
-      if(article.authorInfo && article.authorInfo.length > 0) {
-        article.authorNickname = article.authorInfo[0].nickName;
-        article.authorAvatarUrl = article.authorInfo[0].avatarUrl;
+      const item = res.list[0];
+
+      // 数据结构转换
+      if (collectionName === 'drawings') {
+        item.title = '画作分享'; // 画作可能没有标题，给一个默认的
+        item.content = item.description;
+        item.isDrawing = true;
+        item.imageUrl = item.fileID;
       }
-      delete article.authorInfo;
+
+      if(item.authorInfo && item.authorInfo.length > 0) {
+        item.authorNickname = item.authorInfo[0].nickName;
+        item.authorAvatarUrl = item.authorInfo[0].avatarUrl;
+      }
+      delete item.authorInfo;
       return {
         success: true,
-        data: article
+        data: item
       }
     } else {
       return {
         success: false,
-        message: '文章不存在'
+        message: '内容不存在'
       }
     }
   } catch(e) {

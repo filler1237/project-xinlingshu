@@ -1,0 +1,29 @@
+<!-- components/color-picker/color-picker.wxml -->
+<view class="color-picker-mask" wx:if="{{show}}" bind:tap="onMaskClick">
+  <view class="color-picker-modal {{show ? 'show' : ''}}" catch:tap="preventBubble">
+    <view class="preview-area">
+      <view class="preview-dot" style="background-color: {{'rgb(' + r + ',' + g + ',' + b + ')'}}"></view>
+    </view>
+    <view class="sliders-container">
+      <view class="slider-item">
+        <text class="slider-label">R</text>
+        <slider min="0" max="255" value="{{r}}" bindchange="onSliderChange" data-channel="r" activeColor="#e54d42" block-color="#e54d42" />
+        <text class="slider-value">{{r}}</text>
+      </view>
+      <view class="slider-item">
+        <text class="slider-label">G</text>
+        <slider min="0" max="255" value="{{g}}" bindchange="onSliderChange" data-channel="g" activeColor="#b3d465" block-color="#b3d465" />
+        <text class="slider-value">{{g}}</text>
+      </view>
+      <view class="slider-item">
+        <text class="slider-label">B</text>
+        <slider min="0" max="255" value="{{b}}" bindchange="onSliderChange" data-channel="b" activeColor="#0081ff" block-color="#0081ff" />
+        <text class="slider-value">{{b}}</text>
+      </view>
+    </view>
+    <view class="buttons-area">
+      <button class="picker-btn cancel" bind:tap="onCancel">取消</button>
+      <button class="picker-btn confirm" bind:tap="onConfirm">确定</button>
+    </view>
+  </view>
+</view>

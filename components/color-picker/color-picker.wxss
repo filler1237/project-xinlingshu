@@ -1,0 +1,101 @@
+/* components/color-picker/color-picker.wxss */
+.color-picker-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.color-picker-mask.show {
+  opacity: 1;
+}
+
+.color-picker-modal {
+  width: 85%;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.1);
+  padding: 40rpx;
+  box-sizing: border-box;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.color-picker-modal.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.preview-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40rpx;
+}
+
+.preview-dot {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 1rpx solid #eee;
+}
+
+.sliders-container {
+  width: 100%;
+}
+
+.slider-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.slider-label {
+  width: 40rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.slider-item slider {
+  flex: 1;
+  margin: 0 20rpx;
+}
+
+.slider-value {
+  width: 60rpx;
+  text-align: right;
+  font-size: 28rpx;
+  color: #888;
+}
+
+.buttons-area {
+  margin-top: 40rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.picker-btn {
+  flex: 1;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.cancel {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.confirm {
+  background-color: #007aff;
+  color: white;
+}

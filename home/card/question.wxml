@@ -1,7 +1,11 @@
-<navigation-bar title="塔罗占卜" back="{{true}}" color="black" background="transparent"></navigation-bar>
-<view class="container">
-  <view class="title">探索未知的答案</view>
-  <view class="subtitle">在心中默念你的问题，然后写下来</view>
-  <textarea class="question-input" placeholder="在这里输入您的问题..." bindinput="onQuestionInput" value="{{question}}"></textarea>
-  <button class="submit-btn" bindtap="submitQuestion">开始抽牌</button>
+<view class="page-container">
+  <navigation-bar title="塔罗占卜" back="{{true}}" color="black" background="transparent"></navigation-bar>
+  <view class="content-container">
+    <view class="content-wrapper">
+      <view class="title">探索未知的答案</view>
+      <view class="subtitle">在心中默念你的问题，然后写下来</view>
+      <textarea class="question-input" placeholder="在这里输入您的问题..." bindinput="onQuestionInput" value="{{question}}"></textarea>
+      <button class="submit-btn" bindtap="submitQuestion">开始抽牌</button>
+    </view>
+  </view>
 </view>

@@ -12,7 +12,12 @@
             <view class="comment-time">{{article.createTime}}</view>
           </view>
         </view>
-        <view class="comment-content">{{article.content}}</view>
+        <view class="comment-content">
+          <block wx:if="{{article.isDrawing}}">
+            <image class="drawing-image-detail" src="{{article.imageUrl}}" mode="widthFix"></image>
+          </block>
+          {{article.content}}
+        </view>
       </view>
     </view>
 

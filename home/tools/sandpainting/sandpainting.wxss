@@ -1,103 +1,233 @@
 /* home/tools/sandpainting/sandpainting.wxss */
-.sandpainting-container {
+page {
   height: 100%;
-  background-color: #f0e6d6;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.page {
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f0f2f5;
+  overflow: hidden;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-}
-
-.clear-button {
-  padding: 8rpx 16rpx;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 16rpx;
-  transition: all 0.3s ease;
-}
-
-.clear-button:active {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(0.95);
-}
-
-.clear-text {
-  font-size: 24rpx;
-  color: white;
-  font-weight: bold;
-}
-
-.canvas-container {
+.canvas-wrapper {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20rpx;
-  background-color: #f0e6d6;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .drawing-canvas {
-  background-color: #fff8dc;
-  border-radius: 10rpx;
-  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
 }
 
-.control-panel {
-  padding: 20rpx;
-  background-color: #d4af37;
-  box-shadow: 0 -5rpx 20rpx rgba(0, 0, 0, 0.1);
+/* 抽屉容器 */
+.drawer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: height 0.3s ease-in-out;
+  z-index: 100;
+  height: 160rpx; /* 调整后的折叠高度 */
 }
 
-.color-palette {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20rpx;
+.drawer-container.expanded {
+  height: 520rpx; /* 展开高度 */
 }
 
-.color-item {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-  margin: 0 10rpx;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
-}
-
-.color-item:active {
-  transform: scale(1.1);
-}
-
-.brush-size {
+/* 折叠内容 */
+.drawer-collapsed-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10rpx 0;
+  cursor: pointer;
 }
 
-.size-label {
+.drawer-handle-wrapper {
+  display: flex;
+  align-items: center;
+  color: #999;
   font-size: 24rpx;
-  color: white;
   margin-bottom: 15rpx;
-  font-weight: bold;
 }
 
-.size-options {
+.drawer-handle-arrow {
+  margin-right: 8rpx;
+}
+
+.collapsed-tools {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 0 20rpx;
+}
+
+.collapsed-tool-item {
+  font-size: 26rpx;
+  color: #333;
+  padding: 10rpx 15rpx;
+  border-radius: 12rpx;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+
+/* 展开内容 */
+.drawer-expanded-content {
+  padding: 30rpx;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.drawer-container.expanded .drawer-expanded-content {
+  opacity: 1;
+}
+
+.color-palette-wrapper {
+  margin-bottom: 20rpx;
+}
+.color-palette {
+  white-space: nowrap;
+}
+.color-item {
+  display: inline-block;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  border: 4rpx solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+.color-item.active {
+  border-color: #d4af37;
+  transform: scale(1.1);
+}
+.more-colors-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+.more-colors-icon {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.tools-and-size-wrapper {
+  margin-bottom: 25rpx;
+}
+.tool-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 25rpx;
+}
+.tool-btn-text {
+  font-size: 26rpx;
+  color: #666;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background-color: #f0f0f0;
+}
+.tool-btn-text.active {
+  color: #ffffff;
+  background-color: #d4af37;
+}
+
+.brush-size {
+  width: 100%;
+}
+
+.size-slider {
+  margin: 0;
+}
+
+.bottom-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.save-btn {
+  background-color: #34c759;
+}
+
+.upload-btn-main {
+  background: linear-gradient(135deg, #00adee, #29abe2);
+}
+
+/* 调色板和活动弹窗 */
+.color-picker-modal, .activity-popup-mask {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.size-item {
-  background-color: #333;
-  border-radius: 50%;
-  margin: 0 15rpx;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
+.color-picker-content, .activity-popup-content {
+  background-color: white;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.2);
 }
 
-.size-item:active {
-  transform: scale(1.1);
+.activity-popup-content {
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.activity-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.activity-section {
+  margin-bottom: 20rpx;
+}
+.section-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+  color: #555;
+}
+.section-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+.upload-btn {
+  width: 100%;
+  background-color: #d4af37;
+  color: white;
+  margin-top: 20rpx;
 }

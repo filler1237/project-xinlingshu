@@ -1,7 +1,8 @@
 {
   "navigationBarTitleText": "沙画涂鸦",
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "color-picker": "/components/color-picker/color-picker"
   },
   "navigationStyle": "custom"
 }

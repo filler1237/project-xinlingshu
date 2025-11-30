@@ -1,45 +1,38 @@
 <!--pages/home/function/test/test.wxml-->
 <navigation-bar title="心理测评"></navigation-bar>
 
-<view class="Pic">
-<image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu.png" mode="heightFix" class="Pic"/>
-</view>
+<view class="page-container">
+  <!-- 保留顶部的树 -->
+  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu.png" mode="widthFix" class="top-tree"/>
 
-<view class="QesBox">
-  <view class="QesIn" style="background: #E5FFF0;" data-id="0" bind:tap="GoToIntro" >
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>抑郁自评量表</text>
-      <text>SDS</text>
+  <!-- 专业量表区 -->
+  <view class="section">
+    <view class="section-title">专业心理测评</view>
+    <view class="card-grid">
+      <view wx:for="{{professionalScales}}" wx:key="id" class="card professional-card" style="background: {{item.bgColor}};" data-url="{{item.url}}" bind:tap="GoToIntro">
+        <image src="{{item.icon}}" mode="widthFix" class="card-icon"/>
+        <view class="card-font">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-abbr">{{item.abbr}}</text>
+        </view>
+      </view>
     </view>
   </view>
-  <view class="QesIn" style="background: #EDF9FC;" data-id="1" bind:tap="GoToIntro">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>焦虑自评量表</text>
-      <text>SAS</text>
+
+  <!-- IPIP 轻量问卷区 -->
+  <view class="section">
+    <view class="section-title ipip-title">自我探索问卷 (IPIP)</view>
+    <view class="card-grid">
+      <view wx:for="{{ipipScales}}" wx:key="id" class="card ipip-card" style="background: {{item.bgColor}};" data-url="{{item.url}}" bind:tap="GoToIntro">
+        <image src="{{item.icon}}" mode="widthFix" class="card-icon"/>
+        <view class="card-font">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-abbr">{{item.abbr}}</text>
+        </view>
+      </view>
     </view>
   </view>
-  <view class="QesIn" style="background: #FFFBE3;" data-id="2" bind:tap="GoToIntro">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>阿森斯失眠量表</text>
-      <text>AIS</text>
-    </view>
-  </view>
-</view>
 
-
-<view class="QesBox">
-  <view class="QesIn" style="background: #F0F4FF;" data-id="3" bind:tap="GoToIntro">
-    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font">
-      <text>一般健康问卷</text>
-      <text>GHD-12</text>
-    </view>
-  </view>
-</view>
-
-<view>
-  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
+  <!-- 底部插画 -->
+  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Test.png" mode="widthFix" class="bottom-illustration"/>
 </view>

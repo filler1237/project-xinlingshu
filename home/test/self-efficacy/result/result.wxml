@@ -1,0 +1,42 @@
+<view class="page-container">
+  <image src="/image/result-top-illustration.png" class="top-illustration" mode="widthFix"/>
+  
+  <view class="content-wrapper">
+    <view class="title">你的自我效能感概况</view>
+    
+    <view class="result-card">
+      <view class="chart-container">
+        <!-- 这里可以放置饼图或雷达图组件 -->
+        <view class="score-placeholder">{{scoreLevel}}</view>
+      </view>
+      <view class="divider"></view>
+      <view class="text-container">
+        <!-- Result Content -->
+        <view wx:if="{{!showAdvice}}" class="content-section fade-in">
+          <block wx:for="{{resultContent}}" wx:key="index">
+            <view class="result-item">
+              <view class="dot"></view>
+              <text>{{item}}</text>
+            </view>
+          </block>
+        </view>
+        <!-- Advice Content -->
+        <view wx:else class="content-section fade-in">
+          <block wx:for="{{adviceContent}}" wx:key="index">
+            <view class="result-item">
+              <view class="dot dot-advice"></view>
+              <text>{{item}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    
+    <view class="button-group">
+      <view class="button primary-button" bind:tap="toggleView">
+        {{ showAdvice ? '查看结果' : '查看建议' }}
+      </view>
+      <view class="button secondary-button" bind:tap="goHome">返回测试列表</view>
+    </view>
+  </view>
+</view>

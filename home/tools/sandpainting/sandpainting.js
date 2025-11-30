@@ -1,310 +1,254 @@
 // home/tools/sandpainting/sandpainting.js
 Page({
   data: {
-    canvasWidth: 0,
-    canvasHeight: 0,
+    // 颜色和画笔
     colors: ['#333333', '#FF0000', '#FF6B35', '#F7931E', '#FDB813', '#8DC63F', '#39B54A', '#00A651', '#00ADEE', '#29ABE2', '#5E3D99', '#92278F', '#C12283', '#ED1C24', '#FFFFFF'],
     selectedColor: '#333333',
-    brushSizes: [5, 10, 15, 20, 25],
     selectedSize: 15,
+    isEraser: false,
+    canvasBgColor: '#FFFFFF',
+
+    // 状态
     isDrawing: false,
-    lastX: 0,
-    lastY: 0
-  },
-  
-  // 初始化状态
-  isInitComplete: false,
-  initCallbacks: [],
-  pendingTouchEvent: null,
+    showColorPicker: false,
+    showActivity: false,
+    isDrawerExpanded: false,
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-onLoad(options) {
-    // 初始化画布尺寸，考虑自定义导航栏高度
-    const systemInfo = wx.getSystemInfoSync();
-    const isAndroid = systemInfo.platform === 'android';
-    
-    // 导航栏高度：状态栏高度 + (Android 48px / iOS 44px)
-    const navBarHeight = systemInfo.statusBarHeight + (isAndroid ? 48 : 44);
-    
-    // 控制面板高度大约是150rpx
-    const controlPanelHeight = 150 / 2; // 转换为px
-    
-    // 其他padding：20rpx（canvas-container的padding）* 2
-    const padding = (20 / 2) * 2;
-    
-    const canvasWidth = systemInfo.windowWidth - padding;
-    const canvasHeight = systemInfo.windowHeight - navBarHeight - controlPanelHeight - padding;
-    
-    this.setData({
-      canvasWidth: canvasWidth,
-      canvasHeight: canvasHeight
-    });
+    // 历史记录
+    historyStack: [],
+
+    // 抽屉交互
+    drawerBottom: 0,
+    touchStartY: 0,
+    isDrawerMoving: false,
   },
 
-  /**
-   * 开始绘制
-   */
-  startDrawing: function(e) {
-    console.log('startDrawing called:', e.touches[0]);
-    // 如果canvas上下文或位置信息未初始化，先初始化并保存事件
-    if (!this.isInitComplete || !this.context || !this.canvasRect) {
-      console.log('Canvas not initialized, saving event...');
-      this.pendingTouchEvent = e;
-      this.initCanvas();
-      return;
-    }
-    
-    // 使用clientX/clientY更可靠
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const offsetX = touchX - this.canvasRect.left;
-    const offsetY = touchY - this.canvasRect.top;
-    
-    this.setData({
-      isDrawing: true,
-      lastX: offsetX,
-      lastY: offsetY
-    });
-    console.log('Drawing started at:', offsetX, offsetY);
-  },
+  lastColor: '#333333', // 保存切换橡皮擦前的颜色
 
-  /**
-   * 绘制中
-   */
-  onDrawing: function(e) {
-    console.log('onDrawing called:', e.touches[0]);
-    // 如果canvas上下文或位置信息未初始化，先初始化
-    if (!this.context || !this.canvasRect) {
-      console.log('Canvas not initialized, initializing now...');
-      this.initCanvas();
-      return;
-    }
-    
-    if (!this.data.isDrawing) return;
-
-    // 使用clientX/clientY更可靠
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const currentX = touchX - this.canvasRect.left;
-    const currentY = touchY - this.canvasRect.top;
-
-    // 绘制线条
-    try {
-      this.context.beginPath();
-      this.context.moveTo(this.data.lastX, this.data.lastY);
-      this.context.lineTo(currentX, currentY);
-      this.context.stroke();
-      console.log('Line drawn from', this.data.lastX, this.data.lastY, 'to', currentX, currentY);
-    } catch (error) {
-      console.error('Error drawing line:', error);
-    }
-
-    // 更新最后位置
-    this.setData({
-      lastX: currentX,
-      lastY: currentY
-    });
-  },
-
-  /**
-   * 停止绘制
-   */
-  stopDrawing: function(e) {
-    this.setData({
-      isDrawing: false
-    });
-  },
-
-  /**
-   * 选择颜色
-   */
-  selectColor: function(e) {
-    const color = e.currentTarget.dataset.color;
-    this.setData({
-      selectedColor: color
-    });
-    this.context.strokeStyle = color;
-  },
-
-  /**
-   * 选择画笔粗细
-   */
-  selectBrushSize: function(e) {
-    const size = parseInt(e.currentTarget.dataset.size);
-    this.setData({
-      selectedSize: size
-    });
-    this.context.lineWidth = size;
-  },
-
-  /**
-   * 清空画布
-   */
-  clearCanvas: function() {
-    const that = this;
-    wx.showModal({
-      title: '提示',
-      content: '确定要清空画布吗？',
-      success: function(res) {
-        if (res.confirm && that.context) {
-          that.context.clearRect(0, 0, that.context.canvas.width, that.context.canvas.height);
-        }
-      }
-    });
-  },
-
-  /**
-   * 返回上一级
-   */
-  navigateBack: function() {
-    wx.navigateBack({
-      delta: 1
-    });
-  },
-
-  /**
-   * 初始化画布
-   */
-  initCanvas: function(callback = null, attempt = 0) {
-    console.log('Initializing canvas, attempt:', attempt);
-    // 如果已经初始化则调用回调并返回
-    if (this.isInitComplete && this.context && this.canvasRect) {
-      console.log('Canvas already initialized');
-      if (callback) callback();
-      return;
-    }
-    
-    // 添加回调到队列
-    if (callback) {
-      this.initCallbacks.push(callback);
-    }
-    
-    // 使用页面内选择器查询更可靠
-    this.createSelectorQuery()
-      .select('#sandCanvas')
-      .boundingClientRect()
-      .exec((rectRes) => {
-        console.log('Bounding client rect result:', rectRes);
-        if (rectRes && rectRes[0]) {
-          this.canvasRect = rectRes[0];
-          console.log('CanvasRect set:', this.canvasRect);
-          
-          this.createSelectorQuery()
-            .select('#sandCanvas')
-            .fields({ node: true, size: true })
-            .exec((res) => {
-              console.log('Canvas fields result:', res);
-              if (res && res[0]) {
-                const canvas = res[0].node;
-                // 设置画布实际尺寸
-                canvas.width = res[0].width;
-                canvas.height = res[0].height;
-                this.context = canvas.getContext('2d');
-                
-                // 设置画布属性
-                this.context.lineCap = 'round';
-                this.context.lineJoin = 'round';
-                this.context.lineWidth = this.data.selectedSize;
-                this.context.strokeStyle = this.data.selectedColor;
-                console.log('Canvas context initialized:', this.context);
-                
-                // 标记初始化完成并执行所有回调
-                this.isInitComplete = true;
-                this.initCallbacks.forEach(cb => cb());
-                this.initCallbacks = [];
-                
-                // 如果有 pending 的触摸事件，处理它
-                if (this.pendingTouchEvent) {
-                  console.log('Processing pending touch event:', this.pendingTouchEvent);
-                  const event = this.pendingTouchEvent;
-                  this.pendingTouchEvent = null;
-                  
-                  // 根据事件类型调用相应的处理函数
-                  if (event.type === 'touchstart') {
-                    this.startDrawing(event);
-                  } else if (event.type === 'touchmove') {
-                    this.onDrawing(event);
-                  }
-                }
-              } else {
-                console.log('Failed to get canvas node or size, retrying...');
-                // 重试初始化
-                this.retryInitCanvas(callback, attempt + 1);
-              }
-            });
-        } else {
-          console.log('Failed to get canvas bounding rect, retrying...');
-          // 重试初始化
-          this.retryInitCanvas(callback, attempt + 1);
-        }
-      });
-  },
-  
-  /**
-   * 重试初始化画布
-   */
-  retryInitCanvas: function(callback = null, attempt = 0) {
-    // 最多重试5次
-    const maxAttempts = 5;
-    if (attempt < maxAttempts) {
-      setTimeout(() => {
-        this.initCanvas(callback, attempt + 1);
-      }, 100);
-    } else {
-      console.log('Failed to initialize canvas after max attempts');
-      // 初始化失败，清空回调
-      this.initCallbacks = [];
-    }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady() {
     this.initCanvas();
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  initCanvas() {
+    const query = wx.createSelectorQuery();
+    query.select('#sandCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0] || !res[0].node) {
+          console.error("无法获取Canvas节点");
+          return;
+        }
+        const canvas = res[0].node;
+        const ctx = canvas.getContext('2d');
+        const dpr = wx.getSystemInfoSync().pixelRatio;
 
+        this.canvasWidth = res[0].width;
+        this.canvasHeight = res[0].height;
+        
+        canvas.width = this.canvasWidth * dpr;
+        canvas.height = this.canvasHeight * dpr;
+        ctx.scale(dpr, dpr);
+
+        this.canvas = canvas;
+        this.context = ctx;
+        
+        this.clearCanvas(false);
+        this.updateBrush();
+      });
+  },
+  
+  saveHistory() {
+    if (!this.context) return;
+    const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    this.data.historyStack.push(imageData);
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  updateBrush() {
+    if (!this.context) return;
+    this.context.lineCap = 'round';
+    this.context.lineJoin = 'round';
+    this.context.lineWidth = this.data.selectedSize;
+    this.context.strokeStyle = this.data.isEraser ? this.data.canvasBgColor : this.data.selectedColor;
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
+  startDrawing(e) {
+    if (!this.context) return;
+    this.saveHistory();
+    this.setData({ isDrawing: true });
+    const { x, y } = e.touches[0];
+    this.lastX = x;
+    this.lastY = y;
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
+  onDrawing(e) {
+    if (!this.data.isDrawing || !this.context) return;
+    const { x, y } = e.touches[0];
+    
+    this.context.beginPath();
+    this.context.moveTo(this.lastX, this.lastY);
+    this.context.lineTo(x, y);
+    this.context.stroke();
+    
+    this.lastX = x;
+    this.lastY = y;
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
+  stopDrawing() {
+    this.setData({ isDrawing: false });
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
+  undo() {
+    if (this.data.historyStack.length > 0) {
+      const lastState = this.data.historyStack.pop();
+      this.context.putImageData(lastState, 0, 0);
+    } else {
+      wx.showToast({ title: '没有更多记录了', icon: 'none' });
+    }
+  },
 
-  }
+  selectColor(e) {
+    const color = e.currentTarget.dataset.color;
+    this.lastColor = color;
+    this.setData({ selectedColor: color, isEraser: false });
+    this.updateBrush();
+  },
+  
+  onColorChange(e) {
+    const color = e.detail.color;
+    this.lastColor = color;
+    this.setData({ selectedColor: color, isEraser: false });
+    this.updateBrush();
+  },
+
+  selectBrushSize(e) {
+    this.setData({ selectedSize: e.detail.value });
+    this.updateBrush();
+  },
+
+  toggleEraser() {
+    const newIsEraser = !this.data.isEraser;
+    if (newIsEraser) this.lastColor = this.data.selectedColor;
+    this.setData({
+      isEraser: newIsEraser,
+      selectedColor: newIsEraser ? this.data.canvasBgColor : this.lastColor,
+    });
+    this.updateBrush();
+  },
+
+  clearCanvas(isShowModal = true) {
+    const clear = () => {
+      if (!this.context) return;
+      this.saveHistory();
+      this.context.fillStyle = this.data.canvasBgColor;
+      this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.data.historyStack = [];
+    };
+
+    if (isShowModal) {
+      wx.showModal({
+        title: '提示',
+        content: '确定要清空画布吗？',
+        success: (res) => res.confirm && clear(),
+      });
+    } else {
+      clear();
+    }
+  },
+
+  // 新增功能
+  saveCanvas() {
+    wx.canvasToTempFilePath({
+      canvas: this.canvas,
+      success: (res) => {
+        wx.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: () => wx.showToast({ title: '已保存到相册', icon: 'success' }),
+          fail: (err) => {
+            if (err.errMsg.includes('auth deny')) {
+              wx.showModal({
+                title: '授权失败',
+                content: '请开启保存到相册的权限',
+                confirmText: '去设置',
+                success: (modalRes) => modalRes.confirm && wx.openSetting(),
+              });
+            } else {
+              wx.showToast({ title: '保存失败', icon: 'none' });
+            }
+          },
+        });
+      },
+      fail: () => wx.showToast({ title: '导出失败', icon: 'none' }),
+    }, this);
+  },
+
+  // 上传作品
+  uploadDrawing() {
+    wx.showLoading({ title: '正在导出画布...' });
+    wx.canvasToTempFilePath({
+      canvas: this.canvas,
+      success: (res) => {
+        wx.hideLoading();
+        const tempFilePath = encodeURIComponent(res.tempFilePath);
+        wx.navigateTo({
+          url: `/home/tools/publish-drawing/publish-drawing?tempFilePath=${tempFilePath}`
+        });
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        wx.showToast({ title: '导出画布失败', icon: 'none' });
+        console.error("导出画布失败:", err);
+      }
+    }, this);
+  },
+
+  showActivityPopup() {
+    this.setData({ showActivity: true });
+  },
+
+  hideActivityPopup() {
+    this.setData({ showActivity: false });
+  },
+
+  toggleColorPicker() {
+    this.setData({ showColorPicker: !this.data.showColorPicker });
+  },
+  
+  doNothing() {}, // 阻止事件冒泡
+
+  // 抽屉交互逻辑
+  toggleDrawer() {
+    this.setData({ isDrawerExpanded: !this.data.isDrawerExpanded });
+  },
+
+  drawerTouchStart(e) {
+    this.setData({ 
+      touchStartY: e.touches[0].clientY,
+      isDrawerMoving: true,
+    });
+  },
+
+  drawerTouchMove(e) {
+    if (!this.data.isDrawerMoving) return;
+    const touchMoveY = e.touches[0].clientY;
+    const deltaY = this.data.touchStartY - touchMoveY; // 上滑为正
+    // 限制抽屉移动范围
+    if ( (this.data.isDrawerExpanded && deltaY < 0) || (!this.data.isDrawerExpanded && deltaY > 0) ) {
+        // 向上拖动展开，向下拖动收起
+        // 可以在这里做更精细的跟随移动效果，为简化暂时不做
+    }
+  },
+
+  drawerTouchEnd(e) {
+    if (!this.data.isDrawerMoving) return;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaY = this.data.touchStartY - touchEndY;
+    const threshold = 50; // 拖动阈值
+
+    if (deltaY > threshold) {
+      this.setData({ isDrawerExpanded: true });
+    } else if (deltaY < -threshold) {
+      this.setData({ isDrawerExpanded: false });
+    }
+    this.setData({ isDrawerMoving: false });
+  },
 });

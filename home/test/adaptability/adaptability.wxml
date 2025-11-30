@@ -1,0 +1,35 @@
+<navigation-bar title="适应力评估" show-back-button="{{true}}"></navigation-bar>
+<view class="page-container">
+  <view class="main-content">
+    <!-- 顶部进度区域 -->
+    <view class="progress-section">
+      <view class="progress-bar-container">
+        <view class="progress-bar" style="width: {{(currentQuestionIndex + 1) / questions.length * 100}}%;"></view>
+      </view>
+      <view class="progress-text">{{currentQuestionIndex + 1}} / {{questions.length}}</view>
+    </view>
+
+    <!-- 题目展示区域 -->
+    <view class="question-section">
+      <view class="question-stem">请选择更贴近你的一句：</view>
+      <view class="options-container">
+        <block wx:for="{{questions[currentQuestionIndex].options}}" wx:key="id" wx:for-item="option">
+          <view 
+            class="option-card {{selectedOptionId === option.id ? 'selected' : ''}}" 
+            data-option-id="{{option.id}}" 
+            bind:tap="selectAnswer">
+            <text>{{option.text}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  
+  <view class="footer-actions">
+    <view class="nav-button prev-button {{currentQuestionIndex === 0 ? 'disabled' : ''}}" bind:tap="goPrev">上一题</view>
+    <block wx:if="{{currentQuestionIndex === questions.length - 1}}">
+      <view class="nav-button submit-button {{submitButtonEnabled ? 'enabled' : ''}}" bind:tap="submit">提交</view>
+    </block>
+  </view>
+
+</view>
