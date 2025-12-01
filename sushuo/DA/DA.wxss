@@ -288,3 +288,17 @@
   font-size: 30rpx;
   font-weight: bold;
 }
+
+.chat-image {
+  max-width: 400rpx; /* 图片最大宽度 */
+  border-radius: 18rpx; /* 图片圆角，和气泡保持一致 */
+  display: block; /* 解决图片下方空隙问题 */
+}
+
+.ai-bubble .chat-image {
+  /* 如果需要，可以为AI的图片设置特定样式 */
+}
+
+.user-bubble .chat-image {
+  /* 如果需要，可以为用户的图片设置特定样式 */
+}

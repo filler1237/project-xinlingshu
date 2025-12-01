@@ -27,10 +27,10 @@ exports.main = async (event, context) => {
       echoer_openid: openid,
       repliedAt: _.gte(startOfDay).and(_.lt(endOfDay))
     }).count();
-    if(countResult.total >= 1) {
+    if(countResult.total >= 5) {
       return {
         code: 102,
-        message: '今天已经回应过了，明天再来吧',
+        message: '今天回应已经达到5次了，明天再来吧',
       }
     }
     // 更新指定的烦恼记录

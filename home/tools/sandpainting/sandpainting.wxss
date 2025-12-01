@@ -34,10 +34,6 @@ page {
 
 /* 抽屉容器 */
 .drawer-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-color: #ffffff;
   border-top-left-radius: 24rpx;
   border-top-right-radius: 24rpx;

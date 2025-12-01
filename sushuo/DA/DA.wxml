@@ -50,9 +50,22 @@
         <image wx:if="{{!item.isUser}}" class="avatar" src="{{aiAvatarUrl}}"></image>
         
         <!-- 消息气泡 -->
+                <!-- 消息气泡 -->
         <view class="message-bubble {{item.isUser ? 'user-bubble' : 'ai-bubble'}}">
-          <text class="message-text">{{item.text}}</text>
+          <!-- 使用 wx:if 来根据消息类型渲染不同内容 -->
+          
+          <!-- 如果是文本类型 (或为了兼容老数据，没有type属性) -->
+          <text wx:if="{{item.type === 'text' || !item.type}}" class="message-text">{{item.text}}</text>
+          
+          <!-- 如果是图片类型 -->
+          <image wx:elif="{{item.type === 'image'}}" 
+                 src="{{item.imageUrl}}" 
+                 class="chat-image" 
+                 mode="widthFix" 
+                 bindtap="previewImage" 
+                 data-src="{{item.imageUrl}}"></image>
         </view>
+
 
         <!-- 用户头像 -->
         <image wx:if="{{item.isUser}}" class="avatar" src="{{userAvatarUrl}}"></image>

@@ -1,5 +1,5 @@
 <!-- home/tools/sandpainting/sandpainting.wxml -->
-<view class="page" catchtouchmove="true">
+<view class="page" catchtouchmove="doNothing">
   <!-- 顶部导航 -->
   <navigation-bar title="沙画涂鸦" back="{{true}}" background="#f7f7f7" color="#333333"></navigation-bar>
 
@@ -25,17 +25,17 @@
     style="bottom: {{drawerBottom}}px;"
   >
     <!-- 折叠状态显示的内容 -->
-    <view class="drawer-collapsed-content" bindtap="toggleDrawer">
+    <view class="drawer-collapsed-content" catchtap="toggleDrawer">
       <view class="drawer-handle-wrapper">
         <view class="drawer-handle-arrow">↑</view>
         <view class="drawer-handle-text">工具栏</view>
       </view>
       <view class="collapsed-tools">
-        <view class="collapsed-tool-item">🎨 颜色</view>
-        <view class="collapsed-tool-item">✏️ 画笔</view>
-        <view class="collapsed-tool-item">🧽 橡皮</view>
-        <view class="collapsed-tool-item" bindtap="saveCanvas" catchtap="doNothing">💾 保存</view>
-        <view class="collapsed-tool-item" bindtap="showActivityPopup" catchtap="doNothing">🎉 本期活动</view>
+        <view class="collapsed-tool-item" catchtap="toggleDrawer">🎨 颜色</view>
+        <view class="collapsed-tool-item" catchtap="toggleEraser">✏️ 画笔</view>
+        <view class="collapsed-tool-item" catchtap="toggleEraser">🧽 橡皮</view>
+        <view class="collapsed-tool-item" bindtap="saveCanvas" catchtap="saveCanvas">💾 保存</view>
+        <view class="collapsed-tool-item" bindtap="showActivityPopup" catchtap="showActivityPopup">🎉 本期活动</view>
       </view>
     </view>
 

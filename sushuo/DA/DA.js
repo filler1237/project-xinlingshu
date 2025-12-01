@@ -72,7 +72,8 @@ Page({
       name: `新话题 ${new Date().toLocaleDateString()}`,
       content: [{
         text: '你好！我是你的朋友云舒，有什么想要跟我分享的吗？',
-        isUser: false
+        isUser: false,
+        type: 'text'
       }],
       lastUpdated: db.serverDate()
     };
@@ -175,13 +176,39 @@ Page({
     this.setData({ inputText: e.detail.value });
   },
 
+  previewImage: function(e) {
+    const currentUrl = e.currentTarget.dataset.src;
+    wx.previewImage({
+      current: currentUrl,
+      urls: [currentUrl]
+    });
+  },
+
+  _parseMessage: function(text) {
+    const imageRegex = /!\[.*?\]\((.*?)\)/;
+    const match = text.match(imageRegex);
+
+    if(match && match[1]) {
+      return {
+        type: 'image',
+        imageUrl: match[1],
+        text: text
+      };
+    } else {
+      return {
+        type: 'text',
+        text: text
+      };
+    }
+  },
+
   // --- 聊天逻辑 (与之前基本相同) ---
 
   sendMessage: function () {
     const message = this.data.inputText.trim();
     if (!message || this.data.isSending) return;
 
-    const newUserMessage = { text: message, isUser: true };
+    const newUserMessage = { text: message, isUser: true ,type: 'text' };
     this.setData({
       content: [...this.data.content, newUserMessage],
       inputText: '',
@@ -193,7 +220,15 @@ Page({
       data: { query: message, user: this.data.userId },
       success: res => {
         const reply = (res.result && res.result.code === 0) ? res.result.reply : '抱歉，出错了，请稍后再试';
-        const newAssistantMessage = { text: reply, isUser: false };
+
+        const parsedMessage = this._parseMessage(reply);
+
+        const newAssistantMessage = {
+          text: parsedMessage.text,
+          type: parsedMessage.type,
+          imageUrl: parsedMessage.imageUrl || '', // 如果是图片，则有 imageUrl
+          isUser: false
+        };
         this.setData({
           content: [...this.data.content, newAssistantMessage]
         });

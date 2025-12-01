@@ -14,19 +14,30 @@ Page({
     showActivity: false,
     isDrawerExpanded: false,
 
-    // 历史记录
-    historyStack: [],
-
     // 抽屉交互
     drawerBottom: 0,
     touchStartY: 0,
     isDrawerMoving: false,
   },
 
+  historyStack: [], // 保存笔画路径
+  currentStroke: null, // 当前正在绘制的笔画
   lastColor: '#333333', // 保存切换橡皮擦前的颜色
 
   onReady() {
-    this.initCanvas();
+    setTimeout(() => {
+      this.initCanvas();
+    }, 100);
+    const query = wx.createSelectorQuery();
+    query.select('#canvas-wrapper').boundingClientRect(rect => {
+      const canvasQuery = wx.createSelectorQuery().select('#sandCanvas').node();
+      canvasQuery.exec(res => {
+        const canvasNode = res[0].node;
+        const ctx = canvasNode.getContext('2d');
+        canvasNode.width = rect.width - 40;
+        canvasNode.height = rect.height - 40;
+      });
+    }).exec();
   },
 
   initCanvas() {
@@ -53,54 +64,81 @@ Page({
         this.context = ctx;
         
         this.clearCanvas(false);
-        this.updateBrush();
       });
   },
   
-  saveHistory() {
+  // 重绘整个画布
+  redrawCanvas() {
     if (!this.context) return;
-    const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    this.data.historyStack.push(imageData);
-  },
+    // 1. 清空画布
+    this.context.fillStyle = this.data.canvasBgColor;
+    this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-  updateBrush() {
-    if (!this.context) return;
-    this.context.lineCap = 'round';
-    this.context.lineJoin = 'round';
-    this.context.lineWidth = this.data.selectedSize;
-    this.context.strokeStyle = this.data.isEraser ? this.data.canvasBgColor : this.data.selectedColor;
+    // 2. 遍历历史记录并重绘每一笔
+    this.historyStack.forEach(stroke => {
+      if (stroke.points.length < 2) return;
+      
+      this.context.beginPath();
+      this.context.strokeStyle = stroke.color;
+      this.context.lineWidth = stroke.size;
+      this.context.lineCap = 'round';
+      this.context.lineJoin = 'round';
+      
+      this.context.moveTo(stroke.points[0].x, stroke.points[0].y);
+      for (let i = 1; i < stroke.points.length; i++) {
+        this.context.lineTo(stroke.points[i].x, stroke.points[i].y);
+      }
+      this.context.stroke();
+    });
   },
 
   startDrawing(e) {
     if (!this.context) return;
-    this.saveHistory();
     this.setData({ isDrawing: true });
-    const { x, y } = e.touches[0];
-    this.lastX = x;
-    this.lastY = y;
+    
+    // 创建一个新的笔画对象
+    this.currentStroke = {
+      color: this.data.isEraser ? this.data.canvasBgColor : this.data.selectedColor,
+      size: this.data.selectedSize,
+      points: [e.touches[0]]
+    };
   },
 
   onDrawing(e) {
-    if (!this.data.isDrawing || !this.context) return;
+    if (!this.data.isDrawing || !this.context || !this.currentStroke) return;
+    
     const { x, y } = e.touches[0];
+    this.currentStroke.points.push({ x, y });
+    
+    // 实时绘制当前笔画
+    if (this.currentStroke.points.length < 2) return;
+    
+    const points = this.currentStroke.points;
+    const lastPoint = points[points.length - 2];
     
     this.context.beginPath();
-    this.context.moveTo(this.lastX, this.lastY);
+    this.context.strokeStyle = this.currentStroke.color;
+    this.context.lineWidth = this.currentStroke.size;
+    this.context.lineCap = 'round';
+    this.context.lineJoin = 'round';
+    
+    this.context.moveTo(lastPoint.x, lastPoint.y);
     this.context.lineTo(x, y);
     this.context.stroke();
-    
-    this.lastX = x;
-    this.lastY = y;
   },
 
   stopDrawing() {
+    if (this.currentStroke && this.currentStroke.points.length > 1) {
+      this.historyStack.push(this.currentStroke);
+    }
+    this.currentStroke = null;
     this.setData({ isDrawing: false });
   },
 
   undo() {
-    if (this.data.historyStack.length > 0) {
-      const lastState = this.data.historyStack.pop();
-      this.context.putImageData(lastState, 0, 0);
+    if (this.historyStack.length > 0) {
+      this.historyStack.pop();
+      this.redrawCanvas();
     } else {
       wx.showToast({ title: '没有更多记录了', icon: 'none' });
     }
@@ -110,19 +148,16 @@ Page({
     const color = e.currentTarget.dataset.color;
     this.lastColor = color;
     this.setData({ selectedColor: color, isEraser: false });
-    this.updateBrush();
   },
   
   onColorChange(e) {
     const color = e.detail.color;
     this.lastColor = color;
     this.setData({ selectedColor: color, isEraser: false });
-    this.updateBrush();
   },
 
   selectBrushSize(e) {
     this.setData({ selectedSize: e.detail.value });
-    this.updateBrush();
   },
 
   toggleEraser() {
@@ -132,16 +167,13 @@ Page({
       isEraser: newIsEraser,
       selectedColor: newIsEraser ? this.data.canvasBgColor : this.lastColor,
     });
-    this.updateBrush();
   },
 
   clearCanvas(isShowModal = true) {
     const clear = () => {
       if (!this.context) return;
-      this.saveHistory();
-      this.context.fillStyle = this.data.canvasBgColor;
-      this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-      this.data.historyStack = [];
+      this.historyStack = [];
+      this.redrawCanvas();
     };
 
     if (isShowModal) {
@@ -155,7 +187,6 @@ Page({
     }
   },
 
-  // 新增功能
   saveCanvas() {
     wx.canvasToTempFilePath({
       canvas: this.canvas,
@@ -181,7 +212,6 @@ Page({
     }, this);
   },
 
-  // 上传作品
   uploadDrawing() {
     wx.showLoading({ title: '正在导出画布...' });
     wx.canvasToTempFilePath({
@@ -213,9 +243,8 @@ Page({
     this.setData({ showColorPicker: !this.data.showColorPicker });
   },
   
-  doNothing() {}, // 阻止事件冒泡
+  doNothing() {},
 
-  // 抽屉交互逻辑
   toggleDrawer() {
     this.setData({ isDrawerExpanded: !this.data.isDrawerExpanded });
   },
@@ -229,20 +258,13 @@ Page({
 
   drawerTouchMove(e) {
     if (!this.data.isDrawerMoving) return;
-    const touchMoveY = e.touches[0].clientY;
-    const deltaY = this.data.touchStartY - touchMoveY; // 上滑为正
-    // 限制抽屉移动范围
-    if ( (this.data.isDrawerExpanded && deltaY < 0) || (!this.data.isDrawerExpanded && deltaY > 0) ) {
-        // 向上拖动展开，向下拖动收起
-        // 可以在这里做更精细的跟随移动效果，为简化暂时不做
-    }
   },
 
   drawerTouchEnd(e) {
     if (!this.data.isDrawerMoving) return;
     const touchEndY = e.changedTouches[0].clientY;
     const deltaY = this.data.touchStartY - touchEndY;
-    const threshold = 50; // 拖动阈值
+    const threshold = 50;
 
     if (deltaY > threshold) {
       this.setData({ isDrawerExpanded: true });
