@@ -178,31 +178,61 @@ Page({
 
   previewImage: function(e) {
     const currentUrl = e.currentTarget.dataset.src;
+    const urls = this.data.content
+    .filter(item => item.type === 'image')
+    .map(item => item.imageUrl);
     wx.previewImage({
       current: currentUrl,
-      urls: [currentUrl]
+      urls: urls
     });
   },
-
+ // 解析多张图片与文本
   _parseMessage: function(text) {
-    const imageRegex = /!\[.*?\]\((.*?)\)/;
-    const match = text.match(imageRegex);
-
-    if(match && match[1]) {
-      return {
+    const imageRegex = /!\[.*?\]\((.*?)\)/g;
+    const messages = [];
+    let lastIndex = 0;
+    let match;
+    // 循环查找所有图片
+    while((match = imageRegex.exec(text)) !== null) {
+      if(match.index > lastIndex) {
+        const textPart = text.substring(lastIndex, match.index).trim();
+        if(textPart) {
+          messages.push({
+            type: 'text',
+            text: textPart,
+            isUser: false
+          });
+        }
+      }
+      // 添加图片
+      messages.push({
         type: 'image',
         imageUrl: match[1],
-        text: text
-      };
-    } else {
-      return {
-        type: 'text',
-        text: text
-      };
+        isUser: false,
+        text:''
+      });
+      lastIndex = imageRegex.lastIndex;
     }
+
+    if(lastIndex < text.length) {
+      const remainingText = text.substring(lastIndex).trim();
+      if(remainingText) {
+        messages.push({
+          type:'text',
+          text: remainingText,
+          isUser: false
+        });
+      }
+    }
+    // 没有匹配则返回纯文本
+    if(messages.length === 0) {
+      return [{ type: 'text', text: text.trim(),isUser:false }];
+    }
+    return messages;
+
   },
 
-  // --- 聊天逻辑 (与之前基本相同) ---
+  // --- 聊天逻辑  ---
 
   sendMessage: function () {
     const message = this.data.inputText.trim();
@@ -215,26 +245,28 @@ Page({
       isSending: true,
     });
 
+    const history = this.data.content
+    .slice(-6)
+    .filter(msg => msg.type === 'text' && msg.text)
+    .map(msg => ({
+      role: msg.isUser ? 'user' : 'assistant',
+      content: msg.text
+    }));
+
     wx.cloud.callFunction({
       name: 'xinlixuejia',
-      data: { query: message, user: this.data.userId },
+      data: { query: message, user: this.data.userId, chat_history: history },
       success: res => {
         const reply = (res.result && res.result.code === 0) ? res.result.reply : '抱歉，出错了，请稍后再试';
 
-        const parsedMessage = this._parseMessage(reply);
+        const parsedMessages = this._parseMessage(reply);
 
-        const newAssistantMessage = {
-          text: parsedMessage.text,
-          type: parsedMessage.type,
-          imageUrl: parsedMessage.imageUrl || '', // 如果是图片，则有 imageUrl
-          isUser: false
-        };
         this.setData({
-          content: [...this.data.content, newAssistantMessage]
+          content: [...this.data.content, ...parsedMessages]
         });
       },
       fail: err => {
-        const networkError = { text: '网络开小差了，请检查网络连接', isUser: false };
+        const networkError = { text: '网络开小差了，请检查网络连接', isUser: false, type: 'text' };
         this.setData({
           content: [...this.data.content, networkError]
         });
