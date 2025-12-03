@@ -1,6 +1,6 @@
 <!--pages/sushuo/XIE/XIE.wxml-->
 <view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+    <image class='back' src='cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/back.svg' style="width: 18rpx;"></image>
 </view>
 <view class="title">倾诉</view>
 <form bindsubmit="formSubmit">
@@ -22,10 +22,10 @@
   </view>
   <!-- 上传按钮+框 -->
   <view class='ui-uploader' bindtap='upload' wx:if="{{showUpload}}">
-    <image src="/image/update_img.png" style="height: 80rpx;width: 80rpx;"></image>
+    <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/update_img.png" style="height: 80rpx;width: 80rpx;"></image>
   </view>
 </view>
-<image src="/image/SheQu.png" mode="" class="tree" style="height: 260rpx;"/>
+<image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/SheQu.png" mode="" class="tree" style="height: 260rpx;"/>
 </view>
 </view>
 </form>

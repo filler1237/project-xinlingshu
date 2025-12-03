@@ -1,5 +1,5 @@
 <view class='partone' style="width:82rpx" bindtap='onBackTap'>
-    <image class='back' src='/image/back.svg' style="width: 18rpx;"></image>
+    <image class='back' src='cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/back.svg' style="width: 18rpx;"></image>
 </view>
 <view class="title">心情记录</view>
 <view class="container">

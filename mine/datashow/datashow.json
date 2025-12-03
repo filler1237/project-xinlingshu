@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "ec-canvas": "../../components/ec-canvas/ec-canvas"
+    "ec-canvas": "/pkg_echarts/ec-canvas/ec-canvas"
   },
   "navigationBarTitleText": "这天全校学生心情数据",
   "navigationStyle": "default"
