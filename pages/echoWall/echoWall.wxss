@@ -220,7 +220,6 @@ page {
   margin-bottom: 15rpx;
 }
 
-
 .original-vent-content {
   font-size: 30rpx;
   color: #666;
@@ -229,10 +228,28 @@ page {
   border-bottom: 1rpx dashed #eee;
 }
 
-
 .my-echo-content {
   font-size: 32rpx;
   color: #333;
   font-weight: bold;
 }
 
+/* --- 审核及回响状态样式 (核心新增) --- */
+.status-reviewing {
+  color: #f0ad4e; /* 橙色 - 审核中 */
+  font-size: 28rpx;
+  font-weight: normal;
+}
+
+.status-rejected {
+  color: #d9534f; /* 红色 - 审核失败 */
+  font-size: 28rpx;
+  font-weight: normal;
+}
+
+.status-pending-echo {
+  color: #999; /* 灰色 - 等待回响 */
+  font-size: 28rpx;
+  font-style: italic;
+  font-weight: normal;
+}

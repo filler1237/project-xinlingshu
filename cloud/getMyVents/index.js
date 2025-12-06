@@ -16,10 +16,13 @@ exports.main = async (event, context) => {
       .get();
 
     const myEchoesPromise = db.collection('vents')
-      .where({ echoer_openid: openid })
+      .where({ 
+        echoer_openid: openid,
+        status: 'approved'
+      })
       .orderBy('createdAt', 'desc')
       .get();
-
+    
     const [myVentsResult, myEchoesResult] = await Promise.all([myVentsPromise, myEchoesPromise]);
     const myVentsData = myVentsResult.data.map(item => ({ ...item,type:'vent'}));
     const myEchoesData = myEchoesResult.data.map(item => ({ ...item,type:'echo'}));
@@ -31,11 +34,11 @@ exports.main = async (event, context) => {
       data: allMyRelatedVents,
     };
   } catch (e) {
-    console.error(e);
+    console.error('获取个人相关vents失败:',e);
     return {
       code: 500,
       message: '数据库操作失败',
-      error: e,
+      error: e.message,
     };
   }
 };

@@ -16,12 +16,13 @@ exports.main = async (event, context) => {
 
   if (!content || content.trim() === '') {
     return {
-      code: 1,
+      code: 400,
       message: '内容不能为空',
     };
   }
 
   try {
+    
     // --- 检查当日发布次数的逻辑 ---
     const now = new Date();
     // 确保时区正确，云函数默认是 UTC+0，我们需要转换为 UTC+8
@@ -64,7 +65,8 @@ exports.main = async (event, context) => {
         _openid: openid,
         content: content,
         createdAt: new Date(), // 存储的是标准的 UTC 时间
-        status: 'pending',
+        status: 'reviewing',
+        reviewComment: '',
         echo: null,
         echoer_openid: null,
         repliedAt: null,
@@ -74,16 +76,17 @@ exports.main = async (event, context) => {
     console.log('--- 数据库写入成功 ---');
 
     return {
-      code: 0,
-      message: '提交成功',
+      success: true,
+      code: 200,
+      message: '提交成功, 内容正在审核中',
     };
   } catch (e) {
 
     console.error('!!! 函数执行出错 !!!', e);
     return {
       code: 500,
-      message: '数据库操作失败',
-      error: e,
+      message: '服务器开小差了，请稍后再试',
+      error: e.message,
     };
   }
 };

@@ -13,11 +13,33 @@ exports.main = async (event, context) => {
   if (!ventId || !echo || echo.trim() === '') {
     return {
       code: 1,
+      success: false,
       message: '参数不完整或回应内容为空',
     };
   }
-
   try {
+    // 内容安全审核
+    console.log(`[内容审核] 准备审核内容: "${echo}"`);
+    const reviewResult = await cloud.callFunction({
+      name:'testReview',
+      data: {
+        content: echo
+      }
+    });
+
+    // 检查审核结果
+    if(!reviewResult.result || !reviewResult.result.pass) {
+      console.warn(`[审核不通过] 内容: "${echo}"`, reviewResult.result);
+      return {
+        code: 101,
+        success: false,
+        message: reviewResult.result ? reviewResult.result.mess  : '内容审核失败',
+
+      };
+    }
+    console.log(`[审核通过] 内容: "${echo}"`);
+
+    
     const now = new Date();
     const localDate = new Date(now.getTime() + (8 * 60 * 60 * 1000));
     const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate());

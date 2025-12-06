@@ -12,7 +12,8 @@ exports.main = async (event, context) => {
     // 使用聚合操作随机获取一条不属于当前用户且待回应的烦恼
     const result = await db.collection('vents').aggregate()
       .match({
-        status: 'pending',
+        status: 'approved',
+        echo: null,
         _openid: _.neq(openid) // 确保不是自己的烦恼
       })
       .sample({
