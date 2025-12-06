@@ -4,5 +4,5 @@
     <view class="line" animation="{{lineAnimation}}"></view>
   </view>
   <!-- 注意：请将 checkmark.png 放在项目的 image 目录下 -->
-  <image class="checkmark" src="/image/checkmark.png" animation="{{iconAnimation}}"></image>
+  <image class="checkmark" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/打勾_无圈.png" animation="{{iconAnimation}}"></image>
 </view>

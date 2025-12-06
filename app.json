@@ -49,7 +49,6 @@
     {
       "root": "competition",
       "pages": [
-
         "pages/studenthome/studenthome",
         "pages/adminhome/adminhome",
         "pages/judgehome/judgehome",
@@ -89,6 +88,7 @@
         "setting/setting",
         "mycomment/mycomment",
         "record/record",
+        "record/detail/detail",
         "datashow/datashow",
         "datashow1/datashow1"
       ]

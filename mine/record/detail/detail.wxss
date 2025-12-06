@@ -1,0 +1,98 @@
+/* mine/record/detail/detail.wxss */
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.question-section, .tarot-section, .hexagram-section, .cards-display-section {
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+  color: #333;
+}
+
+.question-text {
+  font-size: 16px;
+  color: #555;
+}
+
+.analysis-text {
+  font-size: 16px;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+.loading-state {
+  text-align: center;
+  padding-top: 50px;
+  color: #999;
+}
+
+.hexagram-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f0f4f7;
+  border-radius: 10px;
+}
+
+.hexagram-item {
+  text-align: center;
+}
+
+.hexagram-label {
+  font-size: 14px;
+  color: #888;
+}
+
+.hexagram-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.hexagram-constitution {
+  font-size: 14px;
+  color: #666;
+}
+
+.arrow {
+  font-size: 24px;
+  margin: 0 20px;
+  color: #888;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.card-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+
+.tarot-card-image {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.card-name {
+  font-size: 12px;
+  text-align: center;
+  color: #666;
+}

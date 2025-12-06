@@ -1,0 +1,50 @@
+<!--mine/record/detail/detail.wxml-->
+<navigation-bar title="占卜详情"></navigation-bar>
+<view class="container" wx:if="{{recordDetail}}">
+  <!-- Tarot Detail -->
+  <block wx:if="{{recordDetail.type === 'tarot'}}">
+    <view class="question-section">
+      <text class="section-title">我的问题</text>
+      <text class="question-text">{{recordDetail.question}}</text>
+    </view>
+    <view class="cards-display-section">
+      <text class="section-title">我的牌阵</text>
+      <view class="cards-container">
+        <view class="card-image-container" wx:for="{{recordDetail.cards}}" wx:key="id">
+          <image class="tarot-card-image" src="{{item.image_path}}" mode="widthFix"></image>
+          <text class="card-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="tarot-section">
+      <text class="section-title">牌阵解读</text>
+      <view class="analysis-text">{{recordDetail.analysis}}</view>
+    </view>
+  </block>
+
+  <!-- Hexagram Detail -->
+  <block wx:if="{{recordDetail.type === 'hexagram'}}">
+    <view class="hexagram-display">
+      <view class="hexagram-item">
+        <view class="hexagram-label">本卦</view>
+        <view class="hexagram-name">{{recordDetail.hexagrams.original.name}}</view>
+        <view class="hexagram-constitution">{{recordDetail.hexagrams.original.constitution}}</view>
+      </view>
+      
+      <view class="arrow" wx:if="{{recordDetail.hexagrams.changed && recordDetail.hexagrams.changed.name !== '无'}}">→</view>
+      
+      <view class="hexagram-item" wx:if="{{recordDetail.hexagrams.changed && recordDetail.hexagrams.changed.name !== '无'}}">
+        <view class="hexagram-label">变卦</view>
+        <view class="hexagram-name">{{recordDetail.hexagrams.changed.name}}</view>
+        <view class="hexagram-constitution">{{recordDetail.hexagrams.changed.constitution}}</view>
+      </view>
+    </view>
+    <view class="hexagram-section">
+      <text class="section-title">卦象解读</text>
+      <view class="analysis-text">{{recordDetail.analysis}}</view>
+    </view>
+  </block>
+</view>
+<view class="loading-state" wx:else>
+  <text>加载中...</text>
+</view>

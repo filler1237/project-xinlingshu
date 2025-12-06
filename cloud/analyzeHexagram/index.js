@@ -9,8 +9,7 @@ const LLM_URL = 'https://api.deepseek.com/v1/chat/completions';
 // 从环境变量中获取 API Key，您需要在云函数配置中设置好 LLM_API_KEY
 const LLM_API_KEY = process.env.LLM_API_KEY;
 
-// 64卦数据 - 源自维基百科，并按二进制码（初爻至上爻）排序
-// 编码规则：1代表阳爻（⚊），0代表阴爻（⚋）。二进制码字符串从左到右依次代表初爻（底）至上爻（顶）。
+// 64卦数据
 const hexagrams = {
     "000000": { "name": "坤", "pinyin": "kūn", "constitution": "上坤下坤" },
     "000001": { "name": "剥", "pinyin": "bō", "constitution": "上艮下坤" },
@@ -80,43 +79,18 @@ const hexagrams = {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log('--- 云函数 analyzeHexagram 开始执行 ---');
-  console.log('接收到的前端事件 (event):', JSON.stringify(event, null, 2));
+  const { originalLines, changedLines, movingLinesCount, question } = event; // 假设前端会传来 question
 
-  const { originalLines, changedLines, movingLinesCount } = event;
-
-  // --- 1. 精确计算所有相关卦象 ---
   const lineSymbolToBinary = (line) => (line === '⚊' ? '1' : '0');
-
-  // 修正：前端传来的爻是从初爻到上爻（bottom-to-top），数据表的键也是如此，因此直接转换即可。
   const originalBinary = originalLines.split('').map(lineSymbolToBinary).join('');
-
-  // 本卦
   const originalHexagram = hexagrams[originalBinary] || { name: '未知', constitution: '' };
 
-  // 变卦
   let changedHexagram = { name: '无', constitution: '' };
   if (movingLinesCount > 0) {
     const changedBinary = changedLines.split('').map(lineSymbolToBinary).join('');
     changedHexagram = hexagrams[changedBinary] || { name: '未知', constitution: '' };
   }
-
-  // 综卦 (Zong Gua): 垂直颠倒卦象，相当于反转 top-to-bottom 的二进制码。
-  const zongBinary = originalBinary.split('').reverse().join('');
-  const zongHexagram = hexagrams[zongBinary] || { name: '未知', constitution: '' };
-
-  // 错卦 (Cuo Gua): 每爻阴阳取反。
-  const cuoBinary = originalBinary.split('').map(b => (b === '1' ? '0' : '1')).join('');
-  const cuoHexagram = hexagrams[cuoBinary] || { name: '未知', constitution: '' };
-
-  // 互卦 (Hu Gua): 由内卦组成。
-  // originalBinary 是 top-to-bottom (爻 6, 5, 4, 3, 2, 1)
-  // 互卦上卦 = 原卦 5, 4, 3爻 -> originalBinary.substring(1, 4)
-  // 互卦下卦 = 原卦 4, 3, 2爻 -> originalBinary.substring(2, 5)
-  const huBinary = originalBinary.substring(1, 4) + originalBinary.substring(2, 5);
-  const huHexagram = hexagrams[huBinary] || { name: '无', constitution: '' };
-
-  // --- 2. 明确找出动爻位置和爻题 ---
+  
   const movingLineInfos = [];
   if (movingLinesCount > 0) {
     for (let i = 0; i < originalLines.length; i++) {
@@ -129,7 +103,15 @@ exports.main = async (event, context) => {
     }
   }
 
-  // --- 3. 构建专家级Prompt ---
+  // ... [省略构建 prompt 的代码，与原文件相同] ...
+  
+  const zongBinary = originalBinary.split('').reverse().join('');
+  const zongHexagram = hexagrams[zongBinary] || { name: '未知', constitution: '' };
+  const cuoBinary = originalBinary.split('').map(b => (b === '1' ? '0' : '1')).join('');
+  const cuoHexagram = hexagrams[cuoBinary] || { name: '未知', constitution: '' };
+  const huBinary = originalBinary.substring(1, 4) + originalBinary.substring(2, 5);
+  const huHexagram = hexagrams[huBinary] || { name: '无', constitution: '' };
+  
   let prompt = `你是一位精通《易经》、学识渊博的智者。请根据我提供的、已经过精确计算的完整占卜信息，进行一次全面、深刻、多维度的解读。
 
 **核心占卜信息**
@@ -170,11 +152,7 @@ exports.main = async (event, context) => {
 
 请直接开始你的解读。`;
 
-  console.log('--- 构造的 Prompt 如下 ---');
-  console.log(prompt);
-  console.log('--------------------------');
 
-  // 2. 调用 AI API
   try {
     const response = await got.post(LLM_URL, {
       headers: {
@@ -182,7 +160,7 @@ exports.main = async (event, context) => {
         'Authorization': `Bearer ${LLM_API_KEY}`
       },
       json: {
-        model: "deepseek-chat", // 或者您使用的其他模型
+        model: "deepseek-chat",
         messages: [
           { "role": "system", "content": "你是一位精通《易经》的智者，能够根据用户提供的卦象信息，给出深刻而富有哲理的解读。" },
           { "role": "user", "content": prompt }
@@ -195,7 +173,23 @@ exports.main = async (event, context) => {
     if (response.body && response.body.choices && response.body.choices[0]) {
       const aiResult = response.body.choices[0].message.content;
       
-      // 返回结构化数据
+      const db = cloud.database();
+      const wxContext = cloud.getWXContext();
+      await db.collection('divination_records').add({
+        data: {
+          _openid: wxContext.OPENID,
+          type: 'hexagram',
+          question: question || '未提供问题', // 保证question字段存在
+          hexagrams: {
+            original: originalHexagram,
+            changed: changedHexagram,
+            movingLines: movingLineInfos
+          },
+          analysis: aiResult,
+          createdAt: new Date(),
+        }
+      });
+
       return {
         success: true,
         analysis: {
@@ -203,7 +197,6 @@ exports.main = async (event, context) => {
           changedHexagram: changedHexagram,
           movingLineInfos: movingLineInfos,
           aiInterpretation: aiResult,
-          // 辅助信息，前端可以根据需要展示
           supplementaryInfo: {
             zongHexagram: zongHexagram,
             cuoHexagram: cuoHexagram,
@@ -216,14 +209,13 @@ exports.main = async (event, context) => {
     }
 
   } catch (error) {
-    console.error('调用 AI API 时发生错误:', error);
-    // 如果是 got 的 HTTPError，打印更详细的信息
+    console.error('调用 AI API 或数据库操作时发生错误:', error);
     if (error.response) {
       console.error('API 响应体:', error.response.body);
     }
     return {
       success: false,
-      error: '调用 AI 服务失败，请稍后再试。'
+      error: '调用 AI 服务或数据库操作失败，请稍后再试。'
     };
   }
 };

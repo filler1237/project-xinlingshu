@@ -40,7 +40,7 @@
         <text class="growth-value-text">成长值: {{growthValue}}</text>
       </view>
       <view class="water-button {{waterdrops <= 0 ? 'disabled' : ''}}" bindtap="onWatering">
-        <image class="water-drop-icon" src="/image/water-drop.png" /> <!-- 假设水滴图标路径 -->
+        <image class="water-drop-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png" />
         <text>浇水 ({{waterdrops}})</text>
       </view>
     </view>

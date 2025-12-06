@@ -1,4 +1,4 @@
-import * as echarts from '/pkg_echarts/ec-canvas/echarts';
+import * as echarts from '../../pkg_echarts/ec-canvas/echarts';
 
 let chart = null; // 将 chart 提升为全局变量，方便在页面方法中调用
 

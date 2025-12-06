@@ -15,7 +15,7 @@
   <image class="array" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Vector 1.jpg" style="width: 6rpx;"/>
   <!-- 使用Flexbox重构图标区域 -->
   <view class="actions-container">
-    <navigator class="action-item" url="/sushuo/XIE/record/record">
+    <navigator class="action-item" url="/mine/record/record">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/slideshow-line.jpg"/>
       <text class="txt">我的树洞</text>
     </navigator>

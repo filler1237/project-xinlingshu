@@ -2,7 +2,7 @@
   <view class="task-panel {{ isExpanded ? 'expanded' : '' }}">
     <view class="header" bind:tap="togglePanel">
       <text class="header-title">今日任务 ({{tasks.length}})</text>
-      <image class="arrow {{ isExpanded ? 'up' : '' }}" src="/image/arrow.png"></image>
+      <image class="arrow {{ isExpanded ? 'up' : '' }}" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/箭头_列表展开.png"></image>
     </view>
     <view class="task-list-container">
       <view class="task-list">
