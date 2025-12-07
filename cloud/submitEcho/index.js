@@ -18,28 +18,7 @@ exports.main = async (event, context) => {
     };
   }
   try {
-    // 内容安全审核
-    console.log(`[内容审核] 准备审核内容: "${echo}"`);
-    const reviewResult = await cloud.callFunction({
-      name:'testReview',
-      data: {
-        content: echo
-      }
-    });
 
-    // 检查审核结果
-    if(!reviewResult.result || !reviewResult.result.pass) {
-      console.warn(`[审核不通过] 内容: "${echo}"`, reviewResult.result);
-      return {
-        code: 101,
-        success: false,
-        message: reviewResult.result ? reviewResult.result.mess  : '内容审核失败',
-
-      };
-    }
-    console.log(`[审核通过] 内容: "${echo}"`);
-
-    
     const now = new Date();
     const localDate = new Date(now.getTime() + (8 * 60 * 60 * 1000));
     const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate());
@@ -58,7 +37,6 @@ exports.main = async (event, context) => {
     // 更新指定的烦恼记录
     const result = await db.collection('vents').doc(ventId).update({
       data: {
-        status: 'replied',
         echo: echo,
         echoer_openid: openid,
         repliedAt: new Date(),
