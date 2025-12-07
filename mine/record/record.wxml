@@ -1,18 +1,63 @@
-<!--pages/mine/record/record.wxml-->
-<navigation-bar title='{{title}}'></navigation-bar>
+<!--mine/record/record.wxml-->
+<navigation-bar title="我的占卜记录"></navigation-bar>
 
+<view class="container">
+  <!-- 塔罗牌占卜记录 -->
+  <view class="section">
+    <view class="section-title">塔罗占卜记录</view>
+    
+    <block wx:if="{{!isLoading && tarotRecords.length > 0}}">
+      <!-- 记录列表 -->
+      <view class="record-list {{isTarotExpanded ? 'expanded' : ''}}">
+        <view class="record-card" wx:for="{{tarotRecords}}" wx:key="_id" bindtap="goToDetail" data-id="{{item._id}}" data-type="tarot" wx:if="{{isTarotExpanded || index < 3}}">
+          <view class="card-title">{{item.question}}</view>
+          <view class="card-date">{{item.date}}</view>
+        </view>
+      </view>
+      
+      <!-- 展开/折叠按钮 -->
+      <view class="collapse-toggle" wx:if="{{tarotRecords.length > 3}}" bindtap="toggleTarotCollapse">
+        <text>{{isTarotExpanded ? '收起记录' : '展开更多'}}</text>
+        <image class="arrow-icon {{isTarotExpanded ? 'up' : ''}}" src="/image/arrow-down.png" />
+      </view>
+    </block>
 
-<view class="max">
-  <block wx:for="{{RECORD}}" wx:key="index">
-    <view class="recordbox" style="background-color: {{item.backgroundColor}};">
-      <view class="imgbox">
-        <image class="img" src="{{item.imgSrc}}" mode="aspectFill"/>
-      </view>
-      <view class="textbox">
-        <text style="font-size: 25rpx;">{{item.date}}</text>
-        <text style="font-size: 40rpx;">{{item.title}}</text>
-        <text style="font-size: 30rpx;">{{item.result}}</text>
-      </view>
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!isLoading && tarotRecords.length === 0}}">
+      <view>暂无塔罗记录</view>
+      <view class="empty-tip">📌 快去占卜试试看吧～</view>
     </view>
-  </block>
+  </view>
+
+  <!-- 周易占卜记录 -->
+  <view class="section">
+    <view class="section-title">周易占卜记录</view>
+
+    <block wx:if="{{!isLoading && zhouyiRecords.length > 0}}">
+      <!-- 记录列表 -->
+      <view class="record-list {{isZhouyiExpanded ? 'expanded' : ''}}">
+        <view class="record-card" wx:for="{{zhouyiRecords}}" wx:key="_id" bindtap="goToDetail" data-id="{{item._id}}" data-type="zhouyi" wx:if="{{isZhouyiExpanded || index < 3}}">
+          <view class="card-title">卦象：{{item.hexagram}}</view>
+          <view class="card-date">{{item.date}}</view>
+        </view>
+      </view>
+
+      <!-- 展开/折叠按钮 -->
+      <view class="collapse-toggle" wx:if="{{zhouyiRecords.length > 3}}" bindtap="toggleZhouyiCollapse">
+        <text>{{isZhouyiExpanded ? '收起记录' : '展开更多'}}</text>
+        <image class="arrow-icon {{isZhouyiExpanded ? 'up' : ''}}" src="/image/arrow-down.png" />
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!isLoading && zhouyiRecords.length === 0}}">
+      <view>暂无周易记录</view>
+      <view class="empty-tip">📌 快去占卜试试看吧～</view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{isLoading}}">
+    <text>加载中...</text>
+  </view>
 </view>

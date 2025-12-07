@@ -79,6 +79,20 @@ exports.main = async (event, context) => {
     // 移除Markdown等特殊符号
     analysis = analysis.replace(/[#*-]/g, '');
 
+    // 将结果存入数据库
+    const db = cloud.database();
+    const wxContext = cloud.getWXContext();
+    await db.collection('divination_records').add({
+      data: {
+        _openid: wxContext.OPENID,
+        type: 'tarot',
+        question: question,
+        cards: selectedCards,
+        analysis: analysis,
+        createdAt: new Date(),
+      }
+    });
+
     return {
       analysisResult: analysis,
     };
