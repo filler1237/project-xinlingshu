@@ -1,0 +1,134 @@
+/* 全局背景设为清爽的灰白色 */
+page {
+  background-color: #FAFAFA;
+}
+
+.container {
+  padding: 0;
+  padding-bottom: 40rpx;
+  /* 覆盖全局 app.wxss 的样式 */
+  display: block; 
+  height: auto;
+  align-items: unset;
+  justify-content: unset;
+}
+
+/* 列表项卡片设计 */
+.message-card {
+  display: flex;
+  background-color: #FFFFFF;
+  padding: 30rpx;
+  margin-bottom: 2rpx; /* 极细分割线效果 */
+  width: 100%; /* 强制撑满 */
+  box-sizing: border-box; /* 包含 padding */
+}
+
+/* 点击反馈 */
+.message-card:active {
+  background-color: #F5F5F5;
+}
+
+/* 头像样式 */
+.card-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 12rpx; /* 微圆角，比纯圆更现代 */
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  background-color: #eee;
+}
+
+/* 右侧内容容器 */
+.card-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部布局 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6rpx;
+}
+
+/* 昵称 - 使用参考图中的绿色/深色风格，或者微信蓝 */
+.card-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #3b4f69; /* 接近参考图的深蓝色名 */
+}
+
+/* 时间 - 弱化显示 */
+.card-time {
+  font-size: 24rpx;
+  color: #B2B2B2;
+}
+
+/* 操作类型文本 */
+.action-row {
+  margin-bottom: 12rpx;
+}
+
+.action-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 主要内容 - 评论本体 */
+.main-content {
+  font-size: 30rpx;
+  color: #333333;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+  word-break: break-all;
+}
+
+/* 灰色引用盒子 - 核心亮点 */
+.quote-box {
+  background-color: #F7F7F7; /* 经典的浅灰背景 */
+  padding: 16rpx 20rpx;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: flex-start;
+}
+
+.quote-text {
+  font-size: 26rpx;
+  color: #777777;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 最多显示两行 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.arrow {
+  margin-left: 8rpx;
+  color: #ccc;
+  font-family: monospace;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200rpx;
+}
+
+.empty-img {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5; /* 让占位图不那么抢眼 */
+}
+
+.empty-state text {
+  font-size: 28rpx;
+  color: #999;
+}

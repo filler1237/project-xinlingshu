@@ -90,7 +90,8 @@
         "record/record",
         "record/detail/detail",
         "datashow/datashow",
-        "datashow1/datashow1"
+        "datashow1/datashow1",
+        "message/message"
       ]
     },
     {

@@ -1,0 +1,52 @@
+<view class="container">
+  <view wx:if="{{messages.length === 0}}" class="empty-state">
+    <image class="empty-img" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/empty-box.png" mode="aspectFit"></image>
+    <text>暂无新消息</text>
+  </view>
+
+  <view 
+    wx:for="{{messages}}" 
+    wx:key="_id" 
+    class="message-card"
+    bindtap="onItemTap" 
+    data-articleid="{{item.relatedId}}" 
+    data-type="{{item.type}}"
+  >
+    <image class="card-avatar" src="{{item.senderAvatar}}" mode="aspectFill"></image>
+    
+    <view class="card-right">
+      <!-- 头部：昵称与时间 -->
+      <view class="card-header">
+        <text class="card-name">{{item.senderName}}</text>
+        <text class="card-time">{{item.timeDisplay}}</text>
+      </view>
+
+      <!-- 中间：操作类型描述 -->
+      <view class="action-row">
+        <text wx:if="{{item.type === 'community_like'}}" class="action-text">赞了你的帖子</text>
+        <text wx:elif="{{item.type === 'community_comment'}}" class="action-text">评论了你</text>
+        <text wx:elif="{{item.type === 'community_reply'}}" class="action-text">回复了你</text>
+        <text wx:elif="{{item.type === 'treehole_reply'}}" class="action-text">回应了你的树洞</text>
+      </view>
+
+      <!-- 主要内容区：对于点赞，通常没有评论内容，所以隐藏。对于评论，显示评论内容 -->
+      <view class="main-content" wx:if="{{item.type !== 'community_like'}}">
+        {{item.content}}
+      </view>
+
+      <!-- 灰色引用盒子 -->
+      <view class="quote-box">
+        <block wx:if="{{item.type === 'community_like'}}">
+          <!-- 如果是点赞，box里显示关联内容的引用，或者固定文案 -->
+          <!-- 避免重复显示 '赞了你的帖子' -->
+          <text class="quote-text">{{ (item.content && item.content !== '赞了你的帖子') ? item.content : '点击查看原贴' }}</text>
+        </block>
+        <block wx:else>
+           <!-- 对于评论，这里展示来源占位 -->
+          <text class="quote-text">查看原贴详情</text>
+        </block>
+        <text class="arrow">></text>
+      </view>
+    </view>
+  </view>
+</view>
