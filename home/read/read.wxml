@@ -3,7 +3,7 @@
 
 <view class="articles-list">
   <!-- 文章卡片循环开始 -->
-  <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="goToDetail" data-id="{{item._id}}">
+  <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="goToDetail" data-id="{{item._id}}" data-collectionname="{{item.collectionName}}">
 
     <view class="card-header" catch:tap="goToUserProfile" data-userid="{{item._openid}}">
       <image class="author-avatar" src="{{item.authorAvatarUrl}}" mode="aspectFill"></image>
@@ -31,7 +31,7 @@
     </view>
 
     <view class="card-footer">
-      <view class="footer-item" catch:tap="onToggleLike" data-id="{{item._id}}" data-index="{{index}}">
+      <view class="footer-item" catch:tap="onToggleLike" data-id="{{item._id}}" data-index="{{index}}" data-collectionname="{{item.collectionName}}">
         <image class="footer-icon" src="{{item.liked ? 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/likeup.png' : 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png'}}"></image>
         <text>{{item.likes}}</text>
       </view>

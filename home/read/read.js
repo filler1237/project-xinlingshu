@@ -97,6 +97,7 @@ Page({
     const articleId = event.currentTarget.dataset.id;
     const index = event.currentTarget.dataset.index;
     const article = this.data.articles[index];
+    const collectionName = article.collectionName;
 
     // 更新ui
     const updatedLiked = !article.liked;
@@ -109,7 +110,8 @@ Page({
     wx.cloud.callFunction({
       name:'dianzan',
       data:{
-        articleId:articleId
+        articleId:articleId,
+        collectionName: collectionName
       },
       success: res=>{
         if(res.result && res.result.success) {
