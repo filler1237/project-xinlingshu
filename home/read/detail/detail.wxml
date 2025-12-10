@@ -18,6 +18,13 @@
           </block>
           {{article.content}}
         </view>
+        <!-- 文章底部操作栏 -->
+        <view class="article-actions">
+          <view class="action-item" bindtap="onToggleArticleLike">
+             <image class="action-icon" src="{{article.liked ? 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/likeup.png' : 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png'}}"></image>
+             <text class="action-count">{{article.likes || 0}}</text>
+          </view>
+        </view>
       </view>
     </view>
 
@@ -28,19 +35,58 @@
       <view class="comments-title">全部评论</view>
     
       <!-- 使用 wx:if 和 wx:else 来确保只显示一种状态 -->
+      <!-- 使用 wx:if 和 wx:else 来确保只显示一种状态 -->
       <block wx:if="{{comments.length > 0}}">
         <!-- 评论循环 -->
         <view wx:for="{{comments}}" wx:key="_id" class="comment-item">
+          <!-- 根评论头像 -->
           <image class="comment-avatar" src="{{item.authorAvatarUrl}}" mode="aspectFill"></image>
+          
           <view class="comment-main">
+            <!-- 根评论头部 -->
             <view class="comment-header">
               <view class="comment-author-time">
                 <view class="comment-author">{{item.authorNickName}}</view>
                 <view class="comment-time">{{item.createTime}}</view>
               </view>
-              <image class="comment-like-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
+              <view class="comment-actions">
+                <view class="reply-text" bindtap="onTapReply" data-comment="{{item}}">回复</view>
+                <image class="comment-like-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
+              </view>
             </view>
-            <view class="comment-content">{{item.content}}</view>
+            
+            <!-- 根评论内容 -->
+            <view class="comment-content" bindtap="onTapReply" data-comment="{{item}}">{{item.content}}</view>
+
+            <!-- 子评论（回复）区域 -->
+            <view class="reply-box" wx:if="{{item.replies && item.replies.length > 0}}">
+              <view class="reply-item" wx:for="{{item.replies}}" wx:for-item="reply" wx:key="_id" bindtap="onTapReply" data-comment="{{reply}}">
+                <!-- 回复头部 -->
+                <view class="reply-header">
+                  <image class="reply-avatar" src="{{reply.authorAvatarUrl}}" mode="aspectFill"></image>
+                  <view class="reply-author-time">
+                    <view class="reply-author">
+                      {{reply.authorNickName}} 
+                      <block wx:if="{{reply.replyToUserId && reply.replyToUserId !== item._openid}}">
+                        <text class="reply-arrow">回复</text> {{reply.replyToUserName}}
+                      </block>
+                      <block wx:if="{{reply.authorNickName === article.authorNickname}}">
+                        <text class="author-badge">作者</text>
+                      </block>
+                    </view>
+                    <view class="reply-time">{{reply.createTime}}</view>
+                  </view>
+                  <image class="reply-like-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
+                </view>
+                <!-- 回复内容 -->
+                <view class="reply-content">{{reply.content}}</view>
+              </view>
+              <!-- 展开更多回复（如果需要，暂时不需要实现完整逻辑，留个入口） -->
+               <view class="expand-replies" wx:if="{{item.replies.length > 5}}">
+                展开{{item.replies.length}}条回复 >
+              </view>
+            </view>
+
           </view>
         </view>
       </block>
@@ -54,12 +100,16 @@
 
 <!-- 底部评论输入框 -->
 <view class="comment-input-bar">
+  <!-- 如果正在回复某人，显示取消按钮 -->
+   <view class="cancel-reply" wx:if="{{replyTo}}" bindtap="onClearReply">×</view>
+
   <input 
     class="comment-input" 
-    placeholder="郑锐荣好帅..." 
+    placeholder="{{replyTo ? '回复 ' + replyTo.user + '：' : '郑锐荣好帅...'}}" 
     value="{{commentContent}}"
     bindinput="onCommentInput"
     confirm-type="send"
+    focus="{{!!replyTo}}"
     bindconfirm="submitComment"
   />
   <button class="send-button" bind:tap="submitComment" disabled="{{!commentContent}}">发送</button>

@@ -52,7 +52,7 @@ exports.main = async (event, context) => {
         as: 'comments',
       })
       .end();
-      
+
     const [articlesRes, drawingsRes] = await Promise.all([articlesPromise, drawingsPromise]);
 
     let articles = articlesRes.list;
@@ -64,25 +64,32 @@ exports.main = async (event, context) => {
       content: item.description, // 使用 description 作为 content
       // drawings 特有的字段
       isDrawing: true,
-      imageUrl: item.fileID 
+      imageUrl: item.fileID,
+      collectionName: 'drawings'
     }));
-    
+
+    articles = articles.map(item => ({
+      ...item,
+      collectionName: 'articles'
+    }));
+
     // 合并两个数据源并排序
     let combinedList = [...articles, ...drawings];
     combinedList.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
-    
+
     // 如果需要分页，合并后可能需要截取
     // 为了简单起见，这里假设两个源各取 pageSize 然后合并，前端需要能处理重复数据
     // 一个更优的方案是在数据库层面做 union，但小程序云数据库不支持
     // 所以我们取了数据后再合并排序
     articles = combinedList.slice(0, pageSize);
 
-    // 2. 查询当前用户的所有点赞记录
+    // 2. 查询当前用户的所有点赞记录 (增加limit防止数据量大时查不全)
     const userLikesRes = await db.collection('likes').where({
       _openid: openid
-    }).get();
-    
-    const userLikedArticleIds = new Set(userLikesRes.data.map(like => like.articleId));
+    }).limit(1000).get();
+
+    // 注意：dianzan云函数存的是 articlesId，不是 articleId
+    const userLikedKeys = new Set(userLikesRes.data.map(like => `${like.articlesId}_${like.collectionName}`));
 
     // 3. 遍历合并后的列表，处理数据并添加 liked 状态
     articles = articles.map(item => {
@@ -102,13 +109,13 @@ exports.main = async (event, context) => {
       } else {
         item.summary = '';
       }
-      
+
       // 初始化计数字段
       item.likes = item.likes || 0;
       item.commentsCount = item.comments ? item.comments.length : 0;
 
       // 添加点赞状态
-      item.liked = userLikedArticleIds.has(item._id);
+      item.liked = userLikedKeys.has(`${item._id}_${item.collectionName}`);
 
       return item;
     });

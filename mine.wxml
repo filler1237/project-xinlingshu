@@ -24,7 +24,10 @@
     </navigator>
     <view class="divider"></view>
     <navigator class="action-item" url="">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/pie-chart-line.jpg"></image>
+      <view class="icon-wrapper">
+        <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/pie-chart-line.jpg"></image>
+        <view class="badge" wx:if="{{unreadCount > 0}}">{{unreadCount > 99 ? '99+' : unreadCount}}</view>
+      </view>
       <text class="txt">我的消息</text>
     </navigator>
     <view class="divider"></view>

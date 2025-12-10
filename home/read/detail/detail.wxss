@@ -3,25 +3,59 @@
 page {
   background-color: #f7f7f7;
   padding-bottom: 120rpx; /* 为底部输入框留出空间 */
+  /* 确保页面本身不引入左右留白 */
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .container {
-  padding: 30rpx 0;
+  padding: 0; /* 移除所有内边距 */
+  width: 100%; /* 确保占据全宽 */
+  box-sizing: border-box; /* 确保 padding 不会增加总宽度 */
 }
 
 /* 文章区域 */
 .article-wrapper {
   background-color: #fff;
-  padding: 30rpx;
-
+  padding: 30rpx 0; /* 只保留上下内边距，移除左右内边距 */
+  width: 100%; /* 确保占据全宽 */
+  box-sizing: border-box;
+  box-sizing: border-box;
 }
 
+/* 文章底部操作栏（点赞等） */
+.article-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20rpx 40rpx;
+  border-top: 1rpx solid #f5f5f5;
+  margin-top: 30rpx;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+}
+
+.action-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 10rpx;
+}
+
+.action-count {
+  font-size: 28rpx;
+  color: #666;
+}
 
 /* 分隔线 */
 .divider {
   height: 1rpx;
   background-color: #e0e0e0;
   margin: 20rpx 0;
+  width: 100%; /* 确保占据全宽 */
+  box-sizing: border-box;
 }
 
 /* 评论区域 */
@@ -29,22 +63,30 @@ page {
   background-color: #fff;
   padding-bottom: 30rpx;
   border-radius: 16rpx;
-  width: 750rpx;
+  /* 移除固定宽度，让其自然撑开 */
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0; /* 移除左右内边距 */
+  padding-right: 0; /* 移除左右内边距 */
 }
 
 .comments-title {
   font-size: 32rpx;
   font-weight: bold;
   margin-bottom: 30rpx;
-  padding: 30rpx 30rpx 10rpx 30rpx; /* 统一设置内边距 */
+  padding: 30rpx 0 10rpx 0; /* 只保留上下内边距，移除左右内边距 */
   border-bottom: 1rpx solid #f0f0f0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* 评论条目 - 核心样式 */
 .comment-item {
   display: flex;
-  padding: 20rpx 30rpx; /* 为评论条目添加左右边距 */
+  padding: 20rpx 0; /* 只保留上下内边距，移除左右内边距 */
   border-bottom: 1rpx solid #f0f0f0;
+  width: 100%;
+  box-sizing: border-box;
 }
 .comment-item:last-child {
   border-bottom: none;
@@ -107,6 +149,8 @@ page {
   text-align: center;
   color: #999;
   padding: 40rpx 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* 底部评论输入框 */
@@ -117,9 +161,11 @@ page {
   right: 0;
   display: flex;
   align-items: center;
-  padding: 15rpx 20rpx;
+  padding: 15rpx 0; /* 移除左右内边距 */
   background-color: #fff;
   border-top: 1rpx solid #e0e0e0;
+  width: 100%; /* 确保占据全宽 */
+  box-sizing: border-box;
 }
 
 .comment-input {
@@ -127,8 +173,9 @@ page {
   height: 70rpx;
   background-color: #f2f2f2;
   border-radius: 35rpx;
-  padding: 0 30rpx;
+  padding: 0 0; /* 移除左右内边距 */
   font-size: 28rpx;
+  box-sizing: border-box;
 }
 
 .send-button {
@@ -144,4 +191,105 @@ page {
 .send-button[disabled] {
   background-color: #9ae6b6;
   color: #e0e0e0;
+}
+
+/* 评论操作区 */
+.comment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.reply-text {
+  font-size: 26rpx;
+  color: #555;
+  margin-right: 20rpx;
+}
+
+/* 子回复区域 */
+.reply-box {
+  background-color: #f7f7f7;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-top: 20rpx;
+}
+
+.reply-item {
+  margin-bottom: 20rpx;
+}
+
+.reply-item:last-child {
+  margin-bottom: 0;
+}
+
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.reply-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.reply-author-time {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; /* 垂直排列 */
+}
+
+.reply-author {
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.reply-arrow {
+  color: #999;
+  margin: 0 5rpx;
+  font-size: 24rpx;
+}
+
+.author-badge {
+    background-color: #f0ad4e;
+    color: white;
+    font-size: 20rpx;
+    padding: 2rpx 6rpx;
+    border-radius: 4rpx;
+    margin-left: 10rpx;
+}
+
+.reply-time {
+  font-size: 22rpx;
+  color: #bbb;
+}
+
+.reply-like-icon {
+    width: 30rpx;
+    height: 30rpx;
+}
+
+.reply-content {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 55rpx; /* 与头像对齐 */
+}
+
+.expand-replies {
+  font-size: 26rpx;
+  color: #576b95;
+  margin-top: 15rpx;
+  padding-left: 0;
+}
+
+/* 取消回复按钮 */
+.cancel-reply {
+    font-size: 40rpx;
+    color: #999;
+    padding: 0 20rpx;
+    line-height: 70rpx;
 }

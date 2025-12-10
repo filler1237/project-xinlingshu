@@ -4,7 +4,7 @@
 <view class="profile-page" wx:if="{{!isLoading}}">
   <!-- 1. 用户信息头部 -->
   <view class="profile-header">
-    <image class="header-bg" src="/image/profile-bg.jpg" mode="aspectFill"></image> <!-- 您需要提供一张背景图 -->
+    <image class="header-bg" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/背景图.jpeg" mode="aspectFill"></image> <!-- 您需要提供一张背景图 -->
     <view class="user-info-box">
       <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
       <view class="user-nickname">{{userInfo.nickName}}</view>
@@ -22,11 +22,11 @@
       </view>
       <view class="card-footer">
         <view class="footer-item">
-          <image class="footer-icon" src="/image/like.png"></image>
+          <image class="footer-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
           <text>{{item.likes}}</text>
         </view>
         <view class="footer-item">
-          <image class="footer-icon" src="/image/comment.png"></image>
+          <image class="footer-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/comment.png"></image>
           <text>{{item.commentsCount}}</text>
         </view>
       </view>

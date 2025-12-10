@@ -7,7 +7,7 @@ Page({
     // 页面显示的最终数据
     avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
     nickName: "游客，点击登录",
-    
+
     // 内部状态数据
     isLogin: false,
     userInfo: null,
@@ -17,7 +17,7 @@ Page({
     showEditProfilePopup: false,
     editingNickName: '',
     tempAvatarUrl: '',
-    
+
     // 新增：身份选择相关
     showIdentityPopup: false, // 身份选择弹窗
     selectedIdentity: '', // 用户选择的身份
@@ -27,7 +27,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
+  onLoad: function () {
     this.getOpenid();
   },
 
@@ -49,6 +49,22 @@ Page({
       // 刷新用户信息，以同步最新的身份绑定状态等
       this.refreshUserInfo(userInfo._id);
     }
+    this.getUnreadCount();
+  },
+
+  getUnreadCount() {
+    if (!this.data.isLogin) return;
+    wx.cloud.callFunction({
+      name: 'getUnreadCount',
+      success: res => {
+        if (res.result.success) {
+          this.setData({
+            unreadCount: res.result.count
+          });
+        }
+      },
+      fail: console.error
+    });
   },
 
   /**
@@ -104,7 +120,7 @@ Page({
       }
     });
   },
-  
+
   /**
    * 3. 选择身份
    */
@@ -113,7 +129,7 @@ Page({
     this.setData({
       selectedIdentity: identity
     });
-    
+
     // 确认选择并执行登录
     wx.showModal({
       title: '身份确认',
@@ -129,12 +145,12 @@ Page({
   /**
    * 4. 根据选择的身份执行登录
    */
-  loginWithIdentity: function(identity) {
+  loginWithIdentity: function (identity) {
     const that = this;
     wx.showLoading({ title: '登录中...' });
-    
+
     console.log("开始登录，身份:", identity);
-    
+
     wx.cloud.callFunction({
       name: 'loginRegister',
       data: {
@@ -145,14 +161,14 @@ Page({
     }).then(res => {
       wx.hideLoading();
       console.log("登录云函数返回:", res);
-      
+
       if (res.result && res.result.userInfo) {
         const { userInfo } = res.result;
         console.log("登录/注册成功", userInfo);
 
         // 更新用户信息
         that.updateUserInfo(userInfo);
-        
+
         // 根据身份进行跳转
         that.redirectAfterLogin(userInfo.identity);
       } else {
@@ -175,16 +191,16 @@ Page({
   /**
    * 5. 登录后根据身份跳转
    */
-  redirectAfterLogin: function(identity) {
+  redirectAfterLogin: function (identity) {
     console.log("执行登录后跳转，身份:", identity);
-    
+
     // 关闭身份选择弹窗
-    this.setData({ 
+    this.setData({
       showIdentityPopup: false,
-      tempUserProfile: null 
+      tempUserProfile: null
     });
-    
-    switch(identity) {
+
+    switch (identity) {
       case 'student':
         wx.showToast({
           title: '学生登录成功',
@@ -193,7 +209,7 @@ Page({
         });
         // 学生留在当前页面，不需要跳转
         break;
-        
+
       case 'admin':
         console.log("管理员登录，准备跳转");
         wx.showToast({
@@ -215,7 +231,7 @@ Page({
           });
         }, 1000);
         break;
-        
+
       case 'judge':
         console.log("评委登录，准备跳转");
         wx.showToast({
@@ -236,7 +252,7 @@ Page({
           });
         }, 1000);
         break;
-        
+
       default:
         console.log("未知身份，不跳转");
         wx.showToast({
@@ -252,7 +268,7 @@ Page({
   getIdentityText(identity) {
     const identityMap = {
       'student': '学生',
-      'admin': '管理员', 
+      'admin': '管理员',
       'judge': '评委'
     };
     return identityMap[identity] || '用户';
@@ -299,7 +315,7 @@ Page({
             wx.navigateTo({
               url: '/pages/auth/usercenter/usercenter',
             });
-          } 
+          }
         }
       });
     }
@@ -382,7 +398,7 @@ Page({
       });
     });
   },
-  
+
   doNothing() {
     // 用于阻止事件冒泡
   },
@@ -433,9 +449,9 @@ Page({
   /**
    * 活动系统点击处理
    */
-  onActivitySystemTap: function() {
+  onActivitySystemTap: function () {
     console.log("点击活动系统", this.data.isLogin, this.data.userInfo);
-    
+
     if (!this.data.isLogin) {
       wx.showToast({
         title: '请先登录',
@@ -443,11 +459,11 @@ Page({
       });
       return;
     }
-    
+
     // 安全获取用户身份，添加更多调试信息
     const userInfo = this.data.userInfo;
     console.log("完整用户信息:", userInfo);
-    
+
     if (!userInfo) {
       wx.showToast({
         title: '用户信息获取失败',
@@ -455,14 +471,14 @@ Page({
       });
       return;
     }
-    
+
     // 获取身份，如果没有身份字段则默认为学生
     const identity = userInfo.identity || 'student';
     console.log("用户身份:", identity);
-    
+
     let targetUrl = '';
-    
-    switch(identity) {
+
+    switch (identity) {
       case 'student':
         targetUrl = '/competition/pages/studenthome/studenthome';
         break;
@@ -479,9 +495,9 @@ Page({
         });
         return;
     }
-    
+
     console.log("跳转到:", targetUrl);
-    
+
     wx.navigateTo({
       url: targetUrl,
       success: (res) => {
@@ -497,7 +513,7 @@ Page({
   /**
    * 显示路径错误对话框
    */
-  showPathErrorDialog: function(identity, path, err) {
+  showPathErrorDialog: function (identity, path, err) {
     wx.showModal({
       title: '跳转失败',
       content: `${identity}页面跳转失败\n路径: ${path}\n错误: ${err.errMsg}\n请检查页面是否存在且路径正确`,
@@ -508,16 +524,16 @@ Page({
   /**
    * 路径诊断功能
    */
-  diagnoseNavigation: function() {
+  diagnoseNavigation: function () {
     console.log("=== 开始诊断跳转路径 ===");
-    
+
     const testPaths = [
       {
         name: "管理员路径",
         url: "/competition/pages/adminhome/adminhome"
       },
       {
-        name: "评委路径", 
+        name: "评委路径",
         url: "/competition/pages/judgehome/judgehome"
       },
       {
@@ -525,7 +541,7 @@ Page({
         url: "/competition/pages/studenthome/studenthome"
       }
     ];
-    
+
     testPaths.forEach((test, index) => {
       setTimeout(() => {
         console.log(`测试 ${test.name}: ${test.url}`);
@@ -549,11 +565,11 @@ Page({
   /**
    * 清除缓存并重新登录
    */
-  clearCacheAndRelogin: function() {
+  clearCacheAndRelogin: function () {
     // 清除本地缓存
     wx.removeStorageSync('userInfo');
     wx.removeStorageSync('openid');
-    
+
     // 重置页面状态
     this.setData({
       isLogin: false,
@@ -561,15 +577,15 @@ Page({
       avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
       nickName: "游客，点击登录"
     });
-    
+
     app.globalData.userInfo = null;
     app.globalData.isLogin = false;
-    
+
     wx.showToast({
       title: '缓存已清除，请重新登录',
       icon: 'success'
     });
-    
+
     // 重新获取openid
     this.getOpenid();
   },
@@ -577,12 +593,12 @@ Page({
   /**
    * 检查用户状态
    */
-  checkUserStatus: function() {
+  checkUserStatus: function () {
     console.log("=== 用户状态检查 ===");
     console.log("登录状态:", this.data.isLogin);
     console.log("用户信息:", this.data.userInfo);
     console.log("用户身份:", this.data.userInfo ? this.data.userInfo.identity : "未获取");
-    
+
     wx.showModal({
       title: '用户状态',
       content: `登录: ${this.data.isLogin}\n身份: ${this.data.userInfo ? this.data.userInfo.identity : "未获取"}`,
