@@ -127,6 +127,7 @@ Page({
           });
         }
       },
+      
       fail: err=>{
         // 若失败则回滚前端的更新
         this.setData({
