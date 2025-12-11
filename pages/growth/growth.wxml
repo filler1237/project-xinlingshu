@@ -2,7 +2,7 @@
 <view class="page-container">
   <!-- 自定义导航栏 -->
   <view class="nav-bar-wrapper">
-    <navigation-bar title="我的成长树" background="transparent"></navigation-bar>
+    <navigation-bar title="我的成长树" background="transparent" back="{{false}}"></navigation-bar>
   </view>
 
   <!-- 1. 顶部背景区域 -->
