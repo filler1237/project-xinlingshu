@@ -1,11 +1,9 @@
 /* pages/sushuo/DA/DA.wxss */
 .page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  /* 移除 flex，回归最原始的块级布局，避免高度计算干扰 */
+  min-height: 100vh;
   background-color: #f4f4f4;
   position: relative;
-  overflow: hidden; /* 防止页面滚动 */
 }
 
 /* --- 自定义导航栏 --- */
@@ -16,49 +14,38 @@
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: center; /* 标题居中 */
+  justify-content: space-between; /* 两端对齐，中间标题 */
   background-color: #ffffff;
   border-bottom: 1rpx solid #e0e0e0;
   z-index: 100;
+  padding: 0 10rpx; /* 增加一点内边距 */
+  box-sizing: border-box;
 }
 
 .back-button {
-  position: absolute;
-  left: 20rpx;
-  bottom: 0;
+  width: 80rpx; /* 固定宽度方便点击 */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20rpx;
-}
-
-.back-icon {
-  width: 40rpx;
-  height: 40rpx;
 }
 
 .title {
   font-size: 34rpx;
   font-weight: bold;
   color: #333;
+  position: absolute; /* 绝对定位居中 */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* --- 话题菜单按钮 (修改为悬浮按钮) --- */
-.topics-menu-button {
-  position: fixed; /* 使用 fixed 定位 */
-  right: 30rpx; /* 改为距离右边 30rpx */
-  width: 90rpx;
-  height: 90rpx;
-  background-color: #ffffff;
-  border-radius: 50%; /* 圆形 */
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15); /* 添加阴影 */
+.header-menu-btn {
+  width: 80rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 101; /* 确保在聊天内容之上 */
 }
 
-.topics-menu-icon {
+.back-icon, .topics-menu-icon {
   width: 48rpx;
   height: 48rpx;
 }
@@ -159,11 +146,20 @@
 
 /* --- 聊天区域 --- */
 .chat-container {
-  flex: 1;
-  height: 0; /* 保留此行以确保 flex: 1 在父容器高度固定时正确计算，从而启用滚动 */
-  padding-bottom: 120rpx; /* 为输入框留出空间 */
+  /* 绝杀修正：改用 fixed 定位，直接相对于屏幕视口，无视父级高度，彻底消除截断问题 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* 确保在输入框之下 */
   box-sizing: border-box;
-  width: 100%;
+  /* 
+     内边距策略：
+     Top: 留给 fixed header 的空间 (代码动态设置)
+     Bottom: 这里不再设置 padding-bottom，而是改为在 scroll-view 内部添加占位 view
+             这样兼容性更好，确保内容一定能被顶上去
+  */ 
 }
 
 .message-row {
@@ -195,58 +191,64 @@
   margin-right: 20rpx;
 }
 
+/* 气泡通用样式 */
 .message-bubble {
-  max-width: 70%;
-  padding: 20rpx;
-  border-radius: 20rpx;
+  max-width: 75%;
+  padding: 22rpx 30rpx;
+  border-radius: 16rpx;
   word-break: break-all;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.05);
+  position: relative;
+  font-size: 30rpx;
+  line-height: 1.6;
 }
 
+/* 用户气泡 - 微信绿 */
 .user-bubble {
-  background-color: #95ec69;
-  color: #333;
+  background-color: #95ec69; 
+  color: #1a1a1a;
+  border-top-right-radius: 4rpx; /* 非对称圆角 */
+  margin-right: 16rpx;
 }
 
+/* AI 气泡 - 纯白 */
 .ai-bubble {
   background-color: #ffffff;
-  color: #333;
+  color: #1a1a1a;
+  border-top-left-radius: 4rpx; /* 非对称圆角 */
+  margin-left: 16rpx;
 }
 
-.message-text {
-  font-size: 30rpx;
-  line-height: 1.5;
-}
-
-/* AI 思考中 */
+/* AI 思考中 - 优化动画容器 */
 .typing-indicator {
   display: flex;
   align-items: center;
-  padding: 10rpx 0;
+  justify-content: center;
+  padding: 10rpx 15rpx;
+  min-width: 80rpx;
 }
 
 .dot {
-  width: 16rpx;
-  height: 16rpx;
-  background-color: #aaa;
+  width: 14rpx;
+  height: 14rpx;
+  background-color: #999;
   border-radius: 50%;
-  margin: 0 6rpx;
-  animation: typing 1.2s infinite ease-in-out;
+  margin: 0 5rpx;
+  animation: typing 1.4s infinite ease-in-out both;
 }
 
-.dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+.dot:nth-child(3) { animation-delay: 0s; }
 
 @keyframes typing {
-  0%, 80%, 100% {
-    transform: scale(0);
+  0%, 80%, 100% { 
+    transform: scale(0.6);
+    opacity: 0.6;
   }
-  40% {
-    transform: scale(1.0);
+  40% { 
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -258,9 +260,13 @@
   right: 0;
   display: flex;
   align-items: center;
-  padding: 20rpx;
-  background-color: #f8f8f8;
-  border-top: 1rpx solid #e0e0e0;
+  padding: 24rpx 30rpx;
+  background-color: #f7f7f7; /* 稍浅一点 */
+  border-top: 1rpx solid #ebebeb;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.03); /* 上阴影 */
+  z-index: 100;
+  padding-bottom: calc(24rpx + constant(safe-area-inset-bottom)); /* 适配 iPhone X */
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
 }
 
 .input-box {

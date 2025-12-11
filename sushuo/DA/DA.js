@@ -47,7 +47,7 @@ Page({
 
   // --- 核心：话题管理 ---
 
-  loadUserTopics: function() {
+  loadUserTopics: function () {
     db.collection('chatTopics').where({ userId: this.data.userId }).orderBy('lastUpdated', 'desc').get().then(res => {
       if (res.data && res.data.length > 0) {
         // 如果有历史话题，加载它们
@@ -64,7 +64,7 @@ Page({
     });
   },
 
-  createNewTopic: function() {
+  createNewTopic: function () {
     const newTopicId = 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9);
     const newTopic = {
       _id: newTopicId,
@@ -92,7 +92,7 @@ Page({
     });
   },
 
-  switchTopic: function(e) {
+  switchTopic: function (e) {
     const topicId = e.currentTarget.dataset.topicId;
     if (topicId === this.data.currentTopicId) {
       this.setData({ isTopicsPanelOpen: false }); // 如果是当前话题，则只关闭面板
@@ -109,7 +109,7 @@ Page({
     }
   },
 
-  deleteTopic: function(e) {
+  deleteTopic: function (e) {
     const topicIdToDelete = e.currentTarget.dataset.topicId;
     wx.showModal({
       title: '确认删除',
@@ -164,11 +164,11 @@ Page({
 
   // --- UI 与事件处理 ---
 
-  toggleTopicsPanel: function() {
+  toggleTopicsPanel: function () {
     this.setData({ isTopicsPanelOpen: !this.data.isTopicsPanelOpen });
   },
 
-  onBackTap: function() {
+  onBackTap: function () {
     wx.navigateBack({ delta: 1 });
   },
 
@@ -176,27 +176,59 @@ Page({
     this.setData({ inputText: e.detail.value });
   },
 
-  previewImage: function(e) {
+  previewImage: function (e) {
     const currentUrl = e.currentTarget.dataset.src;
     const urls = this.data.content
-    .filter(item => item.type === 'image')
-    .map(item => item.imageUrl);
+      .filter(item => item.type === 'image')
+      .map(item => item.imageUrl);
     wx.previewImage({
       current: currentUrl,
       urls: urls
     });
   },
- // 解析多张图片与文本
-  _parseMessage: function(text) {
+
+  /**
+   * 长按消息气泡事件
+   */
+  onMessageLongPress: function (e) {
+    const text = e.currentTarget.dataset.text;
+    const type = e.currentTarget.dataset.type;
+
+    // 只有文本消息支持复制
+    if (!text || (type && type !== 'text')) return;
+
+    wx.showActionSheet({
+      itemList: ['复制'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          wx.setClipboardData({
+            data: text,
+            success: () => {
+              wx.showToast({
+                title: '已复制',
+                icon: 'success'
+              });
+            }
+          });
+        }
+      },
+      fail: (res) => {
+        console.log(res.errMsg);
+      }
+    });
+  },
+
+  // 解析多张图片与文本
+  _parseMessage: function (text) {
     const imageRegex = /!\[.*?\]\((.*?)\)/g;
     const messages = [];
     let lastIndex = 0;
     let match;
     // 循环查找所有图片
-    while((match = imageRegex.exec(text)) !== null) {
-      if(match.index > lastIndex) {
+    while ((match = imageRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
         const textPart = text.substring(lastIndex, match.index).trim();
-        if(textPart) {
+        if (textPart) {
           messages.push({
             type: 'text',
             text: textPart,
@@ -209,24 +241,24 @@ Page({
         type: 'image',
         imageUrl: match[1],
         isUser: false,
-        text:''
+        text: ''
       });
       lastIndex = imageRegex.lastIndex;
     }
 
-    if(lastIndex < text.length) {
+    if (lastIndex < text.length) {
       const remainingText = text.substring(lastIndex).trim();
-      if(remainingText) {
+      if (remainingText) {
         messages.push({
-          type:'text',
+          type: 'text',
           text: remainingText,
           isUser: false
         });
       }
     }
     // 没有匹配则返回纯文本
-    if(messages.length === 0) {
-      return [{ type: 'text', text: text.trim(),isUser:false }];
+    if (messages.length === 0) {
+      return [{ type: 'text', text: text.trim(), isUser: false }];
     }
     return messages;
 
@@ -234,24 +266,85 @@ Page({
 
   // --- 聊天逻辑  ---
 
+  scrollToBottom: function () {
+    this.setData({
+      scrollTop: 999999
+    });
+  },
+
+  /**
+   * 打字机效果处理函数
+   */
+  processStreamBuffer: function (fullText) {
+    if (!fullText) return;
+
+    // 如果已经在打字中，先清除之前的
+    if (this._typewriterTimer) clearInterval(this._typewriterTimer);
+
+    const chars = fullText.split('');
+    const that = this;
+    const TYPE_SPEED = 30; // 打字速度，越小越快
+    let currentIndex = 0;
+
+    // 获取最后一条消息索引（AI的占位消息）
+    const msgIndex = this.data.content.length - 1;
+
+    this._typewriterTimer = setInterval(() => {
+      if (currentIndex >= chars.length) {
+        clearInterval(that._typewriterTimer);
+        that._typewriterTimer = null;
+        that.setData({ isSending: false });
+        that.saveChatHistory();
+        return;
+      }
+
+      // 获取当前要追加的字符
+      // 为了性能，可以每次追加 2-3 个字符
+      const chunkSize = 2;
+      const chunk = fullText.substring(currentIndex, currentIndex + chunkSize);
+      currentIndex += chunkSize;
+
+      const currentText = that.data.content[msgIndex].text || '';
+      const updateKey = `content[${msgIndex}].text`;
+
+      that.setData({
+        [updateKey]: currentText + chunk
+      }, () => {
+        // 每几次更新滚动一次，避免频繁调用 setScroll
+        if (currentIndex % 10 === 0 || currentIndex >= chars.length) {
+          that.scrollToBottom();
+        }
+      });
+
+    }, TYPE_SPEED);
+  },
+
   sendMessage: function () {
     const message = this.data.inputText.trim();
     if (!message || this.data.isSending) return;
 
-    const newUserMessage = { text: message, isUser: true ,type: 'text' };
+    // 1. 用户消息上屏
+    const newUserMessage = { text: message, isUser: true, type: 'text' };
+
+    // 2. AI 占位消息（先放一个空的，用于打字）
+    const aiPlaceholder = { text: '', isUser: false, type: 'text' };
+
     this.setData({
-      content: [...this.data.content, newUserMessage],
+      content: [...this.data.content, newUserMessage, aiPlaceholder],
       inputText: '',
       isSending: true,
+    }, () => {
+      this.scrollToBottom();
     });
 
     const history = this.data.content
-    .slice(-6)
-    .filter(msg => msg.type === 'text' && msg.text)
-    .map(msg => ({
-      role: msg.isUser ? 'user' : 'assistant',
-      content: msg.text
-    }));
+      .slice(0, -2) // 排除掉刚刚加的那两条
+      .slice(-6)
+      .filter(msg => msg.type === 'text' && msg.text)
+      .map(msg => ({
+        role: msg.isUser ? 'user' : 'assistant',
+        content: msg.text
+      }));
 
     wx.cloud.callFunction({
       name: 'xinlixuejia',
@@ -259,22 +352,32 @@ Page({
       success: res => {
         const reply = (res.result && res.result.code === 0) ? res.result.reply : '抱歉，出错了，请稍后再试';
 
+        // 简单处理：如果包含多段（如图片），暂时不支持打字机，直接显示；如果是纯文本，打字机。
         const parsedMessages = this._parseMessage(reply);
 
-        this.setData({
-          content: [...this.data.content, ...parsedMessages]
-        });
+        if (parsedMessages.length > 1 || parsedMessages[0].type !== 'text') {
+          // 复杂内容：替换掉占位符
+          const list = this.data.content;
+          list.pop();
+          this.setData({
+            content: [...list, ...parsedMessages],
+            isSending: false
+          }, () => { this.scrollToBottom(); });
+          this.saveChatHistory();
+        } else {
+          // 纯文本：使用打字机
+          const textToType = parsedMessages[0].text;
+          this.processStreamBuffer(textToType);
+        }
       },
       fail: err => {
-        const networkError = { text: '网络开小差了，请检查网络连接', isUser: false, type: 'text' };
-        this.setData({
-          content: [...this.data.content, networkError]
-        });
         console.error('调用云函数失败:', err);
-      },
-      complete: () => {
-        this.setData({ isSending: false });
-        this.saveChatHistory(); // 保存到当前话题
+        const list = this.data.content;
+        list.pop(); // 移除占位
+        this.setData({
+          content: [...list, { text: '网络开了小差，请稍后重试', isUser: false, type: 'text' }],
+          isSending: false
+        }, () => { this.scrollToBottom(); });
       }
     });
   },
