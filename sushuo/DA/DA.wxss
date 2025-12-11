@@ -15,8 +15,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between; /* 两端对齐，中间标题 */
-  background-color: #ffffff;
-  border-bottom: 1rpx solid #e0e0e0;
+  background-color: #f4f4f4; /* 改为与页面背景一致的浅灰 */
+  /* border-bottom: 1rpx solid #e0e0e0; 移除边框以实现沉浸式效果 */
   z-index: 100;
   padding: 0 10rpx; /* 增加一点内边距 */
   box-sizing: border-box;

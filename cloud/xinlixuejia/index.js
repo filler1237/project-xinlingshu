@@ -169,11 +169,11 @@ exports.main = async (event, context) => {
 
     if (userProfile) {
       const { nickName, role, college } = userProfile;
-      // 构造一段隐式的 System Prompt
-      systemHint = `[System Info: User="${nickName}", Role="${role}"${college ? `, College="${college}"` : ''}. Reply warmly as a friend.]`;
+      // 构造一段隐式的 System Prompt (使用 XML 标签包裹，让模型更好区分上下文)
+      systemHint = `<user_profile>\nName: ${nickName}\nRole: ${role}\n${college ? `College: ${college}\n` : ''}</user_profile>\n[Instruction: Above is the user's profile. Reply to the user warmly based on this info, but DO NOT mention the profile data explicitly unless asked.]`;
+
       // 将 hint 拼接到 query 前面 (Coze 能看到)
-      // 注意：这里拼在 query 里是最稳妥的，因为我们没法改 Bot 的 system prompt
-      finalQuery = `${systemHint}\n${userQuery}`;
+      finalQuery = `${systemHint}\n\nUser Query:\n${userQuery}`;
       console.log('[画像注入]', systemHint);
     }
 
