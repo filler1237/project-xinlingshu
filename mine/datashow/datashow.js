@@ -1,40 +1,18 @@
-import * as echarts from '../../pkg_echarts/ec-canvas/echarts';
+// 全局 chart 实例
+let chart = null;
 
-let chart = null; // 将 chart 提升为全局变量，方便在页面方法中调用
-
-// --- 模拟数据 ---
-const mainData = [
-  { name: '积极', value: 306 },
-  { name: '中性', value: 452 },
-  { name: '消极', value: 259 }
-];
-
-const positiveDetailData = [
-  { name: '快乐', value: 128 },
-  { name: '激动', value: 89 },
-  { name: '满足', value: 89 }
-];
-
-const neutralDetailData = [
-  { name: '平静', value: 235 },
-  { name: '其他', value: 217 }
-];
-
-const negativeDetailData = [
-  { name: '疲惫', value: 49 },
-  { name: '委屈', value: 67 },
-  { name: '焦虑', value: 82 },
-  { name: '悲伤', value: 36 },
-  { name: '愤怒', value: 25 }
-];
-
-// --- 图表配置生成函数 ---
+// ---------------- 图表配置 ----------------
 function getChartOption(data, title) {
-  const colors = title === '消极情绪详情'
-    ? ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de'] // 为详情页提供不同颜色
-    : ['#409eff', '#e6a23c', '#f56c6c'];
+  const colors =
+    title === '消极情绪详情'
+      ? ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de'] // 消极情绪详情的颜色
+      : title === '积极情绪详情'
+      ? ['#409eff', '#e6a23c', '#90ee7e'] // 积极情绪详情的颜色
+      : title === '中性情绪详情'
+      ? ['#bda29a', '#6e7074'] // 中性情绪详情的颜色
+      : ['#409eff', '#e6a23c', '#f56c6c']; // 总体情绪分布的颜色
 
-  const option = {
+  return {
     title: {
       text: title,
       left: 'center',
@@ -46,160 +24,282 @@ function getChartOption(data, title) {
     },
     tooltip: {
       trigger: 'item',
-      formatter: '{b}: {c}人 ({d}%)'
+      formatter: '{b}: {c} 人 ({d}%)'
     },
     legend: {
-      show: true,
       bottom: 10,
-      left: 'center',
-      icon: 'circle',
+      left: 'center'
     },
-    series: [{
-      name: '心情数据',
-      type: 'pie',
-      radius: ['30%', '65%'],
-      center: ['50%', '55%'],
-      roseType: 'area',
-      itemStyle: {
-        borderRadius: 8,
-        borderColor: '#fff',
-        borderWidth: 2
-      },
-      label: {
-        show: true,
-        position: 'outside',
-        formatter: '{b}\n{c}人 ({d}%)',
-        fontSize: 12,
-      },
-      labelLine: {
-        length: 10,
-        length2: 15,
-      },
-      data: data.map((item, index) => ({
-        ...item,
-        itemStyle: {
-          color: colors[index % colors.length]
-        }
-      }))
-    }]
+    series: [
+      {
+        type: 'pie',
+        radius: ['30%', '65%'],
+        center: ['50%', '55%'],
+        roseType: 'area',
+        label: {
+          formatter: '{b}\n{c}人 ({d}%)'
+        },
+        data: data.map((item, index) => ({
+          ...item,
+          itemStyle: {
+            color: colors[index % colors.length]
+          }
+        }))
+      }
+    ]
   };
-  return option;
 }
 
-// --- 页面逻辑 ---
+// ---------------- 页面逻辑 ----------------
 Page({
   data: {
     ec: {
-      lazyLoad: true // 开启懒加载
+      lazyLoad: true
     },
-    currentDate: new Date().toISOString().split('T')[0],
+    activeRange: '7days', // 默认选择最近7天
     isDrilledDown: false,
-    summary: {}
+    summary: {},
+    emotionData: { // 用于存储从云函数获取的原始情绪数据
+      mainData: [],
+      positiveDetailData: [],
+      neutralDetailData: [],
+      negativeDetailData: []
+    }
   },
 
-  onLoad() {
-    this.ecComponent = this.selectComponent('#mychart-dom-pie');
-    this.initChart(mainData, '总体情绪分布');
-    this.calculateSummary(mainData, '总体情绪分布');
+  /**
+   * ⚠️ 一定要在 onReady
+   */
+  onReady() {
+    this.ecComponent = this.selectComponent('.ec-canvas');
+    console.log('调试信息：onReady中this.ecComponent的值：', this.ecComponent);
+
+    if (!this.ecComponent) {
+      console.log('调试信息：ec-canvas 组件查找失败');
+      console.error('❌ ec-canvas 组件未找到');
+      return;
+    }
+    this.onRangeChange({ currentTarget: { dataset: { range: this.data.activeRange } } });
   },
 
-  // 初始化图表
+  /**
+   * 初始化图表
+   */
   initChart(data, title) {
     this.ecComponent.init((canvas, width, height, dpr) => {
-      chart = echarts.init(canvas, null, {
-        width: width,
-        height: height,
-        devicePixelRatio: dpr
-      });
-      const option = getChartOption(data, title);
-      chart.setOption(option);
+      // ⚠️ 关键：同分包路径
+      console.log('调试信息：初始化图表，数据：', data, '标题：', title);
+      const echarts = require('../ec-canvas/echarts');
 
-      // 绑定点击事件
+      chart = echarts.init(canvas, null, { 
+        width, 
+        height, 
+        devicePixelRatio: dpr 
+      });
+
+      // 必须绑定
+      canvas.setChart(chart);
+
+      chart.setOption(getChartOption(data, title));
+
+      // 点击下钻
+      chart.off('click'); // 先移除旧的事件监听，防止重复绑定
       chart.on('click', (params) => {
-        if (!this.data.isDrilledDown) {
-          if (params.name === '消极') {
-            this.drillDown('negative');
-          } else if (params.name === '积极') {
-            this.drillDown('positive');
-          } else if (params.name === '中性') {
-            this.drillDown('neutral');
-          }
-        }
+        if (this.data.isDrilledDown) return;
+        this.drillDown(params.name);
       });
 
       return chart;
     });
   },
 
-  // 下钻到情绪详情
-  drillDown(type) {
-    let detailData, detailTitle;
-    
-    if (type === 'negative') {
-      detailData = negativeDetailData;
-      detailTitle = '消极情绪详情';
-    } else if (type === 'positive') {
-      detailData = positiveDetailData;
-      detailTitle = '积极情绪详情';
-    } else if (type === 'neutral') {
-      detailData = neutralDetailData;
-      detailTitle = '中性情绪详情';
-    }
-    
-    const option = getChartOption(detailData, detailTitle);
-    chart.setOption(option, true); // true 表示不合并，直接替换
-    this.setData({ isDrilledDown: true });
-    this.calculateSummary(detailData, detailTitle);
+  /**
+   * 根据时间范围获取情绪数据并更新图表
+   */
+  async fetchEmotionData(days) {
+    console.log('调试信息：开始获取情绪数据，天数：', days);
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - days);
+
+    const formatToISOString = (date) => {
+      return date.toISOString().split('T')[0];
+    };
+
+    const start = formatToISOString(startDate);
+    const end = formatToISOString(endDate);
+    console.log('调试信息：查询情绪数据日期范围：', start, '到', end);
+
+    wx.cloud.callFunction({
+      name: 'getEmotionTrend',
+      data: {
+        startDate: start,
+        endDate: end
+      },
+      success: res => {
+        console.log('云函数返回数据：', res);
+        if (res.result.ok) {
+          const { series } = res.result;
+
+          // 定义情绪强度到主情绪类型的映射
+          const emotionIntensityToMainTypeMap = {
+            '快乐': '积极',
+            '激动': '积极',
+            '满足': '积极',
+            '平静': '中性',
+            '其他': '中性',
+            '疲惫': '消极',
+            '委屈': '消极',
+            '焦虑': '消极',
+            '悲伤': '消极',
+            '愤怒': '消极'
+          };
+
+          const mainEmotionMap = {};
+          const positiveDetailMap = {};
+          const neutralDetailMap = {};
+          const negativeDetailMap = {};
+
+          series.forEach(item => {
+            const detailedEmotionName = item.emotionType; // 实际的详细情绪名称，如"平静", "焦虑"
+            const mainEmotionCategory = emotionIntensityToMainTypeMap[detailedEmotionName];
+
+            if (mainEmotionCategory) {
+              // 统计主情绪
+              mainEmotionMap[mainEmotionCategory] = (mainEmotionMap[mainEmotionCategory] || 0) + 1;
+
+              // 统计下钻情绪
+              if (mainEmotionCategory === '积极') {
+                positiveDetailMap[detailedEmotionName] = (positiveDetailMap[detailedEmotionName] || 0) + 1;
+              } else if (mainEmotionCategory === '中性') {
+                neutralDetailMap[detailedEmotionName] = (neutralDetailMap[detailedEmotionName] || 0) + 1;
+              } else if (mainEmotionCategory === '消极') {
+                negativeDetailMap[detailedEmotionName] = (negativeDetailMap[detailedEmotionName] || 0) + 1;
+              }
+            } else {
+                console.warn(`调试信息：未知的详细情绪名称：${detailedEmotionName}`);
+            }
+          });
+
+          const mainData = Object.keys(mainEmotionMap).map(key => ({ name: key, value: mainEmotionMap[key] }));
+          const positiveDetailData = Object.keys(positiveDetailMap).map(key => ({ name: key, value: positiveDetailMap[key] }));
+          const neutralDetailData = Object.keys(neutralDetailMap).map(key => ({ name: key, value: neutralDetailMap[key] }));
+          const negativeDetailData = Object.keys(negativeDetailMap).map(key => ({ name: key, value: negativeDetailMap[key] }));
+
+          this.setData({
+            emotionData: {
+              mainData,
+              positiveDetailData,
+              neutralDetailData,
+              negativeDetailData
+            }
+          }, () => {
+            console.log('调试信息：处理后的情绪数据：', this.data.emotionData);
+            this.initChart(mainData, '总体情绪分布'); // 首次渲染只显示总体情绪分布
+            this.calculateSummary(mainData, '总体情绪分布');
+          });
+        } else {
+          console.error('获取情绪数据失败：', res.result.error);
+          wx.showToast({
+            title: '获取数据失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: err => {
+        console.error('调用云函数失败：', err);
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none'
+        });
+      }
+    });
   },
 
-  // 返回上一级
+  /**
+   * 下钻
+   */
+  drillDown(emotionType) {
+    let detailData = [];
+    let title = '';
+
+    if (emotionType === '消极') {
+      detailData = this.data.emotionData.negativeDetailData;
+      title = '消极情绪详情';
+    } else if (emotionType === '积极') {
+      detailData = this.data.emotionData.positiveDetailData;
+      title = '积极情绪详情';
+    } else if (emotionType === '中性') {
+      detailData = this.data.emotionData.neutralDetailData;
+      title = '中性情绪详情';
+    } else {
+      wx.showToast({
+        title: '暂无详细数据或无法下钻',
+        icon: 'none'
+      });
+      return;
+    }
+
+    if (detailData.length > 0) {
+      chart.setOption(getChartOption(detailData, title), true);
+      this.setData({ isDrilledDown: true });
+      this.calculateSummary(detailData, title);
+    } else {
+      wx.showToast({
+        title: '暂无详细数据',
+        icon: 'none'
+      });
+    }
+  },
+
+  /**
+   * 返回上一级
+   */
   onDrillBack() {
-    const option = getChartOption(mainData, '总体情绪分布');
-    chart.setOption(option, true);
+    const { mainData } = this.data.emotionData;
+    chart.setOption(getChartOption(mainData, '总体情绪分布'), true);
     this.setData({ isDrilledDown: false });
     this.calculateSummary(mainData, '总体情绪分布');
   },
 
-  // 日期选择变化
-  onDateChange(e) {
-    this.setData({
-      currentDate: e.detail.value
-    });
-    // 这里可以加入根据日期获取新数据的逻辑
-    // 为演示，我们重置为初始状态
-    this.onDrillBack(); 
+  /**
+   * 时间范围切换
+   */
+  onRangeChange(e) {
+    const { range } = e.currentTarget.dataset;
+    let days = 0;
+    if (range === '7days') {
+      days = 7;
+    } else if (range === '30days') {
+      days = 30;
+    } else if (range === '90days') {
+      days = 90;
+    }
+    this.setData({ activeRange: range, isDrilledDown: false });
+    this.fetchEmotionData(days);
   },
 
-  // 返回页面
-  onBackTap() {
-    wx.navigateBack();
-  },
-
-  // 计算摘要信息
+  /**
+   * 计算摘要
+   */
   calculateSummary(data, title) {
-    const total = data.reduce((sum, item) => sum + item.value, 0);
-    const majorEmotion = data.reduce((max, item) => (item.value > max.value ? item : max), data[0]).name;
+    const total = data.reduce((sum, i) => sum + i.value, 0);
+    const majorEmotion = data.length > 0 ? data.reduce((a, b) => (b.value > a.value ? b : a)).name : '无';
+
     let suggestion = '';
 
     if (title === '总体情绪分布') {
-      if (majorEmotion === '积极') {
-        suggestion = '整体情绪状态良好，请继续保持积极心态。';
-      } else if (majorEmotion === '中性') {
-        suggestion = '情绪状态平稳，可适当增加放松活动。';
-      } else {
-        suggestion = '近期消极情绪占比较高，建议关注情绪变化。';
-      }
-    } else if (title === '消极情绪详情') {
-      suggestion = `在消极情绪中，"${majorEmotion}" 表现最为突出，请重点关注。`;
-    } else if (title === '积极情绪详情') {
-      suggestion = `在积极情绪中，"${majorEmotion}" 表现最为突出，这是一个很好的现象。`;
-    } else if (title === '中性情绪详情') {
-      suggestion = `在中性情绪中，"${majorEmotion}" 表现最为突出，情绪状态相对稳定。`;
+      if (majorEmotion === '积极') suggestion = '整体情绪良好，请继续保持。';
+      else if (majorEmotion === '中性') suggestion = '情绪较平稳，可适度放松。';
+      else if (majorEmotion === '消极') suggestion = '消极情绪偏多，建议关注心理状态。';
+      else suggestion = '暂无情绪数据。';
+    } else {
+      suggestion = `当前 "${majorEmotion}" 情绪占比较高，请重点关注。`;
     }
 
     this.setData({
       summary: {
-        title: title,
+        title,
         total,
         majorEmotion,
         suggestion

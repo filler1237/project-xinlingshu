@@ -18,7 +18,7 @@
       <!-- 展开/折叠按钮 -->
       <view class="collapse-toggle" wx:if="{{tarotRecords.length > 3}}" bindtap="toggleTarotCollapse">
         <text>{{isTarotExpanded ? '收起记录' : '展开更多'}}</text>
-        <image class="arrow-icon {{isTarotExpanded ? 'up' : ''}}" src="/image/arrow-down.png" />
+        <image class="arrow-icon {{isTarotExpanded ? 'up' : ''}}" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/箭头_列表展开.png" />
       </view>
     </block>
 
@@ -45,7 +45,7 @@
       <!-- 展开/折叠按钮 -->
       <view class="collapse-toggle" wx:if="{{zhouyiRecords.length > 3}}" bindtap="toggleZhouyiCollapse">
         <text>{{isZhouyiExpanded ? '收起记录' : '展开更多'}}</text>
-        <image class="arrow-icon {{isZhouyiExpanded ? 'up' : ''}}" src="/image/arrow-down.png" />
+        <image class="arrow-icon {{isZhouyiExpanded ? 'up' : ''}}" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/箭头_列表展开.png" />
       </view>
     </block>
 

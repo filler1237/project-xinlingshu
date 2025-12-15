@@ -10,7 +10,7 @@
     "pages/echoWall/echoWall",
     "pages/auth/login/login"
   ],
-  "subPackages": [
+  "subpackages": [
     {
       "root": "home",
       "name": "home",

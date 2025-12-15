@@ -10,23 +10,26 @@ exports.main = async (event, context) => {
 
   try {
     const { data } = await db.collection('DiaryEntries')
-      .where({
-        userId: wxContext.OPENID,
-        date: db.command.gte(startDate).and(db.command.lte(endDate))
-      })
+    .where({
+      userId: wxContext.OPENID,
+      date: db.command.and(
+        db.command.gte(startDate),
+        db.command.lte(endDate)
+      )
+    })
       .orderBy('date', 'asc')
       .get()
-
     
-    const series = data.map(d => ({ 
-      date: d.date, 
-      emotionType: d.emotionType, 
-      emotionIntensity: d.emotionIntensity !== null && d.emotionIntensity !== undefined ? d.emotionIntensity : 0 
+    const series = data.map(d => ({
+      date: d.date,
+      emotionType: d.emotionType, // 例如：积极、中性、消极
+      emotionIntensity: d.emotionIntensity !== null && d.emotionIntensity !== undefined ? d.emotionIntensity : '其他' // 例如：快乐、平静、疲惫
     }))
+
     const stat = {}
-    data.forEach(d => {
-      const k = d.emotionType || '其他'
-      stat[k] = (stat[k] || 0) + 1
+    series.forEach(item => {
+      const mainEmotion = item.emotionType || '其他'; // 使用 emotionType 作为主情绪分类
+      stat[mainEmotion] = (stat[mainEmotion] || 0) + 1
     })
 
     return { ok: true, series, stat }

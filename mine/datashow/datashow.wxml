@@ -1,16 +1,19 @@
 <view class="page-container">
 
-  <!-- 日期选择器 -->
-  <picker mode="date" value="{{currentDate}}" start="2020-01-01" end="2025-12-31" bindchange="onDateChange">
-    <view class="date-picker">
-      <text>{{currentDate}}</text>
-      <image class="down-icon" src="/image/down.png" />
-    </view>
-  </picker>
+  <!-- 时间范围选择器 -->
+  <view class="time-range-selector">
+    <view class="time-range-button {{activeRange === '7days' ? 'active' : ''}}" data-range="7days" bindtap="onRangeChange">最近7天</view>
+    <view class="time-range-button {{activeRange === '30days' ? 'active' : ''}}" data-range="30days" bindtap="onRangeChange">最近30天</view>
+    <view class="time-range-button {{activeRange === '90days' ? 'active' : ''}}" data-range="90days" bindtap="onRangeChange">最近90天</view>
+  </view>
 
   <!-- 图表容器 -->
   <view class="chart-container">
-    <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+    <ec-canvas
+    class="ec-canvas"
+    canvas-id="mychart-pie"
+    ec="{{ ec }}"
+  ></ec-canvas>
   </view>
   
   <!-- 数据摘要 -->

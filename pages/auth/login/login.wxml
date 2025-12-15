@@ -26,7 +26,7 @@
         <view class="picker-view">
           <text class="picker-label">角色</text>
           <text class="picker-value">{{roles[roleIndex]}}</text>
-          <image class="picker-arrow" src="/image/down.png" mode="aspectFit"></image>
+          <image class="picker-arrow" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/箭头_列表展开.png" mode="aspectFit"></image>
         </view>
       </picker>
       <view class="form-input-group">
