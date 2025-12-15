@@ -14,7 +14,6 @@ Page({
     content: [], // 当前话题的聊天信息
     topics: [], // 用户的所有话题列表
     currentTopicId: null, // 当前活动的话题ID
-    userId: '',
 
     // --- 静态资源与样式 ---
     userAvatarUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg',
@@ -32,16 +31,7 @@ Page({
       headerHeight: (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height
     });
 
-    // 2. 获取或生成用户ID
-    let userId = app.globalData.userId || wx.getStorageSync('userId');
-    if (!userId) {
-      userId = 'user_' + Date.now() + Math.random().toString(36).substr(2, 9);
-      wx.setStorageSync('userId', userId);
-      app.globalData.userId = userId;
-    }
-    this.setData({ userId: userId });
-
-    // 3. 加载用户的话题列表
+    // 2. 加载用户的话题列表
     this.loadUserTopics();
   },
 
@@ -65,30 +55,55 @@ Page({
   },
 
   createNewTopic: function () {
-    const newTopicId = 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9);
-    const newTopic = {
-      _id: newTopicId,
-      userId: this.data.userId,
-      name: `新话题 ${new Date().toLocaleDateString()}`,
-      content: [{
-        text: '你好！我是你的朋友云舒，有什么想要跟我分享的吗？',
-        isUser: false,
-        type: 'text'
-      }],
-      lastUpdated: db.serverDate()
-    };
+    wx.showLoading({ title: '创建中...' });
 
-    db.collection('chatTopics').add({ data: newTopic }).then(res => {
-      this.setData({
-        topics: [newTopic, ...this.data.topics], // 将新话题添加到列表顶部
-        content: newTopic.content,
-        currentTopicId: newTopic._id,
-        isTopicsPanelOpen: false // 创建后自动关闭面板
-      });
-      wx.showToast({ title: '新话题已创建', icon: 'success' });
-    }).catch(err => {
-      console.error("创建新话题失败:", err);
-      wx.showToast({ title: '创建失败', icon: 'none' });
+    // 1. 先调用云函数创建 Coze 会话
+    wx.cloud.callFunction({
+      name: 'createConversation',
+      success: res => {
+        wx.hideLoading();
+
+        if (res.result && res.result.code === 0) {
+          const cozeConversationId = res.result.conversationId;
+          console.log('[新 Coze 会话已创建]', cozeConversationId);
+
+          // 2. 创建话题并保存 conversationId
+          const newTopicId = 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9);
+          const newTopic = {
+            _id: newTopicId,
+            name: `新话题 ${new Date().toLocaleDateString()}`,
+            content: [{
+              text: '你好！我是你的朋友云舒，有什么想要跟我分享的吗？',
+              isUser: false,
+              type: 'text'
+            }],
+            cozeConversationId: cozeConversationId,  // 保存 Coze 会话ID
+            lastUpdated: db.serverDate()
+          };
+
+          db.collection('chatTopics').add({ data: newTopic }).then(() => {
+            this.setData({
+              topics: [newTopic, ...this.data.topics],
+              content: newTopic.content,
+              currentTopicId: newTopic._id,
+              isTopicsPanelOpen: false
+            });
+            wx.showToast({ title: '新话题已创建', icon: 'success' });
+          }).catch(err => {
+            console.error("创建话题失败:", err);
+            wx.showToast({ title: '创建失败', icon: 'none' });
+          });
+
+        } else {
+          console.error("创建会话失败:", res.result);
+          wx.showToast({ title: '创建会话失败', icon: 'none' });
+        }
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error("调用创建会话云函数失败:", err);
+        wx.showToast({ title: '网络错误', icon: 'none' });
+      }
     });
   },
 
@@ -162,6 +177,32 @@ Page({
     }).catch(console.error);
   },
 
+  /**
+   * 保存 Coze ConversationID 到话题
+   * @param {string} topicId - 话题ID
+   * @param {string} conversationId - Coze 会话ID
+   */
+  _saveConversationIdToTopic: function (topicId, conversationId) {
+    // 1. 更新数据库
+    db.collection('chatTopics').doc(topicId).update({
+      data: {
+        cozeConversationId: conversationId
+      }
+    }).then(() => {
+      console.log('[已保存 ConversationID 到话题]', conversationId);
+    }).catch(err => {
+      console.error('[保存 ConversationID 失败]', err);
+    });
+
+    // 2. 更新本地 topics 数组
+    const topicIndex = this.data.topics.findIndex(t => t._id === topicId);
+    if (topicIndex !== -1) {
+      this.setData({
+        [`topics[${topicIndex}].cozeConversationId`]: conversationId
+      });
+    }
+  },
+
   // --- UI 与事件处理 ---
 
   toggleTopicsPanel: function () {
@@ -220,7 +261,7 @@ Page({
 
   // 解析多张图片与文本
   _parseMessage: function (text) {
-    const imageRegex = /!\[.*?\]\((.*?)\)/g;
+    const imageRegex = /!\[([^\]]*?)\]\((.*?)\)/g;
     const messages = [];
     let lastIndex = 0;
     let match;
@@ -237,11 +278,13 @@ Page({
         }
       }
       // 添加图片
+      // Markdown 格式: ![alt文本](图片URL)
+      // match[1] = alt文本, match[2] = 图片URL
       messages.push({
         type: 'image',
-        imageUrl: match[1],
+        imageUrl: match[2],  // 修复：使用 match[2] 获取图片URL
         isUser: false,
-        text: ''
+        text: match[1] || ''  // alt文本可选保留
       });
       lastIndex = imageRegex.lastIndex;
     }
@@ -346,11 +389,25 @@ Page({
         content: msg.text
       }));
 
+    // 获取当前话题的 cozeConversationId（如果有）
+    const currentTopic = this.data.topics.find(t => t._id === this.data.currentTopicId);
+    const topicConversationId = currentTopic ? currentTopic.cozeConversationId : null;
+
     wx.cloud.callFunction({
       name: 'xinlixuejia',
-      data: { query: message, user: this.data.userId, chat_history: history },
+      data: {
+        query: message,
+        topicConversationId: topicConversationId  // 传递话题的会话ID
+      },
       success: res => {
-        const reply = (res.result && res.result.code === 0) ? res.result.reply : '抱歉，出错了，请稍后再试';
+        const result = res.result || {};
+        const reply = (result.code === 0) ? result.reply : '抱歉，出错了，请稍后再试';
+        const returnedConversationId = result.conversationId;
+
+        // 如果云函数返回了 conversationId，且当前话题没有，则保存
+        if (returnedConversationId && currentTopic && !currentTopic.cozeConversationId) {
+          this._saveConversationIdToTopic(this.data.currentTopicId, returnedConversationId);
+        }
 
         // 简单处理：如果包含多段（如图片），暂时不支持打字机，直接显示；如果是纯文本，打字机。
         const parsedMessages = this._parseMessage(reply);

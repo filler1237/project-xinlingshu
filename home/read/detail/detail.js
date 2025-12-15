@@ -74,7 +74,7 @@ Page({
       },
       success: res => {
         if (res.result.success) {
-          const rawComments = res.result.data.map(comment => {
+          const rawComments = res.result.data.reverse().map(comment => {
             comment.createTime = new Date(comment.createTime).toLocaleString();
             return comment;
           });

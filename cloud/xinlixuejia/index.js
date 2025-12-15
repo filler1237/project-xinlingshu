@@ -1,261 +1,260 @@
 // cloud/xinlixuejia/index.js
+// Coze API v3 对话云函数
 
 const cloud = require('wx-server-sdk');
 const axios = require('axios');
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
-const db = cloud.database(); // 初始化数据库
+const db = cloud.database();
 
-// --- 1. 结构化配置与常量管理 ---
+// --- 配置 ---
 const CONFIG = {
-  API_URL: 'https://api.coze.cn/open_api/v2/chat',
+  API_HOST: 'https://api.coze.cn',
   API_KEY: process.env.COZE_API_KEY,
-  BOT_ID: '7579231261534093347',
-  REQUEST_TIMEOUT: 60000,
-  MAX_HISTORY_LENGTH: 10, // 最多保留最近 10 条历史
+  BOT_ID: '7583917266450792474',
+  POLL_INTERVAL: 1000,
+  POLL_MAX_ATTEMPTS: 30,
+  REQUEST_TIMEOUT: 10000,
 };
 
-const MESSAGE_TYPES = {
-  TOOL_RESPONSE: 'tool_response',
-  ANSWER: 'answer',
-};
+const getHeaders = () => ({
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${CONFIG.API_KEY}`
+});
 
-// --- 重试配置 ---
-const RETRY_CONFIG = {
-  retries: 2, // 最多重试 2 次
-  retryDelay: 1000, // 初始间隔 1s
-};
+// --- Coze API 封装 ---
 
+/**
+ * 发起对话
+ * @param {string} userId - 用户ID
+ * @param {string} query - 用户的纯净查询（用于知识库匹配）
+ * @param {string|null} conversationId - 会话ID
+ * @param {string|null} userProfileHint - 用户画像提示（可选，单独发送以避免影响知识库匹配）
+ */
+async function initiateChat(userId, query, conversationId = null, userProfileHint = null) {
+  let url = `${CONFIG.API_HOST}/v3/chat`;
+  if (conversationId) {
+    url += `?conversation_id=${conversationId}`;
+  }
 
-// --- 2. 辅助函数：内容安全检测 ---
+  // 构建消息列表：先发用户画像（如果有），再发纯净的用户查询
+  const messages = [];
+
+  if (userProfileHint) {
+    messages.push({
+      role: 'user',
+      content: userProfileHint,
+      content_type: 'text'
+    });
+  }
+
+  // 用户的纯净查询，知识库将基于这条消息进行匹配
+  messages.push({
+    role: 'user',
+    content: query,
+    content_type: 'text'
+  });
+
+  const payload = {
+    bot_id: CONFIG.BOT_ID,
+    user_id: userId,
+    additional_messages: messages,
+    stream: false,
+    auto_save_history: true
+  };
+
+  console.log('[Coze URL]', url);
+
+  const response = await axios.post(url, payload, {
+    headers: getHeaders(),
+    timeout: CONFIG.REQUEST_TIMEOUT
+  });
+
+  if (response.data.code !== 0) {
+    throw new Error(`Initiate Chat Error: ${response.data.msg}`);
+  }
+
+  return response.data.data;
+}
+
+/**
+ * 轮询对话状态
+ */
+async function pollChatStatus(chatId, conversationId) {
+  const url = `${CONFIG.API_HOST}/v3/chat/retrieve`;
+
+  for (let i = 0; i < CONFIG.POLL_MAX_ATTEMPTS; i++) {
+    if (i > 0) {
+      await new Promise(resolve => setTimeout(resolve, CONFIG.POLL_INTERVAL));
+    }
+
+    const response = await axios.get(url, {
+      params: { chat_id: chatId, conversation_id: conversationId },
+      headers: getHeaders(),
+      timeout: CONFIG.REQUEST_TIMEOUT
+    });
+
+    const status = response.data.data.status;
+    console.log(`[Polling] Attempt ${i + 1}/${CONFIG.POLL_MAX_ATTEMPTS}, Status: ${status}`);
+
+    if (status === 'completed') return true;
+    if (status === 'failed' || status === 'canceled') {
+      throw new Error(`Chat Failed: ${status}`);
+    }
+  }
+
+  throw new Error('Chat Timeout');
+}
+
+/**
+ * 获取消息列表
+ */
+async function fetchChatMessages(chatId, conversationId) {
+  const url = `${CONFIG.API_HOST}/v3/chat/message/list`;
+  const response = await axios.get(url, {
+    params: { chat_id: chatId, conversation_id: conversationId },
+    headers: getHeaders(),
+    timeout: CONFIG.REQUEST_TIMEOUT
+  });
+
+  if (response.data.code !== 0) {
+    throw new Error(`Fetch Messages Error: ${response.data.msg}`);
+  }
+
+  return response.data.data;
+}
+
+/**
+ * 解析 AI 回复
+ */
+function parseV3Response(messageList, chatId, minCreateTime) {
+  const answerMessages = messageList.filter(msg =>
+    msg.role === 'assistant' &&
+    msg.type === 'answer' &&
+    msg.chat_id === chatId &&
+    msg.created_at >= minCreateTime
+  );
+
+  if (answerMessages.length === 0) return null;
+
+  return answerMessages.map(msg => msg.content).join('\n').trim();
+}
+
+// --- 辅助函数 ---
+
 async function checkContentSafety(content, openid) {
   try {
+    if (!content) return true;
     const result = await cloud.openapi.security.msgSecCheck({
-      content: content,
-      version: 2,
-      scene: 2,
-      openid: openid
+      content, version: 2, scene: 2, openid
     });
-    // errCode为0表示通过，其他表示不通过或调用失败
     return result.errCode === 0;
   } catch (err) {
-    if (err.errCode === 87014) {
-      console.warn('[内容风控] 检测到敏感内容', content);
-      return false; // 明确违规
-    }
-    // 其他错误（如调用超限），暂时放行，避免误伤业务
-    console.error('[内容风控] 接口调用失败，默认放行', err);
+    if (err.errCode === 87014) return false;
     return true;
   }
 }
 
-// --- 3. 辅助函数：带重试的请求 ---
-async function fetchCozeWithRetry(payload, retries = RETRY_CONFIG.retries) {
-  try {
-    const response = await axios.post(CONFIG.API_URL, payload, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${CONFIG.API_KEY}`
-      },
-      timeout: CONFIG.REQUEST_TIMEOUT,
-      responseType: 'json'
-    });
-    return response;
-  } catch (error) {
-    if (retries > 0) {
-      console.warn(`[Coze 请求失败] 正在重试... 剩余次数: ${retries}`, error.message);
-      await new Promise(resolve => setTimeout(resolve, RETRY_CONFIG.retryDelay));
-      return fetchCozeWithRetry(payload, retries - 1);
-    }
-    throw error;
-  }
-}
-
-/**
- * 从 Coze 消息中提取图片
- */
-function extractImageUrlFromToolResponse(messages) {
-  try {
-    const toolResponseMessage = messages.find(msg => msg.type === MESSAGE_TYPES.TOOL_RESPONSE);
-    if (!toolResponseMessage) return null;
-
-    const contentObj = typeof toolResponseMessage.content === 'string'
-      ? JSON.parse(toolResponseMessage.content)
-      : toolResponseMessage.content;
-
-    const dataObj = typeof contentObj?.data === 'string'
-      ? JSON.parse(contentObj.data)
-      : contentObj?.data;
-
-    return dataObj?.data?.image_urls?.[0] || null;
-
-  } catch (e) {
-    console.error("解析插件图片链接失败:", e);
-    return null;
-  }
-}
-
-// --- 新增：异步写日志函数 ---
-async function logChat(data) {
-  try {
-    await db.collection('chat_logs').add({
-      data: {
-        ...data,
-        createTime: db.serverDate()
-      }
-    });
-  } catch (err) {
-    console.error('[日志写入失败]', err);
-    // 日志写入失败不应影响主流程
-  }
-}
-
-// --- 新增：获取用户画像 ---
 async function getUserProfile(openid) {
   try {
-    const res = await db.collection('users').where({
-      _openid: openid
-    }).get();
-
+    const res = await db.collection('users').where({ _openid: openid }).get();
     if (res.data.length > 0) {
       const u = res.data[0];
-      // 优先取根目录的 nickName，其次是 userInfo 里的，最后兜底
-      const nickName = u.nickName || (u.userInfo && u.userInfo.nickName) || '同学';
-      const role = u.role === 'student' ? '学生' : (u.role === 'teacher' ? '老师' : '');
-      const college = u.college || '';
-      return { nickName, role, college };
+      return {
+        nickName: u.nickName || (u.userInfo && u.userInfo.nickName) || '同学',
+        role: u.role === 'student' ? '学生' : (u.role === 'teacher' ? '老师' : ''),
+        college: u.college || ''
+      };
     }
     return null;
   } catch (err) {
     console.error('[查用户库失败]', err);
-    return null; // 查不到就降级处理
+    return null;
   }
 }
 
-/**
- * 云函数主入口
- */
+async function logChat(data) {
+  try {
+    await db.collection('chat_logs').add({
+      data: { ...data, createTime: db.serverDate() }
+    });
+  } catch (err) {
+    console.error('[日志写入失败]', err);
+  }
+}
+
+// --- 主入口 ---
+
 exports.main = async (event, context) => {
   const { OPENID } = cloud.getWXContext();
-  let { query: userQuery, chat_history: chatHistory = [], user } = event;
-  const userId = user || OPENID;
+  let { query: userQuery, topicConversationId } = event;
   const startTime = Date.now();
 
-  // --- 输入校验与裁剪 ---
-  if (!userQuery || typeof userQuery !== 'string') {
+  if (!userQuery) {
     return { code: 400, message: '请求内容不能为空' };
   }
 
-  if (!CONFIG.API_KEY || !CONFIG.BOT_ID) {
-    return { code: 500, message: '云函数配置缺失' };
-  }
-
-  // 裁剪 history，保留最近 N 条，减少 Token 消耗
-  if (chatHistory.length > CONFIG.MAX_HISTORY_LENGTH) {
-    chatHistory = chatHistory.slice(-CONFIG.MAX_HISTORY_LENGTH);
-  }
-
-  // 1. 先对用户输入做一次风控（可选，防止用户发送违规内容给 AI）
-  // 这里暂时不做，主要防 AI 输出
-
   try {
-    // 1. 并行执行：查用户画像 (New)
-    // 为了不阻塞，这里其实是阻塞的 await，因为我们需要拿到 proflie 修改 query。
-    // 但耗时很短 (通常 <50ms)
+    // 1. 获取用户画像，构建单独的提示（不与用户查询合并）
+    let userProfileHint = null;
     const userProfile = await getUserProfile(OPENID);
-
-    let finalQuery = userQuery;
-    let systemHint = '';
-
     if (userProfile) {
       const { nickName, role, college } = userProfile;
-      // 构造一段隐式的 System Prompt (使用 XML 标签包裹，让模型更好区分上下文)
-      systemHint = `<user_profile>\nName: ${nickName}\nRole: ${role}\n${college ? `College: ${college}\n` : ''}</user_profile>\n[Instruction: Above is the user's profile. Reply to the user warmly based on this info, but DO NOT mention the profile data explicitly unless asked.]`;
-
-      // 将 hint 拼接到 query 前面 (Coze 能看到)
-      finalQuery = `${systemHint}\n\nUser Query:\n${userQuery}`;
-      console.log('[画像注入]', systemHint);
+      userProfileHint = `<user_profile>\nName: ${nickName}\nRole: ${role}\n${college ? `College: ${college}\n` : ''}</user_profile>\n[Instruction: Reply warmly based on user profile, but don't mention it unless asked.]`;
+      console.log('[画像注入]', nickName);
     }
 
-    console.log(`[请求Coze] User: ${userId}, Query(with hint): ${finalQuery}`);
+    console.log(`[话题 ConversationID] ${topicConversationId || '无'}`);
+    console.log(`[用户查询] ${userQuery}`);
 
-    // 2. 发起请求（带重试）
-    const response = await fetchCozeWithRetry({
-      bot_id: CONFIG.BOT_ID,
-      user: userId,
-      query: finalQuery, // 使用注入后的 Query
-      stream: false,
-      chat_history: chatHistory,
-    });
+    // 2. Coze V3 交互 - 用户画像和查询分开发送，避免影响知识库匹配
+    const chatStartTime = Math.floor(Date.now() / 1000);
+    const chatData = await initiateChat(OPENID, userQuery, topicConversationId, userProfileHint);
+    const { id: chatId, conversation_id: conversationId } = chatData;
 
-    console.log('[Coze响应成功]');
-    const responseBody = response.data;
+    console.log(`[Chat Initiated] ChatID: ${chatId}, ConversationID: ${conversationId}`);
 
-    if (responseBody.code !== 0) {
-      console.error('[Coze业务错误]', responseBody);
-      // 记录失败日志
-      logChat({ userId, query: userQuery, error: responseBody, status: 'api_error' });
-      return { code: responseBody.code, message: responseBody.msg || 'AI 思考遇到困难' };
-    }
+    await pollChatStatus(chatId, conversationId);
+    const messageList = await fetchChatMessages(chatId, conversationId);
+    const finalReply = parseV3Response(messageList, chatId, chatStartTime);
 
-    const messages = responseBody.messages || [];
-    const imageUrl = extractImageUrlFromToolResponse(messages);
-    const assistantTextMessage = messages.find(msg => msg.type === MESSAGE_TYPES.ANSWER)?.content || '';
-
-    let finalReply = '';
-    if (imageUrl) {
-      finalReply += `![生成的图片](${imageUrl})\n\n`;
-    }
-    finalReply += assistantTextMessage;
-
-    if (!finalReply.trim()) {
-      logChat({ userId, query: userQuery, status: 'empty_response' });
+    if (!finalReply) {
       return { code: 500, message: 'AI 没有回应' };
     }
 
-    // 3. 对 AI 输出进行风控检测 (Crucial)
-    // 只有文本才需要检测，图片暂时没法检测（需要 costly OCR）
-    // 2. 并行执行：内容风控检测 + 日志写入
-    // 注意：我们在写入日志前，不知道风控结果。
-    // 为了数据纯净度，我们可以在风控通过后再写日志，或者先记录原始回复。
-    // 策略：先做风控。
+    // 3. 风控检测
+    const isSafe = await checkContentSafety(finalReply, OPENID);
 
-    const isSafe = await checkContentSafety(assistantTextMessage, OPENID);
-
-    // 3. 写入日志 (记录完整信息，包括耗时)
-    // 即使拦截了，我们后台也想知道AI到底说了啥违规的，所以 status 标记为 intercepted
-    await logChat({
-      userId,
-      query: userQuery, // 记录 AI 的原始回复
+    logChat({
+      userId: OPENID,
+      query: userQuery,
       reply: finalReply,
       status: isSafe ? 'success' : 'intercepted',
-      costTime: Date.now() - startTime,
-      userProfile: userProfile // 顺便把当时的用户画像也记下来
+      costTime: Date.now() - startTime
     });
 
     if (!isSafe) {
       return {
         code: 0,
-        reply: '我就不回答这个问题啦 \n(内容可能涉及敏感信息)'
+        reply: '我就不回答这个问题啦 \n(内容可能涉及敏感信息)',
+        conversationId
       };
     }
 
     return {
       code: 0,
       message: 'success',
-      reply: finalReply.trim(),
+      reply: finalReply,
+      conversationId
     };
 
   } catch (error) {
-    console.error(`[系统异常]`, error);
-    // 记录异常日志
-    logChat({ userId, query: userQuery, error: error.message, status: 'system_error' });
+    console.error('[系统异常]', error.message);
+    logChat({ userId: OPENID, query: userQuery, error: error.message, status: 'error' });
 
-    // 区分超时错误
-    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+    if (error.message.includes('Timeout')) {
       return { code: 504, message: '思考时间有点长，请重试' };
     }
-
     return { code: 500, message: '系统开小差了，请稍后重试' };
   }
 };
