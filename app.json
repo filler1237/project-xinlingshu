@@ -104,11 +104,6 @@
         "trend/trend",
         "wordcloud/wordcloud"
       ]
-    },
-    {
-      "root": "pkg_echarts",
-      "name": "pkg_echarts",
-      "pages": []
     }
   ],
   "preloadRule": {
