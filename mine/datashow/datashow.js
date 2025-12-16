@@ -134,7 +134,8 @@ Page({
       name: 'getEmotionTrend',
       data: {
         startDate: start,
-        endDate: end
+        endDate: end,
+        scope:'global'
       },
       success: res => {
         console.log('云函数返回数据：', res);
