@@ -2,62 +2,129 @@
 <view class="page-container">
   <!-- 自定义导航栏 -->
   <view class="nav-bar-wrapper">
-    <navigation-bar title="我的成长树" background="transparent" back="{{false}}"></navigation-bar>
+    <navigation-bar title=" " background="transparent" back="{{false}}"></navigation-bar>
   </view>
 
-  <!-- 1. 顶部背景区域 -->
-  <view class="hero-section">
-    <!-- 背景图 -->
-    <image class="background-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/背景图.png" mode="aspectFill"></image>
-    
+  <!-- 全屏沉浸背景 -->
+  <view class="immersive-bg">
+    <image class="bg-img" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/背景图.png" mode="aspectFill"></image>
+    <view class="bg-overlay"></view>
+  </view>
+
+  <!-- 顶部成长区域 (占全屏) -->
+  <view class="growth-header">
+    <view class="header-content">
+      <view class="page-title">我的心灵花园</view>
+      <view class="level-pill">Lv. {{treeLevel}} · 成长值 {{growthValue}}</view>
+    </view>
+
     <!-- 浮动云朵 -->
     <image class="cloud cloud1" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵1.png" mode="aspectFit"></image>
     <image class="cloud cloud2" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵2.png" mode="aspectFit"></image>
-    <image class="cloud cloud3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵3.png" mode="aspectFit"></image>
+    <image class="cloud cloud3" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵1.png" mode="aspectFit"></image>
+    <image class="cloud cloud4" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/云朵2.png" mode="aspectFit"></image>
 
-    <!-- 成长树 -->
-    <view class="tree-wrapper {{isAnimating ? 'is-growing' : ''}}">
-      <image class="tree-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
+    <!-- 成长树容器 -->
+    <view class="tree-stage">
+       <view class="tree-wrapper {{isAnimating ? 'is-growing' : ''}}">
+          <image class="tree-image" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/level_{{treeLevel}}.png" mode="aspectFit" />
+          
+          <!-- 正念果实 (随机生成) -->
+          <view class="mindfulness-fruit" wx:for="{{fruits}}" wx:key="id" style="top: {{item.top}}%; left: {{item.left}}%;" bindtap="onPickFruit" data-index="{{index}}">
+            🍎
+            <view class="fruit-glow"></view>
+          </view>
+       </view>
+
+        <!-- 浇水动画 -->
+       <image wx:if="{{isWatering}}" class="watering-can" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/水壶.png" mode="aspectFit"></image>
     </view>
-    
-    <!-- 浇水动画的水壶 -->
-    <image wx:if="{{isWatering}}" class="watering-can" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/images/tree/水壶.png" mode="aspectFit"></image>
   </view>
 
-  <!-- 2. 页面下方内容区域 -->
-  <view class="content-section">
+  <!-- 底部功能控制板 -->
+  <view class="control-panel">
     
-    <!-- 今日任务 -->
-    <view class="task-panel-wrapper">
-      <task-panel id="task-panel" tasks="{{todayTasks}}" />
+    <!-- 浇水按钮 (悬浮凸起) -->
+    <view class="water-btn-wrapper" bindtap="onWatering">
+      <view class="water-btn {{waterdrops <= 0 ? 'disabled' : ''}}">
+        <image class="drop-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png" />
+      </view>
+      <text class="water-text">浇水 {{waterdrops}}</text>
     </view>
 
-    <!-- 心理树等级模块 -->
-    <view class="card growth-info-card">
-      <view class="card-title">心理树等级</view>
-      <view class="growth-level-display">
-        <text class="level-text">Lv. {{treeLevel}}</text>
-        <text class="growth-value-text">成长值: {{growthValue}}</text>
+    <!-- 功能卡片区 -->
+    <view class="panel-content">
+      
+      <!-- 徽章墙 (横向滚动) -->
+      <view class="section-badge">
+        <view class="section-header">
+          <text class="section-title">我的徽章</text>
+          <text class="section-more">查看全部 ></text>
+        </view>
+        <scroll-view class="badge-scroll" scroll-x enable-flex>
+          <view class="badge-item" wx:for="{{unlockedAchievements}}" wx:key="_id" bindtap="showBadgeDetail" data-badge="{{item}}">
+            <image class="badge-img" src="{{item.iconUrl}}" />
+            <text class="badge-name">{{item.name}}</text>
+          </view>
+          <!-- 空状态 -->
+          <view wx:if="{{unlockedAchievements.length === 0}}" class="empty-badge">
+            <text>暂无徽章，继续探索吧</text>
+          </view>
+        </scroll-view>
       </view>
-      <view class="water-button {{waterdrops <= 0 ? 'disabled' : ''}}" bindtap="onWatering">
-        <image class="water-drop-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png" />
-        <text>浇水 ({{waterdrops}})</text>
-      </view>
-    </view>
 
-    <!-- 我的徽章 -->
-    <view class="card achievements-card">
-      <view class="card-title">我的徽章</view>
-      <view class="achievements-grid" wx:if="{{unlockedAchievements.length > 0}}">
-        <view class="badge" wx:for="{{unlockedAchievements}}" wx:key="_id">
-          <image class="badge-icon" src="{{item.iconUrl}}" />
-          <view class="badge-name">{{item.name}}</view>
+      <!-- 今日任务 -->
+      <view class="section-task">
+        <task-panel id="task-panel" tasks="{{todayTasks}}" />
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 正念任务弹窗 -->
+  <view class="modal-overlay" wx:if="{{showMindfulnessPopup}}">
+    <view class="modal-card">
+      <view class="modal-header">✨ 正念时刻</view>
+      <view class="modal-body">
+        <view class="task-title">{{currentTask.title}}</view>
+        <view class="task-desc">{{currentTask.content}}</view>
+        <view class="task-reward">+{{currentTask.reward}} 能量</view>
+      </view>
+      <button class="modal-btn" bindtap="onCompleteMindfulnessTask">我完成了</button>
+      <view class="modal-close" bindtap="closeMindfulnessPopup">×</view>
+    </view>
+  </view>
+
+  <!-- 徽章详情弹窗 -->
+  <view class="modal-overlay" wx:if="{{showBadgePopup}}" bindtap="closeBadgePopup">
+    <view class="modal-card badge-detail" catchtap="doNothing">
+      <image class="detail-img" src="{{selectedBadge.iconUrl}}" mode="aspectFit" />
+      <view class="detail-name">{{selectedBadge.name}}</view>
+      <view class="detail-desc">{{selectedBadge.desc}}</view>
+      <view class="detail-date">获得于 {{selectedBadge.date}}</view>
+    </view>
+  </view>
+
+  <!-- 浇水选择弹窗 -->
+  <view class="modal-overlay" wx:if="{{showWateringPopup}}" bindtap="closeWateringPopup">
+    <view class="modal-card watering-panel" catchtap="doNothing">
+      <view class="modal-header">选择浇水量</view>
+      <view class="watering-options">
+        <view class="water-option" bindtap="onConfirmWater" data-amount="10">
+          <image class="option-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png" />
+          <text>10g</text>
+        </view>
+        <view class="water-option" bindtap="onConfirmWater" data-amount="50">
+          <image class="option-icon large" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png" />
+          <text>50g</text>
+        </view>
+        <view class="water-option all-in" bindtap="onConfirmWater" data-amount="all">
+          <text class="option-emoji">🌊</text>
+          <text>全部</text>
         </view>
       </view>
-      <view class="no-achievements" wx:else>
-        <text>暂未获得任何徽章，继续努力吧！</text>
-      </view>
+      <view class="modal-close" bindtap="closeWateringPopup">×</view>
     </view>
-    
   </view>
+
 </view>

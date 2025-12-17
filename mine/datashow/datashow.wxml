@@ -18,22 +18,36 @@
   
   <!-- 数据摘要 -->
   <view class="summary-container">
-    <view class="summary-title">
-      <text>{{summary.title}}</text>
-      <!-- 返回上一级按钮，仅在第二层级显示 -->
-      <text wx:if="{{isDrilledDown}}" class="drill-back" bindtap="onDrillBack">返回上一级</text>
+    <view class="summary-header">
+      <view class="summary-title">{{summary.title}}</view>
+      <!-- 返回上一级按钮 -->
+      <view wx:if="{{isDrilledDown}}" class="drill-back" bindtap="onDrillBack">
+        <text>↩ 返回上一级</text>
+      </view>
     </view>
-    <view class="summary-item">
-      <text class="summary-label">总人数：</text>
-      <text class="summary-value">{{summary.total}} 人</text>
+
+    <!-- 关键指标卡片 -->
+    <view class="indicators-grid">
+      <view class="indicator-card">
+        <text class="card-label">总人数</text>
+        <view class="card-value-group">
+          <text class="card-value">{{summary.total}}</text>
+          <text class="card-unit">人</text>
+        </view>
+      </view>
+      <view class="indicator-card">
+        <text class="card-label">主要情绪</text>
+        <text class="card-value emotion-text {{summary.majorEmotion === '消极' ? 'text-negative' : (summary.majorEmotion === '积极' ? 'text-positive' : 'text-neutral')}}">{{summary.majorEmotion}}</text>
+      </view>
     </view>
-    <view class="summary-item">
-      <text class="summary-label">主要情绪：</text>
-      <text class="summary-value">{{summary.majorEmotion}}</text>
-    </view>
-    <view class="summary-item suggestion">
-      <text class="summary-label">专业建议：</text>
-      <text class="summary-text">{{summary.suggestion}}</text>
+
+    <!-- 专业建议 -->
+    <view class="suggestion-box">
+      <view class="suggestion-header">
+        <image class="suggestion-icon" src="/images/icons/suggestion.png" wx:if="{{false}}"></image> <!-- 预留图标位 -->
+        <text class="suggestion-label">专业建议</text>
+      </view>
+      <text class="suggestion-content">{{summary.suggestion}}</text>
     </view>
   </view>
 </view>

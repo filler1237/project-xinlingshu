@@ -3,14 +3,19 @@ let chart = null;
 
 // ---------------- 图表配置 ----------------
 function getChartOption(data, title) {
-  const colors =
-    title === '消极情绪详情'
-      ? ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de'] // 消极情绪详情的颜色
-      : title === '积极情绪详情'
-      ? ['#409eff', '#e6a23c', '#90ee7e'] // 积极情绪详情的颜色
-      : title === '中性情绪详情'
-      ? ['#bda29a', '#6e7074'] // 中性情绪详情的颜色
-      : ['#409eff', '#e6a23c', '#f56c6c']; // 总体情绪分布的颜色
+  // 定义颜色映射
+  const colorMap = {
+    '积极': '#34D399', // 绿色
+    '中性': '#60A5FA', // 蓝色
+    '消极': '#F87171', // 红色
+    // 详细情绪颜色映射 (示例，可根据需要扩展)
+    '快乐': '#34D399', '激动': '#10B981', '满足': '#6EE7B7',
+    '平静': '#60A5FA', '其他': '#93C5FD',
+    '疲惫': '#F87171', '委屈': '#EF4444', '焦虑': '#DC2626', '悲伤': '#B91C1C', '愤怒': '#991B1B'
+  };
+
+  // 默认备用颜色列表
+  const defaultColors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
 
   return {
     title: {
@@ -18,33 +23,67 @@ function getChartOption(data, title) {
       left: 'center',
       top: 10,
       textStyle: {
-        fontSize: 16,
-        fontWeight: 'bold'
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333'
       }
     },
     tooltip: {
       trigger: 'item',
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      padding: [10, 15],
+      textStyle: {
+        color: '#333'
+      },
       formatter: '{b}: {c} 人 ({d}%)'
     },
     legend: {
-      bottom: 10,
-      left: 'center'
+      bottom: 10, // 保持在底部
+      left: 'center',
+      itemWidth: 14,
+      itemHeight: 14,
+      icon: 'circle',
+      textStyle: {
+        fontSize: 12,
+        color: '#666'
+      }
     },
     series: [
       {
         type: 'pie',
-        radius: ['30%', '65%'],
-        center: ['50%', '55%'],
-        roseType: 'area',
-        label: {
-          formatter: '{b}\n{c}人 ({d}%)'
+        radius: ['35%', '55%'], // 减小半径以避免遮挡
+        center: ['50%', '45%'], // 上移中心点，为底部图例留出空间
+        roseType: false, // 关闭玫瑰图模式，规整饼图更容易控制布局
+        avoidLabelOverlap: true, // 开启防重叠
+        itemStyle: {
+          borderRadius: 8,
+          borderColor: '#fff',
+          borderWidth: 2
         },
-        data: data.map((item, index) => ({
-          ...item,
-          itemStyle: {
-            color: colors[index % colors.length]
-          }
-        }))
+        label: {
+          show: true,
+          position: 'outside',
+          formatter: '{b}\n{c}人 ({d}%)',
+          color: '#333',
+          fontSize: 12,
+          lineHeight: 18
+        },
+        labelLine: {
+          show: true,
+          length: 15,
+          length2: 10,
+          smooth: true
+        },
+        data: data.map((item, index) => {
+          // 优先使用映射颜色，如果没有则使用默认颜色列表
+          const color = colorMap[item.name] || defaultColors[index % defaultColors.length];
+          return {
+            ...item,
+            itemStyle: {
+              color: color
+            }
+          };
+        })
       }
     ]
   };
@@ -91,10 +130,10 @@ Page({
       console.log('调试信息：初始化图表，数据：', data, '标题：', title);
       const echarts = require('../ec-canvas/echarts');
 
-      chart = echarts.init(canvas, null, { 
-        width, 
-        height, 
-        devicePixelRatio: dpr 
+      chart = echarts.init(canvas, null, {
+        width,
+        height,
+        devicePixelRatio: dpr
       });
 
       // 必须绑定
@@ -135,7 +174,7 @@ Page({
       data: {
         startDate: start,
         endDate: end,
-        scope:'global'
+        scope: 'global'
       },
       success: res => {
         console.log('云函数返回数据：', res);
@@ -178,7 +217,7 @@ Page({
                 negativeDetailMap[detailedEmotionName] = (negativeDetailMap[detailedEmotionName] || 0) + 1;
               }
             } else {
-                console.warn(`调试信息：未知的详细情绪名称：${detailedEmotionName}`);
+              console.warn(`调试信息：未知的详细情绪名称：${detailedEmotionName}`);
             }
           });
 
