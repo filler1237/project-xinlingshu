@@ -27,6 +27,7 @@
         <textarea class="echo-input" placeholder="送上一句温暖的回应..." maxlength="-1" model:value="{{echoText}}"></textarea>
         <button class="submit-btn" type="primary" bindtap="submitEcho">送出回声</button>
         <button class="skip-btn" bindtap="getRandomVent">换一个</button>
+        <text class="report-link" bindtap="reportVent">举报不当内容</text>
       </block>
       <block wx:else>
         <view class="empty-state">

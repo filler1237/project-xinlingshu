@@ -56,7 +56,7 @@
             </view>
             
             <!-- 根评论内容 -->
-            <view class="comment-content" bindtap="onTapReply" data-comment="{{item}}">{{item.content}}</view>
+            <view class="comment-content" bindtap="onTapReply" bindlongpress="onLongPressComment" data-comment="{{item}}" data-index="{{index}}">{{item.content}}</view>
 
             <!-- 子评论（回复）区域 -->
             <view class="reply-box" wx:if="{{item.replies && item.replies.length > 0}}">
@@ -77,9 +77,9 @@
                     <view class="reply-time">{{reply.createTime}}</view>
                   </view>
                   <image class="reply-like-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png"></image>
-                </view>
+              </view>
                 <!-- 回复内容 -->
-                <view class="reply-content">{{reply.content}}</view>
+                <view class="reply-content" bindlongpress="onLongPressComment" data-comment="{{reply}}" data-parentindex="{{index}}">{{reply.content}}</view>
               </view>
               <!-- 展开更多回复（如果需要，暂时不需要实现完整逻辑，留个入口） -->
                <view class="expand-replies" wx:if="{{item.replies.length > 5}}">

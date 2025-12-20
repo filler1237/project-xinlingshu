@@ -17,7 +17,7 @@
   <view class="actions-container">
     <navigator class="action-item" url="/mine/record/record">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/slideshow-line.jpg"/>
-      <text class="txt">我的树洞</text>
+      <text class="txt">占卜记录</text>
     </navigator>
     <view class="divider"></view>
     <navigator class="action-item" url="/mine/booked/booked">

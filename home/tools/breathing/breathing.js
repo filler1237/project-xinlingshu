@@ -8,16 +8,19 @@ Page({
   },
   data: {
     status: 'ready', // ready, inhaling, holding, exhaling, paused
-    progress: 0,
-    countdown: 0,
     instruction: '准备开始',
-    cycleTime: 57, // 一个完整呼吸周期的时间（秒）：吸气4秒 + 屏息7秒 + 呼气8秒 = 19秒，重复3次，总共57秒
+    countdown: 0,
+    progress: 0,
+    animationType: 'none',
     inhaleTime: 4,
     holdTime: 7,
     exhaleTime: 8,
-    cycles: 3,
+    cycleCount: 0,
+    totalCycles: 3,
+    statusBarHeight: 0,
+    navBarHeight: 44, // Default navigation bar height
+    totalNavHeight: 0, // Total height for padding
     timer: null,
-    animationType: '', // 用于UI动画效果
     // 保存暂停时的状态，用于恢复
     pausedStep: 0,
     pausedCycle: 1,
@@ -37,39 +40,39 @@ Page({
       pausedTotalSteps: 0,
       pausedPhaseSteps: 0
     });
-    
+
     this._continueBreathing(0, 1, 0, 0);
   },
-  
+
   // 从暂停状态继续呼吸练习
   resumeBreathing() {
     const { pausedStep, pausedCycle, pausedTotalSteps, pausedPhaseSteps } = this.data;
     const statusMap = ['inhaling', 'holding', 'exhaling'];
     const instructionMap = ['缓慢吸气', '保持屏息', '缓缓呼气'];
-    
+
     this.setData({
       status: statusMap[pausedStep],
       animationType: statusMap[pausedStep],
       instruction: instructionMap[pausedStep]
     });
-    
+
     this._continueBreathing(pausedStep, pausedCycle, pausedTotalSteps, pausedPhaseSteps);
   },
-  
+
   // 内部方法：继续呼吸练习逻辑
   _continueBreathing(cycleStep, currentCycle, totalSteps, phaseSteps) {
     const totalBreathingSteps = (this.data.inhaleTime + this.data.holdTime + this.data.exhaleTime) * this.data.cycles;
-    
+
     this.data.timer = setInterval(() => {
       // 检查是否已被暂停
       if (this.data.status === 'paused') {
         clearInterval(this.data.timer);
         return;
       }
-      
+
       totalSteps++;
       phaseSteps++;
-      
+
       // 保存当前状态，用于暂停后恢复
       this.setData({
         pausedStep: cycleStep,
@@ -77,13 +80,13 @@ Page({
         pausedTotalSteps: totalSteps,
         pausedPhaseSteps: phaseSteps
       });
-      
+
       const progress = Math.min((totalSteps / totalBreathingSteps) * 100, 100);
-      
+
       if (cycleStep === 0) { // 吸气阶段
         const countdown = this.data.inhaleTime - phaseSteps;
         this.setData({ countdown: countdown });
-        
+
         if (countdown <= 0) {
           cycleStep = 1;
           phaseSteps = 0;
@@ -97,7 +100,7 @@ Page({
       } else if (cycleStep === 1) { // 屏息阶段
         const countdown = this.data.holdTime - phaseSteps;
         this.setData({ countdown: countdown });
-        
+
         if (countdown <= 0) {
           cycleStep = 2;
           phaseSteps = 0;
@@ -111,11 +114,11 @@ Page({
       } else { // 呼气阶段
         const countdown = this.data.exhaleTime - phaseSteps;
         this.setData({ countdown: countdown });
-        
+
         if (countdown <= 0) {
           currentCycle++;
           phaseSteps = 0;
-          
+
           if (currentCycle > this.data.cycles) {
             // 完成所有循环
             this.stopBreathing();
@@ -127,7 +130,7 @@ Page({
             });
             return;
           }
-          
+
           cycleStep = 0;
           this.setData({
             status: 'inhaling',
@@ -137,7 +140,7 @@ Page({
           });
         }
       }
-      
+
       this.setData({ progress: progress });
     }, 1000);
   },
@@ -147,14 +150,14 @@ Page({
       clearInterval(this.data.timer);
       this.data.timer = null;
     }
-    
+
     // 只有在练习进行中才更新为暂停状态
     if (this.data.status !== 'ready' && this.data.status !== 'paused') {
       this.setData({
-            status: 'paused',
-            instruction: '练习已暂停',
-            animationType: 'paused'
-          });
+        status: 'paused',
+        instruction: '练习已暂停',
+        animationType: 'paused'
+      });
     }
   },
 

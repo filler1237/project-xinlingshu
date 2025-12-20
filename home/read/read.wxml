@@ -11,8 +11,8 @@
         <view class="author-nickname">{{item.authorNickName}}</view>
         <view class="publish-time">{{item.createTime}}</view>
       </view>
-      <!-- More actions menu -->
-      <view class="actions-menu" wx:if="{{item._openid === userOpenid}}" catch:tap="deleteArticle" data-id="{{item._id}}">
+      <!-- More actions menu (visible to everyone) -->
+      <view class="actions-menu" catch:tap="onMoreActions" data-id="{{item._id}}" data-index="{{index}}" data-isowner="{{item._openid === userOpenid}}">
         <text class="dot">●</text><text class="dot">●</text><text class="dot">●</text>
       </view>
     </view>

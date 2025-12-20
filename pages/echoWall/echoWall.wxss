@@ -253,3 +253,13 @@ page {
   font-style: italic;
   font-weight: normal;
 }
+
+/* 举报相关样式 */
+.report-link {
+  display: block;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 30rpx 20rpx;
+  margin-top: 10rpx;
+}

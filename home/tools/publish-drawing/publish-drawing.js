@@ -32,7 +32,7 @@ Page({
         .orderBy('startTime', 'desc')
         .limit(1)
         .get();
-      
+
       if (res.data.length > 0) {
         this.setData({ activity: res.data[0] });
       }
@@ -65,22 +65,32 @@ Page({
       });
       const fileID = uploadResult.fileID;
 
-      // 内容安全检测已暂时禁用，上线前请务必重新开启
-      /*
-      // 2. 内容安全检查 (使用fileID)
-      const safeCheckResult = await wx.cloud.callFunction({
-        name: 'safeCheck',
-        data: {
-          text: this.data.description,
-          fileID: fileID
+      // 2. 内容安全检查
+      try {
+        const safeCheckResult = await wx.cloud.callFunction({
+          name: 'safeCheck',
+          data: {
+            text: this.data.description,
+            fileID: fileID
+          }
+        });
+
+        if (!safeCheckResult.result.pass) {
+          // 如果检测不通过，删除已上传的违规图片
+          await wx.cloud.deleteFile({ fileList: [fileID] });
+          throw new Error(safeCheckResult.result.reason || '内容包含违规信息，无法发布');
         }
-      });
-      
-      if (!safeCheckResult.result.pass) {
-        await wx.cloud.deleteFile({ fileList: [fileID] });
-        throw new Error(safeCheckResult.result.reason || '内容安全检测未通过');
+      } catch (checkErr) {
+        // 捕获检查过程本身的错误（如云函数调用失败），也视为不通过，并清理资源
+        if (checkErr.message.includes('违规')) {
+          throw checkErr;
+        } else {
+          // 如果是网络等其他错误，可以选择是否放行，这里为了安全起见选择拦截
+          await wx.cloud.deleteFile({ fileList: [fileID] });
+          console.error("安全检查服务异常:", checkErr);
+          throw new Error('内容安全检测服务繁忙，请稍后重试');
+        }
       }
-      */
 
       // 3. 写入数据库
       await db.collection('drawings').add({
@@ -96,8 +106,8 @@ Page({
       });
 
       wx.hideLoading();
-      wx.showToast({ 
-        title: '发布成功', 
+      wx.showToast({
+        title: '发布成功',
         icon: 'success',
         duration: 1500
       });
@@ -115,10 +125,22 @@ Page({
     } catch (error) {
       wx.hideLoading();
       this.setData({ isPublishing: false });
-      wx.showToast({
-        title: error.message || '发布失败，请重试',
-        icon: 'none'
-      });
+
+      // 如果是违规相关的错误，使用弹窗强提示
+      if (error.message && (error.message.includes('违规') || error.message.includes('安全') || error.message.includes('检测'))) {
+        wx.showModal({
+          title: '审核未通过',
+          content: error.message,
+          showCancel: false,
+          confirmText: '我知道了'
+        });
+      } else {
+        // 其他错误使用 Toast 轻提示
+        wx.showToast({
+          title: error.message || '发布失败，请重试',
+          icon: 'none'
+        });
+      }
       console.error("发布失败:", error);
     }
   }

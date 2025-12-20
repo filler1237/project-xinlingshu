@@ -272,6 +272,59 @@ Page({
         console.error('dianzan云函数调用失败', err);
       }
     });
+  },
+
+  // 长按评论
+  onLongPressComment(e) {
+    const comment = e.currentTarget.dataset.comment;
+
+    // 只有自己的评论才能删除
+    if (comment._openid !== this.data.userOpenid) {
+      return; // 不是自己的评论，不做任何操作
+    }
+
+    wx.showActionSheet({
+      itemList: ['删除评论'],
+      itemColor: '#d9534f',
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          this.deleteComment(comment._id);
+        }
+      }
+    });
+  },
+
+  // 删除评论
+  deleteComment(commentId) {
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这条评论吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading({ title: '删除中...', mask: true });
+
+          wx.cloud.callFunction({
+            name: 'deleteComment',
+            data: { commentId: commentId },
+            success: (res) => {
+              wx.hideLoading();
+              if (res.result && res.result.code === 0) {
+                wx.showToast({ title: '删除成功', icon: 'success' });
+                // 刷新评论列表
+                this.getComments(this.data.article._id);
+              } else {
+                wx.showToast({ title: res.result?.msg || '删除失败', icon: 'none' });
+              }
+            },
+            fail: (err) => {
+              wx.hideLoading();
+              console.error('删除评论失败:', err);
+              wx.showToast({ title: '网络错误', icon: 'none' });
+            }
+          });
+        }
+      }
+    });
   }
 
 })

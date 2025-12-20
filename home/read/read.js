@@ -4,7 +4,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: { 
+  data: {
     articles: [],
     page: 1,
     pageSize: 10,
@@ -21,7 +21,7 @@ Page({
     this.getArticles(true); // 首次加载
   },
 
-  onShow(){
+  onShow() {
     if (this.data.needsRefresh) {
       this.getArticles(true);
       this.setData({ needsRefresh: false });
@@ -58,7 +58,7 @@ Page({
       success: res => {
         const newArticles = res.result.data || [];
         const oldArticles = isRefresh ? [] : this.data.articles;
-        
+
         this.setData({
           articles: oldArticles.concat(newArticles),
           page: page + 1,
@@ -108,14 +108,14 @@ Page({
     });
 
     wx.cloud.callFunction({
-      name:'dianzan',
-      data:{
-        articleId:articleId,
+      name: 'dianzan',
+      data: {
+        articleId: articleId,
         collectionName: collectionName
       },
-      success: res=>{
-        if(res.result && res.result.success) {
-          if(res.result.likes != this.data.articles[index].likes) {
+      success: res => {
+        if (res.result && res.result.success) {
+          if (res.result.likes != this.data.articles[index].likes) {
             this.setData({
               [`articles[${index}].likes`]: res.result.likes
             });
@@ -127,8 +127,8 @@ Page({
           });
         }
       },
-      
-      fail: err=>{
+
+      fail: err => {
         // 若失败则回滚前端的更新
         this.setData({
           [`articles[${index}].liked`]: article.liked,
@@ -138,14 +138,14 @@ Page({
           title: '网络错误',
           icon: 'none'
         });
-        console.error('dianzan云函数调用失败',err);
+        console.error('dianzan云函数调用失败', err);
       }
     });
   },
 
   goToUserProfile(event) {
     const userId = event.currentTarget.dataset.userid;
-    if(userId) {
+    if (userId) {
       wx.navigateTo({
         url: `/home/profile/profile?userId=${userId}`,
       });
@@ -158,7 +158,7 @@ Page({
       url: `/home/read/detail/detail?id=${articleId}`,
     })
   },
-  
+
   goToCreatePage() {
     wx.navigateTo({
       url: '/home/read/create/create',
@@ -208,5 +208,64 @@ Page({
         }
       }
     })
+  },
+
+  // 更多操作 - 根据是否是作者显示不同选项
+  onMoreActions(event) {
+    const articleId = event.currentTarget.dataset.id;
+    const index = event.currentTarget.dataset.index;
+    const isOwner = event.currentTarget.dataset.isowner;
+
+    if (isOwner) {
+      // 作者：显示删除
+      wx.showActionSheet({
+        itemList: ['删除'],
+        itemColor: '#d9534f',
+        success: (res) => {
+          if (res.tapIndex === 0) {
+            this.deleteArticle({ currentTarget: { dataset: { id: articleId } } });
+          }
+        }
+      });
+    } else {
+      // 非作者：显示举报
+      const reasons = ['色情低俗', '政治敏感', '攻击谩骂', '广告垃圾', '其他'];
+      wx.showActionSheet({
+        itemList: reasons,
+        success: (res) => {
+          this.reportArticle(articleId, index, reasons[res.tapIndex]);
+        }
+      });
+    }
+  },
+
+  // 举报文章
+  reportArticle(articleId, index, reason) {
+    const article = this.data.articles[index];
+    wx.showLoading({ title: '提交中...' });
+
+    wx.cloud.callFunction({
+      name: 'reportContent',
+      data: {
+        targetId: articleId,
+        targetType: article.isDrawing ? 'drawing' : 'article',
+        targetCollection: article.isDrawing ? 'drawings' : 'articles',
+        targetContent: (article.title || article.content || '').substring(0, 200),
+        targetUserId: article._openid || '',
+        reason: reason
+      },
+      success: (res) => {
+        wx.hideLoading();
+        if (res.result.code === 0) {
+          wx.showToast({ title: '举报成功', icon: 'success' });
+        } else {
+          wx.showToast({ title: res.result.msg, icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showToast({ title: '举报失败', icon: 'none' });
+      }
+    });
   }
 })

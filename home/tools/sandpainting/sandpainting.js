@@ -55,18 +55,18 @@ Page({
 
         this.canvasWidth = res[0].width;
         this.canvasHeight = res[0].height;
-        
+
         canvas.width = this.canvasWidth * dpr;
         canvas.height = this.canvasHeight * dpr;
         ctx.scale(dpr, dpr);
 
         this.canvas = canvas;
         this.context = ctx;
-        
+
         this.clearCanvas(false);
       });
   },
-  
+
   // 重绘整个画布
   redrawCanvas() {
     if (!this.context) return;
@@ -77,13 +77,13 @@ Page({
     // 2. 遍历历史记录并重绘每一笔
     this.historyStack.forEach(stroke => {
       if (stroke.points.length < 2) return;
-      
+
       this.context.beginPath();
       this.context.strokeStyle = stroke.color;
       this.context.lineWidth = stroke.size;
       this.context.lineCap = 'round';
       this.context.lineJoin = 'round';
-      
+
       this.context.moveTo(stroke.points[0].x, stroke.points[0].y);
       for (let i = 1; i < stroke.points.length; i++) {
         this.context.lineTo(stroke.points[i].x, stroke.points[i].y);
@@ -95,7 +95,7 @@ Page({
   startDrawing(e) {
     if (!this.context) return;
     this.setData({ isDrawing: true });
-    
+
     // 创建一个新的笔画对象
     this.currentStroke = {
       color: this.data.isEraser ? this.data.canvasBgColor : this.data.selectedColor,
@@ -106,22 +106,22 @@ Page({
 
   onDrawing(e) {
     if (!this.data.isDrawing || !this.context || !this.currentStroke) return;
-    
+
     const { x, y } = e.touches[0];
     this.currentStroke.points.push({ x, y });
-    
+
     // 实时绘制当前笔画
     if (this.currentStroke.points.length < 2) return;
-    
+
     const points = this.currentStroke.points;
     const lastPoint = points[points.length - 2];
-    
+
     this.context.beginPath();
     this.context.strokeStyle = this.currentStroke.color;
     this.context.lineWidth = this.currentStroke.size;
     this.context.lineCap = 'round';
     this.context.lineJoin = 'round';
-    
+
     this.context.moveTo(lastPoint.x, lastPoint.y);
     this.context.lineTo(x, y);
     this.context.stroke();
@@ -149,7 +149,7 @@ Page({
     this.lastColor = color;
     this.setData({ selectedColor: color, isEraser: false });
   },
-  
+
   onColorChange(e) {
     const color = e.detail.color;
     this.lastColor = color;
@@ -216,6 +216,8 @@ Page({
     wx.showLoading({ title: '正在导出画布...' });
     wx.canvasToTempFilePath({
       canvas: this.canvas,
+      fileType: 'jpg', // 使用 JPG 格式以减小积
+      quality: 0.8,    // 压缩质量
       success: (res) => {
         wx.hideLoading();
         const tempFilePath = encodeURIComponent(res.tempFilePath);
@@ -242,15 +244,15 @@ Page({
   toggleColorPicker() {
     this.setData({ showColorPicker: !this.data.showColorPicker });
   },
-  
-  doNothing() {},
+
+  doNothing() { },
 
   toggleDrawer() {
     this.setData({ isDrawerExpanded: !this.data.isDrawerExpanded });
   },
 
   drawerTouchStart(e) {
-    this.setData({ 
+    this.setData({
       touchStartY: e.touches[0].clientY,
       isDrawerMoving: true,
     });
