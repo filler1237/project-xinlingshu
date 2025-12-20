@@ -1,0 +1,51 @@
+<view class="page-container">
+
+<!-- 标题区域 -->
+<view class="header">
+  <text class="title">开发者的一点话</text>
+  <text class="subtitle">About This Mini Program</text>
+</view>
+
+<!-- 内容卡片 -->
+<view class="content-card">
+
+  <text class="paragraph">
+    感谢您使用我们的微信小程序。
+  </text>
+
+  <text class="paragraph">
+    这是一个由几名大三学生共同完成的小项目。
+    从最初的构想到现在能够被真正使用，我们在不断学习、尝试与修改中一步步推进。
+  </text>
+
+  <text class="paragraph">
+    我们希望通过「日记记录」「情绪分析」「心灵树成长」「塔罗探索」等功能，
+    为大学生提供一个可以慢下来、与自己对话的空间。
+    在面对学业、生活和未来选择时，哪怕只能带来一点点陪伴，
+    对我们来说也意义非凡。
+  </text>
+
+  <text class="paragraph">
+    由于时间与能力有限，小程序目前仍有不少功能处在持续完善阶段。
+    例如心理预约相关模块，受限于现实条件，我们暂时无法与官方实名认证系统进行深度对接，
+    在功能完整性与使用体验上仍有提升空间。
+  </text>
+
+  <text class="paragraph">
+    如果您在使用过程中遇到问题，或对功能设计有任何建议，
+    欢迎通过小程序内的反馈方式联系我们。
+    您的每一条意见，都会成为我们继续改进的重要参考。
+  </text>
+
+  <text class="paragraph ending">
+    再次感谢您的理解、包容与支持，
+    也感谢您愿意将宝贵的时间交给我们的作品。
+  </text>
+
+  <view class="signature">
+    <text>—— 开发团队敬上</text>
+  </view>
+
+</view>
+
+</view>

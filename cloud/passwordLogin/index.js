@@ -1,65 +1,52 @@
 // cloud/passwordLogin/index.js
-const cloud = require('wx-server-sdk');
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
-const db = cloud.database();
+const cloud = require('wx-server-sdk')
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+const db = cloud.database()
 
 exports.main = async (event, context) => {
-  const { username, password, role } = event;
-
-  console.log('--- passwordLogin 云函数 ---');
-  console.log('接收到的参数 (event):', event);
+  const { username, password, role } = event
 
   if (!username || !password || !role) {
     return {
       success: false,
-      message: '缺少必要参数',
-    };
+      message: '缺少必要参数'
+    }
   }
 
   try {
-    // 根据用户名查询用户
+    // 关键点：username + password + role 一起查
     const userRes = await db.collection('users').where({
-      username: username
-    }).get();
+      username,
+      password,
+      role
+    }).get()
 
     if (userRes.data.length === 0) {
       return {
         success: false,
-        message: '用户不存在',
-      };
-    }
-
-    const user = userRes.data[0];
-
-    // 验证密码
-    if (user.password !== password) {
-      return {
-        success: false,
-        message: '密码错误',
-      };
-    }
-
-    // 密码正确，更新角色并返回用户信息
-    await db.collection('users').doc(user._id).update({
-      data: {
-        role: role
+        message: '账号 / 密码 / 身份不正确'
       }
-    });
+    }
 
-    // 获取更新后的用户信息
-    const updatedUserRes = await db.collection('users').doc(user._id).get();
+    const user = userRes.data[0]
 
+    // 登录成功，不改数据库，只返回必要信息
     return {
       success: true,
       message: '登录成功',
-      userInfo: updatedUserRes.data,
-    };
+      userInfo: {
+        _id: user._id,
+        username: user.username,
+        role: user.role,
+        nickName: user.nickName
+      }
+    }
 
-  } catch (e) {
-    console.error('登录异常', e);
+  } catch (err) {
+    console.error('passwordLogin error:', err)
     return {
       success: false,
-      message: '登录异常，请稍后再试',
-    };
+      message: '服务器异常'
+    }
   }
-};
+}

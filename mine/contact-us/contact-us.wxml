@@ -1,0 +1,54 @@
+<view class="page-container">
+
+<!-- 标题 -->
+<view class="header">
+  <text class="title">联系我们</text>
+  <text class="subtitle">Contact Us</text>
+</view>
+
+<!-- 内容卡片 -->
+<view class="content-card">
+
+  <text class="paragraph">
+    如果您在使用小程序的过程中遇到任何问题，
+    或对功能设计、体验细节有建议和想法，
+    都非常欢迎与我们取得联系。
+  </text>
+
+  <text class="paragraph">
+    作为学生开发团队，我们仍在不断学习与完善中。
+    您的每一条反馈，都会帮助我们把产品做得更好。
+  </text>
+
+  <!-- 联系方式列表 -->
+  <view class="contact-list">
+
+    <view class="contact-item">
+      <text class="label">反馈方式</text>
+      <text class="value">请发邮件至1472214864@qq.com</text>
+    </view>
+
+    <view class="contact-item">
+      <text class="label">适用范围</text>
+      <text class="value">功能建议 · 使用问题 · Bug 反馈</text>
+    </view>
+
+    <view class="contact-item">
+      <text class="label">回复说明</text>
+      <text class="value">我们会在能力范围内尽快处理与回复</text>
+    </view>
+
+  </view>
+
+  <text class="ending">
+    感谢您的理解、支持与耐心，
+    也感谢您愿意帮助我们一起把这个小程序变得更好。
+  </text>
+
+  <view class="signature">
+    <text>—— 开发团队</text>
+  </view>
+
+</view>
+
+</view>

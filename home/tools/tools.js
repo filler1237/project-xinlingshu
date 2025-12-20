@@ -7,9 +7,12 @@ Page({
   },
   
   gotoWhiteNoise() {
-    wx.navigateTo({
-      url: '/home/tools/whitenoise/whitenoise'
-    })
+    wx.showModal({
+      title: '提示',
+      content: '这个功能目前暂时在开发中',
+      showCancel: false,
+      confirmText: '我知道了'
+    });
   },
   
   gotoMeditation() {
@@ -20,9 +23,12 @@ Page({
   
   // 跳转到音频资源管理页面
   gotoAudioUpload() {
-    wx.navigateTo({
-      url: '/home/tools/user_self_upload/user_self_upload'
-    })
+    wx.showModal({
+      title: '提示',
+      content: '这个功能目前暂时在开发中',
+      showCancel: false,
+      confirmText: '我知道了'
+    });
   },
   
   // 跳转到沙画涂鸦页面

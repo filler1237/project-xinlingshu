@@ -11,7 +11,7 @@
   <view class="tool-list">
     <view class="tool-item" bind:tap="gotoBreathingExercise">
       <view class="tool-icon">
-        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/呼吸练习.png" mode="aspectFit" class="tool-icon-img"/>
       </view>
       <view class="tool-info">
         <text class="tool-name">呼吸练习</text>
@@ -21,11 +21,21 @@
     
     <view class="tool-item" bind:tap="gotoMeditation">
       <view class="tool-icon">
-        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/冥想.png" mode="aspectFit" class="tool-icon-img"/>
       </view>
       <view class="tool-info">
         <text class="tool-name">正念冥想</text>
         <text class="tool-desc">放松身心，提升专注力的冥想练习</text>
+      </view>
+    </view>
+    
+    <view class="tool-item" bind:tap="gotoSandPainting">
+      <view class="tool-icon">
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/沙画.png" mode="aspectFit" class="tool-icon-img"/>
+      </view>
+      <view class="tool-info">
+        <text class="tool-name">沙画涂鸦</text>
+        <text class="tool-desc">随意涂画，释放压力</text>
       </view>
     </view>
     
@@ -46,16 +56,6 @@
       <view class="tool-info">
         <text class="tool-name">音频资源管理</text>
         <text class="tool-desc">上传和管理白噪音音频文件</text>
-      </view>
-    </view>
-    
-    <view class="tool-item" bind:tap="gotoSandPainting">
-      <view class="tool-icon">
-        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png" mode="aspectFit" class="tool-icon-img"/>
-      </view>
-      <view class="tool-info">
-        <text class="tool-name">沙画涂鸦</text>
-        <text class="tool-desc">随意涂画，释放压力</text>
       </view>
     </view>
   </view>

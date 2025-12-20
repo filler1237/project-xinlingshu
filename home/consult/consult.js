@@ -61,24 +61,15 @@ onPhoneInput: function(e) {
 },
 
 onLoad: function (options) {
-  wx.showLoading({ title: '加载中...' });
-  wx.cloud.callFunction({
-    name: 'getAvailability', // 更新为新的云函数名称
-    success: res => {
-      if (res.result && res.result.success) {
-        this.setData({
-          availabilityData: res.result.data, // 更新数据路径
-          teacherList: res.result.data.map(t => t.teacherName)
-        });
-      } else {
-        wx.showToast({ title: '加载失败', icon: 'none' });
+  wx.showModal({
+    title: '提示',
+    content: '功能目前在开发中',
+    showCancel: false,
+    confirmText: '我知道了',
+    success: function (res) {
+      if (res.confirm) {
+        wx.navigateBack();
       }
-      wx.hideLoading();
-    },
-    fail: err => {
-      console.error(err);
-      wx.hideLoading();
-      wx.showToast({ title: '加载失败', icon: 'none' });
     }
   });
 },

@@ -1,6 +1,5 @@
 // pages/mine/mine.js
 const app = getApp();
-const db = wx.cloud.database();
 
 Page({
   data: {
@@ -48,7 +47,6 @@ Page({
       app.globalData.userInfo = userInfo;
       app.globalData.isLogin = true;
       // 刷新用户信息，以同步最新的身份绑定状态等
-      this.refreshUserInfo(userInfo._id);
       this.fetchNextAppointment(); // 获取下一次预约
     } else {
       this.setData({ nextAppointment: null }); // 未登录则清除预约信息
@@ -109,20 +107,6 @@ Page({
       }
     }).catch(err => {
       console.error("获取预约列表失败", err);
-    });
-  },
-
-  /**
-   * 从数据库刷新最新的用户信息
-   */
-  refreshUserInfo(userId) {
-    db.collection('users').doc(userId).get().then(res => {
-      const freshUserInfo = res.data;
-      console.log("刷新用户信息成功", freshUserInfo);
-      this.updateUserInfo(freshUserInfo); // 使用统一的函数来更新数据
-      this.checkIdentityBound(freshUserInfo);
-    }).catch(err => {
-      console.error("刷新用户信息失败", err);
     });
   },
 
@@ -487,62 +471,17 @@ Page({
    * 活动系统点击处理
    */
   onActivitySystemTap: function () {
-    console.log("点击活动系统", this.data.isLogin, this.data.userInfo);
-
-    if (!this.data.isLogin) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      });
-      return;
-    }
-
-    // 安全获取用户身份，添加更多调试信息
-    const userInfo = this.data.userInfo;
-    console.log("完整用户信息:", userInfo);
-
-    if (!userInfo) {
-      wx.showToast({
-        title: '用户信息获取失败',
-        icon: 'none'
-      });
-      return;
-    }
-
-    // 获取角色，如果没有角色字段则默认为学生
-    const role = userInfo.role || 'student';
-    console.log("用户角色:", role);
-
-    let targetUrl = '';
-
-    switch (role) {
-      case 'student':
-        targetUrl = '/competition/pages/studenthome/studenthome';
-        break;
-      case 'admin':
-        targetUrl = '/competition/pages/adminhome/adminhome';
-        break;
-      case 'judge':
-        targetUrl = '/competition/pages/judgehome/judgehome';
-        break;
-      default:
-        wx.showToast({
-          title: '角色信息异常',
-          icon: 'none'
-        });
-        return;
-    }
-
-    console.log("跳转到:", targetUrl);
-
-    wx.navigateTo({
-      url: targetUrl,
+    wx.showModal({
+      title: '提示',
+      content: '该功能正在开发中',
+      showCancel: false,
+      confirmText: '确定',
       success: (res) => {
-        console.log("页面跳转成功", res);
-      },
-      fail: (err) => {
-        console.error("页面跳转失败:", err);
-        this.showPathErrorDialog(role, targetUrl, err);
+        if (res.confirm) {
+          wx.navigateBack({
+            delta: 1
+          });
+        }
       }
     });
   },

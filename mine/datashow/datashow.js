@@ -35,7 +35,7 @@ function getChartOption(data, title) {
       textStyle: {
         color: '#333'
       },
-      formatter: '{b}: {c} 人 ({d}%)'
+      formatter: '{b}: {c} 份 ({d}%)'
     },
     legend: {
       bottom: 10, // 保持在底部
@@ -63,7 +63,7 @@ function getChartOption(data, title) {
         label: {
           show: true,
           position: 'outside',
-          formatter: '{b}\n{c}人 ({d}%)',
+          formatter: '{b}\n{c}份 ({d}%)',
           color: '#333',
           fontSize: 12,
           lineHeight: 18
@@ -105,11 +105,45 @@ Page({
       negativeDetailData: []
     }
   },
-
+  checkAdminPermission() {
+    const userInfo = wx.getStorageSync('userInfo');
+  
+    // 未登录
+    if (!userInfo || !userInfo.role) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 1500);
+      return false;
+    }
+  
+    // 非管理员
+    if (userInfo.role !== 'admin') {
+      wx.showModal({
+        title: '权限不足',
+        content: '该功能仅管理员可查看',
+        showCancel: false,
+        success: () => {
+          wx.navigateBack();
+        }
+      });
+      return false;
+    }
+  
+    return true;
+  },
+  
   /**
    * ⚠️ 一定要在 onReady
    */
   onReady() {
+    if (!this.checkAdminPermission()){
+      return;
+    }
+
     this.ecComponent = this.selectComponent('.ec-canvas');
     console.log('调试信息：onReady中this.ecComponent的值：', this.ecComponent);
 

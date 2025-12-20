@@ -77,7 +77,7 @@
 <view class="GameBox">
 <view class="Game" bind:tap="gotoTools">
     <view class="GameIma">
-      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/service-line.jpg" mode="aspectFill"/>
+      <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Gemini_Generated_Image_q11g7qq11g7qq11g.png" mode="aspectFill"/>
     </view>
     <text class="Font_G">减压工具箱</text>
   </view>

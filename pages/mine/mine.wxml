@@ -80,10 +80,6 @@
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/slideshow-line.jpg" style="width: 53.33rpx;"/>
       <text>心理测评</text>
     </navigator>
-    <view class="item" style="width:112rpx ;" bindtap="showQRCode">
-      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/slideshow-3-line.jpg" style="width: 53.33rpx;"/>
-      <text>预约码</text>
-    </view>
     <navigator url="/mine/record/record" class="item" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/building-2-line.jpg" style="width: 53.33rpx;"/>
       <text>测评记录</text>
@@ -109,16 +105,12 @@
   </view>
 </view>
 <view class="forus" style="width: 360rpx;">
-  <navigator url="../sushuo/sushuo" class="button">
-    <text>关于我们</text>
+  <navigator url="/mine/developer-message/developer-message" class="button">
+    <text>开发者的话</text>
   </navigator>
   <view class="l">|</view>
-  <navigator url="../sushuo/sushuo" class="button">
+  <navigator url="/mine/contact-us/contact-us" class="button">
     <text>联系我们</text>
-  </navigator>
-  <view class="l">|</view>
-  <navigator url="../sushuo/sushuo" class="button">
-    <text>寻求帮助</text>
   </navigator>
 </view>
 

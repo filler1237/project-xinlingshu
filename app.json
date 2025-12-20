@@ -91,7 +91,9 @@
         "record/detail/detail",
         "datashow/datashow",
         "datashow1/datashow1",
-        "message/message"
+        "message/message",
+        "developer-message/developer-message",
+        "contact-us/contact-us"
       ]
     },
     {
