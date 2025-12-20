@@ -27,7 +27,7 @@
       <view class="CePing">
         <view class="Mid_f">
           <text class="Font">心理测评</text>
-          <text class="Font_s">治愈您的心灵</text>
+          <text class="Font_s">Psychological Assessment</text>
         </view>
         <view class="Mid_i">
           <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/CePing.png" mode="widthFix"/>
@@ -39,7 +39,7 @@
       <view class="SheQu">
         <view class="Mid_f">
           <text class="Font">心理社区</text>
-          <text class="Font_s">治愈您的心灵</text>
+          <text class="Font_s">Mental Health Community</text>
         </view>
         <view class="Mid_i">
           <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/SheQu.png" mode="widthFix"/>
@@ -53,7 +53,7 @@
   <view class="BuJi" style="margin: 0;">
     <view class="BuJi_i" style="width:250rpx; flex-direction: column;">
       <text class="Font">心理树洞</text>
-      <text class="Font_s">Spiritual nourishment</text>
+      <text class="Font_s">Echo Wall</text>
     </view>
     <view class="BuJi_i" style="justify-content: flex-end; align-items: flex-end; margin-right: 25rpx;">
       <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/BuJi.png" mode="widthFix"/>
