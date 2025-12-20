@@ -87,7 +87,7 @@
       <view class="interpretation-divider"></view>
 
       <view class="interpretation-title">智者解读</view>
-      <text class="result-text">{{result.aiInterpretation}}</text>
+      <rich-text class="result-text" nodes="{{result.aiInterpretationHtml}}"></rich-text>
     </block>
     <!-- 错误信息展示 -->
     <block wx:else>

@@ -218,6 +218,7 @@
   color: #555;
   line-height: 1.6;
   text-align: justify;
+  white-space: pre-wrap; /* 保留换行符并自动换行 */
 }
 
 /* Loading Overlay Styles */

@@ -18,7 +18,7 @@
     </view>
     <view class="tarot-section">
       <text class="section-title">牌阵解读</text>
-      <view class="analysis-text">{{recordDetail.analysis}}</view>
+      <rich-text class="analysis-text" nodes="{{recordDetail.analysisHtml}}"></rich-text>
     </view>
   </block>
 
@@ -41,7 +41,7 @@
     </view>
     <view class="hexagram-section">
       <text class="section-title">卦象解读</text>
-      <view class="analysis-text">{{recordDetail.analysis}}</view>
+      <rich-text class="analysis-text" nodes="{{recordDetail.analysisHtml}}"></rich-text>
     </view>
   </block>
 </view>

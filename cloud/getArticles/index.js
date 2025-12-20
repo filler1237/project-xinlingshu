@@ -75,7 +75,25 @@ exports.main = async (event, context) => {
 
     // 合并两个数据源并排序
     let combinedList = [...articles, ...drawings];
-    combinedList.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+
+    // 健壮的日期排序：处理不同格式的 createTime
+    combinedList.sort((a, b) => {
+      const getTimestamp = (item) => {
+        if (!item.createTime) return 0;
+        // 如果是 Date 对象，直接获取时间戳
+        if (item.createTime instanceof Date) {
+          return item.createTime.getTime();
+        }
+        // 如果有 $date 属性（云数据库服务器日期格式）
+        if (item.createTime.$date) {
+          return new Date(item.createTime.$date).getTime();
+        }
+        // 尝试解析为日期
+        const date = new Date(item.createTime);
+        return isNaN(date.getTime()) ? 0 : date.getTime();
+      };
+      return getTimestamp(b) - getTimestamp(a);
+    });
 
     // 如果需要分页，合并后可能需要截取
     // 为了简单起见，这里假设两个源各取 pageSize 然后合并，前端需要能处理重复数据

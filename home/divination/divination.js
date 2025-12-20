@@ -132,10 +132,10 @@ Page({
         return l.symbol;
       });
     }
-    
+
     // 如果是六爻全动，传递对卦的爻符号
     if (movingLinesCount === 6) {
-        changedLines = this.getOppositeHexagram(originalLines);
+      changedLines = this.getOppositeHexagram(originalLines);
     }
 
     const cloudCallData = {
@@ -150,8 +150,13 @@ Page({
       data: cloudCallData
     }).then(res => {
       if (res.result && res.result.success) {
+        // 解析 Markdown 格式的 AI 解读
+        const analysis = res.result.analysis;
+        if (analysis && analysis.aiInterpretation) {
+          analysis.aiInterpretationHtml = this.parseMarkdown(analysis.aiInterpretation);
+        }
         this.setData({
-          result: res.result.analysis, // 现在 analysis 是一个对象
+          result: analysis,
           isResultObject: true
         });
 
@@ -228,4 +233,16 @@ Page({
   onLoad: function (options) {
     // 在这里可以加载完整的64卦数据
   },
+
+  /**
+   * 简易 Markdown 解析器
+   * 将 **加粗** 转为 <strong>，换行转为 <br/>
+   */
+  parseMarkdown(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **加粗**
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')              // *斜体*
+      .replace(/\n/g, '<br/>');                          // 换行
+  }
 })

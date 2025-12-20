@@ -31,9 +31,9 @@ Page({
       success: res => {
         if (res.result && res.result.success) {
           let recordDetail = res.result.data;
-          
+
           recordDetail.formattedDate = new Date(recordDetail.createdAt).toLocaleString();
-          
+
           if (recordDetail.type === 'hexagram' && !recordDetail.question) {
             recordDetail.question = '无';
           }
@@ -41,7 +41,12 @@ Page({
           if (recordDetail.type === 'hexagram' && recordDetail.result) {
             recordDetail.analysis = recordDetail.result;
           }
-          
+
+          // 解析 Markdown 格式
+          if (recordDetail.analysis) {
+            recordDetail.analysisHtml = this.parseMarkdown(recordDetail.analysis);
+          }
+
           this.setData({
             recordDetail: recordDetail,
           });
@@ -64,5 +69,16 @@ Page({
         wx.hideLoading();
       }
     });
+  },
+
+  /**
+   * 简易 Markdown 解析器
+   */
+  parseMarkdown(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br/>');
   }
 });
