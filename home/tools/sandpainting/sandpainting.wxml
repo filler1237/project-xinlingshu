@@ -52,9 +52,6 @@
             bind:tap="selectColor" 
             data-color="{{item}}">
           </view>
-          <view class="color-item more-colors-btn" bind:tap="toggleColorPicker">
-            <image src="/image/more_colors_icon.png" class="more-colors-icon" />
-          </view>
         </scroll-view>
       </view>
 
@@ -81,13 +78,6 @@
         <button class="action-btn save-btn" bindtap="saveCanvas">保存画作</button>
         <button class="action-btn upload-btn-main" bindtap="uploadDrawing">上传作品</button>
       </view>
-    </view>
-  </view>
-
-  <!-- 调色板模态层 -->
-  <view class="color-picker-modal" wx:if="{{showColorPicker}}" bind:tap="toggleColorPicker">
-    <view class="color-picker-content" catch:tap="doNothing">
-      <color-picker bind:change="onColorChange" />
     </view>
   </view>
 

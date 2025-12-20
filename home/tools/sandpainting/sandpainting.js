@@ -2,7 +2,7 @@
 Page({
   data: {
     // 颜色和画笔
-    colors: ['#333333', '#FF0000', '#FF6B35', '#F7931E', '#FDB813', '#8DC63F', '#39B54A', '#00A651', '#00ADEE', '#29ABE2', '#5E3D99', '#92278F', '#C12283', '#ED1C24', '#FFFFFF'],
+    colors: ['#333333', '#FF0000', '#FF6B35', '#F7931E', '#FDB813', '#8DC63F', '#39B54A', '#00A651', '#00ADEE', '#29ABE2', '#5E3D99', '#92278F', '#C12283', '#ED1C24'],
     selectedColor: '#333333',
     selectedSize: 15,
     isEraser: false,
@@ -10,7 +10,6 @@ Page({
 
     // 状态
     isDrawing: false,
-    showColorPicker: false,
     showActivity: false,
     isDrawerExpanded: false,
 
@@ -150,12 +149,6 @@ Page({
     this.setData({ selectedColor: color, isEraser: false });
   },
 
-  onColorChange(e) {
-    const color = e.detail.color;
-    this.lastColor = color;
-    this.setData({ selectedColor: color, isEraser: false });
-  },
-
   selectBrushSize(e) {
     this.setData({ selectedSize: e.detail.value });
   },
@@ -239,10 +232,6 @@ Page({
 
   hideActivityPopup() {
     this.setData({ showActivity: false });
-  },
-
-  toggleColorPicker() {
-    this.setData({ showColorPicker: !this.data.showColorPicker });
   },
 
   doNothing() { },
