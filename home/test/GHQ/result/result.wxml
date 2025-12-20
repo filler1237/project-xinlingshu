@@ -1,0 +1,36 @@
+<page-meta theme="light"></page-meta>
+<view class="page-container">
+  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/顶部装饰_花草.png" class="top-illustration" mode="widthFix"/>
+
+  <view class="content-wrapper">
+    <view class="title">你的心理健康评估结果</view>
+
+    <view class="result-card">
+      <view class="chart-container">
+        <view class="score-placeholder">{{score}}</view>
+        <view class="score-label">总分</view>
+        <view class="score-description">一般健康问卷GHQ-12总分<br/>（0-36分）</view>
+      </view>
+      <view class="divider"></view>
+      <view class="text-container">
+        <view class="result-section">
+          <view class="result-item">
+            <view class="dot"></view>
+            <text>{{resultText}}</text>
+          </view>
+        </view>
+        <view class="advice-section">
+          <view class="advice-title">建议与指导</view>
+          <view class="result-item">
+            <view class="dot dot-advice"></view>
+            <text>{{adviceText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="button-group">
+      <view class="button secondary-button" bind:tap="goHome">返回测试列表</view>
+    </view>
+  </view>
+</view>

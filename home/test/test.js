@@ -48,7 +48,7 @@ Page({
         id: 0,
         title: '抑郁自评量表',
         abbr: 'SDS',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png',
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/抑郁.png',
         bgColor: 'linear-gradient(145deg, #E5FFF0, #D9F2E5)',
         url: '/home/test/intro/intro?id=0'
       },
@@ -56,7 +56,7 @@ Page({
         id: 1,
         title: '焦虑自评量表',
         abbr: 'SAS',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png',
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/焦虑.png',
         bgColor: 'linear-gradient(145deg, #EDF9FC, #E0F0F5)',
         url: '/home/test/intro/intro?id=1'
       },
@@ -64,7 +64,7 @@ Page({
         id: 2,
         title: '阿森斯失眠量表',
         abbr: 'AIS',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png',
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/失眠.png',
         bgColor: 'linear-gradient(145deg, #FFFBE3, #F5F2DA)',
         url: '/home/test/intro/intro?id=2'
       },
@@ -72,7 +72,7 @@ Page({
         id: 3,
         title: '一般健康问卷',
         abbr: 'GHQ-12',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/TestIcon.png',
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/心理健康.png',
         bgColor: 'linear-gradient(145deg, #F0F4FF, #E3E8F5)',
         url: '/home/test/intro/intro?id=3'
       }
@@ -82,7 +82,7 @@ Page({
         id: 4,
         title: '适应力评估',
         abbr: 'Resilience',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/ipip_icon.png', // 统一的IPIP图标
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/ipip.png', // 统一的IPIP图标
         bgColor: 'linear-gradient(145deg, #E6F7F4, #D9ECE7)',
         url: '/home/test/adaptability/adaptability'
       },
@@ -90,7 +90,7 @@ Page({
         id: 5,
         title: '自我效能感',
         abbr: 'Self-efficacy',
-        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/ipip_icon.png',
+        icon: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/ipip.png',
         bgColor: 'linear-gradient(145deg, #FDF2F0, #F8E6E3)',
         url: '/home/test/self-efficacy/assessment/assessment'
       }

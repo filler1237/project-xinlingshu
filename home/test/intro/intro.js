@@ -12,6 +12,12 @@ Page({
     Title: ["抑郁自评量表 SDS", "焦虑自评量表 SAS", "阿森斯失眠量表 AIS", "一般健康问卷 GHQ-12"],
     IconTitle: ["抑郁自评量表\nSDS", "焦虑自评量表\nSAS", "阿森斯失眠量表\nAIS", "一般健康问卷\nGHQ-12"],
     Color: ["#E5FFF0", "#EDF9FC", "#FFFBE3", "#F0F4FF"],
+    Icon: [
+      "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/抑郁.png",
+      "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/焦虑.png", 
+      "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/失眠.png",
+      "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/心理健康.png"
+    ],
     Intro: ["抑郁自评量表（Self-rating depression scale SDS），是含有20个项目，分为4级评分的自评量表，原型是W.K.Zung编制的抑郁量表（1965）。其特点是使用简便，并能相当直观地反映抑郁患者的主观感受及其在治疗中的变化。主要适用于具有抑郁症状的成年人，包括门诊及住院患者。只是对严重迟缓症状的抑郁，评定有困难。",
     "焦虑自评量表（Self一Rating Anxiety Seale, SAS）由Zung于1971年编制,从量表构造的形式到具体评定办法,都与抑郁自评量表（SDS）十分相似,它也是一个含有20个项目,分为4级评分的自评量表,用于评出焦虑病人的主观感受。",
     "阿森斯失眠量表也称亚森失眠量表，是国际公认的睡眠质量自测量表，可用于对公众的睡眠质量状况进行调查。在我国，也推荐人们使用该量表对睡眠质量进行调查。\n阿森斯失眠量表可用于对你经历的睡眠障碍进行自我评估。对于下列问题，如果过去1个月内每星期至少在你身上发生3次，你就应该进行评测，并圈出符合你的情况的选项。",
@@ -22,6 +28,7 @@ Page({
     color: "#E5FFF0",
     icontitle: "",
     intro: "",
+    icon: "",
     id: ""
   },
 
@@ -43,6 +50,9 @@ Page({
     })
     this.setData({
       intro : this.data.Intro[this.data.id]
+    })
+    this.setData({
+      icon : this.data.Icon[this.data.id]
     })
   },
 

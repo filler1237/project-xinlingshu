@@ -144,33 +144,3 @@ page {
     opacity: 1;
   }
 }
-
-/* 深色模式适配 */
-@media (prefers-color-scheme: dark) {
-  page {
-    background-color: #121212;
-  }
-
-  .content-wrapper .title {
-    color: #E0E0E0;
-  }
-
-  .result-card {
-    background-color: #1E1E1E;
-    box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.2);
-  }
-  
-  .divider {
-    background-color: #333;
-  }
-
-  .result-item text {
-    color: #BDBDBD;
-  }
-
-  .secondary-button {
-    background-color: #2C2C2C;
-    color: #E0E0E0;
-    border-color: #444;
-  }
-}

@@ -1,59 +1,160 @@
-/* home/test/intro/intro.wxss */
-page{
-  background-color: #FFFFF5;
+page {
+  background-color: #F8F9FA;
+  min-height: 100vh;
 }
 
-.IconBox{
-  width: 750rpx;
-  height: 300rpx;
+.page-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 25rpx;
+  padding: 0 50rpx;
+  box-sizing: border-box;
+  padding-bottom: 200rpx; /* 为底部装饰留空间 */
 }
-.QesIn{
+
+/* 图标区域 */
+.icon-section {
+  width: 100%;
+  margin-top: 50rpx;
+  margin-bottom: 40rpx;
+}
+
+.icon-card {
   width: 230rpx;
   height: 250rpx;
-  border-radius: 10rpx;
+  border-radius: 20rpx;
   backdrop-filter: blur(20rpx);
-  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.QesPic{
-  margin-top: 10rpx;
-  width: 100rpx;
+  margin: 0 auto;
 }
 
-.IntroBox{
-  width: 82%;
-  height: 720rpx;
-  margin: 35rpx;
-  padding: 35rpx;
-  padding-top: 40rpx;
-  background-color: #ffffff;
-  border-radius: 10rpx;
-  backdrop-filter: blur(20rpx);
-  box-shadow: 0rpx 0rpx 8rpx 0rpx #DCDCC14C;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+.icon-image {
+  width: 100rpx;
+  margin-bottom: 15rpx;
 }
-button{
-  background-color: #96CE74;
-  height: 75rpx;
-}
-.Font{
-  font-family: PingFang SC;
-  font-weight: 230;
+
+.icon-title {
   font-size: 28rpx;
-  line-height: 1.25;
-  letter-spacing: 0.25rpx;
-  line-height: 1.5em;
-  letter-spacing: 2px;
-  word-spacing: 4px;
-  /* text-align: center; */
-  margin-top: 15rpx;
+  color: #343A40;
+  text-align: center;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* 介绍内容区域 */
+.intro-section {
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+
+.intro-card {
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #A8D8B8;
+  margin-bottom: 20rpx;
+}
+
+.intro-content {
+  font-size: 28rpx;
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+.instruction {
+  font-size: 26rpx;
+  color: #A8D8B8;
+  text-align: center;
+  font-weight: 500;
+}
+
+.disclaimer {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #FFF3CD;
+  border: 2rpx solid #FFC107;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: flex-start;
+}
+
+.disclaimer-icon {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+  flex-shrink: 0;
+}
+
+.disclaimer-text {
+  font-size: 24rpx;
+  color: #856404;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* 操作区域 */
+.action-section {
+  width: 100%;
+  margin-bottom: 40rpx;
+}
+
+.start-button {
+  width: 100%;
+  padding: 30rpx 0;
+  background-color: #A8D8B8;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 25rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.start-button:active {
+  background-color: #8BC99F;
+  transform: scale(0.98);
+}
+
+/* 底部装饰 */
+.bottom-decoration {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.bottom-decoration image {
+  width: 100%;
+  display: block;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .page-container {
+    padding: 0 30rpx;
+  }
+
+  .icon-card {
+    width: 200rpx;
+    height: 220rpx;
+  }
+
+  .icon-image {
+    width: 80rpx;
+  }
+
+  .intro-card {
+    padding: 30rpx;
+  }
 }

@@ -1,56 +1,35 @@
-<navigation-bar title="阿森斯失眠量表 AIS"></navigation-bar>
+<navigation-bar title="阿森斯失眠量表" show-back-button="{{true}}"></navigation-bar>
+<view class="page-container">
+  <view class="main-content">
+    <!-- 顶部进度区域 -->
+    <view class="progress-section">
+      <view class="progress-bar-container">
+        <view class="progress-bar" style="width: {{(currentQuestionIndex + 1) / questions.length * 100}}%;"></view>
+      </view>
+      <view class="progress-text">{{currentQuestionIndex + 1}} / {{questions.length}}</view>
+    </view>
 
-<view class="IconBox">
-  <view class="QesIn" style="background: {{color}};">
-    <image src="/image/TestIcon.png" mode="widthFix" class="QesPic"/>
-    <view class="Font" style="text-align: center;">
-      <text >阿森斯失眠量表</text>
-      <text >AIS</text>
+    <!-- 题目展示区域 -->
+    <view class="question-section">
+      <view class="question-stem">{{questions[currentQuestionIndex]}}</view>
+      <view class="options-container">
+        <block wx:for="{{options}}" wx:key="id" wx:for-item="option">
+          <view
+            class="option-card {{selectedOptionId === option.id ? 'selected' : ''}}"
+            data-option-id="{{option.id}}"
+            bind:tap="selectAnswer">
+            <text>{{option.text}}</text>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
-</view>
 
-<view class="quesbox" wx:if="{{id<=7}}">
-
-<swiper style="height: 100%;" current="{{id}}" bindchange="QueChange" >
-  <block wx:for="{{AISquestion}}" >
-    <swiper-item style="height:fit-content;">
-        
-      <view class="question">
-        {{item.question}}
-      </view>
-
-      <view class="select flex" >
-        <view  class="item" >
-          <label bindtap="OpA">{{OptionA}}</label>
-          <label bindtap="OpB">{{OptionB}}</label>
-          <label bindtap="OpC">{{OptionC}}</label>
-          <label bindtap="OpD">{{OptionD}}</label>
-        </view>
-      </view>
-      
-      
-    </swiper-item>  
-  </block> 
-</swiper>
-<view wx:if="{{id != 0}}">
-  <view class="tips" bindtap="LastQ">
-    上一题
+  <view class="footer-actions">
+    <view class="nav-button prev-button {{currentQuestionIndex === 0 ? 'disabled' : ''}}" bind:tap="goPrev">上一题</view>
+    <block wx:if="{{currentQuestionIndex === questions.length - 1}}">
+      <view class="nav-button submit-button {{submitButtonEnabled ? 'enabled' : ''}}" bind:tap="submit">提交</view>
+    </block>
   </view>
-</view>
-<view class="tips" style="color: #FEDB03;" wx:if="{{id<=7}}">
-    {{id+1}}/8
-</view>
-</view>
 
-
-
-<view wx:if="{{id==8}}" class="quesbox"  >
-   <view class="select flex" bindtap="Goresult">
-    <label >查看结果</label>
-    </view> 
-</view>
-
-<view>
-  <image src="/image/Test.png" mode="widthFix" style="width: 750rpx;"/>
 </view>

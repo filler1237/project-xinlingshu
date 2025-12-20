@@ -1,5 +1,6 @@
+<page-meta theme="light"></page-meta>
 <view class="page-container">
-  <image src="/image/result-top-illustration.png" class="top-illustration" mode="widthFix"/>
+  <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/顶部装饰_花草.png" class="top-illustration" mode="widthFix"/>
   
   <view class="content-wrapper">
     <view class="title">你的适应力概况</view>

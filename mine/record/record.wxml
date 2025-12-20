@@ -1,5 +1,5 @@
 <!--mine/record/record.wxml-->
-<navigation-bar title="我的占卜记录"></navigation-bar>
+<navigation-bar title="我的记录"></navigation-bar>
 
 <view class="container">
   <!-- 塔罗牌占卜记录 -->
