@@ -1,124 +1,108 @@
 /* home/read/create/create.wxss */
-.container {
-  padding: 40rpx;
-  background-color: #f8f9fa;
+
+/* 防止全局样式干扰，显式重置 */
+page {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.publish-container {
+  padding: 10rpx 20rpx; /* 极窄左右边距 */
+  background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block; /* 防止继承 flex */
 }
 
-.header {
-  margin-bottom: 50rpx;
-  text-align: center;
+.input-group {
+  margin-bottom: 40rpx;
 }
 
-.header-title {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #343a40;
-  margin-bottom: 10rpx;
+.title-section {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+  margin-bottom: 20rpx;
 }
-
-.header-subtitle {
-  font-size: 28rpx;
-  color: #868e96;
-}
-
-.card {
-  background-color: #ffffff;
-  border-radius: 24rpx;
-  padding: 10rpx 40rpx;
-  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.08);
-}
-
-.form-item {
-  display: flex;
-  align-items: center;
-}
-
-.title-wrapper {
-  padding: 30rpx 0;
-}
-
 
 .title-input {
-  font-size: 32rpx;
-  color: #343a40;
-  flex: 1;
+  font-size: 44rpx; /* 进一步加大 */
   font-weight: bold;
+  color: #000;
+  height: 80rpx;
+  min-height: 80rpx;
+  text-align: left;
 }
 
-.title-input::placeholder {
-  color: #adb5bd;
-  font-weight: normal;
+.title-placeholder {
+  color: #bfbfbf; 
 }
 
 .divider {
-  height: 1rpx;
-  background-color: #e9ecef;
-  margin: 0;
+  display: none; 
 }
 
-.content-wrapper {
-  padding: 30rpx 0;
+.content-section {
+  width: 100%;
+  padding-top: 10rpx;
 }
 
 .content-textarea {
   width: 100%;
-  height: 500rpx;
-  font-size: 30rpx;
-  color: #495057;
+  height: 400rpx; /* 加高 */
+  font-size: 32rpx;
+  color: #333;
   line-height: 1.6;
+  text-align: left;
+  padding: 0;
 }
 
-.textarea-placeholder {
-  color: #adb5bd;
+.content-placeholder {
+  color: #bfbfbf;
 }
 
 .button-wrapper {
-  margin-top: 80rpx;
-  padding: 0 20rpx;
+  margin-top: 60rpx;
+  padding: 0;
 }
 
 .publish-button {
+  background: #07c160;
+  color: white;
+  border-radius: 12rpx;
+  font-size: 34rpx;
+  font-weight: 500;
+  height: 90rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(to right, #a8e6cf, #dcedc1);
-  color: #333;
-  border-radius: 50rpx;
-  font-size: 34rpx;
-  font-weight: bold;
-  box-shadow: 0 10rpx 30rpx rgba(168, 230, 207, 0.4);
-  transition: all 0.3s ease;
 }
 
 .publish-button:active {
-  transform: translateY(2rpx);
-  box-shadow: 0 6rpx 20rpx rgba(168, 230, 207, 0.5);
+  background: #06ad56;
 }
 
-/* 图片选择器样式 */
+/* 图片选择器 - 核心优化 */
 .image-picker {
-  padding: 0 40rpx 40rpx;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20rpx;
 }
 
-/* 基础样式：先定义基本属性 */
+/* 九宫格计算：一行3个，间距10rpx */
 .image-item, .add-image-btn {
   position: relative;
-  border-radius: 12rpx;
+  border-radius: 8rpx;
   overflow: hidden;
-  /* 使用 calc 计算宽度，(100% - 2个间隙) / 3 */
-  width: calc((100% - 40rpx) / 3);
+  width: 32%; 
   height: 0;
-  padding-bottom: calc((100% - 40rpx) / 3); /* 宽高比 1:1 */
-  margin-right: 20rpx;
-  margin-bottom: 20rpx;
+  padding-bottom: 32%; /* 保持正方形 */
+  margin-right: 2%; 
+  margin-bottom: 2%;
+  box-sizing: border-box;
 }
 
-/* 每行第3个元素移除右边距 */
+/* 每行第3个清除右边距 */
 .image-picker > view:nth-child(3n) {
   margin-right: 0;
 }
@@ -129,37 +113,52 @@
   height: 100%;
   top: 0;
   left: 0;
+  object-fit: cover;
 }
 
 .delete-btn {
   position: absolute;
-  top: 10rpx;
-  right: 10rpx;
+  top: 0;
+  right: 0;
   width: 40rpx;
   height: 40rpx;
   background: rgba(0,0,0,0.5);
   color: #fff;
-  border-radius: 50%;
+  border-radius: 0 0 0 12rpx; /* 角标样式 */
   text-align: center;
   line-height: 36rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   z-index: 10;
 }
 
 .add-image-btn {
-  background-color: #f7f7f7;
-  border: 2rpx dashed #ddd;
-  box-sizing: border-box;
+  background-color: #f0f0f0; /* 更明显的灰色 */
+  display: flex; /* 注意：这里的flex对height:0的padding hack元素内部定位不起作用，需要内部绝对定位 */
+  border: none;
 }
 
-.add-icon {
+.add-icon-wrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 80rpx;
-  color: #ccc;
-  font-weight: 300;
-  line-height: 1; 
-  margin-top: -8rpx;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-symbol {
+  font-size: 100rpx; /* 巨大号 */
+  color: #b0b0b0;
+  font-weight: 200; /* 细体但大 */
+  line-height: 0.8;
+  margin-bottom: 10rpx;
+  padding-top: 10rpx; /* 视觉修正 */
+}
+
+.add-text {
+  font-size: 26rpx;
+  color: #b0b0b0;
 }

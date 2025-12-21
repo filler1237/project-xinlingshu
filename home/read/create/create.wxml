@@ -1,28 +1,34 @@
 <!-- home/read/create/create.wxml -->
-<view class="container">
-  <view class="header">
-    <view class="header-title">分享你的想法</view>
-    <view class="header-subtitle">在这里，每个声音都被听见</view>
-  </view>
+<view class="publish-container">
 
-  <view class="card">
-    <view class="form-item title-wrapper">
-      <input class="title-input" placeholder="给你的文章起个标题吧" model:value="{{title}}" />
-    </view>
-    <view class="divider"></view>
-    <view class="form-item content-wrapper">
-      <textarea class="content-textarea" placeholder="尽情书写你的想法和故事..." model:value="{{content}}" placeholder-class="textarea-placeholder"></textarea>
+  
+  <view class="input-group">
+    <!-- 标题输入 -->
+    <view class="title-section">
+      <input class="title-input" placeholder="添加标题 (非必填)" placeholder-class="title-placeholder" model:value="{{title}}" />
     </view>
     
-    <!-- 图片选择区域 -->
-    <view class="image-picker">
-      <view class="image-item" wx:for="{{tempImages}}" wx:key="*this">
-        <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}"></image>
-        <view class="delete-btn" catchtap="deleteImage" data-index="{{index}}">×</view>
+    <view class="divider"></view>
+
+    <!-- 正文输入 -->
+    <view class="content-section">
+      <textarea class="content-textarea" placeholder="添加正文" maxlength="1000" placeholder-class="content-placeholder" model:value="{{content}}"></textarea>
+    </view>
+  </view>
+
+  <!-- 图片选择区域 -->
+  <view class="image-picker">
+    <view class="image-item" wx:for="{{tempImages}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}"></image>
+      <view class="delete-btn" catchtap="deleteImage" data-index="{{index}}">×</view>
+    </view>
+    <!-- 添加按钮 - 样式调整为灰色块 -->
+    <view class="add-image-btn" bindtap="chooseImage" wx:if="{{tempImages.length < 9}}">
+      <view class="add-icon-wrapper">
+         <!-- 使用自定义图标或简单的 + 号 -->
+         <text class="add-symbol">+</text>
       </view>
-      <view class="add-image-btn" bindtap="chooseImage" wx:if="{{tempImages.length < 9}}">
-        <text class="add-icon">+</text>
-      </view>
+      <text class="add-text">添加图片</text>
     </view>
   </view>
 
