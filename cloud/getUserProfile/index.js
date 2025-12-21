@@ -7,20 +7,20 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   const { userId } = event
 
-  if(!userId) {
+  if (!userId) {
     return {
       success: false,
       message: '缺少用户ID'
     }
   }
 
-  try{
+  try {
     // 查询用户信息
     const userRes = await db.collection('users').where({
       _openid: userId
     }).limit(1).get()
 
-    if(userRes.data.length === 0) {
+    if (userRes.data.length === 0) {
       return {
         success: false,
         message: '未找到该用户'
@@ -30,23 +30,51 @@ exports.main = async (event, context) => {
 
     // 查询用户发布过的文章
     const articlesRes = await db.collection('articles').where({
-      _openid:userId
+      _openid: userId
     })
-    .orderBy('createTime','desc').get()
+      .orderBy('createTime', 'desc').get()
+
+    // 查询用户发布过的画作
+    const drawingsRes = await db.collection('drawings').where({
+      _openid: userId
+    })
+      .orderBy('createTime', 'desc').get()
+
+    // 合并文章和画作
+    let mergedList = [];
+    if (articlesRes.data) {
+      mergedList = mergedList.concat(articlesRes.data.map(item => ({ ...item, type: 'article' })));
+    }
+    if (drawingsRes.data) {
+      mergedList = mergedList.concat(drawingsRes.data.map(item => ({
+        ...item,
+        type: 'drawing',
+        isDrawing: true,
+        // 关键映射：适配前端字段
+        imageUrl: item.fileID,
+        content: item.description
+      })));
+    }
+
+    // 按时间倒序排序
+    mergedList.sort((a, b) => {
+      const timeA = new Date(a.createTime).getTime();
+      const timeB = new Date(b.createTime).getTime();
+      return timeB - timeA;
+    });
 
     // 组合数据并返回
     return {
       success: true,
-      data:{
+      data: {
         userInfo: {
           nickName: userInfo.nickName,
           avatarUrl: userInfo.avatarUrl,
-          // 后续可添加其他需要展示的信息
         },
-        articles: articlesRes.data
+        articles: mergedList
       }
     }
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     return {
       success: false,

@@ -11,7 +11,8 @@ Page({
     userOpenid: '',
     comments: [],
     replyTo: null, // 当前正在回复的对象 { id, user, parentId }
-    commentContent: ''
+    commentContent: '',
+    currentImageIndex: 0 // 多图轮播索引
   },
 
   /**
@@ -37,6 +38,27 @@ Page({
     })
   },
 
+  onSwiperChange(e) {
+    this.setData({
+      currentImageIndex: e.detail.current
+    });
+  },
+
+  onPreviewDetailImage(e) {
+    const current = e.currentTarget.dataset.current;
+    const article = this.data.article;
+    // 优先使用 images 数组，如果没有则降级到 imageUrl
+    const urls = (article.images && article.images.length > 0) ? article.images : [article.imageUrl];
+
+    wx.previewImage({
+      current: current,
+      urls: urls,
+      fail: function (err) {
+        console.error('Preview fail', err);
+      }
+    });
+  },
+
   getArticle(id) {
     wx.cloud.callFunction({
       name: 'getArticleById',
@@ -45,6 +67,9 @@ Page({
       },
       success: res => {
         if (res.result && res.result.data) {
+          if (res.result.data.createTime) {
+            res.result.data.createTime = this.formatTime(res.result.data.createTime);
+          }
           this.setData({
             article: res.result.data
           });
@@ -75,7 +100,7 @@ Page({
       success: res => {
         if (res.result.success) {
           const rawComments = res.result.data.reverse().map(comment => {
-            comment.createTime = new Date(comment.createTime).toLocaleString();
+            comment.createTime = this.formatTime(comment.createTime);
             return comment;
           });
 
@@ -220,6 +245,15 @@ Page({
     })
   },
 
+  goToUserProfile(event) {
+    const userId = event.currentTarget.dataset.userid;
+    if (userId) {
+      wx.navigateTo({
+        url: `/home/profile/profile?userId=${userId}`,
+      });
+    }
+  },
+
   onToggleArticleLike() {
     const article = this.data.article;
     const collectionName = article.collectionName || (article.isDrawing ? 'drawings' : 'articles');
@@ -325,6 +359,37 @@ Page({
         }
       }
     });
-  }
+  },
 
+  /**
+   * 格式化时间
+   * @param {string} isoString ISO时间字符串
+   * @returns {string} 格式化后的时间字符串
+   */
+  formatTime(isoString) {
+    if (!isoString) return '';
+    const now = new Date();
+    const past = new Date(isoString);
+    const diff = now - past; // 毫秒差
+
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const week = 7 * day;
+
+    if (diff < minute) {
+      return '刚刚';
+    } else if (diff < hour) {
+      return Math.floor(diff / minute) + '分钟前';
+    } else if (diff < 24 * hour) {
+      return Math.floor(diff / hour) + '小时前';
+    } else if (diff < week) {
+      return Math.floor(diff / day) + '天前';
+    } else {
+      // 超过一周，显示具体日期，例如 12-20
+      const month = (past.getMonth() + 1).toString().padStart(2, '0');
+      const date = past.getDate().toString().padStart(2, '0');
+      return `${month}-${date}`;
+    }
+  }
 })

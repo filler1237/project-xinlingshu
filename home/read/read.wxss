@@ -1,41 +1,47 @@
 /* home/read/read.wxss */
 
 .add-button {
-  position: fixed; /* 固定定位 */
-  right: 40rpx; /* 距离右边 40rpx */
-  bottom: 40rpx; /* 距离底部 40rpx */
-  font-size: 48rpx; /* 增大字体大小 */
-  color: #ffffff; /* 白色字体 */
-  background-color: #07c160; /* 绿色背景 */
-  width: 100rpx; /* 设置宽度 */
-  height: 100rpx; /* 设置高度 */
-  border-radius: 50%; /* 圆形 */
+  position: fixed;
+  right: 40rpx;
+  bottom: 80rpx; /* 稍微抬高，避免碰到全面屏底部条 */
+  font-size: 56rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #07c160, #36d385); /* 渐变色背景 */
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1); /* 添加阴影 */
-  z-index: 1000; /* 确保在顶层 */
+  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.4); /* 更柔和的彩色投影 */
+  z-index: 1000;
+  transition: transform 0.2s;
+}
+
+.add-button:active {
+  transform: scale(0.95);
 }
 
 .article-list {
-  padding: 20rpx;
-  background-color: #f7f7f7; /* 给列表一个浅灰色背景 */
+  padding: 24rpx; /* 增加页面边距 */
+  background-color: #f6f7f9; /* 极淡的灰蓝色背景 */
+  min-height: 100vh;
 }
 
 .article-card {
-  background-color: #ffffff; /* 卡片背景为白色 */
-  border-radius: 16rpx; /* 圆角 */
-  margin-bottom: 20rpx; /* 卡片间距 */
-  padding: 24rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05); /* 添加轻微的阴影增加立体感 */
-  overflow: hidden; /* 防止内容溢出 */
+  background-color: #ffffff;
+  border-radius: 24rpx; /* 更大的圆角 */
+  margin-bottom: 24rpx;
+  padding: 32rpx; /* 增加内边距 */
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03); /* 极淡的阴影 */
+  overflow: hidden;
 }
 
 /* 卡片头部 */
 .card-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20rpx;
+  margin-bottom: 24rpx;
   position: relative;
 }
 
@@ -44,36 +50,42 @@
   top: 0;
   right: 0;
   display: flex;
-  gap: 5rpx;
-  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 40rpx;
 }
 
 .dot {
-  color: #999;
-  font-size: 24rpx;
+  color: #c0c4cc; /* 更浅的灰色 */
+  font-size: 20rpx;
+  margin: 0 2rpx;
 }
 
 .author-avatar {
   width: 80rpx;
   height: 80rpx;
-  border-radius: 50%; /* 头像圆形 */
-  margin-right: 20rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  background-color: #f0f0f0;
 }
 
 .author-info {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .author-nickname {
-  font-size: 30rpx;
-  font-weight: bold;
+  font-size: 32rpx;
+  font-weight: 600;
   color: #333333;
+  margin-bottom: 6rpx;
 }
 
 .publish-time {
   font-size: 24rpx;
-  color: #999999;
+  color: #909399; /* 浅灰色 */
 }
 
 /* 卡片主体 */
@@ -84,9 +96,9 @@
 .article-title {
   font-size: 34rpx;
   font-weight: bold;
-  color: #333333;
-  margin-bottom: 10rpx;
-  /* 最多显示两行，超出部分显示省略号 */
+  color: #2c3e50;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -96,51 +108,107 @@
 
 .article-summary {
   font-size: 28rpx;
-  color: #666666;
+  color: #555555;
   line-height: 1.6;
-  /* 最多显示三行 */
+  margin-bottom: 16rpx;
+  /* 最多显示4行 */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.drawing-image {
-  width: 60%; /* 缩小图片宽度 */
-  max-height: 400rpx; /* 限制最大高度 */
+/* 多图九宫格布局 */
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16rpx;
+}
+
+.grid-image {
+  /* 32% * 3 + 2% * 2 = 100% */
+  width: 32%; 
+  height: 220rpx;
+  margin-right: 2%;
+  margin-bottom: 2%; /* 上下间距 */
   border-radius: 8rpx;
-  margin-top: 10rpx; /* 与上方文字的间距 */
-  margin-bottom: 10rpx;
+  background-color: #f0f2f5;
+}
+
+/* 每行第3个元素移除右边距 */
+.grid-image:nth-child(3n) {
+  margin-right: 0;
+}
+
+/* 单图模式：稍微大一点，突出显示 */
+.single-image {
+  width: 60%; /* 单图占60%宽度 */
+  height: 360rpx; /* 高度自适应或固定 */
+  border-radius: 12rpx;
+  margin-top: 16rpx;
+  background-color: #f0f2f5;
+  display: block;
 }
 
 /* 卡片底部 */
 .card-footer {
   display: flex;
-  justify-content: flex-end; /* 让点赞评论靠右对齐 */
+  justify-content: flex-end;
   align-items: center;
-  padding-top: 20rpx;
-  border-top: 1rpx solid #f0f0f0; /* 添加一条分割线 */
+  margin-top: 10rpx;
 }
 
 .footer-item {
   display: flex;
   align-items: center;
-  margin-left: 40rpx; /* 调整点赞和评论之间的间距 */
+  margin-left: 48rpx;
   font-size: 26rpx;
-  color: #888888;
+  color: #909399;
 }
 
 .footer-icon {
-  width: 36rpx;
-  height: 36rpx;
-  margin-right: 10rpx;
+  width: 32rpx; /* 更小的图标 */
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+/* 评论预览区（仿朋友圈/小红书） */
+.comments-preview {
+  margin-top: 24rpx;
+  padding: 16rpx 20rpx;
+  background-color: #f7f8fa; /* 浅灰色背景 */
+  border-radius: 12rpx;
+}
+
+.comment-preview-item {
+  font-size: 26rpx;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+}
+
+.comment-preview-item:last-child {
+  margin-bottom: 0;
+}
+
+.comment-user {
+  font-weight: 600;
+  color: #576b95; /* 微信蓝 */
 }
 
 /* 空状态提示 */
 .empty-tip {
   text-align: center;
   padding: 100rpx 0;
-  color: #999999;
+  color: #c0c4cc;
   font-size: 28rpx;
+}
+
+/* 彩蛋 */
+.easter-egg {
+  text-align: center;
+  padding: 40rpx 0 160rpx;
+  color: #eaeaea; /* 几乎看不见 */
+  font-size: 20rpx;
 }

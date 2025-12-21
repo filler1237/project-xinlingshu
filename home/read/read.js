@@ -57,6 +57,10 @@ Page({
       },
       success: res => {
         const newArticles = res.result.data || [];
+        // 格式化时间
+        newArticles.forEach(article => {
+          article.createTime = this.formatTime(article.createTime);
+        });
         const oldArticles = isRefresh ? [] : this.data.articles;
 
         this.setData({
@@ -239,6 +243,23 @@ Page({
     }
   },
 
+  // 预览图片
+  onPreviewImage(event) {
+    const urls = event.currentTarget.dataset.urls; // 所有图片链接数组
+    const current = event.currentTarget.dataset.current; // 当前点击图片的链接
+
+    // 如果没有urls，尝试将current包装成数组
+    const previewUrls = urls ? urls : [current];
+
+    wx.previewImage({
+      current: current,
+      urls: previewUrls,
+      fail: function (error) {
+        console.error('Preview image failed:', error);
+      }
+    });
+  },
+
   // 举报文章
   reportArticle(articleId, index, reason) {
     const article = this.data.articles[index];
@@ -267,5 +288,36 @@ Page({
         wx.showToast({ title: '举报失败', icon: 'none' });
       }
     });
+  },
+  /**
+   * 格式化时间
+   * @param {string} isoString ISO时间字符串
+   * @returns {string} 格式化后的时间字符串
+   */
+  formatTime(isoString) {
+    if (!isoString) return '';
+    const now = new Date();
+    const past = new Date(isoString);
+    const diff = now - past; // 毫秒差
+
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const week = 7 * day;
+
+    if (diff < minute) {
+      return '刚刚';
+    } else if (diff < hour) {
+      return Math.floor(diff / minute) + '分钟前';
+    } else if (diff < 24 * hour) {
+      return Math.floor(diff / hour) + '小时前';
+    } else if (diff < week) {
+      return Math.floor(diff / day) + '天前';
+    } else {
+      // 超过一周，显示具体日期，例如 12-20
+      const month = (past.getMonth() + 1).toString().padStart(2, '0');
+      const date = past.getDate().toString().padStart(2, '0');
+      return `${month}-${date}`;
+    }
   }
 })

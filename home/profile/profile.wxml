@@ -17,8 +17,14 @@
     <!-- 复用 read 页面的文章卡片样式 -->
     <view wx:for="{{articles}}" wx:key="_id" class="article-card" bind:tap="gotoDetail" data-id="{{item._id}}">
       <view class="card-body">
-        <view class="article-title">{{item.title}}</view>
-        <view class="article-summary">{{item.content}}</view> <!-- 这里直接用 content，也可以再处理成 summary -->
+        <block wx:if="{{item.type === 'drawing' || item.isDrawing}}">
+            <view class="article-summary">{{item.content}}</view>
+            <image class="drawing-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load="{{true}}"></image>
+        </block>
+        <block wx:else>
+            <view class="article-title">{{item.title}}</view>
+            <view class="article-summary">{{item.content}}</view>
+        </block>
       </view>
       <view class="card-footer">
         <view class="footer-item">

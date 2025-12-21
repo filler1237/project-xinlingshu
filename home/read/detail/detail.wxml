@@ -3,28 +3,43 @@
 <view class="container">
   <!-- 文章内容区域 -->
   <view class="article-wrapper">
-    <view class="comment-item">
-      <image class="comment-avatar" src="{{article.authorAvatarUrl}}" mode="aspectFill"></image>
-      <view class="comment-main">
-        <view class="comment-header">
-          <view class="comment-author-time">
-            <view class="comment-author">{{article.authorNickname}}</view>
-            <view class="comment-time">{{article.createTime}}</view>
-          </view>
-        </view>
-        <view class="comment-content">
-          <block wx:if="{{article.isDrawing}}">
-            <image class="drawing-image-detail" src="{{article.imageUrl}}" mode="widthFix"></image>
-          </block>
-          {{article.content}}
-        </view>
-        <!-- 文章底部操作栏 -->
-        <view class="article-actions">
-          <view class="action-item" bindtap="onToggleArticleLike">
-             <image class="action-icon" src="{{article.liked ? 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/likeup.png' : 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png'}}"></image>
-             <text class="action-count">{{article.likes || 0}}</text>
-          </view>
-        </view>
+    <!-- 顶部用户信息栏 -->
+    <view class="article-header" bindtap="goToUserProfile" data-userid="{{article._openid}}">
+      <image class="header-avatar" src="{{article.authorAvatarUrl}}" mode="aspectFill"></image>
+      <view class="header-info">
+        <view class="header-name">{{article.authorNickname || article.authorNickName}}</view>
+        <view class="header-time">{{article.createTime}}</view>
+      </view>
+    </view>
+
+    <!-- 文章主体内容 -->
+    <view class="article-content-body">
+      <!-- 多图轮播 -->
+      <view class="swiper-container" wx:if="{{article.images && article.images.length > 1}}">
+        <swiper class="detail-swiper" bindchange="onSwiperChange" indicator-dots="{{false}}" circular="{{true}}" current="{{currentImageIndex}}">
+            <block wx:for="{{article.images}}" wx:key="*this">
+                <swiper-item>
+                    <image src="{{item}}" class="slide-image" mode="aspectFit" bindtap="onPreviewDetailImage" data-current="{{item}}"></image>
+                </swiper-item>
+            </block>
+        </swiper>
+        <!-- 页码指示器 -->
+        <view class="image-counter">{{currentImageIndex + 1}}/{{article.images.length}}</view>
+      </view>
+
+      <!-- 单图模式 -->
+      <block wx:elif="{{(article.images && article.images.length === 1) || article.imageUrl}}">
+        <image class="detail-image-full" src="{{(article.images && article.images.length === 1) ? article.images[0] : article.imageUrl}}" mode="widthFix" lazy-load="{{true}}" bindtap="onPreviewDetailImage" data-current="{{(article.images && article.images.length === 1) ? article.images[0] : article.imageUrl}}"></image>
+      </block>
+      
+      <view class="detail-text-content" wx:if="{{article.content}}">{{article.content}}</view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="article-actions-bar">
+      <view class="action-item" bindtap="onToggleArticleLike">
+          <image class="action-icon" src="{{article.liked ? 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/likeup.png' : 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/like.png'}}"></image>
+          <text class="action-count">{{article.likes || 0}}</text>
       </view>
     </view>
 
@@ -34,7 +49,6 @@
     <view class="comments-section">
       <view class="comments-title">全部评论</view>
     
-      <!-- 使用 wx:if 和 wx:else 来确保只显示一种状态 -->
       <!-- 使用 wx:if 和 wx:else 来确保只显示一种状态 -->
       <block wx:if="{{comments.length > 0}}">
         <!-- 评论循环 -->
@@ -105,7 +119,7 @@
 
   <input 
     class="comment-input" 
-    placeholder="{{replyTo ? '回复 ' + replyTo.user + '：' : '郑锐荣好帅...'}}" 
+    placeholder="{{replyTo ? '回复 ' + replyTo.user + '：' : '留下你的评论...'}}" 
     value="{{commentContent}}"
     bindinput="onCommentInput"
     confirm-type="send"

@@ -16,14 +16,14 @@ Page({
    */
   onLoad(options) {
     const userId = options.userId;
-    if(userId) {
+    if (userId) {
       this.getUserProfile(userId);
     } else {
       wx.showToast({
         title: '用户ID不存在',
         icon: 'none'
       });
-      this.setData({isLoading: false});
+      this.setData({ isLoading: false });
     }
   },
 
@@ -32,10 +32,10 @@ Page({
     wx.cloud.callFunction({
       name: 'getUserProfile',
       data: {
-        userId:userId
+        userId: userId
       },
       success: res => {
-        if(res.result && res.result.success) {
+        if (res.result && res.result.success) {
           this.setData({
             userInfo: res.result.data.userInfo,
             articles: res.result.data.articles
@@ -52,13 +52,13 @@ Page({
           title: '网络错误',
           icon: 'none'
         });
-        console.error('云函数getUserProfile调用失败',err);
+        console.error('云函数getUserProfile调用失败', err);
       },
       complete: () => {
         this.setData({ isLoading: false });
-        }
-      });
-    },
+      }
+    });
+  },
   gotoDetail(event) {
     const articleId = event.currentTarget.dataset.id;
     wx.navigateTo({
