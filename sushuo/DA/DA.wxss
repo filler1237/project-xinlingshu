@@ -38,8 +38,15 @@
   transform: translateX(-50%);
 }
 
-.header-menu-btn {
+.floating-menu-btn {
+  position: fixed;
+  left: 24rpx;
+  z-index: 101; /* 确保在最上层，方便点击 */
+  background-color: #ffffff;
   width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.12);
   display: flex;
   align-items: center;
   justify-content: center;

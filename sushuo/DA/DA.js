@@ -20,15 +20,19 @@ Page({
     aiAvatarUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/logo1.png',
     statusBarHeight: 0,
     headerHeight: 0,
+    navRightMargin: 0, // 新增：导航栏右侧安全边距
   },
 
   onLoad: function (options) {
     // 1. 初始化自定义导航栏
     const systemInfo = wx.getSystemInfoSync();
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
+    const navRightMargin = systemInfo.windowWidth - menuButtonInfo.left + 10; // 计算右侧边距: 屏幕宽 - 胶囊左边距 + 缓冲
+
     this.setData({
       statusBarHeight: systemInfo.statusBarHeight,
-      headerHeight: (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height
+      headerHeight: (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height,
+      navRightMargin: navRightMargin
     });
 
     // 2. 加载用户的话题列表
