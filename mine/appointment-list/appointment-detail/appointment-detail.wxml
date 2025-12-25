@@ -1,0 +1,80 @@
+<!--pages/mine/appointment-list/appointment-detail/appointment-detail.wxml-->
+<view class="container" wx:if="{{!isLoading}}">
+  
+  <!-- 学生信息部分 -->
+  <view class="section">
+    <view class="section-title">学生信息</view>
+    
+    <view class="info-item">
+      <view class="label">姓名</view>
+      <view class="value" style="font-size: 32rpx; font-weight: bold;">{{studentInfo.realName || studentInfo.nickName || '未填写'}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">昵称</view>
+      <view class="value">{{studentInfo.nickName || '未知'}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">学号</view>
+      <view class="value">{{studentInfo.studentId || '未填写'}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">学院</view>
+      <view class="value">{{studentInfo.major || '未填写'}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">联系电话</view>
+      <view class="value">
+        <text wx:if="{{studentInfo.phoneNumber}}" class="phone-link" bindtap="makePhoneCall" data-phone="{{studentInfo.phoneNumber}}">{{studentInfo.phoneNumber}}</text>
+        <text wx:else style="color: #ccc;">未填写</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约信息部分 -->
+  <view class="section">
+    <view class="section-title">预约详情</view>
+    
+    <view class="info-item">
+      <view class="label">状态</view>
+      <view class="value">
+        <text style="background: {{appointment.status==='已结束'?'#f3f4f6':'#ecfdf5'}}; color: {{appointment.status==='已结束'?'#9ca3af':'#059669'}}; padding: 4rpx 16rpx; border-radius: 8rpx; font-size: 24rpx;">{{appointment.status}}</text>
+      </view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">日期</view>
+      <view class="value">{{appointment.date}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">时间</view>
+      <view class="value" style="font-family: monospace;">{{appointment.simpleStartTime}} - {{appointment.simpleEndTime}}</view>
+    </view>
+    
+    <view class="info-item">
+      <view class="label">咨询师</view>
+      <view class="value">{{appointment.teacher}}</view>
+    </view>
+    
+     <view class="info-item">
+      <view class="label">提交时间</view>
+      <view class="value" style="color: #999; font-size: 26rpx;">{{appointment.createTimeStr || '未知'}}</view>
+    </view>
+  </view>
+
+  <!-- 详细描述 -->
+  <view class="section">
+    <view class="section-title">备注/详情</view>
+    <view class="detail-text">{{appointment.detail || '暂无详细描述'}}</view>
+  </view>
+
+</view>
+
+<view class="loading-container" wx:else>
+  <loading type="spinner" color="#34D399" />
+  <text style="margin-top: 20rpx;">加载中...</text>
+</view>

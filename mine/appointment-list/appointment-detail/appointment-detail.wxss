@@ -1,0 +1,127 @@
+/* pages/mine/appointment-list/appointment-detail/appointment-detail.wxss */
+page {
+  background-color: #f7f8fa;
+  box-sizing: border-box;
+  padding-bottom: 60rpx;
+}
+
+.container {
+  padding: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* 通用卡片样式 */
+.section {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰性背景圆 */
+.section::after {
+  content: "";
+  position: absolute;
+  top: -40rpx;
+  right: -40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(52, 211, 153, 0.02));
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* 标题样式 */
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 32rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title::before {
+  content: '';
+  display: block;
+  width: 8rpx;
+  height: 32rpx;
+  background: linear-gradient(to bottom, #34D399, #10B981);
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+  box-shadow: 0 2rpx 6rpx rgba(16, 185, 129, 0.3);
+}
+
+/* 信息行样式 */
+.info-item {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+  font-size: 28rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  color: #999;
+  width: 160rpx;
+  flex-shrink: 0;
+  font-weight: 400;
+}
+
+.value {
+  color: #333;
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+/* 特殊字段样式 */
+.phone-link {
+  color: #34D399;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+.phone-link::after {
+  content: "📞";
+  font-size: 24rpx;
+  margin-left: 8rpx;
+  filter: grayscale(1) opacity(0.5);
+}
+
+/* 详情文本框 */
+.detail-text {
+  background: #f9fafb;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  color: #4b5563;
+  font-size: 28rpx;
+  line-height: 1.6;
+  min-height: 120rpx;
+  border: 1rpx solid #edf2f7;
+}
+
+/* 加载中 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: #9ca3af;
+  font-size: 28rpx;
+}

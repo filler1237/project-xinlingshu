@@ -22,6 +22,7 @@ Page({
     selectedRole: '', // 用户选择的角色
     tempUserProfile: null, // 临时保存用户信息
     nextAppointment: null, // 下一次的预约信息
+    adminAppointmentCount: 0, // 管理员的新预约数量
   },
 
   /**
@@ -51,10 +52,16 @@ Page({
     } else {
       this.setData({ nextAppointment: null }); // 未登录则清除预约信息
     }
+
     // 无论是否登录，尝试获取未读消息（云函数内部会校验openid，如果没有则返回0或者失败，不影响主流程）
     // 或者只有登录状态才获取
     if (app.globalData.isLogin || (userInfo && userInfo._id)) {
       this.getUnreadCount();
+
+      // 如果是管理员，检查新预约
+      if (userInfo && userInfo.role === 'admin') {
+        this.checkAdminAppointments();
+      }
     }
   },
 
@@ -107,6 +114,54 @@ Page({
       }
     }).catch(err => {
       console.error("获取预约列表失败", err);
+    });
+  },
+
+  /**
+   * 检查管理员的新预约
+   */
+  /**
+   * 检查管理员的新预约
+   */
+  checkAdminAppointments() {
+    // 读取本地缓存的上次查看时间，默认为 0
+    const lastViewTime = wx.getStorageSync('lastAdminViewTime') || 0;
+
+    wx.cloud.callFunction({
+      name: 'getAdminAppointments',
+      // 这里可以传递参数给云函数，如果云函数支持的话
+      // 暂时先在前端过滤，或建议修改云函数支持过滤
+      data: {
+        checkNew: true, // 标识是检查新消息
+        username: this.data.userInfo ? this.data.userInfo.username : ''
+      }
+    }).then(res => {
+      if (res.result.success) {
+        // 计算新预约数量：创建时间 > 上次查看时间
+        // 注意：预约记录里需要有 _createTime 或 createTime 字段
+        // 如果云函数返回了 list，我们在前端过滤
+        const allList = res.result.data || [];
+
+        let newCount = 0;
+        if (lastViewTime > 0) {
+          // 如果有查看记录，正常过滤
+          // 假设 _createTime 是 ISO string 或 timestamp
+          newCount = allList.filter(item => {
+            const ct = new Date(item._createTime || item.createTime || 0).getTime();
+            return ct > lastViewTime;
+          }).length;
+        } else {
+          // 如果是首次安装/无缓存，且列表不为空，视为全部是新的（或者你可以设为0，看需求）
+          // 这里暂且显示全部
+          newCount = allList.length;
+        }
+
+        this.setData({
+          adminAppointmentCount: newCount
+        });
+      }
+    }).catch(err => {
+      console.error('获取管理员预约失败', err);
     });
   },
 

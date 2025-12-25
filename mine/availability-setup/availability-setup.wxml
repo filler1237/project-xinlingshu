@@ -1,0 +1,55 @@
+<!--pages/mine/availability-setup/availability-setup.wxml-->
+<view class="container">
+  
+  <!-- 顶部：老师选择 (仅供测试/管理员使用) -->
+  <picker range="{{teachers}}" range-key="name" bindchange="onTeacherChange" value="{{currentTeacherIndex}}">
+    <view style="background:#fff; padding:20rpx; text-align:center; font-weight:bold; color:#333;">
+      当前设置: {{teachers[currentTeacherIndex].name || '请选择老师'}} ▾
+    </view>
+  </picker>
+
+  <!-- 模式切换 -->
+  <view class="mode-tabs">
+    <view class="mode-tab {{mode === 'weekly' ? 'active' : ''}}" bindtap="switchMode" data-mode="weekly">常规周模板</view>
+    <view class="mode-tab {{mode === 'specific' ? 'active' : ''}}" bindtap="switchMode" data-mode="specific">特定日期例外</view>
+  </view>
+
+  <!-- 周选择器 (仅常规模式) -->
+  <scroll-view scroll-x class="week-tabs" wx:if="{{mode === 'weekly'}}">
+     <block wx:for="{{weekDays}}" wx:key="index">
+        <view class="week-tab {{currentWeekDay === index ? 'active' : ''}}" bindtap="selectWeekDay" data-day="{{index}}">
+          {{item}}
+        </view>
+     </block>
+  </scroll-view>
+
+  <!-- 日期选择器 (仅特定日期模式) -->
+  <view class="date-picker-section" wx:if="{{mode === 'specific'}}">
+    <picker mode="date" value="{{currentDate}}" start="2024-01-01" end="2025-12-31" bindchange="onDateChange">
+      <view class="picker-display">
+        当前选中日期: {{currentDate}} ▾
+      </view>
+    </picker>
+    <view class="tip" style="margin: 10rpx 0;">该日期的设置将覆盖周模板</view>
+  </view>
+
+  <!-- 时间槽网格 -->
+  <view class="slots-grid">
+    <block wx:for="{{timeSlots}}" wx:key="startTime">
+      <view class="slot-item {{item.status === 'available' ? 'available' : 'unavailable'}}" bindtap="toggleSlot" data-index="{{index}}">
+        <view>{{item.startTime}}</view>
+        <view wx:if="{{item.status === 'available'}}">空闲</view>
+        <view wx:else>忙碌</view>
+      </view>
+    </block>
+  </view>
+  <view wx:if="{{timeSlots.length === 0}}" class="tip">暂无时间段数据，请稍候...</view>
+
+  <!-- 底部保存按钮 -->
+  <view class="footer-btn">
+    <button class="save-btn" bindtap="saveSettings" disabled="{{isSaving}}">
+      {{isSaving ? '保存中...' : '保存设置'}}
+    </button>
+  </view>
+
+</view>

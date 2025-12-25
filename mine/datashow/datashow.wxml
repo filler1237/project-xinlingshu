@@ -1,4 +1,4 @@
-<view class="page-container"wx:if="{{isAdmin}}">
+<view class="page-container" wx:if="{{isAdmin}}">
 
   <!-- 时间范围选择器 -->
   <view class="time-range-selector">

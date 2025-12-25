@@ -1,0 +1,73 @@
+<!--mine/appointment-list/appointment-list.wxml-->
+<view class="page-container">
+  
+  <!-- 顶部统计 -->
+  <!-- <view class="header-stats" wx:if="{{!isLoading && appointmentList.length > 0}}">
+    <text class="header-title">预约日程</text>
+    <text class="header-count">未来 {{totalCount}} 个预约</text>
+  </view> -->
+  <view class="header-count-bar" wx:if="{{!isLoading && appointmentList.length > 0}}">
+      <text class="header-count-text">未来 {{totalCount}} 个预约</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{isLoading}}" class="empty-state">
+    <loading type="spinner" />
+    <text class="empty-text">加载中...</text>
+  </view>
+
+  <!-- 列表内容 -->
+  <block wx:else>
+    <view wx:if="{{groupedList.length > 0}}">
+      <block wx:for="{{groupedList}}" wx:key="date" wx:for-item="group">
+        
+        <!-- 日期标题 -->
+        <view class="date-group-title">
+          {{group.displayDate}} ({{group.weekDay}})
+        </view>
+
+        <block wx:for="{{group.list}}" wx:key="_id" wx:for-item="item">
+          <navigator class="appointment-card" url="/mine/appointment-list/appointment-detail/appointment-detail?id={{item._id}}">
+            <view class="card-time-row">
+              <text class="time-badge">{{item.simpleStartTime}} - {{item.simpleEndTime}}</text>
+              <view class="status-badge {{item.status === '已结束' ? 'expired' : ''}}">
+                {{item.status}}
+              </view>
+            </view>
+            
+            <view class="card-content">
+              <!-- 如果有学生信息，这里展示 -->
+               <!-- 预约时没存学生姓名，暂时用详情代替，或后续扩展 -->
+              <view class="info-row" wx:if="{{item.teacher}}">
+                <text class="info-label">咨询师</text>
+                <text class="info-value">{{item.teacher}}</text>
+              </view>
+
+              <view class="info-row">
+                <text class="info-label">预约详情</text>
+                <text class="info-value">{{item.detail || '未填写详情'}}</text>
+              </view>
+            </view>
+            
+            <!-- 右侧箭头提示 -->
+            <view style="position:absolute; right: 24rpx; top: 50%; transform: translateY(-50%); opacity: 0.3;">
+              <text class="arrow-right">></text>
+            </view>
+          </navigator>
+        </block>
+
+      </block>
+      
+      <!-- 到底提示 -->
+      <view style="text-align:center; padding: 20rpx; color:#ccc; font-size:24rpx;">
+        - 仅显示最近的预约 -
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <image class="empty-image" src="/images/empty-box.png" mode="aspectFit" />
+      <text class="empty-text">暂时没有新的预约哦</text>
+    </view>
+  </block>
+</view>

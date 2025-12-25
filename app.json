@@ -97,7 +97,10 @@
         "datashow1/datashow1",
         "message/message",
         "developer-message/developer-message",
-        "contact-us/contact-us"
+        "contact-us/contact-us",
+        "appointment-list/appointment-list",
+        "appointment-list/appointment-detail/appointment-detail",
+        "availability-setup/availability-setup"
       ]
     },
     {

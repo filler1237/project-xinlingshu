@@ -12,6 +12,9 @@
   <view class="bianji" bindtap="onEditProfileTap">
   编辑
   </view>
+  
+
+
   <image class="array" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Vector 1.jpg" style="width: 6rpx;"/>
   <!-- 使用Flexbox重构图标区域 -->
   <view class="actions-container">
@@ -44,7 +47,7 @@
 <water-drop-effect id="waterDrop" />
 <view class="sekuai1" style="width: 555.7rpx;"></view>
 <view class="sekuai2" style="width: 550rpx;"></view>
-<view class="myBook" style="width: 690rpx;">
+<view class="myBook" style="width: 690rpx;" wx:if="{{userInfo.role !== 'admin'}}">
   <view class="title">我的预约</view>
   <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/Rectangle 1004.jpg" style="width:172rpx"/>
   
@@ -101,6 +104,18 @@
     <navigator url="/mine/datashow/datashow" class="item" style="width:112rpx ;">
       <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/pie-chart-line.png" style="width: 53.33rpx; "/>
       <text>心理状态</text>
+    </navigator>
+
+    <navigator wx:if="{{userInfo.role === 'admin'}}" url="/mine/appointment-list/appointment-list" class="item" style="width:112rpx; position: relative;">
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/student_appointment_icon_1766657816725.png" style="width: 53.33rpx; height: 53.33rpx;" />
+      <text>学生预约</text>
+      <view class="badge-dot" wx:if="{{adminAppointmentCount > 0}}">{{adminAppointmentCount}}</view>
+    </navigator>
+
+    <navigator wx:if="{{userInfo.role === 'admin'}}" url="/mine/availability-setup/availability-setup" class="item" style="width:112rpx; position: relative;">
+      <image class="icon" src="" style="width: 53.33rpx; height: 53.33rpx;" /> 
+      <image class="icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/pie-chart-line.jpg" style="width: 53.33rpx; height: 53.33rpx;" />
+      <text>排班管理</text>
     </navigator>
   </view>
 </view>

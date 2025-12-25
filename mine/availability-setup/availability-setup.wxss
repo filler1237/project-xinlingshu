@@ -1,0 +1,133 @@
+/* pages/mine/availability-setup/availability-setup.wxss */
+page {
+  background-color: #f7f8fa;
+}
+
+.container {
+  padding: 0;
+  padding-bottom: 120rpx;
+}
+
+/* 顶部模式切换 */
+.mode-tabs {
+  display: flex;
+  background: #fff;
+  padding: 20rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.mode-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 30rpx;
+  color: #666;
+  border-radius: 12rpx;
+  margin: 0 10rpx;
+  background: #f5f5f5;
+}
+
+.mode-tab.active {
+  background: #e6fffa;
+  color: #059669;
+  font-weight: bold;
+}
+
+/* 星期选择器 */
+.week-tabs {
+  white-space: nowrap;
+  background: #fff;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.week-tab {
+  display: inline-block;
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  margin: 0 10rpx;
+  border-radius: 30rpx;
+  color: #666;
+  background: #f9f9f9;
+}
+
+.week-tab.active {
+  background: #34D399;
+  color: #fff;
+}
+
+/* 日期选择器 */
+.date-picker-section {
+  background: #fff;
+  padding: 30rpx;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.picker-display {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 20rpx;
+  background: #f0fdf4;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+/* 时间槽网格 */
+.slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20rpx;
+  gap: 20rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.slot-item {
+  width: 30%; /* 3列 */
+  background: #f3f4f6;
+  padding: 24rpx 0;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: #9ca3af;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.slot-item.available {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #34D399;
+  font-weight: bold;
+}
+
+.slot-item.unavailable {
+   /* 默认样式即为不可用 */
+}
+
+/* 底部按钮 */
+.footer-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20rpx;
+  background: #fff;
+  box-shadow: 0 -4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.save-btn {
+  background: #34D399;
+  color: #fff;
+  border-radius: 40rpx;
+  font-weight: bold;
+}
+
+.tip {
+  text-align: center;
+  color: #999;
+  font-size: 24rpx;
+  margin: 30rpx;
+}

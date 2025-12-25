@@ -92,6 +92,7 @@ function getChartOption(data, title) {
 // ---------------- 页面逻辑 ----------------
 Page({
   data: {
+    isAdmin: false,
     ec: {
       lazyLoad: true
     },
@@ -105,9 +106,13 @@ Page({
       negativeDetailData: []
     }
   },
+  onLoad() {
+    this.checkAdminPermission();
+  },
+
   checkAdminPermission() {
     const userInfo = wx.getStorageSync('userInfo');
-  
+
     // 未登录
     if (!userInfo || !userInfo.role) {
       wx.showToast({
@@ -119,7 +124,7 @@ Page({
       }, 1500);
       return false;
     }
-  
+
     // 非管理员
     if (userInfo.role !== 'admin') {
       wx.showModal({
@@ -132,15 +137,16 @@ Page({
       });
       return false;
     }
-  
+
+    this.setData({ isAdmin: true });
     return true;
   },
-  
+
   /**
    * ⚠️ 一定要在 onReady
    */
   onReady() {
-    if (!this.checkAdminPermission()){
+    if (!this.data.isAdmin) {
       return;
     }
 

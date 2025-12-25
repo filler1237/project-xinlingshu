@@ -310,9 +310,38 @@ page{
 }
 
 /* pages/mine/mine.wxss */
+.admin-notice {
+  position: absolute;
+  top: 156rpx; /* User Name (24) + Line Height (56) + margin */
+  left: 246rpx;
+  font-size: 24rpx;
+  color: #FF8282;
+  font-weight: bold;
+  background-color: rgba(255, 230, 230, 0.8);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
 
+.badge-dot {
+  position: absolute;
+  top: -8rpx;
+  right: 18rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 50%;
+  padding: 0 4rpx;
+  font-weight: bold;
+  border: 2rpx solid #fff;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.2);
+}
 
 /* --- 编辑弹窗专属样式 (原生实现) --- */
+/* 省略重复部分，请在真实环境中确保以下和原文件一致或保留 */
 
 /* 蒙层 */
 .popup-overlay {
