@@ -115,17 +115,6 @@
       ]
     }
   ],
-  "preloadRule": {
-    "pages/home/home": {
-      "network": "all",
-      "packages": [
-        "home",
-        "sushuo",
-        "mine",
-        "diary"
-      ]
-    }
-  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
