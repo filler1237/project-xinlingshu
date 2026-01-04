@@ -1,0 +1,151 @@
+<!-- competition/pages/judge/workDetail/workDetail.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">返回</view>
+    <text class="title">作品详情</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 作品信息 -->
+  <scroll-view class="content" scroll-y wx:if="{{!loading && work}}">
+    <!-- 基本信息卡片 -->
+    <view class="card">
+      <view class="card-title">
+       
+        <text class="title-text">基本信息</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作品标题：</text>
+        <text class="value">{{work.title}}</text>
+      </view>
+      
+      <view class="info-item" wx:if="{{activity}}">
+        <text class="label">所属活动：</text>
+        <text class="value">{{activity.theme || activity.title || '未知活动'}}</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作者：</text>
+        <text class="value">{{work.studentName}}</text>
+      </view>
+      
+      <view class="info-item" wx:if="{{work.submittedAt}}">
+        <text class="label">提交时间：</text>
+        <text class="value">{{work.submittedAt}}</text>
+      </view>
+    </view>
+
+    <!-- 作品描述卡片 -->
+    <view class="card" wx:if="{{work.description}}">
+      <view class="card-title">
+        
+        <text class="title-text">作品描述</text>
+      </view>
+      
+      <view class="description-content">
+        <text class="description-text">{{work.description}}</text>
+      </view>
+    </view>
+
+    <!-- 文件信息卡片 -->
+    <view class="card" wx:if="{{work.fileID}}">
+      <view class="card-title">
+      
+        <text class="title-text">作品文件</text>
+      </view>
+      
+      <view class="file-section">
+        <view class="file-info">
+          
+          <view class="file-details">
+            <text class="file-name">{{work.fileName}}</text>
+            <text class="file-size" wx:if="{{work.fileSize}}">{{work.fileSize}}</text>
+          </view>
+        </view>
+        <button class="download-btn" size="mini" bindtap="downloadWorkFile">
+          查看文件
+        </button>
+      </view>
+    </view>
+
+    <!-- 评审信息卡片 -->
+    <view class="card" wx:if="{{reviewInfo && hasReviewed}}">
+      <view class="card-title">
+      
+        <text class="title-text">我的评审</text>
+      </view>
+      
+      <view class="review-section">
+        <view class="review-score">
+          <text class="score-label">我的评分：</text>
+          <text class="score-value">{{reviewInfo.totalScore}}分</text>
+        </view>
+        
+        <view class="review-comment" wx:if="{{reviewInfo.comment}}">
+          <text class="comment-label">我的评语：</text>
+          <text class="comment-text">{{reviewInfo.comment}}</text>
+        </view>
+        
+        <view class="review-time" wx:if="{{reviewInfo.reviewedAt}}">
+          <text class="time-label">评审时间：</text>
+          <text class="time-value">{{reviewInfo.reviewedAt}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计信息卡片 -->
+    <view class="card">
+      <view class="card-title">
+       
+        <text class="title-text">评审统计</text>
+      </view>
+      
+      <view class="stats-section">
+        <view class="stat-item">
+          <text class="stat-label">评审人数：</text>
+          <text class="stat-value">{{work.judgeCount || 0}}人</text>
+        </view>
+        
+        <view class="stat-item" wx:if="{{work.averageScore > 0}}">
+          <text class="stat-label">平均分：</text>
+          <text class="stat-value highlight">{{work.averageScore.toFixed(2)}}分</text>
+        </view>
+        
+        <view class="stat-item" wx:if="{{work.totalScore > 0}}">
+          <text class="stat-label">总分：</text>
+          <text class="stat-value">{{work.totalScore.toFixed(2)}}分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-section">
+      <button 
+        class="action-btn review-btn" 
+        bindtap="startReview"
+        wx:if="{{!hasReviewed}}"
+      >
+        开始评审
+      </button>
+      <button 
+        class="action-btn review-btn" 
+        bindtap="startReview"
+        wx:if="{{hasReviewed}}"
+      >
+        修改评审
+      </button>
+    </view>
+  </scroll-view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && !work}}">
+    <text class="empty-text">作品不存在或已删除</text>
+  </view>
+</view>
+

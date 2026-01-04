@@ -1,0 +1,339 @@
+/* competition/pages/student/activityDetail/activityDetail.wxss */
+
+.activity-detail-page {
+  background: linear-gradient(180deg, #f7fdf9 0%, #f0f9f4 100%);
+  min-height: 100vh;
+}
+
+.detail-content {
+  height: calc(100vh - 88rpx);
+  padding: 24rpx 32rpx;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 120rpx 0;
+  font-size: 28rpx;
+  color: #95a5a6;
+}
+
+.detail-container {
+  padding-bottom: 40rpx;
+}
+
+/* ========== 头部区域 ========== */
+.header-section {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(76, 217, 100, 0.08);
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.activity-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.status-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  margin-left: 16rpx;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.running {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.ended {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.activity-theme {
+  font-size: 28rpx;
+  color: #7f8c8d;
+  margin-top: 12rpx;
+  display: block;
+}
+
+/* ========== 信息卡片 ========== */
+.info-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(76, 217, 100, 0.08);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f9f4;
+}
+
+.title-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.title-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f9f4;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #7f8c8d;
+  min-width: 140rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #2c3e50;
+  flex: 1;
+  text-align: right;
+}
+
+.description-text {
+  font-size: 28rpx;
+  color: #34495e;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ========== 评分细则 ========== */
+.score-rules {
+  margin-bottom: 20rpx;
+}
+
+.rule-item {
+  padding: 20rpx;
+  background: #f8fcf9;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.rule-item:last-child {
+  margin-bottom: 0;
+}
+
+.rule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.rule-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.rule-score {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #4cd964;
+}
+
+.rule-desc {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  line-height: 1.6;
+}
+
+.total-score {
+  text-align: center;
+  padding: 20rpx;
+  background: #e8f5e9;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* ========== 获奖规则 ========== */
+.award-rules {
+  margin-bottom: 20rpx;
+}
+
+.award-item {
+  padding: 20rpx;
+  background: #fff9e6;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  border-left: 4rpx solid #ffd700;
+}
+
+.award-item:last-child {
+  margin-bottom: 0;
+}
+
+.award-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.award-level {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.award-ratio {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+.award-desc {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  line-height: 1.6;
+}
+
+/* ========== 上传类型 ========== */
+.upload-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.type-tag {
+  padding: 12rpx 24rpx;
+  background: #e8f5e9;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  color: #2c3e50;
+}
+
+/* ========== 进度条 ========== */
+.progress-section {
+  margin-bottom: 20rpx;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #2c3e50;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12rpx;
+  background: #e8f5e9;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.progress-fill.pending {
+  background: #ffc107;
+}
+
+.progress-fill.running {
+  background: #4cd964;
+}
+
+.progress-fill.ended {
+  background: #95a5a6;
+}
+
+.time-info {
+  text-align: center;
+}
+
+.time-text {
+  font-size: 26rpx;
+  color: #7f8c8d;
+}
+
+/* ========== 操作按钮 ========== */
+.action-section {
+  margin-top: 32rpx;
+  padding: 0 0 40rpx 0;
+}
+
+.action-btn {
+  width: 100%;
+  height: 88rpx;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+  margin-bottom: 24rpx;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #4cd964 0%, #3db954 100%);
+  color: white;
+  box-shadow: 0 8rpx 20rpx rgba(76, 217, 100, 0.3);
+}
+
+.primary-btn:active {
+  opacity: 0.8;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #5dade2 0%, #3498db 100%);
+  color: white;
+  box-shadow: 0 8rpx 20rpx rgba(93, 173, 226, 0.3);
+}
+
+.submit-btn:active {
+  opacity: 0.8;
+}
+
+.disabled-btn {
+  background: #ecf0f1;
+  color: #95a5a6;
+}
+

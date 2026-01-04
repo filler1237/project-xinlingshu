@@ -1,0 +1,303 @@
+/* =================================================
+   作品详情页 - 统一科技绿设计系统 (完整修复版)
+   设计特点：禁止挤压布局、科技绿主色、精致呼吸感
+   ================================================= */
+
+   page {
+    background-color: #F4F8F6;
+    --tech-green: #10B981;      /* 核心主色 */
+    --tech-green-light: #ECFDF5;
+    --text-main: #1F2937;
+    --text-sub: #6B7280;
+    --card-bg: #FFFFFF;
+    --border-color: rgba(16, 185, 129, 0.15);
+    --shadow-light: 0 4rpx 20rpx rgba(0, 0, 0, 0.02);
+  }
+  
+  .container {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60rpx;
+  }
+  
+  /* 背景光晕装饰 */
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 600rpx;
+    background: radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.06) 0%, transparent 60%),
+                radial-gradient(circle at 90% 30%, rgba(5, 150, 105, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  /* ==============================
+     1. 头部区域
+     ============================== */
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 40rpx 30rpx;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .back-btn {
+    padding: 16rpx 32rpx;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-main);
+    border-radius: 16rpx;
+    font-size: 28rpx;
+    font-family: 'PingFang SC';
+    font-weight: 500;
+    border: 1rpx solid var(--border-color);
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+    flex-shrink: 0; /* 防止按钮缩窄 */
+  }
+  
+  .back-btn:active {
+    transform: scale(0.96);
+    background: var(--tech-green-light);
+  }
+  
+  .title {
+    flex: 1;
+    text-align: center;
+    font-size: 34rpx;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-right: 120rpx; /* 视觉对冲返回按钮，保持标题绝对居中 */
+  }
+  
+  /* ==============================
+     2. 内容与卡片容器
+     ============================== */
+  .content {
+    padding: 0 30rpx;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .card {
+    background: var(--card-bg);
+    border-radius: 24rpx;
+    padding: 36rpx;
+    margin-bottom: 30rpx;
+    border: 1rpx solid var(--border-color);
+    box-shadow: var(--shadow-light);
+  }
+  
+  /* 修复点：卡片标题图标 */
+  .card-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+    padding-bottom: 20rpx;
+    border-bottom: 1rpx solid #F3F4F6;
+  }
+  
+  .title-icon {
+    width: 8rpx;
+    height: 32rpx;
+    background: var(--tech-green);
+    border-radius: 4rpx;
+    margin-right: 18rpx;
+    flex-shrink: 0; /* 核心修复：禁止被标题文字挤压 */
+  }
+  
+  .title-text {
+    font-size: 30rpx;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  
+  /* ==============================
+     3. 信息项 (修复挤压的核心)
+     ============================== */
+  .info-item {
+    display: flex;
+    margin-bottom: 26rpx;
+    line-height: 1.6;
+  }
+  
+  .label {
+    font-size: 28rpx;
+    color: var(--text-sub);
+    width: 150rpx;      /* 固定宽度 */
+    flex-shrink: 0;    /* 核心修复：禁止被右侧Value挤压 */
+    margin-right: 20rpx;
+  }
+  
+  .value {
+    font-size: 28rpx;
+    color: var(--text-main);
+    font-weight: 500;
+    flex: 1;           /* 自动占据剩余空间 */
+    word-break: break-all; /* 允许长字符换行 */
+  }
+  
+  /* 描述详情块 */
+  .description-content {
+    padding: 24rpx;
+    background: #F9FAFB;
+    border-radius: 16rpx;
+    border: 1rpx dashed #E5E7EB;
+    margin-top: 10rpx;
+  }
+  
+  .description-text {
+    font-size: 28rpx;
+    color: #4B5563;
+    line-height: 1.8;
+  }
+  
+  /* ==============================
+     4. 文件查看区
+     ============================== */
+  .file-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24rpx;
+    background: var(--tech-green-light);
+    border-radius: 16rpx;
+    border: 1rpx solid rgba(16, 185, 129, 0.1);
+  }
+  
+  .file-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0; /* 允许内部文字省略 */
+  }
+  
+  .file-icon {
+    font-size: 48rpx;
+    margin-right: 20rpx;
+    flex-shrink: 0; /* 禁止图标变形 */
+  }
+  
+  .file-details {
+    min-width: 0;
+  }
+  
+  .file-name {
+    font-size: 28rpx;
+    color: var(--text-main);
+    font-weight: 600;
+    margin-bottom: 4rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .file-size {
+    font-size: 24rpx;
+    color: var(--text-sub);
+  }
+  
+  .download-btn {
+    flex-shrink: 0;
+    background: var(--tech-green);
+    color: white;
+    border-radius: 12rpx;
+    font-size: 24rpx;
+    padding: 16rpx 28rpx;
+    font-weight: 600;
+    margin-left: 20rpx;
+    box-shadow: 0 4rpx 10rpx rgba(16, 185, 129, 0.2);
+  }
+  
+  /* ==============================
+     5. 评审结果展示
+     ============================== */
+  .review-section {
+    background: #F0FDF4;
+    border-radius: 20rpx;
+    padding: 30rpx;
+    border: 1rpx solid rgba(16, 185, 129, 0.15);
+  }
+  
+  .review-score {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 24rpx;
+  }
+  
+  .score-label {
+    font-size: 28rpx;
+    color: var(--text-sub);
+    margin-right: 20rpx;
+    flex-shrink: 0;
+  }
+  
+  .score-value {
+    font-size: 52rpx;
+    color: var(--tech-green);
+    font-weight: 700;
+    font-family: 'DIN Alternate', Arial, sans-serif;
+  }
+  
+  .comment-label {
+    font-size: 26rpx;
+    color: var(--text-sub);
+    margin-bottom: 12rpx;
+    display: block;
+  }
+  
+  .comment-text {
+    font-size: 28rpx;
+    color: #374151;
+    background: #FFFFFF;
+    padding: 24rpx;
+    border-radius: 12rpx;
+    border: 1rpx solid #E5E7EB;
+    line-height: 1.6;
+  }
+  
+  /* ==============================
+     6. 统计项与底部操作
+     ============================== */
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24rpx 0;
+    border-bottom: 1rpx solid #F3F4F6;
+  }
+  
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+  
+  .stat-value.highlight {
+    color: var(--tech-green);
+    font-size: 36rpx;
+    font-weight: 700;
+  }
+  
+  .action-section {
+    padding: 40rpx 0 80rpx;
+  }
+  
+  .review-btn {
+    width: 100%;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--tech-green);
+    color: white;
+    border-radius: 20rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    box-shadow: 0 10rpx 20rpx rgba(16, 185, 129, 0.25);
+  }
+  
+  .review-btn:active {
+    transform: translateY(4rpx);
+    box-shadow: 0 4rpx 8rpx rgba(16, 185, 129, 0.2);
+  }
