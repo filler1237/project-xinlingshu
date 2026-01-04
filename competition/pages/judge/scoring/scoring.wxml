@@ -1,0 +1,111 @@
+<navigation-bar title="作品评审" back="{{true}}" color="white" background="#10B981"></navigation-bar>
+
+<view class="scoring-page">
+  <scroll-view class="content" scroll-y>
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>数据加载中...</text>
+    </view>
+
+    <view class="card" wx:if="{{work && activity}}">
+      <view class="card-title">
+        <view class="title-icon"></view>
+        <text class="title-text">作品详情</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">活动名称</text>
+        <text class="value">{{activity.theme || activity.title || '未知活动'}}</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作品标题</text>
+        <text class="value">{{work.title || '未命名作品'}}</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作者姓名</text>
+        <text class="value">{{work.studentName || '学生'}}</text>
+      </view>
+      
+      <view class="info-item" wx:if="{{work.description}}">
+        <text class="label">作品描述</text>
+        <text class="value description-text">{{work.description}}</text>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{scoreItems.length > 0}}">
+      <view class="card-title">
+        <view class="title-icon"></view>
+        <text class="title-text">评分细则</text>
+      </view>
+      
+      <view class="score-items">
+        <view 
+          class="score-item"
+          wx:for="{{scoreItems}}"
+          wx:key="id"
+        >
+          <view class="score-header">
+            <view class="score-name-section">
+              <text class="score-name">{{item.name}}</text>
+              <text class="score-desc" wx:if="{{item.description}}">{{item.description}}</text>
+            </view>
+            <text class="score-range">上限 {{item.maxScore}}分</text>
+          </view>
+          
+          <view class="score-input-section">
+            <input 
+              class="score-input"
+              type="digit"
+              value="{{item.score}}"
+              placeholder="0"
+              bindinput="onScoreInput"
+              data-id="{{item.id}}"
+              disabled="{{hasReviewed}}"
+            />
+            <text class="score-unit">分</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="total-score-section">
+        <text class="total-label">合计总分</text>
+        <text class="total-value">{{totalScore}}</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">
+        <view class="title-icon"></view>
+        <text class="title-text">专家评语</text>
+      </view>
+      
+      <textarea 
+        class="comment-input"
+        placeholder="请填写您的评审意见（选填）"
+        value="{{comment}}"
+        bindinput="onCommentInput"
+        disabled="{{hasReviewed}}"
+        maxlength="500"
+        auto-height
+      />
+      <text class="comment-count">{{comment.length || 0}}/500</text>
+    </view>
+
+    <view class="reviewed-tip" wx:if="{{hasReviewed}}">
+      <text class="tip-icon">✓</text>
+      <text class="tip-text">您已评审过此作品</text>
+    </view>
+
+    <view class="submit-section">
+      <button 
+        class="submit-btn"
+        bindtap="submitScore"
+        loading="{{loading}}"
+        disabled="{{loading || hasReviewed}}"
+      >
+        {{hasReviewed ? '评分已提交' : '确认提交评分'}}
+      </button>
+    </view>
+  </scroll-view>
+</view>
