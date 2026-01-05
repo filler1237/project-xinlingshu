@@ -1,7 +1,6 @@
 {
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "water-drop-effect": "/components/waterDropEffect/waterDropEffect"
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
   },
   "navigationBarTitleText": "心灵树洞",
   "navigationStyle": "custom"

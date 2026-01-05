@@ -8,6 +8,24 @@
 
 
 <view class="ChoiceBox">
+  <view class="QingSu" bindtap="gotoXIE">
+    <view class="Choice" style="background: #93DF5D;">
+      <view class="Pic">
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu.png" mode="widthFix" class="Pic" style="width: 220rpx; top: -50rpx;"/>
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-reflection.png" mode="widthFix" class="Pic" style="top: -85rpx; left: 24rpx;"/>
+      </view>
+      <view class="BoxCon">
+        <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/QingSu-con.png" mode="widthFix"/>
+      </view>
+      <view class="FontBox">
+        <text class="Font">倾诉</text>
+        <text class="Font_s">—————————</text>
+        <text class="Font_s">TALK WITH ME</text>
+      </view>
+    </view>
+    
+  </view>
+
   <view class="QingTan" bindtap="gotoDA">
     <view class="Choice"> 
       <view class="Pic">

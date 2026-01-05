@@ -1,6 +1,6 @@
 // pages/diary/calendar/calendar.js
 const app = getApp()
-wx.cloud.callFunction({ name: 'addUsers' })
+
 Page({
   data: {
     currentDate: '',
@@ -376,13 +376,8 @@ Page({
 
   // 显示日记列表
   showDiaryList() {
-    this.setData({ 
-      showDiaryListModal: true,
-      diaryListLoading: true,
-      diaryList: []
-    }, () => {
-      this.loadDiaryList()
-    })
+    this.setData({ showDiaryListModal: true })
+    this.loadDiaryList()
   },
 
   // 测试数据库连接和数据
@@ -529,35 +524,33 @@ Page({
       
       console.log('日记列表查询结果:', result)
       
-      if (result && result.result && result.result.ok) {
+      if (result.result.ok) {
         console.log('成功获取日记数据:', result.result.data)
-        const diaryData = result.result.data || []
         this.setData({
-          diaryList: diaryData,
+          diaryList: result.result.data,
           diaryListLoading: false
         })
         
         // 显示加载结果提示
-        if (diaryData.length === 0) {
+        if (result.result.data.length === 0) {
           wx.showToast({
             title: '暂无日记数据',
             icon: 'none'
           })
         } else {
           wx.showToast({
-            title: `加载了${diaryData.length}条日记`,
+            title: `加载了${result.result.data.length}条日记`,
             icon: 'success'
           })
         }
       } else {
-        console.error('云函数返回错误:', result?.result?.error || '未知错误')
-        throw new Error(result?.result?.error || '加载失败')
+        console.error('云函数返回错误:', result.result.error)
+        throw new Error(result.result.error || '加载失败')
       }
     } catch (error) {
       console.error('加载日记列表失败:', error)
       this.setData({
-        diaryListLoading: false,
-        diaryList: []
+        diaryListLoading: false
       })
       wx.showToast({
         title: `加载失败: ${error.message}`,
@@ -620,4 +613,6 @@ Page({
       })
     }
   },
+
+
 })

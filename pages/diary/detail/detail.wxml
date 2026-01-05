@@ -76,5 +76,3 @@
     </view>
   </view>
 </view>
-<!-- 水滴动画组件 -->
-<water-drop-effect id="waterDropEffect" />

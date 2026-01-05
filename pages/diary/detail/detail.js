@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad(options) {
-    const { id, reward } = options
+    const { id } = options
     if (id) {
       this.loadDiaryEntry(id)
     } else {
@@ -19,25 +19,6 @@ Page({
         error: '缺少日记ID',
         loading: false
       })
-    }
-
-    // 检查是否有奖励信息，并触发水滴动画
-    if (reward) {
-      try {
-        const rewardData = JSON.parse(decodeURIComponent(reward));
-        // 使用 setTimeout 确保在页面渲染完成后再执行动画
-        setTimeout(() => {
-          const waterDrop = this.selectComponent('#waterDropEffect');
-          if (waterDrop) {
-            // 调用 play 方法，而不是 show
-            waterDrop.play(rewardData.message);
-          } else {
-            console.error('未找到 waterDropEffect 组件');
-          }
-        }, 500); // 延迟500ms，等待页面加载
-      } catch (e) {
-        console.error('解析奖励信息失败:', e);
-      }
     }
   },
 

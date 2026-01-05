@@ -27,7 +27,6 @@
         <textarea class="echo-input" placeholder="送上一句温暖的回应..." maxlength="-1" model:value="{{echoText}}"></textarea>
         <button class="submit-btn" type="primary" bindtap="submitEcho">送出回声</button>
         <button class="skip-btn" bindtap="getRandomVent">换一个</button>
-        <text class="report-link" bindtap="reportVent">举报不当内容</text>
       </block>
       <block wx:else>
         <view class="empty-state">
@@ -40,61 +39,25 @@
     <!-- 我的回声页面 -->
     <view class="page-section" wx:if="{{activeTab === 'myEchoes'}}">
       <scroll-view scroll-y="true" class="echo-list">
-        <block wx:if="{{myVents && myVents.length > 0}}">
-          <block wx:for="{{myVents}}" wx:key="_id">
-
-            <!-- 类型一：我发布的烦恼 (核心修改区域) -->
-            <view wx:if="{{item.type === 'vent'}}" class="my-vent-item my-vent">
-              <view class="card-header">我倾诉的烦恼</view>
-              <view class="my-vent-content">{{item.content}}</view>
-              
-              <!-- 根据审核状态和回声状态显示不同内容 -->
-              <block>
-                <!-- 状态1: 审核中 -->
-                <view wx:if="{{item.status === 'reviewing'}}" class="echo-content status-reviewing">
-                  状态：审核中...
-                </view>
-                <!-- 状态2: 审核失败 -->
-                <view wx:elif="{{item.status === 'rejected'}}" class="echo-content status-rejected">
-                  状态：审核失败 <text wx:if="{{item.reviewComment}}">({{item.reviewComment}})</text>
-                </view>
-                <!-- 状态3: 审核通过 -->
-                <view wx:elif="{{item.status === 'approved'}}">
-                  <view class="echo-content {{item.echo ? '' : 'status-pending-echo'}}">
-                    {{item.echo ? '收到的回声：' + item.echo : '等待回声中...'}}
-                  </view>
-                </view>
-                 <!-- 状态4: 审核过程异常 -->
-                <view wx:elif="{{item.status === 'review_failed'}}" class="echo-content status-rejected">
-                  状态：审核异常，请联系管理员
-                </view>
-              </block>
+        <block wx:if="{{myVents.length > 0}}">
+          <view class="my-vent-item" wx:for="{{myVents}}" wx:key="_id">
+            <view class="my-vent-content">我曾说：{{item.content}}</view>
+            <view class="echo-content {{item.echo ? '' : 'pending'}}">
+              {{item.echo ? '收到的回声：' + item.echo : '等待回声中...'}}
             </view>
-
-            <!-- 类型二：我回复的烦恼 (保持不变) -->
-            <view wx:if="{{item.type === 'echo'}}" class="my-vent-item my-echo">
-              <view class="card-header">别人的烦恼</view>
-              <view class="original-vent-content">{{item.content}}</view>
-              <view class="my-echo-content">
-                我的回应：{{item.echo}}
-              </view>
-            </view>
-
-          </block>
+          </view>
         </block>
         <block wx:else>
           <view class="empty-state">
-            <text>这里空空如也，去倾诉或聆听吧！</text>
+            <text>你还没有倾诉过烦恼，或者还没有收到回声。</text>
           </view>
         </block>
       </scroll-view>
     </view>
-
   </view>
 
   <!-- 底部按钮区域 -->
   <view class="bottom-bar" wx:if="{{activeTab === 'vent'}}">
     <button class="submit-btn" type="primary" bindtap="submitVent">投入树洞</button>
   </view>
-  <water-drop-effect id="waterDrop" />
 </view>

@@ -1,42 +1,24 @@
 <!--pages/auth/login/login.wxml-->
-<navigation-bar title="登录" back="{{true}}"></navigation-bar>
-<view class="page-container">
-
-  <!-- Step 1: Role Selection -->
-  <view class="role-selection-container" wx:if="{{loginStep === 1}}">
-    <view class="info-container">
-      <view class="info-title">欢迎来到心灵树洞</view>
-      <view class="info-description">一个安全、私密的空间，倾听你的心声</view>
-    </view>
-    <button class="role-btn student" bindtap="onStudentLogin">
-      <image class="icon" src="/image/Homepage.png" mode="aspectFit"></image>
-      <text>学生</text>
-    </button>
-    <button class="role-btn teacher-judge" bindtap="showFormLogin">
-      <image class="icon" src="/image/Mine.png" mode="aspectFit"></image>
-      <text>教师 / 评委</text>
-    </button>
+<text>pages/auth/login/login.wxml</text>
+<view class="container">
+  <view class="login-header">
+    <text class="title">欢迎登录</text>
   </view>
 
-  <!-- Step 2: Username/Password Form -->
-  <view class="form-container" wx:if="{{loginStep === 2}}">
-    <form bindsubmit="onFormLogin">
-      <view class="form-title">教师 / 评委登录</view>
-      <picker class="form-picker" bindchange="onRoleChange" value="{{roleIndex}}" range="{{roles}}">
-        <view class="picker-view">
-          <text class="picker-label">角色</text>
-          <text class="picker-value">{{roles[roleIndex]}}</text>
-          <image class="picker-arrow" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/箭头_列表展开.png" mode="aspectFit"></image>
-        </view>
-      </picker>
-      <view class="form-input-group">
-        <input name="username" placeholder="用户名" class="form-input" bindinput="onUsernameInput"/>
-      </view>
-      <view class="form-input-group">
-        <input name="password" type="password" placeholder="密码" class="form-input" bindinput="onPasswordInput"/>
-      </view>
-      <button class="submit-btn" form-type="submit">登 录</button>
-    </form>
+  <view class="form-group">
+    <text class="label">账号</text>
+    <input class="input" placeholder="请输入账号" bindinput="onAccountInput" value="{{account}}" />
   </view>
 
+  <view class="form-group">
+    <text class="label">密码</text>
+    <input class="input" placeholder="请输入密码" password bindinput="onPasswordInput" value="{{password}}" />
+  </view>
+
+  <button class="login-button" bindtap="onLogin">登录</button>
+
+  <view class="register-link">
+    <text>还没有账号？</text>
+    <text class="link-text" bindtap="toRegister">立即注册</text>
+  </view>
 </view>

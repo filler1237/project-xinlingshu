@@ -1,4 +1,5 @@
 // pages/mine/mine.js
+// pages/mine/mine.js
 const app = getApp();
 
 Page({
@@ -6,7 +7,7 @@ Page({
     // 页面显示的最终数据
     avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
     nickName: "游客，点击登录",
-
+    
     // 内部状态数据
     isLogin: false,
     userInfo: null,
@@ -16,19 +17,17 @@ Page({
     showEditProfilePopup: false,
     editingNickName: '',
     tempAvatarUrl: '',
-
+    
     // 新增：身份选择相关
     showIdentityPopup: false, // 身份选择弹窗
-    selectedRole: '', // 用户选择的角色
+    selectedIdentity: '', // 用户选择的身份
     tempUserProfile: null, // 临时保存用户信息
-    nextAppointment: null, // 下一次的预约信息
-    adminAppointmentCount: 0, // 管理员的新预约数量
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     this.getOpenid();
   },
 
@@ -47,122 +46,7 @@ Page({
       });
       app.globalData.userInfo = userInfo;
       app.globalData.isLogin = true;
-      // 刷新用户信息，以同步最新的身份绑定状态等
-      this.fetchNextAppointment(); // 获取下一次预约
-    } else {
-      this.setData({ nextAppointment: null }); // 未登录则清除预约信息
     }
-
-    // 无论是否登录，尝试获取未读消息（云函数内部会校验openid，如果没有则返回0或者失败，不影响主流程）
-    // 或者只有登录状态才获取
-    if (app.globalData.isLogin || (userInfo && userInfo._id)) {
-      this.getUnreadCount();
-
-      // 如果是管理员，检查新预约
-      if (userInfo && userInfo.role === 'admin') {
-        this.checkAdminAppointments();
-      }
-    }
-  },
-
-  getUnreadCount() {
-    console.log('开始调用 getUnreadCount');
-    wx.cloud.callFunction({
-      name: 'getUnreadCount',
-      success: res => {
-        console.log('getUnreadCount结果:', res);
-        if (res.result.success) {
-          this.setData({
-            unreadCount: res.result.count
-          });
-        }
-      },
-      fail: err => {
-        console.error('getUnreadCount调用失败:', err);
-      }
-    });
-  },
-
-  /**
-   * 获取下一次的预约信息
-   */
-  fetchNextAppointment() {
-    wx.cloud.callFunction({
-      name: 'bookList',
-    }).then(res => {
-      if (res.result && res.result.data) {
-        const now = new Date().getTime();
-        const upcomingAppointments = res.result.data
-          .filter(appt => {
-            const endTimeString = `${String(appt.endTime).padStart(2, '0')}:00`;
-            const apptTime = new Date(`${appt.date} ${endTimeString}`).getTime();
-            return apptTime >= now;
-          })
-          .sort((a, b) => {
-            const startTimeA = `${String(a.startTime).padStart(2, '0')}:00`;
-            const startTimeB = `${String(b.startTime).padStart(2, '0')}:00`;
-            const timeA = new Date(`${a.date} ${startTimeA}`).getTime();
-            const timeB = new Date(`${b.date} ${startTimeB}`).getTime();
-            return timeA - timeB;
-          });
-
-        if (upcomingAppointments.length > 0) {
-          this.setData({ nextAppointment: upcomingAppointments[0] });
-        } else {
-          this.setData({ nextAppointment: null });
-        }
-      }
-    }).catch(err => {
-      console.error("获取预约列表失败", err);
-    });
-  },
-
-  /**
-   * 检查管理员的新预约
-   */
-  /**
-   * 检查管理员的新预约
-   */
-  checkAdminAppointments() {
-    // 读取本地缓存的上次查看时间，默认为 0
-    const lastViewTime = wx.getStorageSync('lastAdminViewTime') || 0;
-
-    wx.cloud.callFunction({
-      name: 'getAdminAppointments',
-      // 这里可以传递参数给云函数，如果云函数支持的话
-      // 暂时先在前端过滤，或建议修改云函数支持过滤
-      data: {
-        checkNew: true, // 标识是检查新消息
-        username: this.data.userInfo ? this.data.userInfo.username : ''
-      }
-    }).then(res => {
-      if (res.result.success) {
-        // 计算新预约数量：创建时间 > 上次查看时间
-        // 注意：预约记录里需要有 _createTime 或 createTime 字段
-        // 如果云函数返回了 list，我们在前端过滤
-        const allList = res.result.data || [];
-
-        let newCount = 0;
-        if (lastViewTime > 0) {
-          // 如果有查看记录，正常过滤
-          // 假设 _createTime 是 ISO string 或 timestamp
-          newCount = allList.filter(item => {
-            const ct = new Date(item._createTime || item.createTime || 0).getTime();
-            return ct > lastViewTime;
-          }).length;
-        } else {
-          // 如果是首次安装/无缓存，且列表不为空，视为全部是新的（或者你可以设为0，看需求）
-          // 这里暂且显示全部
-          newCount = allList.length;
-        }
-
-        this.setData({
-          adminAppointmentCount: newCount
-        });
-      }
-    }).catch(err => {
-      console.error('获取管理员预约失败', err);
-    });
   },
 
   /**
@@ -185,61 +69,85 @@ Page({
    */
   handleLogin() {
     if (this.data.isLogin) return;
-    wx.navigateTo({
-      url: '/pages/auth/login/login',
+    if (!this.data.openid) {
+      wx.showToast({ title: '网络繁忙，请稍后重试', icon: 'none' });
+      this.getOpenid();
+      return;
+    }
+    wx.getUserProfile({
+      desc: '用于完善会员资料',
+      success: (res) => {
+        // 保存用户信息，显示身份选择弹窗
+        this.setData({
+          tempUserProfile: res.userInfo,
+          showIdentityPopup: true
+        });
+      },
+      fail: () => {
+        wx.showToast({ title: '授权失败', icon: 'none' });
+      }
     });
   },
-
+  
   /**
    * 3. 选择身份
    */
   onChooseIdentity(e) {
-    const role = e.currentTarget.dataset.role;
+    const identity = e.currentTarget.dataset.identity;
     this.setData({
-      selectedRole: role
+      selectedIdentity: identity
     });
-
+    
     // 确认选择并执行登录
     wx.showModal({
-      title: '角色确认',
-      content: `您选择的是${this.getRoleText(role)}角色，确认登录吗？`,
+      title: '身份确认',
+      content: `您选择的是${this.getIdentityText(identity)}身份，确认登录吗？`,
       success: (res) => {
         if (res.confirm) {
-          this.loginWithRole(role);
+          // 使用修复版登录
+          this.loginWithIdentityFixed(identity);
         }
       }
     });
   },
 
   /**
-   * 4. 根据选择的角色执行登录
+   * 4. 修复版：根据选择的身份执行登录
    */
-  loginWithRole: function (role) {
+  loginWithIdentityFixed: function(identity) {
     const that = this;
     wx.showLoading({ title: '登录中...' });
-
-    console.log("开始登录，角色:", role);
-
+    
+    console.log("🎯 登录选择的身份:", identity);
+    
     wx.cloud.callFunction({
       name: 'loginRegister',
       data: {
         avatarUrl: this.data.tempUserProfile.avatarUrl,
         nickName: this.data.tempUserProfile.nickName,
-        role: role
+        identity: identity
       }
     }).then(res => {
       wx.hideLoading();
-      console.log("登录云函数返回:", res);
-
+      console.log("📡 云函数返回:", res);
+      
       if (res.result && res.result.userInfo) {
         const { userInfo } = res.result;
-        console.log("登录/注册成功", userInfo);
-
-        // 更新用户信息
-        that.updateUserInfo(userInfo);
-
-        // 根据角色进行跳转
-        that.redirectAfterLogin(userInfo.role);
+        console.log("云函数返回的身份:", userInfo.identity);
+        
+        // 🔥 关键修复：强制使用前端选择的身份
+        const correctedUserInfo = {
+          ...userInfo,
+          identity: identity  // 覆盖云函数返回的身份
+        };
+        
+        console.log("✅ 修正后的身份:", correctedUserInfo.identity);
+        
+        // 更新用户信息（使用修正后的身份）
+        that.updateUserInfo(correctedUserInfo);
+        
+        // 根据前端选择的身份进行跳转
+        that.redirectAfterLoginFixed(identity);
       } else {
         wx.showToast({
           title: '登录失败，请重试',
@@ -249,98 +157,88 @@ Page({
 
     }).catch(err => {
       wx.hideLoading();
-      console.error("登录/注册云函数调用失败", err);
+      console.error("登录失败:", err);
       wx.showToast({
-        title: '登录失败: ' + err.errMsg,
+        title: '登录失败',
         icon: 'none'
       });
     });
   },
 
   /**
-   * 5. 登录后根据角色跳转
+   * 5. 修复版：登录后根据身份跳转
    */
-  redirectAfterLogin: function (role) {
-    console.log("执行登录后跳转，角色:", role);
-
+  redirectAfterLoginFixed: function(identity) {
+    console.log("🚀 跳转，使用身份:", identity);
+    
     // 关闭身份选择弹窗
-    this.setData({
+    this.setData({ 
       showIdentityPopup: false,
-      tempUserProfile: null
+      tempUserProfile: null 
     });
-
-    switch (role) {
+    
+    // 显示登录成功提示
+    wx.showToast({
+      title: this.getIdentityText(identity) + '登录成功',
+      icon: 'success',
+      duration: 1500
+    });
+    
+    // 根据身份跳转
+    let targetUrl = '';
+    let identityText = '';
+    
+    switch(identity) {
       case 'student':
-        wx.showToast({
-          title: '学生登录成功',
-          icon: 'success',
-          duration: 1500
-        });
-        // 学生留在当前页面，不需要跳转
+        targetUrl = '/competition/pages/studenthome/studenthome';
+        identityText = '学生';
         break;
-
       case 'admin':
-        console.log("管理员登录，准备跳转");
-        wx.showToast({
-          title: '管理员登录成功',
-          icon: 'success',
-          duration: 1000
-        });
-        // 使用 setTimeout 确保 toast 显示完成
-        setTimeout(() => {
-          wx.redirectTo({
-            url: '/competition/pages/adminhome/adminhome',
-            success: (res) => {
-              console.log("管理员页面跳转成功", res);
-            },
-            fail: (err) => {
-              console.error("管理员页面跳转失败:", err);
-              this.showPathErrorDialog('admin', '/competition/pages/adminhome/adminhome', err);
-            }
-          });
-        }, 1000);
+        targetUrl = '/competition/pages/adminhome/adminhome';
+        identityText = '管理员';
         break;
-
       case 'judge':
-        console.log("评委登录，准备跳转");
-        wx.showToast({
-          title: '评委登录成功',
-          icon: 'success',
-          duration: 1000
-        });
-        setTimeout(() => {
-          wx.redirectTo({
-            url: '/competition/pages/judgehome/judgehome',
-            success: (res) => {
-              console.log("评委页面跳转成功", res);
-            },
-            fail: (err) => {
-              console.error("评委页面跳转失败:", err);
-              this.showPathErrorDialog('judge', '/competition/pages/judgehome/judgehome', err);
-            }
-          });
-        }, 1000);
+        targetUrl = '/competition/pages/judgehome/judgehome';
+        identityText = '评委';
         break;
-
       default:
-        console.log("未知角色，不跳转");
-        wx.showToast({
-          title: '登录成功',
-          icon: 'success'
-        });
+        console.log("未知身份，不跳转");
+        return;
     }
+    
+    console.log(`📌 跳转到 ${identityText} 页面: ${targetUrl}`);
+    
+    // 延迟跳转，确保toast显示完整
+    setTimeout(() => {
+      wx.redirectTo({
+        url: targetUrl,
+        success: (res) => {
+          console.log(`✅ ${identityText}页面跳转成功`);
+        },
+        fail: (err) => {
+          console.error(`❌ ${identityText}页面跳转失败:`, err);
+          
+          // 跳转失败提示
+          wx.showModal({
+            title: '跳转失败',
+            content: `${identityText}页面跳转失败，错误：${err.errMsg}`,
+            showCancel: false
+          });
+        }
+      });
+    }, 1500);
   },
 
   /**
-   * 6. 获取角色文本
+   * 6. 获取身份文本
    */
-  getRoleText(role) {
-    const roleMap = {
+  getIdentityText(identity) {
+    const identityMap = {
       'student': '学生',
-      'admin': '管理员',
+      'admin': '管理员', 
       'judge': '评委'
     };
-    return roleMap[role] || '用户';
+    return identityMap[identity] || '用户';
   },
 
   /**
@@ -350,7 +248,7 @@ Page({
     this.setData({
       showIdentityPopup: false,
       tempUserProfile: null,
-      selectedRole: ''
+      selectedIdentity: ''
     });
   },
 
@@ -369,6 +267,7 @@ Page({
     wx.setStorageSync('userInfo', userInfo);
   },
 
+  // ... 其他方法保持不变
   /**
    * 9. 检查身份绑定状态
    */
@@ -384,7 +283,7 @@ Page({
             wx.navigateTo({
               url: '/pages/auth/usercenter/usercenter',
             });
-          }
+          } 
         }
       });
     }
@@ -467,7 +366,7 @@ Page({
       });
     });
   },
-
+  
   doNothing() {
     // 用于阻止事件冒泡
   },
@@ -493,17 +392,10 @@ Page({
     }).then(res => {
       wx.hideLoading();
       if (res.result.code === 0) {
-        // --- 调试代码开始 ---
-        const waterDrop = this.selectComponent('#waterDrop');
-        console.log('获取到的组件实例:', waterDrop);
-        if (waterDrop) {
-          console.log('尝试播放动画...');
-          waterDrop.play(res.result.reward || 5);
-        } else {
-          console.error('获取水滴动画组件失败，请检查 WXML 中的 id 是否为 "waterDrop"');
-        }
-        // --- 调试代码结束 ---
-
+        wx.showToast({
+          title: `签到成功！+${res.result.reward}水滴`,
+          icon: 'success'
+        });
         // 可以在这里更新本地的水滴数量，如果需要实时显示的话
       } else {
         // 其他情况，例如已经签到或失败
@@ -525,18 +417,63 @@ Page({
   /**
    * 活动系统点击处理
    */
-  onActivitySystemTap: function () {
-    wx.showModal({
-      title: '提示',
-      content: '该功能正在开发中',
-      showCancel: false,
-      confirmText: '确定',
+  onActivitySystemTap: function() {
+    console.log("点击活动系统", this.data.isLogin, this.data.userInfo);
+    
+    if (!this.data.isLogin) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 安全获取用户身份，添加更多调试信息
+    const userInfo = this.data.userInfo;
+    console.log("完整用户信息:", userInfo);
+    
+    if (!userInfo) {
+      wx.showToast({
+        title: '用户信息获取失败',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 获取身份，如果没有身份字段则默认为学生
+    const identity = userInfo.identity || 'student';
+    console.log("用户身份:", identity);
+    
+    let targetUrl = '';
+    
+    switch(identity) {
+      case 'student':
+        targetUrl = '/competition/pages/studenthome/studenthome';
+        break;
+      case 'admin':
+        targetUrl = '/competition/pages/adminhome/adminhome';
+        break;
+      case 'judge':
+        targetUrl = '/competition/pages/judgehome/judgehome';
+        break;
+      default:
+        wx.showToast({
+          title: '身份信息异常',
+          icon: 'none'
+        });
+        return;
+    }
+    
+    console.log("跳转到:", targetUrl);
+    
+    wx.navigateTo({
+      url: targetUrl,
       success: (res) => {
-        if (res.confirm) {
-          wx.navigateBack({
-            delta: 1
-          });
-        }
+        console.log("页面跳转成功", res);
+      },
+      fail: (err) => {
+        console.error("页面跳转失败:", err);
+        this.showPathErrorDialog(identity, targetUrl, err);
       }
     });
   },
@@ -544,10 +481,10 @@ Page({
   /**
    * 显示路径错误对话框
    */
-  showPathErrorDialog: function (role, path, err) {
+  showPathErrorDialog: function(identity, path, err) {
     wx.showModal({
       title: '跳转失败',
-      content: `${role}页面跳转失败\n路径: ${path}\n错误: ${err.errMsg}\n请检查页面是否存在且路径正确`,
+      content: `${identity}页面跳转失败\n路径: ${path}\n错误: ${err.errMsg}\n请检查页面是否存在且路径正确`,
       showCancel: false
     });
   },
@@ -555,16 +492,16 @@ Page({
   /**
    * 路径诊断功能
    */
-  diagnoseNavigation: function () {
+  diagnoseNavigation: function() {
     console.log("=== 开始诊断跳转路径 ===");
-
+    
     const testPaths = [
       {
         name: "管理员路径",
         url: "/competition/pages/adminhome/adminhome"
       },
       {
-        name: "评委路径",
+        name: "评委路径", 
         url: "/competition/pages/judgehome/judgehome"
       },
       {
@@ -572,7 +509,7 @@ Page({
         url: "/competition/pages/studenthome/studenthome"
       }
     ];
-
+    
     testPaths.forEach((test, index) => {
       setTimeout(() => {
         console.log(`测试 ${test.name}: ${test.url}`);
@@ -596,11 +533,11 @@ Page({
   /**
    * 清除缓存并重新登录
    */
-  clearCacheAndRelogin: function () {
+  clearCacheAndRelogin: function() {
     // 清除本地缓存
     wx.removeStorageSync('userInfo');
     wx.removeStorageSync('openid');
-
+    
     // 重置页面状态
     this.setData({
       isLogin: false,
@@ -608,15 +545,15 @@ Page({
       avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
       nickName: "游客，点击登录"
     });
-
+    
     app.globalData.userInfo = null;
     app.globalData.isLogin = false;
-
+    
     wx.showToast({
       title: '缓存已清除，请重新登录',
       icon: 'success'
     });
-
+    
     // 重新获取openid
     this.getOpenid();
   },
@@ -624,113 +561,16 @@ Page({
   /**
    * 检查用户状态
    */
-  checkUserStatus: function () {
+  checkUserStatus: function() {
     console.log("=== 用户状态检查 ===");
     console.log("登录状态:", this.data.isLogin);
     console.log("用户信息:", this.data.userInfo);
-    console.log("用户角色:", this.data.userInfo ? this.data.userInfo.role : "未获取");
-
+    console.log("用户身份:", this.data.userInfo ? this.data.userInfo.identity : "未获取");
+    
     wx.showModal({
       title: '用户状态',
-      content: `登录: ${this.data.isLogin}\n角色: ${this.data.userInfo ? this.data.userInfo.role : "未获取"}`,
+      content: `登录: ${this.data.isLogin}\n身份: ${this.data.userInfo ? this.data.userInfo.identity : "未获取"}`,
       showCancel: false
     });
-  },
-
-  /**
-   * 扫码核销功能
-   */
-  scanCode() {
-    wx.scanCode({
-      success: (res) => {
-        console.log('扫描结果', res.result);
-        const appointmentId = res.result; // 假设二维码内容直接就是预约ID
-
-        wx.showLoading({
-          title: '正在核销...',
-        });
-
-        // 调用云函数进行核销
-        wx.cloud.callFunction({
-          name: 'getScan', // 假设云函数名为 'getScan'
-          data: {
-            appointmentId: appointmentId
-          }
-        }).then(cloudRes => {
-          wx.hideLoading();
-          if (cloudRes.result.success) {
-            // 核销成功，跳转到结果页
-            const studentName = encodeURIComponent(cloudRes.result.studentName || '未知');
-            const studentId = encodeURIComponent(cloudRes.result.studentId || '未知');
-            const college = encodeURIComponent(cloudRes.result.college || '未提供');
-            const major = encodeURIComponent(cloudRes.result.major || '未提供');
-            const phoneNumber = encodeURIComponent(cloudRes.result.phoneNumber || '未提供');
-            wx.navigateTo({
-              url: `/mine/scan-result/scan-result?success=true&studentName=${studentName}&studentId=${studentId}&college=${college}&major=${major}&phoneNumber=${phoneNumber}`
-            });
-          } else {
-            // 核销失败，也跳转到结果页显示失败信息
-            const message = encodeURIComponent(cloudRes.result.message || '核销失败，请重试');
-            wx.navigateTo({
-              url: `/mine/scan-result/scan-result?success=false&message=${message}`
-            });
-          }
-        }).catch(err => {
-          wx.hideLoading();
-          // 网络错误等，跳转到结果页显示失败信息
-          const message = encodeURIComponent('请求失败，请检查网络');
-          wx.navigateTo({
-            url: `/mine/scan-result/scan-result?success=false&message=${message}`
-          });
-          console.error('调用核销云函数失败', err);
-        });
-      },
-      fail: (err) => {
-        wx.showToast({
-          title: '扫描失败',
-          icon: 'none'
-        });
-        console.error('扫描二维码失败', err);
-      }
-    });
-  },
-
-  /**
-   * 退出登录
-   */
-  handleLogout() {
-    wx.showModal({
-      title: '提示',
-      content: '确定要退出登录吗？',
-      success: (res) => {
-        if (res.confirm) {
-          // 清除本地缓存
-          wx.removeStorageSync('userInfo');
-          wx.removeStorageSync('openid');
-
-          // 重置页面状态
-          this.setData({
-            isLogin: false,
-            userInfo: null,
-            avatarUrl: "cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/默认头像.jpeg",
-            nickName: "游客，点击登录",
-            nextAppointment: null,
-          });
-
-          // 重置全局状态
-          app.globalData.userInfo = null;
-          app.globalData.isLogin = false;
-
-          wx.showToast({
-            title: '已退出登录',
-            icon: 'success'
-          });
-
-          // 关闭弹窗
-          this.onCloseEditProfilePopup();
-        }
-      }
-    });
-  },
-
+  }
 });

@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "我的",
-  "usingComponents": {
-    "water-drop-effect": "/components/waterDropEffect/waterDropEffect"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "我的"
 }

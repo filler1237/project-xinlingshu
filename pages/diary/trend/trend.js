@@ -14,21 +14,7 @@ Page({
     yAxisLabels: ['0', '2', '4', '6', '8', '10'],
     showAllDetails: false,
     isAnalyzingTrend: false,
-    trendAnalysisResult: '',
-    factInterval: null,
-    currentFact: '',
-    psychologyFacts: [
-      "“心流”是一种将个人精神力完全投注在某种活动上的感觉，心流产生时同时会有高度的兴奋及充实感。",
-      "“确认偏误”是指人们会倾向于寻找能支持自己观点的证据，而忽略与自己观点矛盾的证据。",
-      "“邓宁-克鲁格效应”是一种认知偏差，能力欠缺的人有一种虚幻的自我优越感，错误地认为自己比真实情况更加优秀。",
-      "“旁观者效应”是指在紧急情况下，由于有他人在场，个体在提供帮助时会感到犹豫。",
-      "“习得性无助”是指人或动物接连不断地受到挫折，便会感到自己对于一切都无能为力，丧失信心，陷入一种无助的心理状态。",
-      "“认知失调”是指当个体持有两种或多种相互矛盾的信念、想法或价值观时，所体验到的心理压力或不适。",
-      "“情绪ABC理论”认为，激发事件A只是引发情绪和行为后果C的间接原因，而引起C的直接原因则是个体对激发事件A的认知和评价而产生的信念B。",
-      "“马斯洛需求层次理论”将人类需求像阶梯一样从低到高按层次分为五种，分别是：生理需求、安全需求、社交需求、尊重需求和自我实现需求。",
-      "“巴纳姆效应”是指人们常常认为一种笼统的、一般性的人格描述十分准确地揭示了自己的特点。",
-      "“从众效应”是指个体在真实的或想象的群体压力下，在认知上或行动上以多数人或权威人物的行为为准则，进而在行为上努力与之趋向一致的现象。"
-    ]
+    trendAnalysisResult: ''
   },
 
   onLoad() {
@@ -379,49 +365,36 @@ Page({
 
   // 运行AI趋势分析
   async runTrendAnalysis() {
-    this.setData({ isAnalyzingTrend: true, trendAnalysisResult: '' });
-
-    // Start showing psychology facts
-    const facts = this.data.psychologyFacts;
-    this.setData({
-      currentFact: facts[Math.floor(Math.random() * facts.length)]
-    });
-
-    const factInterval = setInterval(() => {
-      this.setData({
-        currentFact: facts[Math.floor(Math.random() * facts.length)]
-      });
-    }, 5000);
-
-    this.setData({ factInterval: factInterval });
+    this.setData({ isAnalyzingTrend: true, trendAnalysisResult: '' })
+    wx.showLoading({ title: 'AI分析中...' })
 
     try {
-      const { startDate, endDate } = this.data;
+      const { startDate, endDate } = this.data
       const result = await wx.cloud.callFunction({
         name: 'analyzeEmotionTrend',
         data: {
           startDate,
           endDate
         }
-      });
+      })
+
+      wx.hideLoading()
 
       if (result.result.ok) {
         this.setData({
           trendAnalysisResult: result.result.analysis,
-        });
+          isAnalyzingTrend: false
+        })
       } else {
-        throw new Error(result.result.error || 'AI分析失败');
+        throw new Error(result.result.error || 'AI分析失败')
       }
     } catch (error) {
+      wx.hideLoading()
+      this.setData({ isAnalyzingTrend: false })
       wx.showToast({
         title: error.message,
         icon: 'none'
-      });
-    } finally {
-      if (this.data.factInterval) {
-        clearInterval(this.data.factInterval);
-      }
-      this.setData({ isAnalyzingTrend: false, factInterval: null, currentFact: '' });
+      })
     }
   }
 })

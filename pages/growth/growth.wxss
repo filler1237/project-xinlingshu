@@ -1,536 +1,262 @@
 /* pages/growth/growth.wxss */
 page {
-  background: #f7f8fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  height: 100%;
+  background-color: #f7f7f7; /* 为页面滚动区域设置底色 */
 }
 
-.page-container {
-  height: 100vh;
+.nav-bar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+
+.container {
+  width: 100%;
+}
+
+/* 1. 首屏区域样式 */
+.hero-section {
+  height: 100vh; /* 关键：占满整个视口高度 */
+  width: 100%;
   position: relative;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-}
-
-/* 导航栏 */
-.nav-bar-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-
-/* --- 全屏沉浸背景 --- */
-.immersive-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70vh; /* 覆盖上半部分 */
-  z-index: 0;
-}
-
-.bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.bg-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(247,248,250,1) 95%);
-}
-
-/* 浮动云朵 */
-.cloud {
-  position: absolute;
-  opacity: 0.8;
-  z-index: 2;
-  animation: floatCloud linear infinite;
-}
-
-.cloud1 {
-  width: 280rpx;
-  height: 140rpx;
-  top: 15%;
-  left: -300rpx;
-  animation-duration: 25s;
-}
-
-.cloud2 {
-  width: 320rpx;
-  height: 160rpx;
-  top: 8%;
-  right: -350rpx;
-  animation-duration: 35s;
-  animation-delay: -10s;
-  animation-direction: reverse; 
-}
-
-.cloud3 {
-  width: 220rpx;
-  height: 110rpx;
-  top: 5%;
-  left: -250rpx;
-  opacity: 0.6;
-  animation-duration: 45s;
-  animation-delay: -5s;
-}
-
-.cloud4 {
-  width: 380rpx;
-  height: 190rpx;
-  top: 22%;
-  right: -400rpx;
-  opacity: 0.9;
-  animation-duration: 28s;
-  animation-direction: reverse;
-}
-
-@keyframes floatCloud {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(120vw); } /* 飘过屏幕 */
-}
-
-/* --- 顶部信息区 --- */
-.growth-header {
-  position: relative;
-  z-index: 10;
-  height: 65vh; /* 树木展示区域 */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 180rpx; /* 避开导航栏 */
-}
-
-.header-content {
-  text-align: center;
-  margin-bottom: 20rpx;
-  animation: fadeIn 1s ease-out;
-}
-
-.page-title {
-  font-size: 44rpx;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 12rpx;
-  text-shadow: 0 2rpx 4rpx rgba(255,255,255,0.8);
-}
-
-.level-pill {
-  display: inline-block;
-  background: rgba(255,255,255,0.8);
-  padding: 8rpx 24rpx;
-  border-radius: 30rpx;
-  font-size: 24rpx;
-  color: #58C9A3;
-  font-weight: bold;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
-  backdrop-filter: blur(5px);
-}
-
-/* 树木舞台 */
-.tree-stage {
-  flex: 1;
-  width: 100%;
-  position: relative;
-  display: flex;
   justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 40rpx;
+  align-items: flex-end; /* 1. 改为底部对齐 */
 }
 
-.tree-wrapper {
-  width: 500rpx;
-  height: 500rpx;
-  position: relative;
-  z-index: 5;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  bottom: 10rpx;
+}
+
+.tree-animation-wrapper {
+  display: flex;
+  align-items:flex-end;
+  justify-content:center;
+  width: 60vw;
+  height: 70vh;
+  bottom: 20vh;
+  position: absolute;
+  z-index: 3;
+  transition: transform 1s ease-in-out;
+  transform-origin: bottom; 
+}
+
+.is-growing {
+  transform: scaleY(1.1);
 }
 
 .tree-image {
   width: 100%;
-  height: 100%;
-  animation: sway 6s ease-in-out infinite;
+  /* 应用新的摇摆动画 */
+  animation: sway-animation 4s ease-in-out infinite;
   transform-origin: bottom center;
 }
 
-.is-growing {
-  transform: scale(1.15);
+.tree-level-1 {
+  height: 20%;
 }
 
-/* 正念果实 */
-.mindfulness-fruit {
-  position: absolute;
-  font-size: 48rpx;
-  width: 60rpx;
-  height: 60rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float 3s ease-in-out infinite;
-  cursor: pointer;
-  z-index: 20;
+.tree-level-2 {
+  height: 30%;
 }
 
-.fruit-glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,0,0.6) 0%, rgba(255,255,0,0) 70%);
-  animation: pulse 2s infinite;
+.tree-level-3 {
+  height: 60%
 }
 
-/* --- 下方控制板 (Glassmorphism) --- */
-.control-panel {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.tree-level-4 {
+  height: 70%
 }
 
-/* 浇水按钮 - 悬浮在面板交界处 */
-.water-btn-wrapper {
-  transform: translateY(50%);
-  z-index: 60;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.tree-level-5 {
+  height: 80%
 }
 
-.water-btn {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #58C9A3 0%, #3AAFA9 100%);
-  box-shadow: 0 10rpx 30rpx rgba(88, 201, 163, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 6rpx solid #fff;
-  transition: all 0.2s;
-}
-
-.water-btn:active {
-  transform: scale(0.95);
-}
-
-.water-btn.disabled {
-  background: #dcdcdc;
-  box-shadow: none;
-}
-
-.drop-icon {
-  width: 50rpx;
-  height: 50rpx;
-  filter: brightness(100); /* 转为白色 */
-}
-
-.water-text {
-  font-size: 24rpx;
-  color: #555;
-  margin-top: 10rpx;
-  font-weight: 500;
-  background: rgba(255,255,255,0.8);
-  padding: 4rpx 12rpx;
-  border-radius: 10rpx;
-}
-
-/* 面板内容 */
-.panel-content {
-  width: 100%;
-  padding: 80rpx 32rpx 40rpx 32rpx; /* Top padding 留给水滴按钮 */
-  background: #ffffff;
-  border-radius: 40rpx 40rpx 0 0;
-  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.03);
-  min-height: 400rpx;
-  box-sizing: border-box;
-}
-
-/* 徽章墙 */
-.section-badge {
-  margin-bottom: 40rpx;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 20rpx;
-}
-
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.section-more {
-  font-size: 24rpx;
-  color: #999;
-}
-
-.badge-scroll {
-  white-space: nowrap;
-  display: flex;
-  height: 180rpx;
-}
-
-.badge-item {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 32rpx;
-  width: 120rpx;
-}
-
-.badge-img {
-  width: 90rpx;
-  height: 90rpx;
-  margin-bottom: 12rpx;
-  border-radius: 50%;
-  background: #f8f8f8;
-  border: 2rpx solid #f0f0f0;
-}
-
-.badge-name {
-  font-size: 22rpx;
-  color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  text-align: center;
-}
-
-.empty-badge {
-  width: 100%;
-  text-align: center;
-  line-height: 140rpx;
-  color: #ccc;
-  font-size: 26rpx;
-}
-
-/* --- 弹窗样式 --- */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 200;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.3s;
-}
-
-.modal-card {
-  background: #fff;
-  width: 580rpx;
-  border-radius: 32rpx;
+/* 2. 下方内容区域样式 */
+.content-section {
   padding: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
 }
 
-.modal-header {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30rpx;
-}
-
-.modal-body {
-  text-align: center;
+/* 成长信息面板 */
+.growth-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  border-radius: 20rpx;
+  background-color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
   margin-bottom: 40rpx;
 }
 
-.task-title {
-  font-size: 32rpx;
-  color: #58C9A3;
-  font-weight: 600;
-  margin-bottom: 16rpx;
-}
-
-.task-desc {
-  font-size: 28rpx;
-  color: #666;
-  line-height: 1.6;
-}
-
-.task-reward {
-  margin-top: 20rpx;
-  font-size: 26rpx;
-  color: #ff9f43;
-  font-weight: bold;
-}
-
-.modal-btn {
-  background: #58C9A3;
-  color: #fff;
-  border-radius: 50rpx;
-  padding: 20rpx 60rpx;
-  font-size: 30rpx;
-  border: none;
-}
-
-.modal-close {
-  position: absolute;
-  top: 20rpx;
-  right: 30rpx;
-  font-size: 40rpx;
-  color: #999;
-}
-
-/* 徽章详情样式 */
-.badge-detail .detail-img {
-  width: 200rpx;
-  height: 200rpx;
-  margin-bottom: 30rpx;
-}
-
-.badge-detail .detail-name {
+.growth-level {
   font-size: 34rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 16rpx;
 }
 
-.badge-detail .detail-desc {
-  font-size: 28rpx;
-  color: #666;
-  text-align: center;
-  line-height: 1.5;
-  margin-bottom: 24rpx;
+.growth-value {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #888;
 }
 
-.badge-detail .detail-date {
-  font-size: 24rpx;
-  color: #bbb;
+.water-button {
+  margin-top: 30rpx;
+  width: 300rpx;
+  background-color: #96CE74;
+  border-color: #96CE74;
 }
 
-/* 动画定义 */
-@keyframes sway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(2deg); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10rpx); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 0.8; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleUp {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* 浇水动画恢复 */
-.watering-can {
-  position: absolute;
-  width: 140rpx;
-  height: 140rpx;
-  top: 20%;
-  right: 15%;
-  z-index: 20;
-  animation: pourWater 2s forwards;
-}
-
-/* 浇水面板样式 */
-.watering-panel {
+/* 我的徽章 */
+.achievements-container {
   width: 100%;
-  box-sizing: border-box; /* 修复宽度溢出 */
-  border-radius: 40rpx 40rpx 0 0;
-  padding: 40rpx;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  animation: slideUp 0.3s ease-out;
+  background-color: #ffffff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 8rpx solid #96CE74;
 }
 
-@keyframes pourWater {
-  0% { opacity: 0; transform: rotate(0); }
-  20% { opacity: 1; transform: rotate(-45deg); }
-  80% { opacity: 1; transform: rotate(-45deg); }
-  100% { opacity: 0; transform: rotate(0); }
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120rpx, 1fr));
+  gap: 20rpx;
 }
 
-.watering-options {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20rpx;
-}
-
-.water-option {
+.badge {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f8f9fa;
-  padding: 30rpx;
-  border-radius: 20rpx;
-  width: 160rpx;
-  transition: all 0.2s;
-  border: 2rpx solid transparent;
+  padding: 10rpx;
 }
 
-.water-option:active {
-  background: #eefbee;
-  border-color: #58C9A3;
-  transform: scale(0.95);
+.badge-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #eee;
+  margin-bottom: 10rpx;
 }
 
-.option-icon {
-  width: 60rpx;
-  height: 60rpx;
-  margin-bottom: 16rpx;
+.badge-name {
+  font-size: 24rpx;
+  color: #666;
 }
 
-.option-icon.large {
-  width: 70rpx;
-  height: 70rpx;
+.no-achievements {
+  text-align: center;
+  color: #999;
+  padding: 40rpx;
 }
 
-.option-emoji {
-  font-size: 50rpx;
-  margin-bottom: 20rpx;
+/* 新增：树的摇摆动画 */
+@keyframes sway-animation {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1.5deg);
+  }
+  75% {
+    transform: rotate(1.5deg);
+  }
 }
 
-.all-in {
-  background: #e6fffa;
-  border: 2rpx solid #b2f5ea;
+/* 云朵动画 */
+@keyframes float-animation {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-200rpx); }
 }
 
+.cloud {
+  position: absolute; /* 相对于 hero-section 定位 */
+  z-index: 2;
+  animation-name: float-animation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.cloud1 {
+  width: 280rpx;
+  top: 5%; /* 3. 调高云朵位置 */
+  opacity: 0.9;
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+
+.cloud2 {
+  width: 220rpx;
+  top: 3%; /* 3. 调高云朵位置 */
+  opacity: 0.7;
+  animation-duration: 18s;
+  animation-delay: -10s;
+}
+
+.cloud3 {
+  width: 150rpx;
+  top: 20%; /* 3. 调高云朵位置并错开 */
+  opacity: 0.8;
+  animation-duration: 22s;
+  animation-delay: 0s;
+}
+
+/* 新增：浇水动画和水壶样式 */
+@keyframes watering-animation {
+  0% {
+    opacity: 0;
+    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(0) translateY(0) rotate(45deg);
+  }
+  75% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(200rpx) translateY(-50rpx) rotate(0deg);
+  }
+}
+
+.watering-can {
+  position: absolute;
+  width: 150rpx;
+  height: 150rpx;
+  right: 150rpx; /* 根据树的位置微调 */
+  top: 50%;     /* 根据树的位置微调 */
+  z-index: 10;
+  animation: watering-animation 2s ease-in-out forwards;
+}
+
+.cloud4 {
+  width: 250rpx;
+  top: 18%; /* 3. 调高云朵位置并错开 */
+  opacity: 0.8;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}

@@ -39,42 +39,15 @@ Page({
       name: 'submitVent',
       data: { content: this.data.ventText },
       success: res => {
-        if (res.result.success) {
+        if (res.result.code === 0) {
+          wx.showToast({ title: '投入成功！', icon: 'success' });
           this.setData({ ventText: '' });
-          wx.showToast({
-            title: '投入成功！',
-            icon: 'success',
-            complete: () => {
-              // 使用 setTimeout 稍微延迟跳转，给用户反应时间，体验更好
-              setTimeout(() => {
-                this.setData({ activeTab: 'myEchoes' }, () => {
-                  this.getMyVents();
-                });
-              }, 200); // 延迟200毫秒
-            }
-          });
-
-          wx.cloud.callFunction({
-            name: 'taskSignIn',
-            data: { taskId: 'ventInEchoWall' }
-          }).then(taskRes => {
-            if (taskRes.result.code === 0 && taskRes.result.reward > 0) {
-              const waterDrop = this.selectComponent('#waterDrop');
-              if (waterDrop) {
-                waterDrop.play(taskRes.result.reward);
-              }
-            }
-          });
         } else {
           wx.showToast({ title: res.result.message || '提交失败', icon: 'none' });
         }
       },
       fail: err => {
-        wx.showModal({
-          title: '网络错误',
-          content: '提交失败，请检查您的网络连接并重试',
-          showCancel: false,
-        });
+        wx.showToast({ title: '提交失败，请重试', icon: 'none' });
       },
       complete: () => {
         wx.hideLoading();
@@ -120,20 +93,8 @@ Page({
         echo: this.data.echoText
       },
       success: res => {
-        if (res.result.success) {
+        if (res.result.code === 0) {
           wx.showToast({ title: '回应成功！', icon: 'success' });
-
-          wx.cloud.callFunction({
-            name: 'taskSignIn',
-            data: { taskId: 'listenInEchoWall' }
-          }).then(taskRes => {
-            if (taskRes.result.code === 0 && taskRes.result.reward > 0) {
-              const waterDrop = this.selectComponent('#waterDrop');
-              if (waterDrop) {
-                waterDrop.play(taskRes.result.reward);
-              }
-            }
-          });
           this.getRandomVent(); // 自动获取下一个
         } else {
           wx.showToast({ title: res.result.message || '回应失败', icon: 'none' });
@@ -165,59 +126,6 @@ Page({
       },
       complete: () => {
         wx.hideLoading();
-      }
-    });
-  },
-
-  // 举报烦恼
-  reportVent() {
-    if (!this.data.randomVent) return;
-
-    const reasons = ['色情低俗', '政治敏感', '攻击谩骂', '广告垃圾', '其他'];
-    wx.showActionSheet({
-      itemList: reasons,
-      success: (res) => {
-        const selectedReason = reasons[res.tapIndex];
-        wx.showLoading({ title: '提交中...', mask: true });
-
-        wx.cloud.callFunction({
-          name: 'reportContent',
-          data: {
-            targetId: this.data.randomVent._id,
-            targetType: 'vent',
-            targetCollection: 'vents',
-            targetContent: this.data.randomVent.content.substring(0, 200),
-            targetUserId: this.data.randomVent._openid || '',
-            reason: selectedReason
-          },
-          success: (callRes) => {
-            wx.hideLoading();
-            if (callRes.result && callRes.result.code === 0) {
-              wx.showModal({
-                title: '举报成功',
-                content: '感谢您的反馈，我们会尽快处理',
-                showCancel: false,
-                confirmText: '我知道了',
-                success: () => {
-                  this.getRandomVent(); // 换一个
-                }
-              });
-            } else if (callRes.result && callRes.result.code === -2) {
-              wx.showModal({
-                title: '提示',
-                content: callRes.result.msg || '您已举报过该内容',
-                showCancel: false
-              });
-            } else {
-              wx.showToast({ title: callRes.result?.msg || '举报失败', icon: 'none' });
-            }
-          },
-          fail: (err) => {
-            wx.hideLoading();
-            console.error('举报云函数调用失败:', err);
-            wx.showToast({ title: '网络错误，请重试', icon: 'none' });
-          }
-        });
       }
     });
   },

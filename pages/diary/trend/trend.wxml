@@ -150,7 +150,7 @@
   <!-- AI趋势洞察 -->
   <view class="ai-insight-section" wx:if="{{!isZoomed}}">
     <view class="insight-header">
-      <view class="insight-title">情绪趋势分析</view>
+      <view class="insight-title">AI趋势洞察</view>
       <button class="analyze-btn" bindtap="runTrendAnalysis" loading="{{isAnalyzingTrend}}">
         {{isAnalyzingTrend ? '分析中...' : '获取AI分析'}}
       </button>
@@ -160,14 +160,6 @@
     </view>
     <view class="insight-placeholder" wx:if="{{!trendAnalysisResult && !isAnalyzingTrend}}">
       <text>点击按钮，获取AI对您近期情绪趋势的专业分析和建议。</text>
-    </view>
-    <view class="loading-analysis" wx:if="{{isAnalyzingTrend}}">
-      <view class="loading-dots">
-        <view class="dot"></view>
-        <view class="dot"></view>
-        <view class="dot"></view>
-      </view>
-      <view class="fact-text">{{currentFact}}</view>
     </view>
   </view>
 

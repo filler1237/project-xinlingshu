@@ -92,31 +92,6 @@ page{
   height: 40rpx;
 }
 
-.icon-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 40rpx;
-  height: 40rpx;
-}
-
-.badge {
-  position: absolute;
-  top: -10rpx;
-  right: -10rpx;
-  min-width: 30rpx;
-  height: 30rpx;
-  line-height: 30rpx;
-  background-color: #ff4d4f;
-  color: #fff;
-  font-size: 20rpx;
-  text-align: center;
-  border-radius: 15rpx;
-  padding: 0 6rpx;
-  box-sizing: border-box;
-  z-index: 10;
-  border: 2rpx solid #fff;
-}
-
 .action-item .txt {
   color: #253858;
   font-family: PingFang SC;
@@ -310,38 +285,9 @@ page{
 }
 
 /* pages/mine/mine.wxss */
-.admin-notice {
-  position: absolute;
-  top: 156rpx; /* User Name (24) + Line Height (56) + margin */
-  left: 246rpx;
-  font-size: 24rpx;
-  color: #FF8282;
-  font-weight: bold;
-  background-color: rgba(255, 230, 230, 0.8);
-  padding: 4rpx 12rpx;
-  border-radius: 8rpx;
-}
 
-.badge-dot {
-  position: absolute;
-  top: -8rpx;
-  right: 18rpx;
-  min-width: 32rpx;
-  height: 32rpx;
-  line-height: 32rpx;
-  background-color: #ff4d4f;
-  color: #fff;
-  font-size: 20rpx;
-  text-align: center;
-  border-radius: 50%;
-  padding: 0 4rpx;
-  font-weight: bold;
-  border: 2rpx solid #fff;
-  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.2);
-}
 
 /* --- 编辑弹窗专属样式 (原生实现) --- */
-/* 省略重复部分，请在真实环境中确保以下和原文件一致或保留 */
 
 /* 蒙层 */
 .popup-overlay {
@@ -457,22 +403,3 @@ page{
   font-size: 30rpx;
 }
 
-/* 弹窗内退出登录按钮样式 */
-.popup-logout-btn {
-  width: 90%;
-  margin-top: 60rpx;
-  height: 88rpx;
-  background-color: #fde3e3; /* 淡红色背景 */
-  color: #FF5C5C; /* 深红色文字 */
-  font-size: 32rpx;
-  font-weight: bold;
-  border-radius: 44rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-}
-
-.popup-logout-btn::after {
-  border: none;
-}
