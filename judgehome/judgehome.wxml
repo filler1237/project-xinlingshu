@@ -1,0 +1,63 @@
+<navigation-bar title="评委工作台" back="{{true}}" color="black" background="#FFF" bindback="onBack"></navigation-bar>
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header-card">
+    <view class="header-content">
+      <!-- 用户信息 -->
+      <view class="user-main-info">
+        <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+        <view class="user-details">
+          <text class="welcome">{{isChiefJudge ? '总评委' : '评委'}}工作台</text>
+          <text class="username">{{userInfo.username || '评委用户'}}</text>
+          <text class="user-department" wx:if="{{userInfo.department}}">{{userInfo.department}}</text>
+          <text class="badge {{isChiefJudge ? 'chief' : 'normal'}}">
+            {{isChiefJudge ? '总评委' : '评委'}}
+          </text>
+        </view>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <!-- 返回按钮 -->
+        <view class="action-btn back-action" bindtap="onBack">返回</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-number">{{stats.assignedWorks || 0}}</text>
+      <text class="stat-label">分配作品</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{stats.reviewedWorks || 0}}</text>
+      <text class="stat-label">已评审</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{stats.pendingWorks || 0}}</text>
+      <text class="stat-label">待评审</text>
+    </view>
+  </view>
+
+  <!-- 功能网格 -->
+  <view class="function-grid">
+    <view class="function-card" bindtap="toWorkList">
+      <view class="card-icon">📋</view>
+      <text class="card-title">作品列表</text>
+      <text class="card-desc">查看分配的作品</text>
+    </view>
+
+    <view wx:if="{{isChiefJudge}}" class="function-card" bindtap="toScoreStandard">
+      <view class="card-icon">📐</view>
+      <text class="card-title">评分标准</text>
+      <text class="card-desc">设置评分维度权重</text>
+    </view>
+
+    <view wx:if="{{isChiefJudge}}" class="function-card" bindtap="toScoreSummary">
+      <view class="card-icon">📊</view>
+      <text class="card-title">评分汇总</text>
+      <text class="card-desc">查看所有评分结果</text>
+    </view>
+  </view>
+</view>

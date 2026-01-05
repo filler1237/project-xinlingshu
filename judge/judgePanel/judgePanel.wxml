@@ -1,0 +1,159 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+      返回
+    </view>
+    <text class="title">作品评审</text>
+    <view class="header-placeholder"></view> <!-- 用于布局平衡 -->
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-mask">
+    <view class="loading-content">
+      <text class="loading-text">提交中...</text>
+    </view>
+  </view>
+
+  <!-- 作品信息 -->
+  <view class="card">
+    <text class="card-title">📋 作品信息</text>
+    <view class="info-grid">
+      <view class="info-item">
+        <text class="label">活动名称：</text>
+        <text class="value">{{activityInfo.title || '未知活动'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">组织者：</text>
+        <text class="value">{{activityInfo.organizer || '未知组织'}}</text>
+      </view>
+      <view class="info-item full-width">
+        <text class="label">作品标题：</text>
+        <text class="value">{{activityInfo.workTitle || '未知作品'}}</text>
+      </view>
+      <view class="info-item full-width">
+        <text class="label">作品描述：</text>
+        <text class="value description-text">{{activityInfo.workDescription || '无描述信息'}}</text>
+      </view>
+    </view>
+    
+    <!-- 文件操作区域 -->
+    <view wx:if="{{fileInfo}}" class="file-section">
+      <view class="file-info">
+        <text class="file-icon">📎</text>
+        <text class="file-name">{{fileInfo.fileName || fileInfo.name || '作品文件'}}</text>
+        <text class="file-size" wx:if="{{fileInfo.size}}">({{fileInfo.size}})</text>
+      </view>
+      <view class="file-actions">
+        <view class="download-btn" bindtap="downloadWorkFile">
+          <text class="download-icon">⬇️</text>
+          下载文件
+        </view>
+      </view>
+    </view>
+    <view wx:else class="no-file-section">
+      <text class="no-file-icon">📭</text>
+      <text class="no-file-text">该作品未上传文件</text>
+    </view>
+  </view>
+
+  <!-- 评分区域 -->
+  <view class="card">
+    <text class="card-title">⭐ 作品评分</text>
+    
+    <!-- 三维度评分 -->
+    <view class="score-item" wx:for="{{scoreItems}}" wx:key="id">
+      <view class="score-header">
+        <view class="score-title">
+          <text class="score-name">{{item.name}}</text>
+          <text class="score-range">(0-{{item.maxScore}}分)</text>
+        </view>
+        <text class="current-score" wx:if="{{item.score > 0}}">{{item.score}}分</text>
+      </view>
+      <text class="score-desc">{{item.description}}</text>
+      <view class="score-input-wrapper">
+        <input 
+          class="score-input" 
+          type="digit" 
+          placeholder="{{item.placeholder}}" 
+          value="{{item.score}}" 
+          data-id="{{item.id}}"
+          bindinput="onScoreInput"
+          max="{{item.maxScore}}"
+          min="0"
+        />
+        <text class="score-max">/ {{item.maxScore}}分</text>
+      </view>
+      <view class="score-slider-wrapper" wx:if="{{item.maxScore > 0}}">
+        <slider 
+          value="{{item.score}}" 
+          min="0" 
+          max="{{item.maxScore}}" 
+          step="1"
+          data-id="{{item.id}}"
+          bindchange="onScoreInput"
+          activeColor="#07c160"
+        />
+      </view>
+    </view>
+
+    <!-- 总分显示 -->
+    <view class="total-score-section">
+      <view class="total-score">
+        <text class="total-label">总分</text>
+        <text class="total-value">{{totalScore}}</text>
+        <text class="total-unit">分</text>
+      </view>
+      <text class="total-hint">满分100分</text>
+    </view>
+  </view>
+
+  <!-- 评价区域 -->
+  <view class="card">
+    <view class="comment-header">
+      <text class="card-title">💬 评审意见</text>
+      <text class="word-count">{{comment.length}}/500</text>
+    </view>
+    <textarea 
+      class="comment-input" 
+      placeholder="请详细阐述评分理由，指出作品的优缺点和改进建议..." 
+      value="{{comment}}" 
+      bindinput="onCommentInput"
+      maxlength="500"
+      show-confirm-bar="{{false}}"
+    ></textarea>
+    <view class="comment-tips">
+      <text class="tip-text">• 请客观公正地评价作品</text>
+      <text class="tip-text">• 指出具体优点和不足</text>
+      <text class="tip-text">• 提供建设性改进建议</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button 
+      class="submit-btn" 
+      bindtap="submitScore" 
+      disabled="{{loading}}"
+      loading="{{loading}}"
+      hover-class="submit-btn-hover"
+    >
+      <text wx:if="{{!loading}}" class="submit-icon">✅</text>
+      {{loading ? '提交中...' : '提交评审'}}
+    </button>
+    
+    <!-- 开发调试用的模拟提交按钮 -->
+    <view wx:if="{{false}}" class="mock-section"> <!-- 默认隐藏，开发时改为true -->
+      <button 
+        class="mock-submit-btn" 
+        bindtap="mockSubmitScore"
+      >
+        🎭 模拟提交（测试用）
+      </button>
+    </view>
+  </view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-area"></view>
+</view>

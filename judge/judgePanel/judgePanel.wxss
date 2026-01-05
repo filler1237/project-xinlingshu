@@ -1,0 +1,595 @@
+/* 评分页面样式 - 与评委工作台设计系统统一 */
+
+/* 页面基础样式 */
+.container {
+  padding: 30rpx;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%);
+  position: relative;
+}
+
+/* 背景装饰元素 - 保持统一风格 */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at -20% 20%, rgba(80, 182, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 120% 80%, rgba(66, 255, 0, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 头部区域 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* 返回按钮 - 统一风格 */
+.back-btn {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 25rpx;
+  background: linear-gradient(135deg, #26a69a 0%, #4db6ac 100%);
+  color: white;
+  border-radius: 15rpx;
+  font-size: 28rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  border: none;
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  backdrop-filter: blur(10rpx);
+}
+
+.back-icon {
+  margin-right: 8rpx;
+  font-size: 24rpx;
+}
+
+.back-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+/* 页面标题 */
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  letter-spacing: 1rpx;
+}
+
+.header-placeholder {
+  width: 120rpx; /* 与返回按钮宽度平衡 */
+}
+
+/* 加载遮罩 */
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-content {
+  background: white;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+}
+
+/* 卡片样式 - 统一设计语言 */
+.card {
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%);
+  border-radius: 20rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+.card:active {
+  transform: translateY(2rpx);
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+/* 卡片标题 */
+.card-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #26a69a;
+  margin-bottom: 25rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid rgba(224, 242, 241, 0.6);
+  font-family: PingFang SC;
+  letter-spacing: 0.5rpx;
+}
+
+/* 信息网格布局 */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 作品信息项 */
+.info-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #3F3F3F;
+  font-weight: bold;
+  font-family: PingFang SC;
+  min-width: 140rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #3F3F3F;
+  margin-left: 10rpx;
+  flex: 1;
+  font-family: PingFang SC;
+  font-weight: regular;
+  line-height: 1.4;
+}
+
+.description-text {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 文件区域 */
+.file-section {
+  margin-top: 25rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 15rpx;
+  border: 1rpx solid rgba(224, 242, 241, 0.8);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.file-icon {
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+.file-name {
+  font-size: 28rpx;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  font-weight: 500;
+}
+
+.file-size {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 10rpx;
+  font-family: PingFang SC;
+}
+
+.file-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 无文件区域 */
+.no-file-section {
+  margin-top: 25rpx;
+  padding: 30rpx 20rpx;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 15rpx;
+  border: 1rpx dashed #ccc;
+  text-align: center;
+}
+
+.no-file-icon {
+  font-size: 32rpx;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.no-file-text {
+  font-size: 28rpx;
+  color: #999;
+  font-family: PingFang SC;
+}
+
+/* 下载按钮 */
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4db6ac 0%, #26a69a 100%);
+  color: white;
+  padding: 15rpx 25rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  border: none;
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  backdrop-filter: blur(10rpx);
+}
+
+.download-icon {
+  margin-right: 8rpx;
+  font-size: 20rpx;
+}
+
+.download-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+/* 评分项目 */
+.score-item {
+  margin-bottom: 40rpx;
+  padding-bottom: 25rpx;
+  border-bottom: 1rpx solid rgba(224, 242, 241, 0.6);
+}
+
+.score-item:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* 评分头部 */
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.score-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.score-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+}
+
+.score-range {
+  font-size: 24rpx;
+  color: #666;
+  font-family: PingFang SC;
+}
+
+.current-score {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #d32f2f;
+  font-family: PingFang SC;
+}
+
+/* 评分描述 */
+.score-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+  font-family: PingFang SC;
+  font-weight: regular;
+  margin-bottom: 20rpx;
+}
+
+/* 分数输入区域 */
+.score-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.score-input {
+  width: 140rpx;
+  padding: 18rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  border-radius: 15rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-family: PingFang SC;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10rpx);
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a;
+  color: #d32f2f;
+}
+
+.score-input:focus {
+  border-color: #26a69a;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.score-max {
+  font-size: 24rpx;
+  color: #999;
+  font-family: PingFang SC;
+  font-weight: regular;
+}
+
+/* 滑块样式 */
+.score-slider-wrapper {
+  margin-top: 15rpx;
+}
+
+/* 总分显示区域 */
+.total-score-section {
+  margin-top: 30rpx;
+  padding-top: 25rpx;
+  border-top: 2rpx solid rgba(224, 242, 241, 0.6);
+  text-align: center;
+}
+
+.total-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8rpx;
+  margin-bottom: 8rpx;
+}
+
+.total-label {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+}
+
+.total-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #d32f2f;
+  font-family: PingFang SC;
+  letter-spacing: 1rpx;
+}
+
+.total-unit {
+  font-size: 28rpx;
+  color: #d32f2f;
+  font-family: PingFang SC;
+  font-weight: bold;
+}
+
+.total-hint {
+  font-size: 24rpx;
+  color: #999;
+  font-family: PingFang SC;
+}
+
+/* 评论头部 */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+/* 评价输入区域 */
+.comment-input {
+  width: 100%;
+  min-height: 240rpx;
+  padding: 25rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  border-radius: 15rpx;
+  font-size: 28rpx;
+  font-family: PingFang SC;
+  margin-bottom: 15rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10rpx);
+  box-shadow: inset 1rpx 1rpx 3rpx 0rpx #0000001a;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.comment-input:focus {
+  border-color: #26a69a;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* 评论提示 */
+.comment-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #666;
+  font-family: PingFang SC;
+  line-height: 1.4;
+}
+
+/* 字数统计 */
+.word-count {
+  font-size: 24rpx;
+  color: #999;
+  font-family: PingFang SC;
+  font-weight: regular;
+}
+
+/* 提交区域 */
+.submit-section {
+  margin: 30rpx 0 50rpx;
+}
+
+/* 提交按钮 */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #26a69a 0%, #00897b 100%);
+  color: white;
+  text-align: center;
+  padding: 28rpx;
+  border-radius: 15rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  font-family: PingFang SC;
+  border: none;
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  backdrop-filter: blur(10rpx);
+  letter-spacing: 1rpx;
+  width: 100%;
+}
+
+.submit-icon {
+  margin-right: 10rpx;
+  font-size: 24rpx;
+}
+
+.submit-btn-hover {
+  opacity: 0.9;
+}
+
+.submit-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+.submit-btn:disabled {
+  background: linear-gradient(135deg, #cccccc 0%, #999999 100%);
+  color: #666;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 模拟提交按钮 */
+.mock-section {
+  margin-top: 20rpx;
+}
+
+.mock-submit-btn {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  border: none;
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  width: 100%;
+}
+
+/* 安全区域 */
+.safe-area {
+  height: env(safe-area-inset-bottom);
+  height: constant(safe-area-inset-bottom);
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .container {
+    padding: 20rpx;
+  }
+  
+  .header {
+    margin-bottom: 20rpx;
+  }
+  
+  .card {
+    padding: 25rpx;
+    margin-bottom: 25rpx;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .label {
+    min-width: auto;
+    margin-bottom: 8rpx;
+  }
+  
+  .value {
+    margin-left: 0;
+  }
+  
+  .score-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8rpx;
+  }
+  
+  .score-input-wrapper {
+    justify-content: flex-start;
+  }
+  
+  .total-score {
+    flex-direction: column;
+    align-items: center;
+    gap: 5rpx;
+  }
+  
+  .total-value {
+    font-size: 40rpx;
+  }
+}
+
+/* 小屏幕优化 */
+@media (max-width: 400rpx) {
+  .container {
+    padding: 15rpx;
+  }
+  
+  .card {
+    padding: 20rpx;
+  }
+  
+  .score-input {
+    width: 120rpx;
+    font-size: 28rpx;
+  }
+  
+  .total-value {
+    font-size: 36rpx;
+  }
+}

@@ -1,0 +1,261 @@
+/* 评委工作台统一样式 - 与整体设计系统统一 */
+
+/* 页面基础样式 */
+page {
+  background: linear-gradient(180deg, #FFFFF5 0%, #FFFFFF 100%);
+  min-height: 100vh;
+}
+
+/* 主容器 */
+.container {
+  padding: 80rpx 40rpx 40rpx;
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 背景装饰元素 - 色块1 */
+.sekuai1 {
+  background: #50b6ff14;
+  filter: blur(100rpx);
+  height: 384rpx;
+  position: absolute;
+  left: -120.63rpx;
+  top: 28rpx;
+  z-index: 1;
+}
+
+/* 背景装饰元素 - 色块2 */
+.sekuai2 {
+  background: #42FF0019;
+  filter: blur(100rpx);
+  height: 384rpx;
+  position: absolute;
+  left: 312rpx;
+  top: 662.22rpx;
+  z-index: 1;
+}
+
+/* 头部用户信息卡片 */
+.header-card {
+  background-color: rgba(255, 255, 255, 0.69);
+  border-radius: 20rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 4rpx 4rpx 4rpx 0rpx #00000026;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* 头部内容布局 */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.user-main-info {
+  display: flex;
+  align-items: center;
+}
+
+/* 用户头像样式 */
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 15rpx;
+  border: 3rpx solid #FFFFFFE2;
+  box-shadow: 4rpx 4rpx 4rpx 0rpx #88C16F38;
+  margin-right: 30rpx;
+}
+
+/* 用户信息区域 */
+.user-details {
+  flex: 1;
+}
+
+/* 欢迎文本 */
+.welcome {
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  font-weight: bold;
+  font-size: 40rpx;
+  line-height: 48rpx;
+  letter-spacing: 1rpx;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+/* 用户名样式 */
+.username {
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  font-weight: regular;
+  font-size: 30rpx;
+  line-height: 36rpx;
+  letter-spacing: 0rpx;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+/* 用户部门信息 */
+.user-department {
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  font-weight: regular;
+  font-size: 26rpx;
+  line-height: 32rpx;
+  letter-spacing: 0rpx;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+/* 徽章样式 */
+.badge {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-family: PingFang SC;
+  font-weight: bold;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 头部操作按钮区域 */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* 操作按钮基础样式 */
+.action-btn {
+  padding: 12rpx 20rpx;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  text-align: center;
+  min-width: 100rpx;
+  font-weight: 500;
+  font-family: PingFang SC;
+}
+
+/* 统计卡片网格布局 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30rpx;
+  margin-bottom: 40rpx;
+  z-index: 2;
+  position: relative;
+}
+
+/* 单个统计卡片 */
+.stat-card {
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%);
+  border-radius: 20rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  padding: 40rpx 20rpx;
+  text-align: center;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 统计数字 */
+.stat-number {
+  display: block;
+  font-size: 50rpx;
+  font-weight: bold;
+  color: #3F3F3F;
+  margin-bottom: 8rpx;
+  font-family: PingFang SC;
+}
+
+/* 统计标签 */
+.stat-label {
+  display: block;
+  font-size: 30rpx;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+  font-weight: regular;
+}
+
+/* 功能网格布局 - 修改为居中显示 */
+.function-grid {
+  flex: 1; /* 占据剩余空间 */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 水平居中 */
+  align-content: center;   /* 垂直居中 */
+  gap: 30rpx;
+  margin-bottom: 40rpx;
+  z-index: 2;
+  position: relative;
+}
+
+/* 功能卡片 - 调整宽度和高度 */
+.function-card {
+  background: linear-gradient(148.26deg, rgba(130, 255, 158, 0.8) 0%, rgba(255, 255, 255, 0.8) 9%, rgba(255, 255, 255, 0.8) 100%);
+  border-radius: 20rpx;
+  backdrop-filter: blur(20rpx);
+  box-shadow: 2rpx 2rpx 6rpx 0rpx #00000026;
+  padding: 40rpx 30rpx;
+  text-align: center;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 320rpx; /* 固定宽度 */
+  height: 280rpx; /* 固定高度，使所有卡片大小一致 */
+}
+
+/* 卡片图标 */
+.card-icon {
+  font-size: 54rpx;
+  margin-bottom: 15rpx;
+  background: linear-gradient(135deg, #00897b 0%, #4db6ac 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 卡片标题 */
+.card-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  color: #3F3F3F;
+  font-family: PingFang SC;
+}
+
+/* 卡片描述 */
+.card-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #3F3F3F;
+  line-height: 1.4;
+  font-family: PingFang SC;
+  font-weight: regular;
+}
+
+/* 交互效果 */
+
+/* 卡片按下效果 */
+.function-card:active,
+.stat-card:active {
+  transform: translateY(2rpx);
+  box-shadow: 1rpx 1rpx 3rpx 0rpx #0000001a;
+}
+
+/* 按钮按下效果 */
+.action-btn:active {
+  background: rgba(255, 255, 255, 0.4);
+}

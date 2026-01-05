@@ -1,0 +1,131 @@
+<!-- competition/pages/judge/scoring/scoring.wxml -->
+<navigation-bar title="作品评审" back="{{true}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="scoring-page">
+  <scroll-view class="content" scroll-y>
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 作品信息 -->
+    <view class="card" wx:if="{{work && activity}}">
+      <view class="card-title">
+        <text class="title-icon">📋</text>
+        <text class="title-text">作品信息</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">活动名称：</text>
+        <text class="value">{{activity.theme || activity.title || '未知活动'}}</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作品标题：</text>
+        <text class="value">{{work.title || '未命名作品'}}</text>
+      </view>
+      
+      <view class="info-item">
+        <text class="label">作者：</text>
+        <text class="value">{{work.studentName || '学生'}}</text>
+      </view>
+      
+      <view class="info-item" wx:if="{{work.description}}">
+        <text class="label">作品描述：</text>
+        <text class="value description-text">{{work.description}}</text>
+      </view>
+      
+      <!-- 文件操作 -->
+      <view class="file-section" wx:if="{{work.fileID}}">
+        <view class="file-info">
+          <text class="file-icon">📎</text>
+          <text class="file-name">{{work.fileName || '作品文件'}}</text>
+        </view>
+        <button class="download-btn" size="mini" bindtap="downloadWorkFile">
+          查看文件
+        </button>
+      </view>
+    </view>
+
+    <!-- 评分区域 -->
+    <view class="card" wx:if="{{scoreItems.length > 0}}">
+      <view class="card-title">
+        <text class="title-icon">⭐</text>
+        <text class="title-text">评分细则</text>
+      </view>
+      
+      <view class="score-items">
+        <view 
+          class="score-item"
+          wx:for="{{scoreItems}}"
+          wx:key="id"
+        >
+          <view class="score-header">
+            <view class="score-name-section">
+              <text class="score-name">{{item.name}}</text>
+              <text class="score-desc" wx:if="{{item.description}}">{{item.description}}</text>
+            </view>
+            <text class="score-range">0-{{item.maxScore}}分</text>
+          </view>
+          
+          <view class="score-input-section">
+            <input 
+              class="score-input"
+              type="digit"
+              value="{{item.score}}"
+              placeholder="请输入分数"
+              bindinput="onScoreInput"
+              data-id="{{item.id}}"
+              disabled="{{hasReviewed}}"
+            />
+            <text class="score-unit">分</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 总分显示 -->
+      <view class="total-score-section">
+        <text class="total-label">总分：</text>
+        <text class="total-value">{{totalScore}}分</text>
+      </view>
+    </view>
+
+    <!-- 评语区域 -->
+    <view class="card">
+      <view class="card-title">
+        <text class="title-icon">💬</text>
+        <text class="title-text">评语</text>
+      </view>
+      
+      <textarea 
+        class="comment-input"
+        placeholder="请输入评语..."
+        value="{{comment}}"
+        bindinput="onCommentInput"
+        disabled="{{hasReviewed}}"
+        maxlength="500"
+        auto-height
+      />
+      <text class="comment-count">{{comment.length}}/500</text>
+    </view>
+
+    <!-- 已评审提示 -->
+    <view class="reviewed-tip" wx:if="{{hasReviewed}}">
+      <text class="tip-icon">✓</text>
+      <text class="tip-text">您已评审过此作品，可以修改评分</text>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button 
+        class="submit-btn"
+        bindtap="submitScore"
+        loading="{{loading}}"
+        disabled="{{loading || hasReviewed}}"
+      >
+        {{hasReviewed ? '已评审' : '提交评审'}}
+      </button>
+    </view>
+  </scroll-view>
+</view>
+
