@@ -1,0 +1,121 @@
+<!-- 页面标题栏 -->
+<navigation-bar title="发布通知" back="{{true}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="notice-manage-page">
+  <!-- 表单卡片 -->
+  <view class="form-card">
+    <view class="form-header">
+      <text class="form-title">📢 发布新通知</text>
+      <text class="form-subtitle">向学生端发送重要通知消息</text>
+    </view>
+
+    <!-- 通知标题 -->
+    <view class="form-item">
+      <view class="form-label required">通知标题</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入通知标题，如：重要活动提醒"
+        value="{{noticeTitle}}"
+        bindinput="onTitleInput"
+        maxlength="50"
+      />
+      <view class="input-counter">{{noticeTitle.length}}/50</view>
+      <view wx:if="{{errors.title}}" class="error-tip">{{errors.title}}</view>
+    </view>
+
+    <!-- 通知内容 -->
+    <view class="form-item">
+      <view class="form-label required">通知内容</view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请输入通知详细内容..."
+        value="{{noticeContent}}"
+        bindinput="onContentInput"
+        maxlength="1000"
+      />
+      <view class="textarea-counter">{{noticeContent.length}}/1000</view>
+      <view wx:if="{{errors.content}}" class="error-tip">{{errors.content}}</view>
+    </view>
+
+    <!-- 发布对象 -->
+    <view class="form-item">
+      <view class="form-label">发布对象</view>
+      <view class="target-select">
+        <view 
+          class="target-option {{targetType === 'all' ? 'active' : ''}}"
+          bindtap="onTargetChange"
+          data-type="all"
+        >
+          <view class="option-icon">👥</view>
+          <view class="option-text">
+            <text class="option-title">全体学生</text>
+            <text class="option-desc">发送给所有学生</text>
+          </view>
+          <view class="option-check">{{targetType === 'all' ? '✓' : ''}}</view>
+        </view>
+        
+        <view 
+          class="target-option {{targetType === 'participants' ? 'active' : ''}}"
+          bindtap="onTargetChange"
+          data-type="participants"
+        >
+          <view class="option-icon">🎯</view>
+          <view class="option-text">
+            <text class="option-title">活动参与者</text>
+            <text class="option-desc">仅发送给已参加活动的学生</text>
+          </view>
+          <view class="option-check">{{targetType === 'participants' ? '✓' : ''}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 状态显示 -->
+    <view class="status-info">
+      <view class="status-item">
+        <text class="status-label">发布人：</text>
+        <text class="status-value">{{userInfo.username || '管理员'}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">发布时间：</text>
+        <text class="status-value">{{currentTime}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">通知状态：</text>
+        <text class="status-value">{{publishing ? '发布中...' : '待发布'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button 
+      class="action-btn publish-btn" 
+      bindtap="onPublish"
+      loading="{{publishing}}"
+      disabled="{{publishing}}"
+    >
+      {{publishing ? '发布中...' : '立即发布'}}
+    </button>
+    <button 
+      class="action-btn reset-btn" 
+      bindtap="onReset"
+      disabled="{{publishing}}"
+    >
+      重置
+    </button>
+  </view>
+
+  <!-- 历史记录预览（可选） -->
+  <view class="history-card" wx:if="{{recentNotices.length > 0}}">
+    <view class="history-header">
+      <text class="history-title">📋 最近发布</text>
+    </view>
+    <view class="notice-preview" wx:for="{{recentNotices}}" wx:key="id">
+      <view class="preview-title">{{item.title}}</view>
+      <view class="preview-meta">
+        <text class="preview-time">{{item.time}}</text>
+        <text class="preview-target">· {{item.target === 'all' ? '全体学生' : '活动参与者'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

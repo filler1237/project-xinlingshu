@@ -1,0 +1,267 @@
+<!-- pages/admin/applyActivity/applyActivity.wxml -->
+<view class="page-container">
+  <!-- 1. 基本信息模块 (精简版) -->
+  <view class="form-card">
+    <view class="section-title">1. 基本信息</view>
+    
+    <!-- 活动主题 (保留) -->
+    <view class="form-item">
+      <view class="form-label required">活动主题</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入活动主题" 
+        value="{{theme}}" 
+        bindinput="onThemeInput"
+      />
+      <view wx:if="{{errors.theme}}" class="error-tip">{{errors.theme}}</view>
+    </view>
+    
+    <!-- 活动时间 (保留) -->
+    <view class="form-item">
+      <view class="form-label required">活动时间</view>
+      <view class="time-picker-group">
+        <view class="time-picker">
+          <text>开始时间</text>
+          <picker 
+            mode="date" 
+            value="{{startTime}}" 
+            start="{{minDate}}"
+            bindchange="onStartTimeChange"
+          >
+            <view class="picker-value {{startTime ? '' : 'placeholder'}}">
+              {{startTime || '请选择开始时间'}}
+            </view>
+          </picker>
+        </view>
+        <view class="time-picker">
+          <text>结束时间</text>
+          <picker 
+            mode="date" 
+            value="{{endTime}}" 
+            start="{{startTime || minDate}}"
+            bindchange="onEndTimeChange"
+          >
+            <view class="picker-value {{endTime ? '' : 'placeholder'}}">
+              {{endTime || '请选择结束时间'}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view wx:if="{{errors.time}}" class="error-tip">{{errors.time}}</view>
+    </view>
+    
+    <!-- 活动描述 (保留) -->
+    <view class="form-item">
+      <view class="form-label required">活动描述</view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请详细描述活动内容、要求、规则等..." 
+        value="{{description}}" 
+        bindinput="onDescriptionInput"
+        maxlength="500"
+      />
+      <view class="textarea-counter">{{description.length}}/500</view>
+      <view wx:if="{{errors.description}}" class="error-tip">{{errors.description}}</view>
+    </view>
+  </view>
+  
+  <!-- 2. 评分细则模块 (核心保留) -->
+  <view class="form-card">
+    <view class="section-title">2. 评分细则设置 <text class="section-subtitle">（建议总分100分）</text></view>
+    
+    <!-- 动态评分项列表 -->
+    <view wx:if="{{scoreRules.length > 0}}">
+      <view class="score-rules-list">
+        <view 
+          class="score-rule-item" 
+          wx:for="{{scoreRules}}" 
+          wx:key="id"
+          wx:for-index="index"
+        >
+          <view class="rule-item-header">
+            <text class="rule-index">评分项 {{index + 1}}</text>
+            <text class="rule-delete" bindtap="onDeleteScoreRule" data-index="{{index}}">删除</text>
+          </view>
+          
+          <!-- 评分项名称 -->
+          <view class="rule-form-item">
+            <view class="rule-label">评分项名称</view>
+            <input 
+              class="rule-input" 
+              placeholder="如：内容质量、创意性、技术难度等" 
+              value="{{item.name}}"
+              bindinput="onScoreRuleChange"
+              data-index="{{index}}"
+              data-field="name"
+            />
+          </view>
+          
+          <!-- 分值上限 -->
+          <view class="rule-form-item">
+            <view class="rule-label">分值上限</view>
+            <input 
+              class="rule-input rule-score-input" 
+              type="number" 
+              placeholder="0-100" 
+              value="{{item.maxScore}}"
+              bindinput="onScoreRuleChange"
+              data-index="{{index}}"
+              data-field="maxScore"
+            />
+            <text class="score-unit">分</text>
+          </view>
+          
+          <!-- 评分说明 -->
+          <view class="rule-form-item">
+            <view class="rule-label">评分说明（可选）</view>
+            <textarea 
+              class="rule-textarea" 
+              placeholder="填写具体评分标准，指导评委打分" 
+              value="{{item.description}}"
+              bindinput="onScoreRuleChange"
+              data-index="{{index}}"
+              data-field="description"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 无评分项提示 -->
+    <view wx:else class="empty-tip">
+      <text>暂无评分项，请添加至少一个评分项</text>
+    </view>
+    
+    <!-- 添加评分项按钮 -->
+    <view class="add-rule-btn" bindtap="onAddScoreRule">
+      <text>+ 添加评分项</text>
+    </view>
+    
+    <!-- 总分显示 -->
+    <view class="total-score">
+      <text>当前总分：</text>
+      <text class="total-score-value {{totalScore === 100 ? 'perfect' : 'warning'}}">{{totalScore}}</text>
+      <text>分</text>
+      <text wx:if="{{totalScore !== 100}}" class="total-score-tip">（建议设置为100分）</text>
+    </view>
+    
+    <!-- 评分项错误提示 -->
+    <view wx:if="{{errors.scoreRules}}" class="error-tip">{{errors.scoreRules}}</view>
+  </view>
+  
+  <!-- 3. 作品类型设置模块 (保留) -->
+  <view class="form-card">
+    <view class="section-title">3. 作品类型设置</view>
+    <view class="upload-type-tip">请选择允许提交的作品类型（至少选择一项）</view>
+    
+    <view class="upload-type-list">
+      <view 
+        class="upload-type-item {{item.checked ? 'active' : ''}}" 
+        wx:for="{{allowedUploadTypes}}" 
+        wx:key="value"
+        bindtap="onToggleUploadType"
+        data-index="{{index}}"
+      >
+        <text class="type-icon">{{item.icon}}</text>
+        <text class="type-name">{{item.name}}</text>
+        <text class="type-desc">{{item.desc}}</text>
+      </view>
+    </view>
+    
+    <view wx:if="{{errors.uploadTypes}}" class="error-tip">{{errors.uploadTypes}}</view>
+  </view>
+  
+  <!-- 4. 获奖等级设置模块 (精简版) -->
+  <view class="form-card">
+    <view class="section-title">4. 获奖等级设置</view>
+    
+    <view class="award-level-list">
+      <view 
+        class="award-level-item" 
+        wx:for="{{awardRules}}" 
+        wx:key="level"
+        wx:for-index="index"
+      >
+        <view class="level-header">
+          <text class="level-name">{{item.level}}</text>
+          <text class="level-delete" bindtap="onDeleteAwardRule" data-index="{{index}}" wx:if="{{index > 0}}">删除</text>
+        </view>
+        
+        <view class="level-settings">
+          <!-- 分数线设置 -->
+          <view class="level-setting">
+            <view class="setting-label">最低分数线</view>
+            <input 
+              class="setting-input" 
+              type="number" 
+              placeholder="百分比，如：90" 
+              value="{{item.minScore}}"
+              bindinput="onAwardRuleChange"
+              data-index="{{index}}"
+              data-field="minScore"
+            />
+            <text class="setting-unit">%</text>
+          </view>
+          
+          <!-- 名额比例 -->
+          <view class="level-setting">
+            <view class="setting-label">名额比例</view>
+            <input 
+              class="setting-input" 
+              type="number" 
+              placeholder="0-1之间，如：0.1" 
+              value="{{item.quota}}"
+              bindinput="onAwardRuleChange"
+              data-index="{{index}}"
+              data-field="quota"
+            />
+            <text class="setting-unit">%</text>
+          </view>
+          <!-- 等级描述字段已删除 -->
+        </view>
+      </view>
+    </view>
+    
+    <!-- 添加获奖等级按钮 -->
+    <view class="add-award-btn" bindtap="onAddAwardRule">
+      <text>+ 添加获奖等级</text>
+    </view>
+    
+    <!-- 总获奖比例 -->
+    <view class="total-quota">
+      <text>总获奖比例：</text>
+      <text class="total-quota-value {{totalQuota <= 1 ? 'safe' : 'danger'}}">{{totalQuotaPercent}}%</text>
+      <text wx:if="{{totalQuota > 1}}" class="quota-warning">（总比例不能超过100%）</text>
+    </view>
+    
+    <view wx:if="{{errors.awardRules}}" class="error-tip">{{errors.awardRules}}</view>
+  </view>
+  
+  <!-- 5. 学分发放说明 -->
+  <view class="form-card info-card">
+    <view class="section-title">📝 学分发放说明</view>
+    <view class="credit-info">
+      <text>本系统仅负责评定获奖等级，学分将由学校系统根据导出的获奖名单统一发放。</text>
+      <text class="credit-tip">评委分配由后台算法自动处理，确保每个作品由多位评委评审</text>
+    </view>
+  </view>
+  
+  <!-- 6. 提交按钮区域 -->
+  <view class="button-group">
+    <button 
+      class="submit-btn {{canSubmit ? '' : 'disabled'}}" 
+      bindtap="onSubmit"
+      disabled="{{!canSubmit}}"
+    >
+      提交活动申请
+    </button>
+    
+    <view class="bottom-buttons">
+      <button class="reset-btn" bindtap="onReset">重置表单</button>
+      <button class="back-btn" bindtap="onBack">返回</button>
+    </view>
+  </view>
+  
+  <!-- 底部安全区域 -->
+  <view class="safe-area"></view>
+</view>

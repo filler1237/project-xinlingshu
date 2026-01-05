@@ -1,0 +1,207 @@
+<!-- competition/pages/admin/manageActivity/manageActivity.wxml -->
+<navigation-bar title="活动管理" back="{{true}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="manage-activity-page">
+  <!-- 状态筛选栏 -->
+  <view class="filter-bar">
+    <view 
+      class="filter-item {{currentFilter === 'all' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="all"
+    >
+      全部
+    </view>
+    <view 
+      class="filter-item {{currentFilter === 'notStarted' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="notStarted"
+    >
+      未开始
+    </view>
+    <view 
+      class="filter-item {{currentFilter === 'running' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="running"
+    >
+      进行中
+    </view>
+    <view 
+      class="filter-item {{currentFilter === 'ended' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="ended"
+    >
+      已结束
+    </view>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="activity-list">
+    <view 
+      class="activity-item"
+      wx:for="{{filteredActivities}}"
+      wx:key="id"
+    >
+      <view class="activity-header">
+        <view class="activity-title">{{item.theme || item.title || '未命名活动'}}</view>
+        <view class="activity-status status-{{item.statusType}}">
+          {{item.statusText}}
+        </view>
+      </view>
+      
+      <view class="activity-info">
+        <view class="info-row">
+          <text class="info-label">开始时间：</text>
+          <text class="info-value">{{item.startTime}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">结束时间：</text>
+          <text class="info-value">{{item.endTime}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.description}}">
+          <text class="info-label">活动描述：</text>
+          <text class="info-value">{{item.description}}</text>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="activity-actions">
+        <!-- 未开始的活动可以编辑 -->
+        <button 
+          class="action-btn edit-btn"
+          wx:if="{{item.statusType === 'notStarted'}}"
+          bindtap="onEditActivity"
+          data-id="{{item.id}}"
+        >
+          编辑
+        </button>
+        
+        <!-- 状态控制区域 -->
+        <view class="status-control-group">
+          <view class="current-status-display">
+            <text class="status-label">当前状态：</text>
+            <text class="status-value status-{{item.statusType}}">{{item.statusText}}</text>
+          </view>
+          
+          <!-- 状态切换按钮组 -->
+          <view class="status-buttons">
+            <button 
+              class="status-switch-btn {{item.statusType === 'notStarted' ? 'active' : ''}}"
+              wx:if="{{item.statusType !== 'notStarted'}}"
+              bindtap="onChangeStatus"
+              data-id="{{item.id}}"
+              data-target-status="notStarted"
+            >
+              设为未开始
+            </button>
+            <button 
+              class="status-switch-btn {{item.statusType === 'running' ? 'active' : ''}}"
+              wx:if="{{item.statusType !== 'running'}}"
+              bindtap="onChangeStatus"
+              data-id="{{item.id}}"
+              data-target-status="running"
+            >
+              设为进行中
+            </button>
+            <button 
+              class="status-switch-btn {{item.statusType === 'ended' ? 'active' : ''}}"
+              wx:if="{{item.statusType !== 'ended'}}"
+              bindtap="onChangeStatus"
+              data-id="{{item.id}}"
+              data-target-status="ended"
+            >
+              设为已结束
+            </button>
+          </view>
+        </view>
+        
+        <!-- 删除按钮 -->
+        <button 
+          class="action-btn delete-btn"
+          bindtap="onDeleteActivity"
+          data-id="{{item.id}}"
+        >
+          删除
+        </button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredActivities.length === 0 && !loading}}">
+      <text class="empty-text">暂无活动</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>
+
+<!-- 编辑活动弹窗 -->
+<view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="onCloseEditModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">编辑活动</text>
+      <text class="modal-close" bindtap="onCloseEditModal">×</text>
+    </view>
+    
+    <scroll-view class="modal-body" scroll-y>
+      <view class="form-item">
+        <view class="form-label">活动主题</view>
+        <input 
+          class="form-input"
+          value="{{editingActivity.theme}}"
+          placeholder="请输入活动主题"
+          bindinput="onEditFieldChange"
+          data-field="theme"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">开始时间</view>
+        <picker 
+          mode="date"
+          value="{{editingActivity.startTime}}"
+          bindchange="onEditTimeChange"
+          data-field="startTime"
+        >
+          <view class="picker-display">
+            {{editingActivity.startTime || '请选择开始时间'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">结束时间</view>
+        <picker 
+          mode="date"
+          value="{{editingActivity.endTime}}"
+          start="{{editingActivity.startTime}}"
+          bindchange="onEditTimeChange"
+          data-field="endTime"
+        >
+          <view class="picker-display">
+            {{editingActivity.endTime || '请选择结束时间'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">活动描述</view>
+        <textarea 
+          class="form-textarea"
+          value="{{editingActivity.description}}"
+          placeholder="请输入活动描述"
+          bindinput="onEditFieldChange"
+          data-field="description"
+          maxlength="500"
+        />
+      </view>
+    </scroll-view>
+
+    <view class="modal-footer">
+      <button class="modal-btn cancel-btn" bindtap="onCloseEditModal">取消</button>
+      <button class="modal-btn confirm-btn" bindtap="onSaveActivity">保存</button>
+    </view>
+  </view>
+</view>

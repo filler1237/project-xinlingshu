@@ -1,0 +1,79 @@
+<!-- pages/admin/home/home.wxml -->
+<navigation-bar title="管理员工作台" back="{{false}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="admin-home">
+  <!-- 1. 身份与概览区域 -->
+  <view class="overview-section">
+    <view class="back-button" bindtap="goBack">
+      <text class="back-icon">←</text>
+      返回
+    </view>
+    
+    <view class="user-card">
+      <view class="user-meta">
+        <view class="avatar-wrapper">
+          <text class="avatar-text">{{userInfo.username ? userInfo.username.charAt(0) : 'A'}}</text>
+        </view>
+        <view class="user-info">
+          <text class="user-greeting">管理员</text>
+          <text class="user-name">{{userInfo.username || '管理员'}}</text>
+        </view>
+      </view>
+      <text class="today-date">{{currentDate}}</text>
+    </view>
+
+    <!-- 精简数据看板，只保留关键统计 -->
+    <view class="stats-board">
+      <view class="stat-item" bindtap="toManageActivity">
+        <text class="stat-value">{{stats.activityCount}}</text>
+        <text class="stat-label">进行中的活动</text>
+      </view>
+      <view class="stat-item" bindtap="toWorkList">
+        <text class="stat-value">{{stats.workCount}}</text>
+        <text class="stat-label">总作品数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 2. 核心功能 (2x2网格) -->
+  <view class="workspace-section">
+    <view class="section-title">核心管理</view>
+    
+    <view class="core-function-grid">
+      <!-- 1. 创建发布活动 -->
+      <view class="core-function-card" bindtap="toCreateActivity">
+        <view class="core-icon">🚀</view>
+        <text class="core-title">活动管理</text>
+        <text class="core-desc">创建、发布与管理活动</text>
+      </view>
+
+      <!-- 2. 修改活动 -->
+      <view class="core-function-card" bindtap="toManageActivity">
+        <view class="core-icon">✏️</view>
+        <text class="core-title">修改活动</text>
+        <text class="core-desc">编辑与修改活动信息</text>
+      </view>
+
+      <!-- 3. 结果导出 -->
+      <view class="core-function-card" bindtap="toExportResults">
+        <view class="core-icon">📊</view>
+        <text class="core-title">结果导出</text>
+        <text class="core-desc">导出活动最终结果</text>
+        <text class="core-note">Excel格式，包含评分与获奖信息</text>
+      </view>
+
+      <!-- 4. 发布通知 -->
+      <view class="core-function-card" bindtap="toNoticeManage">
+        <view class="core-icon">📢</view>
+        <text class="core-title">发布通知</text>
+        <text class="core-desc">向学生端发送重要通知</text>
+      </view>
+    </view>
+
+    <!-- 系统状态提示 -->
+    <view class="system-note">
+      <text class="note-icon">💡</text>
+      <text class="note-text">作品评审分配由后台算法自动完成，确保每个作品由多位评委综合评审。</text>
+    </view>
+  </view>
+</view>

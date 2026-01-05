@@ -1,0 +1,316 @@
+<!-- pages/admin/judgeManagement/judgeManagement.wxml -->
+<view class="judge-container">
+  <!-- 顶部标题和统计 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <text class="header-title">评委管理</text>
+      <text class="back-btn header-desc" bindtap="goBack">返回◀  </text>
+      <text class="header-desc">管理活动评委任命与权限</text>
+
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-number">{{stats.totalTeachers}}</text>
+          <text class="stat-label">总老师</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.availableJudges}}</text>
+          <text class="stat-label">可任命</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.appointedJudges}}</text>
+          <text class="stat-label">已任命</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{stats.chiefJudges}}</text>
+          <text class="stat-label">总评委</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 活动选择 -->
+  <view class="activity-selector">
+    <text class="selector-label">选择活动：</text>
+    <picker 
+      mode="selector" 
+      range="{{activityOptions}}"
+      range-key="name"
+      value="{{selectedActivityIndex}}"
+      bindchange="onActivityChange"
+    >
+      <view class="picker-display">
+        {{activityOptions[selectedActivityIndex] ? activityOptions[selectedActivityIndex].name : '请选择活动'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="filter-section">
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        placeholder="搜索老师账号或姓名..."
+        placeholder-class="search-placeholder"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+      <text class="search-icon">🔍</text>
+    </view>
+    
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="all"
+      >
+        全部老师
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'available' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="available"
+      >
+        可任命
+      </view>
+      <view 
+        class="filter-tab {{currentFilter === 'appointed' ? 'active' : ''}}"
+        bindtap="onFilterChange"
+        data-filter="appointed"
+      >
+        已任命
+      </view>
+    </view>
+  </view>
+
+  <!-- 已任命评委面板 -->
+  <view class="appointed-panel" wx:if="{{selectedActivity && appointedJudges.length > 0}}">
+    <view class="panel-header">
+      <text class="panel-title">已任命评委 - {{selectedActivity.name}}</text>
+      <text class="panel-count">{{appointedJudges.length}}人</text>
+    </view>
+    <view class="judges-grid">
+      <view 
+        class="judge-tag {{item.role === 'chief' ? 'chief' : 'normal'}}"
+        wx:for="{{appointedJudges}}"
+        wx:key="teacherId"
+      >
+        <text class="judge-name">{{item.name}}</text>
+        <text class="judge-role">{{item.role === 'chief' ? '总评委' : '评委'}}</text>
+        <text class="remove-btn" bindtap="onRemoveJudge" data-judge="{{item}}">×</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 老师列表 -->
+  <view class="teacher-list">
+    <block wx:for="{{filteredTeachers}}" wx:key="teacherId">
+      <view class="teacher-card">
+        <!-- 老师头像和基础信息 -->
+        <view class="teacher-header">
+          <view class="avatar-section">
+            <view class="teacher-avatar">
+              <text class="avatar-text">{{item.name.charAt(0)}}</text>
+            </view>
+            <view class="online-status {{item.isOnline ? 'online' : 'offline'}}"></view>
+          </view>
+          
+          <view class="teacher-info">
+            <text class="teacher-name">{{item.name}}</text>
+            <text class="teacher-id">工号：{{item.teacherId}}</text>
+            <text class="teacher-department">{{item.department}}</text>
+          </view>
+          
+          <view class="appointment-status {{getAppointmentStatus(item)}}">
+            {{getAppointmentStatusText(item)}}
+          </view>
+        </view>
+
+        <!-- 专业领域 -->
+        <view class="expertise-section" wx:if="{{item.expertise && item.expertise.length}}">
+          <text class="section-label">专业领域：</text>
+          <view class="expertise-tags">
+            <text 
+              class="expertise-tag" 
+              wx:for="{{item.expertise}}" 
+              wx:for-item="field"
+              wx:key="*this"
+            >
+              {{field}}
+            </text>
+          </view>
+        </view>
+
+        <!-- 任命信息 -->
+        <view class="appointment-info" wx:if="{{item.currentAppointment}}">
+          <text class="info-label">当前任命：</text>
+          <text class="info-value">{{item.currentAppointment.activityName}}</text>
+          <text class="info-role {{item.currentAppointment.role}}">
+            {{item.currentAppointment.role === 'chief' ? '总评委' : '评委'}}
+          </text>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button 
+            class="action-btn appoint"
+            bindtap="onAppointJudge"
+            data-teacher="{{item}}"
+            wx:if="{{!item.currentAppointment || item.currentAppointment.activityId !== selectedActivity.id}}"
+          >
+            <text class="btn-icon">👑</text>
+            任命评委
+          </button>
+          
+          <button 
+            class="action-btn change-role"
+            bindtap="onChangeRole"
+            data-teacher="{{item}}"
+            wx:if="{{item.currentAppointment && item.currentAppointment.activityId === selectedActivity.id}}"
+          >
+            <text class="btn-icon">🔄</text>
+            更改角色
+          </button>
+          
+          <button 
+            class="action-btn remove"
+            bindtap="onRemoveAppointment"
+            data-teacher="{{item}}"
+            wx:if="{{item.currentAppointment && item.currentAppointment.activityId === selectedActivity.id}}"
+          >
+            <text class="btn-icon">🗑️</text>
+            取消任命
+          </button>
+          
+          <button 
+            class="action-btn view"
+            bindtap="onViewProfile"
+            data-teacher="{{item}}"
+          >
+            <text class="btn-icon">👁️</text>
+            查看详情
+          </button>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredTeachers.length === 0}}">
+    <text class="empty-icon">👨‍🏫</text>
+    <text class="empty-text">暂无老师数据</text>
+    <text class="empty-desc">当前筛选条件下没有找到老师</text>
+    <button class="empty-btn" bindtap="onResetFilters">重置筛选条件</button>
+  </view>
+
+  <!-- 任命模态框 -->
+  <view class="modal {{showAppointModal ? 'show' : ''}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">任命评委</text>
+        <text class="modal-close" bindtap="onCloseModal">×</text>
+      </view>
+      <view class="modal-body">
+        <text class="modal-teacher">{{selectedTeacher.name}} ({{selectedTeacher.teacherId}})</text>
+        <view class="role-selection">
+          <text class="selection-label">选择角色：</text>
+          <view class="role-options">
+            <view 
+              class="role-option {{appointRole === 'judge' ? 'selected' : ''}}"
+              bindtap="onSelectRole"
+              data-role="judge"
+            >
+              <text class="role-icon">👨‍⚖️</text>
+              <text class="role-name">普通评委</text>
+              <text class="role-desc">评审分配的作品</text>
+            </view>
+            <view 
+              class="role-option {{appointRole === 'chief' ? 'selected' : ''}}"
+              bindtap="onSelectRole"
+              data-role="chief"
+            >
+              <text class="role-icon">👑</text>
+              <text class="role-name">总评委</text>
+              <text class="role-desc">管理评审标准和结果</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="onCloseModal">取消</button>
+        <button class="modal-btn confirm" bindtap="onConfirmAppointment">确认任命</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 老师详情模态框 -->
+  <view class="modal {{showProfileModal ? 'show' : ''}}">
+    <view class="modal-content large">
+      <view class="modal-header">
+        <text class="modal-title">老师详情</text>
+        <text class="modal-close" bindtap="onCloseModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="profile-section" wx:if="{{selectedTeacher}}">
+          <view class="profile-header">
+            <view class="profile-avatar large">
+              <text class="avatar-text">{{selectedTeacher.name.charAt(0)}}</text>
+            </view>
+            <view class="profile-info">
+              <text class="profile-name">{{selectedTeacher.name}}</text>
+              <text class="profile-id">工号：{{selectedTeacher.teacherId}}</text>
+              <text class="profile-department">{{selectedTeacher.department}}</text>
+              <view class="profile-status {{selectedTeacher.isOnline ? 'online' : 'offline'}}">
+                {{selectedTeacher.isOnline ? '在线' : '离线'}}
+              </view>
+            </view>
+          </view>
+
+          <view class="detail-section">
+            <view class="detail-group">
+              <text class="detail-label">电子邮箱</text>
+              <text class="detail-value">{{selectedTeacher.email}}</text>
+            </view>
+            <view class="detail-group">
+              <text class="detail-label">联系电话</text>
+              <text class="detail-value">{{selectedTeacher.phone}}</text>
+            </view>
+            <view class="detail-group">
+              <text class="detail-label">专业领域</text>
+              <view class="detail-tags">
+                <text 
+                  class="detail-tag" 
+                  wx:for="{{selectedTeacher.expertise}}" 
+                  wx:for-item="field"
+                  wx:key="*this"
+                >
+                  {{field}}
+                </text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 任命历史 -->
+          <view class="appointment-history" wx:if="{{selectedTeacher.appointmentHistory && selectedTeacher.appointmentHistory.length}}">
+            <text class="section-title">任命历史</text>
+            <view 
+              class="history-item" 
+              wx:for="{{selectedTeacher.appointmentHistory}}" 
+              wx:for-item="history"
+              wx:key="activityId"
+            >
+              <text class="history-activity">{{history.activityName}}</text>
+              <text class="history-role {{history.role}}">
+                {{history.role === 'chief' ? '总评委' : '评委'}}
+              </text>
+              <text class="history-time">{{history.appointTime}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn primary" bindtap="onCloseModal">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>
