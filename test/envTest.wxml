@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="title">环境配置测试</view>
+  <view class="info">
+    <text>当前环境配置：</text>
+    <text selectable>{{envInfo}}</text>
+  </view>
+  <button bindtap="checkEnvironment">测试连接</button>
+</view>

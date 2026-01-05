@@ -1,0 +1,11 @@
+<view wx:if="{{userInfo.identity === '活动管理员'}}">
+  <button bindtap="goToAdminPage">进入活动管理员页面</button>
+</view>
+
+<view wx:if="{{userInfo.identity === '评委'}}">
+  <button bindtap="goToJudgePage">进入评委页面</button>
+</view>
+
+<view wx:if="{{userInfo.identity === '学生'}}">
+  <button bindtap="goToStudentPage">进入学生页面</button>
+</view>

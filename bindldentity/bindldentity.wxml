@@ -1,0 +1,4 @@
+<!-- competition/pages/index/index.wxml -->
+<view class="loading-container">
+  <text>正在进入系统...</text>
+</view>
