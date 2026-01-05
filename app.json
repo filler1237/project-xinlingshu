@@ -10,7 +10,7 @@
     "pages/echoWall/echoWall",
     "pages/auth/login/login"
   ],
-  "subpackages": [
+  "subPackages": [
     {
       "root": "home",
       "name": "home",
@@ -18,23 +18,14 @@
         "test/test",
         "test/intro/intro",
         "test/SDS/SDS",
-        "test/SDS/result/result",
         "test/SAS/SAS",
-        "test/SAS/result/result",
         "test/AIS/AIS",
-        "test/AIS/result/result",
         "test/GHQ/GHQ",
-        "test/GHQ/result/result",
         "test/result/result",
-        "test/adaptability/adaptability",
-        "test/adaptability/result/result",
-        "test/self-efficacy/assessment/assessment",
-        "test/self-efficacy/result/result",
         "consult/consult",
         "consult/next/1/1",
         "consult/next/1/2/2",
         "read/read",
-        "card/question",
         "card/card",
         "divination/divination",
         "social/social",
@@ -43,9 +34,6 @@
         "tools/tools",
         "tools/breathing/breathing",
         "tools/whitenoise/whitenoise",
-        "tools/meditation/meditation",
-        "tools/sandpainting/sandpainting",
-        "tools/publish-drawing/publish-drawing",
         "tools/user_self_upload/user_self_upload",
         "profile/profile"
       ]
@@ -53,21 +41,30 @@
     {
       "root": "competition",
       "pages": [
+        "pages/login/login",
+        "pages/register/register",
         "pages/studenthome/studenthome",
         "pages/adminhome/adminhome",
         "pages/judgehome/judgehome",
         "pages/student/activityList/activityList",
+        "pages/student/activityDetail/activityDetail",
         "pages/student/submitWork/submitWork",
         "pages/student/viewResult/viewResult",
+        "pages/student/viewNotice/viewNotice",
         "pages/student/creditReward/creditReward",
         "pages/admin/applyActivity/applyActivity",
         "pages/admin/manageActivity/manageActivity",
         "pages/admin/workOverview/workOverview",
         "pages/admin/judgeManage/judgeManage",
+        "pages/admin/noticeManage/noticeManage",
         "pages/admin/creditConfig/creditConfig",
+        "pages/admin/exportResults/exportResults",
         "pages/judge/judgePanel/judgePanel",
         "pages/judge/workList/workList",
-        "pages/bindldentity/bindldentity"
+        "pages/judge/scoring/scoring",
+        "pages/judge/workDetail/workDetail",
+        "pages/bindldentity/bindldentity",
+        "app-optimized.js"
       ]
     },
     {
@@ -84,23 +81,14 @@
       "name": "mine",
       "pages": [
         "booked/booked",
-        "scan-result/scan-result",
-        "qrcode/qrcode",
         "evaluate/evaluate",
         "contact/contact",
         "list/list",
         "setting/setting",
         "mycomment/mycomment",
         "record/record",
-        "record/detail/detail",
         "datashow/datashow",
-        "datashow1/datashow1",
-        "message/message",
-        "developer-message/developer-message",
-        "contact-us/contact-us",
-        "appointment-list/appointment-list",
-        "appointment-list/appointment-detail/appointment-detail",
-        "availability-setup/availability-setup"
+        "datashow1/datashow1"
       ]
     },
     {
@@ -115,6 +103,17 @@
       ]
     }
   ],
+  "preloadRule": {
+    "pages/home/home": {
+      "network": "all",
+      "packages": [
+        "home",
+        "sushuo",
+        "mine",
+        "diary"
+      ]
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
