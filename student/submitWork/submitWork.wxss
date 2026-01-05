@@ -1,0 +1,393 @@
+/* pages/student/submitWork/submitWork.wxss */
+.submit-work-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 导航栏 */
+.nav-header {
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon {
+  font-size: 48rpx;
+  margin-right: 10rpx;
+  color: #333;
+}
+
+.nav-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 主要内容 */
+.main-content {
+  height: calc(100vh - 120rpx);
+}
+
+/* 区块卡片 */
+.section-card {
+  background-color: #fff;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.section-icon {
+  font-size: 36rpx;
+  margin-right: 15rpx;
+}
+
+.section-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-hint {
+  margin-left: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 活动选择 */
+.activity-selector {
+  margin-top: 20rpx;
+}
+
+.hint-text {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.activity-list {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.activity-item {
+  padding: 25rpx;
+  margin-bottom: 15rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  background-color: #fafafa;
+}
+
+.activity-item.selected {
+  border-color: #07c160;
+  background-color: #f0f9f4;
+}
+
+.activity-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.activity-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.activity-organizer,
+.activity-status {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60rpx 30rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+  color: #ccc;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.selected-activity {
+  background-color: #f8f9fa;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid #07c160;
+}
+
+.selected-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.selected-title {
+  font-size: 26rpx;
+  color: #07c160;
+  font-weight: bold;
+}
+
+.change-btn {
+  font-size: 24rpx;
+  color: #07c160;
+  padding: 8rpx 16rpx;
+  border: 1rpx solid #07c160;
+  border-radius: 6rpx;
+}
+
+.activity-detail {
+  background-color: #fff;
+  padding: 20rpx;
+  border-radius: 8rpx;
+}
+
+.detail-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.info-item {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 表单 */
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  display: block;
+  font-weight: bold;
+}
+
+.form-input {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 26rpx;
+  background-color: #fafafa;
+}
+
+.form-textarea {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 26rpx;
+  background-color: #fafafa;
+  min-height: 150rpx;
+}
+
+.input-count {
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+  display: block;
+}
+
+/* 上传区块 */
+.upload-section {
+  margin-bottom: 25rpx;
+  padding: 25rpx;
+  border: 2rpx dashed #ddd;
+  border-radius: 12rpx;
+  background-color: #fafafa;
+}
+
+.upload-section.active {
+  border-color: #07c160;
+  background-color: #f0f9f4;
+}
+
+.upload-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.upload-icon {
+  font-size: 40rpx;
+  margin-right: 15rpx;
+}
+
+.upload-info {
+  flex: 1;
+}
+
+.upload-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 5rpx;
+}
+
+.upload-desc {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.upload-area {
+  text-align: center;
+  padding: 60rpx 30rpx;
+  border: 2rpx dashed #ccc;
+  border-radius: 8rpx;
+  background-color: #fff;
+}
+
+.upload-placeholder {
+  font-size: 28rpx;
+  color: #07c160;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.upload-tip {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  background-color: #fff;
+  border: 1rpx solid #07c160;
+  border-radius: 8rpx;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.file-icon {
+  font-size: 40rpx;
+  margin-right: 15rpx;
+}
+
+.file-details {
+  flex: 1;
+}
+
+.file-name {
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 5rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-size {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.remove-btn {
+  background-color: #fff;
+  border: 1rpx solid #ff4d4f;
+  color: #ff4d4f;
+  border-radius: 6rpx;
+  padding: 0 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+/* 上传提示 */
+.upload-tips {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #f0f8ff;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: flex-start;
+}
+
+.tip-icon {
+  font-size: 30rpx;
+  margin-right: 15rpx;
+  color: #1890ff;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* 提交按钮 */
+.submit-section {
+  padding: 40rpx 30rpx;
+  background-color: #fff;
+  margin-top: 20rpx;
+}
+
+.submit-btn {
+  background-color: #07c160;
+  color: #fff;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.submit-btn.disabled {
+  background-color: #ccc;
+  color: #999;
+}
+
+/* 底部空白 */
+.bottom-space {
+  height: 100rpx;
+}

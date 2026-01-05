@@ -1,0 +1,262 @@
+<!-- pages/student/submitWork/submitWork.wxml -->
+<view class="submit-work-page">
+  <!-- 顶部导航 -->
+  <view class="nav-header">
+    <view class="nav-left" bindtap="onBackTap">
+      <text class="nav-icon">‹</text>
+      <text class="nav-title">提交作品</text>
+    </view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <scroll-view class="main-content" scroll-y>
+    
+    <!-- 活动选择 -->
+    <view class="section-card">
+      <view class="section-title">
+        <text class="section-icon">📋</text>
+        <text class="section-text">选择活动</text>
+      </view>
+      
+      <view class="activity-selector">
+        <view wx:if="{{!selectedActivity}}">
+          <view wx:if="{{registeredActivities.length > 0}}">
+            <text class="hint-text">请选择要提交作品的活动：</text>
+            <view class="activity-list">
+              <view 
+                wx:for="{{registeredActivities}}" 
+                wx:key="id" 
+                class="activity-item {{index === selectedActivityIndex ? 'selected' : ''}}"
+                bindtap="onActivitySelect"
+                data-index="{{index}}"
+              >
+                <view class="activity-title">{{item.activity.title}}</view>
+                <view class="activity-info">
+                  <text class="activity-organizer">{{item.activity.organizer}}</text>
+                  <text class="activity-status">{{item.activity.status}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty-state">
+            <text class="empty-icon">📭</text>
+            <text class="empty-text">暂无可以提交作品的活动</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{selectedActivity}}" class="selected-activity">
+          <view class="selected-header">
+            <text class="selected-title">已选择活动</text>
+            <text class="change-btn" bindtap="clearSelected">重新选择</text>
+          </view>
+          <view class="activity-detail">
+            <text class="detail-title">{{selectedActivity.title}}</text>
+            <view class="detail-info">
+              <text class="info-item">主办方：{{selectedActivity.organizer}}</text>
+              <text class="info-item">状态：{{selectedActivity.status}}</text>
+              <text class="info-item">主题：{{selectedActivity.theme || '未设置'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 作品信息 -->
+    <view class="section-card">
+      <view class="section-title">
+        <text class="section-icon">✏️</text>
+        <text class="section-text">作品信息</text>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">作品标题</text>
+        <input 
+          class="form-input" 
+          placeholder="请输入作品标题（必填）"
+          value="{{workTitle}}"
+          bindinput="onTitleInput"
+          maxlength="50"
+        />
+        <text class="input-count">{{workTitle.length}}/50</text>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">作品描述</text>
+        <textarea 
+          class="form-textarea" 
+          placeholder="请描述您的作品内容、创作思路等（选填）"
+          value="{{workDescription}}"
+          bindinput="onDescriptionInput"
+          maxlength="500"
+          auto-height
+        />
+        <text class="input-count">{{workDescription.length}}/500</text>
+      </view>
+    </view>
+
+    <!-- 多格式上传区块 -->
+    <view class="section-card">
+      <view class="section-title">
+        <text class="section-icon">📤</text>
+        <text class="section-text">上传作品文件</text>
+        <text class="section-hint">（请根据作品类型选择对应区块上传）</text>
+      </view>
+      
+      <!-- 图片作品上传 -->
+      <view class="upload-section {{currentFileType === 'image' ? 'active' : ''}}">
+        <view class="upload-header">
+          <text class="upload-icon">🖼️</text>
+          <view class="upload-info">
+            <text class="upload-title">{{fileTypes.image.name}}</text>
+            <text class="upload-desc">{{fileTypes.image.desc}}</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{imageFiles.length === 0}}" class="upload-area" bindtap="onChooseFile" data-type="image">
+          <text class="upload-placeholder">点击上传图片</text>
+          <text class="upload-tip">支持JPG、PNG、GIF等格式，最大10MB</text>
+        </view>
+        
+        <view wx:else class="uploaded-file">
+          <view class="file-info" bindtap="onViewFileDetail" data-type="image">
+            <text class="file-icon">🖼️</text>
+            <view class="file-details">
+              <text class="file-name">{{imageFiles[0].name}}</text>
+              <text class="file-size">{{imageFiles[0].size}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" size="mini" bindtap="onRemoveFile" data-type="image">删除</button>
+        </view>
+      </view>
+      
+      <!-- 文档作品上传 -->
+      <view class="upload-section {{currentFileType === 'document' ? 'active' : ''}}">
+        <view class="upload-header">
+          <text class="upload-icon">📄</text>
+          <view class="upload-info">
+            <text class="upload-title">{{fileTypes.document.name}}</text>
+            <text class="upload-desc">{{fileTypes.document.desc}}</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{documentFiles.length === 0}}" class="upload-area" bindtap="onChooseFile" data-type="document">
+          <text class="upload-placeholder">点击上传文档</text>
+          <text class="upload-tip">支持PDF、Word、PPT等格式，最大20MB</text>
+        </view>
+        
+        <view wx:else class="uploaded-file">
+          <view class="file-info" bindtap="onViewFileDetail" data-type="document">
+            <text class="file-icon">📄</text>
+            <view class="file-details">
+              <text class="file-name">{{documentFiles[0].name}}</text>
+              <text class="file-size">{{documentFiles[0].size}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" size="mini" bindtap="onRemoveFile" data-type="document">删除</button>
+        </view>
+      </view>
+      
+      <!-- 视频作品上传 -->
+      <view class="upload-section {{currentFileType === 'video' ? 'active' : ''}}">
+        <view class="upload-header">
+          <text class="upload-icon">🎬</text>
+          <view class="upload-info">
+            <text class="upload-title">{{fileTypes.video.name}}</text>
+            <text class="upload-desc">{{fileTypes.video.desc}}</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{videoFiles.length === 0}}" class="upload-area" bindtap="onChooseFile" data-type="video">
+          <text class="upload-placeholder">点击上传视频</text>
+          <text class="upload-tip">支持MP4、AVI、MOV等格式，最大100MB</text>
+        </view>
+        
+        <view wx:else class="uploaded-file">
+          <view class="file-info" bindtap="onViewFileDetail" data-type="video">
+            <text class="file-icon">🎬</text>
+            <view class="file-details">
+              <text class="file-name">{{videoFiles[0].name}}</text>
+              <text class="file-size">{{videoFiles[0].size}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" size="mini" bindtap="onRemoveFile" data-type="video">删除</button>
+        </view>
+      </view>
+      
+      <!-- 音频作品上传 -->
+      <view class="upload-section {{currentFileType === 'audio' ? 'active' : ''}}">
+        <view class="upload-header">
+          <text class="upload-icon">🎵</text>
+          <view class="upload-info">
+            <text class="upload-title">{{fileTypes.audio.name}}</text>
+            <text class="upload-desc">{{fileTypes.audio.desc}}</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{audioFiles.length === 0}}" class="upload-area" bindtap="onChooseFile" data-type="audio">
+          <text class="upload-placeholder">点击上传音频</text>
+          <text class="upload-tip">支持MP3、WAV等格式，最大50MB</text>
+        </view>
+        
+        <view wx:else class="uploaded-file">
+          <view class="file-info" bindtap="onViewFileDetail" data-type="audio">
+            <text class="file-icon">🎵</text>
+            <view class="file-details">
+              <text class="file-name">{{audioFiles[0].name}}</text>
+              <text class="file-size">{{audioFiles[0].size}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" size="mini" bindtap="onRemoveFile" data-type="audio">删除</button>
+        </view>
+      </view>
+      
+      <!-- 压缩包作品上传 -->
+      <view class="upload-section {{currentFileType === 'archive' ? 'active' : ''}}">
+        <view class="upload-header">
+          <text class="upload-icon">📦</text>
+          <view class="upload-info">
+            <text class="upload-title">{{fileTypes.archive.name}}</text>
+            <text class="upload-desc">{{fileTypes.archive.desc}}</text>
+          </view>
+        </view>
+        
+        <view wx:if="{{archiveFiles.length === 0}}" class="upload-area" bindtap="onChooseFile" data-type="archive">
+          <text class="upload-placeholder">点击上传压缩包</text>
+          <text class="upload-tip">支持ZIP、RAR等格式，最大50MB</text>
+        </view>
+        
+        <view wx:else class="uploaded-file">
+          <view class="file-info" bindtap="onViewFileDetail" data-type="archive">
+            <text class="file-icon">📦</text>
+            <view class="file-details">
+              <text class="file-name">{{archiveFiles[0].name}}</text>
+              <text class="file-size">{{archiveFiles[0].size}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" size="mini" bindtap="onRemoveFile" data-type="archive">删除</button>
+        </view>
+      </view>
+      
+      <!-- 上传提示 -->
+      <view class="upload-tips">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">提示：每个作品只能上传一个文件，请根据作品类型选择合适的区块</text>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button 
+        class="submit-btn {{!selectedActivity || !workTitle || !currentFileType ? 'disabled' : ''}}" 
+        bindtap="onSubmit"
+        loading="{{loading}}"
+        disabled="{{!selectedActivity || !workTitle || !currentFileType || loading}}"
+      >
+        {{loading ? '提交中...' : '提交作品'}}
+      </button>
+    </view>
+    
+    <!-- 底部空白 -->
+    <view class="bottom-space"></view>
+  </scroll-view>
+</view>

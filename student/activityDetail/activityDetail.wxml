@@ -1,0 +1,185 @@
+<!-- competition/pages/student/activityDetail/activityDetail.wxml -->
+<navigation-bar title="活动详情" back="{{true}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="activity-detail-page">
+  <scroll-view class="detail-content" scroll-y>
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 活动详情内容 -->
+    <view class="detail-container" wx:else>
+      <!-- 活动标题和状态 -->
+      <view class="header-section">
+        <view class="title-row">
+          <text class="activity-title">{{activity.title || '未命名活动'}}</text>
+          <view class="status-badge {{activity.statusClass}}">
+            {{activity.statusText || activity.status || '未知'}}
+          </view>
+        </view>
+        <text class="activity-theme" wx:if="{{activity.theme}}">主题：{{activity.theme}}</text>
+      </view>
+
+      <!-- 基本信息卡片 -->
+      <view class="info-card">
+        <view class="card-title">
+          <text class="title-icon">📋</text>
+          <text class="title-text">基本信息</text>
+        </view>
+        
+        <view class="info-item">
+          <text class="info-label">活动时间</text>
+          <text class="info-value">{{activity.startTime}} 至 {{activity.endTime}}</text>
+        </view>
+        
+        <view class="info-item">
+          <text class="info-label">主办方</text>
+          <text class="info-value">{{activity.organizer || '心理健康中心'}}</text>
+        </view>
+        
+        <view class="info-item">
+          <text class="info-label">活动形式</text>
+          <text class="info-value">{{activity.formType || '其他形式'}}</text>
+        </view>
+        
+        <view class="info-item">
+          <text class="info-label">参与人数</text>
+          <text class="info-value">{{activity.participantCount || 0}}人</text>
+        </view>
+        
+        <view class="info-item">
+          <text class="info-label">作品数量</text>
+          <text class="info-value">{{activity.workCount || 0}}个</text>
+        </view>
+      </view>
+
+      <!-- 活动描述 -->
+      <view class="info-card" wx:if="{{activity.description}}">
+        <view class="card-title">
+          <text class="title-icon">📝</text>
+          <text class="title-text">活动描述</text>
+        </view>
+        <text class="description-text">{{activity.description}}</text>
+      </view>
+
+      <!-- 评分细则 -->
+      <view class="info-card" wx:if="{{activity.scoreRules && activity.scoreRules.length > 0}}">
+        <view class="card-title">
+          <text class="title-icon">⭐</text>
+          <text class="title-text">评分细则</text>
+        </view>
+        <view class="score-rules">
+          <view 
+            class="rule-item"
+            wx:for="{{activity.scoreRules}}"
+            wx:key="index"
+          >
+            <view class="rule-header">
+              <text class="rule-name">{{item.name || item.criterion || '评分项'}}</text>
+              <text class="rule-score">{{item.maxScore || item.score || 0}}分</text>
+            </view>
+            <text class="rule-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          </view>
+        </view>
+        <view class="total-score">
+          <text>总分：{{activity.totalScore || 0}}分</text>
+        </view>
+      </view>
+
+      <!-- 获奖规则 -->
+      <view class="info-card" wx:if="{{activity.awardRules && activity.awardRules.length > 0}}">
+        <view class="card-title">
+          <text class="title-icon">🏆</text>
+          <text class="title-text">获奖规则</text>
+        </view>
+        <view class="award-rules">
+          <view 
+            class="award-item"
+            wx:for="{{activity.awardRules}}"
+            wx:key="index"
+          >
+            <view class="award-header">
+              <text class="award-level">{{item.level || item.name || '奖项'}}</text>
+              <text class="award-ratio">{{item.ratio || item.percentage || 0}}%</text>
+            </view>
+            <text class="award-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 允许上传类型 -->
+      <view class="info-card" wx:if="{{activity.allowedUploadTypes && activity.allowedUploadTypes.length > 0}}">
+        <view class="card-title">
+          <text class="title-icon">📤</text>
+          <text class="title-text">作品类型</text>
+        </view>
+        <view class="upload-types">
+          <view 
+            class="type-tag"
+            wx:for="{{activity.allowedUploadTypes}}"
+            wx:key="*this"
+          >
+            {{item === 'document' ? '📄 文稿' : 
+              item === 'image' ? '🖼️ 图片' : 
+              item === 'audio' ? '🎵 音频' : 
+              item === 'video' ? '🎬 视频' : item}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 活动进度 -->
+      <view class="info-card">
+        <view class="card-title">
+          <text class="title-icon">📊</text>
+          <text class="title-text">活动进度</text>
+        </view>
+        <view class="progress-section">
+          <view class="progress-info">
+            <text>活动进度</text>
+            <text>{{activity.progress || 0}}%</text>
+          </view>
+          <view class="progress-bar">
+            <view class="progress-fill {{activity.statusClass}}" style="{{'width: ' + (activity.progress || 0) + '%;'}}"></view>
+          </view>
+        </view>
+        <view class="time-info">
+          <text class="time-text">{{activity.timeInfo || '时间信息'}}</text>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="action-section">
+        <button 
+          class="action-btn primary-btn"
+          bindtap="onJoinActivity"
+          wx:if="{{activity.canJoin && !activity.hasRegistered}}"
+        >
+          立即参与
+        </button>
+        <button 
+          class="action-btn submit-btn"
+          bindtap="onSubmitWork"
+          wx:if="{{activity.hasRegistered && (activity.statusClass === 'running' || activity.status === '进行中')}}"
+        >
+          提交作品
+        </button>
+        <button 
+          class="action-btn disabled-btn"
+          disabled="true"
+          wx:if="{{activity.hasRegistered}}"
+        >
+          已报名
+        </button>
+        <button 
+          class="action-btn disabled-btn"
+          disabled="true"
+          wx:if="{{!activity.canJoin && !activity.hasRegistered}}"
+        >
+          {{activity.status === '已结束' ? '活动已结束' : '暂不可参与'}}
+        </button>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+

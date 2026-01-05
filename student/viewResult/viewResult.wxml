@@ -1,0 +1,192 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="title-section">
+        <text class="title">提交结果</text>
+        <view class="back-btn" bindtap="onBack">返回</view>
+      </view>
+      <view class="welcome-section">
+        <text class="welcome-text">查看您的作品提交状态与结果</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 作品列表选择（如果有多个作品） -->
+  <view class="works-list-section" wx:if="{{works.length > 1}}">
+    <view class="section-title">我的作品</view>
+    <scroll-view class="works-scroll" scroll-x>
+      <view 
+        class="work-item {{submission && (submission.id === item.id || submission._id === item.id) ? 'active' : ''}}"
+        wx:for="{{works}}"
+        wx:key="id"
+        bindtap="onSelectWork"
+        data-id="{{item.id}}"
+      >
+        <text class="work-item-title">{{item.workTitle}}</text>
+        <text class="work-item-status">{{statusText[item.status]}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 页面内容 -->
+  <view class="content">
+    <!-- 提交状态流程 -->
+    <view class="process-section" wx:if="{{submission}}">
+      <view class="section-title">提交状态</view>
+      <view class="process-steps">
+        <view class="process-step {{currentStep >= 1 ? 'active' : ''}}">
+          <view class="step-icon">1</view>
+          <text class="step-text">已提交</text>
+          <text class="step-desc">{{submission.submitTime || '未知时间'}}</text>
+        </view>
+        <view class="process-connector {{currentStep >= 2 ? 'active' : ''}}"></view>
+        <view class="process-step {{currentStep >= 2 ? 'active' : ''}}">
+          <view class="step-icon">2</view>
+          <text class="step-text">评审中</text>
+          <text class="step-desc" wx:if="{{submission.status === 'reviewing'}}">正在评审</text>
+        </view>
+        <view class="process-connector {{currentStep >= 3 ? 'active' : ''}}"></view>
+        <view class="process-step {{currentStep >= 3 ? 'active' : ''}}">
+          <view class="step-icon">3</view>
+          <text class="step-text">已完成</text>
+          <text class="step-desc" wx:if="{{submission.status === 'completed'}}">{{submission.updateTime || '未知时间'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 状态概览 -->
+    <view class="status-overview" wx:if="{{submission}}">
+      <view class="status-card {{submission.status}}">
+        <view class="status-icon">{{statusIcons[submission.status] || '📤'}}</view>
+        <view class="status-info">
+          <text class="status-text">{{statusText[submission.status] || '已提交'}}</text>
+          <text class="status-desc">{{statusDesc[submission.status] || '作品已成功提交，等待评审'}}</text>
+        </view>
+        <view class="status-badge">{{submission.status || 'pending'}}</view>
+      </view>
+    </view>
+
+    <!-- 作品信息 -->
+    <view class="info-section" wx:if="{{submission}}">
+      <view class="section-title">作品信息</view>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">活动名称</text>
+          <text class="info-value">{{submission.activityName || '未知活动'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">提交时间</text>
+          <text class="info-value">{{submission.submitTime || '未知时间'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">作品标题</text>
+          <text class="info-value">{{submission.workTitle || '未命名作品'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">最后更新</text>
+          <text class="info-value">{{submission.updateTime || submission.submitTime || '未知时间'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 评分结果 -->
+    <view class="score-section" wx:if="{{submission.scores && submission.scores.length > 0}}">
+      <view class="section-title">评分详情</view>
+      <view class="score-list">
+        <view class="score-item" wx:for="{{submission.scores}}" wx:key="judgeId">
+          <view class="judge-info">
+            <text class="judge-name">{{item.judgeName}}</text>
+            <text class="judge-role">{{item.judgeRole}}</text>
+          </view>
+          <view class="score-details">
+            <view class="score-breakdown">
+              <text class="score-label">综合评分</text>
+              <view class="score-value">
+                <text class="score-number">{{item.totalScore}}</text>
+                <text class="score-total">/{{item.maxScore}}</text>
+              </view>
+            </view>
+            <view class="criteria-scores">
+              <view class="criteria-item" wx:for="{{item.criteria}}" wx:key="name">
+                <text class="criteria-name">{{item.name}}</text>
+                <text class="criteria-score">{{item.score}}分</text>
+              </view>
+            </view>
+          </view>
+          <view class="judge-comment" wx:if="{{item.comment}}">
+            <text class="comment-label">评语：</text>
+            <text class="comment-text">{{item.comment}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最终结果 -->
+    <view class="final-result" wx:if="{{submission.finalScore}}">
+      <view class="result-card">
+        <view class="result-header">
+          <text class="result-title">最终结果</text>
+          <view class="final-score">
+            <text class="score-main">{{submission.finalScore}}</text>
+            <text class="score-divider">/</text>
+            <text class="score-total">{{submission.maxScore}}</text>
+          </view>
+        </view>
+        <view class="result-rank" wx:if="{{submission.rank}}">
+          <text class="rank-label">排名</text>
+          <text class="rank-value">第{{submission.rank}}名</text>
+        </view>
+        <view class="result-actions">
+          <view class="action-btn primary" bindtap="viewCertificate" wx:if="{{submission.certificateAvailable}}">
+            <text class="btn-text">查看证书</text>
+          </view>
+          <view class="action-btn secondary" bindtap="downloadWork">
+            <text class="btn-text">下载作品</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 作品内容预览 -->
+    <view class="preview-section" wx:if="{{submission}}">
+      <view class="section-title">作品预览</view>
+      <view class="work-preview">
+        <text class="work-title" user-select>{{submission.workTitle || '未命名作品'}}</text>
+        <text class="work-content" user-select>{{submission.workContent || '暂无描述'}}</text>
+        
+        <!-- 附件列表 -->
+        <view class="attachment-list" wx:if="{{submission.attachments && submission.attachments.length > 0}}">
+          <view class="attachment-item" wx:for="{{submission.attachments}}" wx:key="id">
+            <view class="file-icon">{{getFileIcon(item.type)}}</view>
+            <view class="file-info">
+              <text class="file-name">{{item.name}}</text>
+              <text class="file-size">{{item.size}}</text>
+            </view>
+            <view class="file-action" bindtap="previewFile" data-fileid="{{item.fileID || item.url}}" data-type="{{item.type}}">
+              <text class="action-text">预览</text>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 测试数据提示 -->
+        <view class="test-data-notice" wx:if="{{isTestData}}">
+          <text class="notice-icon">💡</text>
+          <text class="notice-text">当前显示的是测试数据，实际数据将在正式环境中显示</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && !submission && works.length === 0}}">
+      <text class="empty-icon">📊</text>
+      <text class="empty-text">暂无提交记录</text>
+      <text class="empty-desc">您还没有提交过任何作品</text>
+    </view>
+    
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

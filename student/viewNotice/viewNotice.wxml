@@ -1,0 +1,129 @@
+<!-- competition/pages/student/viewNotice/viewNotice.wxml -->
+<navigation-bar title="查看通知" back="{{true}}" color="white" background="#4cd964"></navigation-bar>
+
+<view class="view-notice-page">
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <view class="filter-row">
+      <view class="filter-label">活动筛选：</view>
+      <picker 
+        mode="selector"
+        range="{{activityOptions}}"
+        range-key="name"
+        value="{{selectedActivityIndex}}"
+        bindchange="onActivityFilterChange"
+      >
+        <view class="filter-picker">
+          {{activityOptions[selectedActivityIndex].name}}
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="filter-row">
+      <view class="filter-label">发布对象：</view>
+      <view class="filter-tabs">
+        <view 
+          class="filter-tab {{targetTypeFilter === 'all' ? 'active' : ''}}"
+          bindtap="onTargetTypeFilter"
+          data-type="all"
+        >
+          全部
+        </view>
+        <view 
+          class="filter-tab {{targetTypeFilter === 'participants' ? 'active' : ''}}"
+          bindtap="onTargetTypeFilter"
+          data-type="participants"
+        >
+          活动参与者
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 通知列表 -->
+  <scroll-view 
+    class="notice-list" 
+    scroll-y
+    refresher-enabled="{{true}}"
+    refresher-triggered="{{refreshing}}"
+    bindrefresherrefresh="onRefresh"
+    bindscrolltolower="onLoadMore"
+  >
+    <view 
+      class="notice-item"
+      wx:for="{{notices}}"
+      wx:key="id"
+      bindtap="onNoticeTap"
+      data-id="{{item.id}}"
+    >
+      <view class="notice-header">
+        <view class="notice-title-row">
+          <text class="notice-title">{{item.title}}</text>
+          <view class="notice-badge" wx:if="{{item.priority === 'high'}}">
+            重要
+          </view>
+        </view>
+        <text class="notice-time">{{item.publishTimeText}}</text>
+      </view>
+      
+      <view class="notice-content">
+        <text class="notice-text">{{item.content}}</text>
+      </view>
+      
+      <view class="notice-footer">
+        <view class="notice-meta">
+          <text class="meta-item">发布人：{{item.publisherName}}</text>
+          <text class="meta-item">对象：{{item.targetTypeText}}</text>
+        </view>
+        <view class="notice-read-count" wx:if="{{item.readCount > 0}}">
+          👁️ {{item.readCount}}人已读
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{notices.length === 0 && !loading}}">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无通知</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore && !loading && notices.length > 0}}">
+      <text>上拉加载更多</text>
+    </view>
+
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!hasMore && notices.length > 0}}">
+      <text>没有更多通知了</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 通知详情弹窗 -->
+<view class="modal-overlay" wx:if="{{showDetailModal}}" bindtap="onCloseDetailModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">{{selectedNotice.title}}</text>
+      <text class="modal-close" bindtap="onCloseDetailModal">×</text>
+    </view>
+    
+    <scroll-view class="modal-body" scroll-y>
+      <view class="detail-meta">
+        <text class="detail-item">发布时间：{{selectedNotice.publishTimeText}}</text>
+        <text class="detail-item">发布人：{{selectedNotice.publisherName}}</text>
+        <text class="detail-item">发布对象：{{selectedNotice.targetTypeText}}</text>
+      </view>
+      
+      <view class="detail-content">
+        <text class="content-text">{{selectedNotice.content}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+

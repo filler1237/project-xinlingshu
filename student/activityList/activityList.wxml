@@ -1,0 +1,116 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="title-section">
+        <view class="back-btn" bindtap="onBack">返回</view>
+        <text class="title">活动列表</text>
+        <view 
+          class="refresh-btn {{refreshing ? 'loading' : ''}}" 
+          bindtap="onRefresh"
+        >
+          🔄 {{refreshing ? '刷新中' : '刷新'}}
+        </view>
+      </view>
+      <view class="welcome-section">
+        <text class="welcome-text">欢迎查看已发布的活动</text>
+      </view>
+      
+      <!-- 搜索框 -->
+      <view class="search-box">
+        <input 
+          class="search-input" 
+          placeholder="搜索活动名称、主题或描述" 
+          bindinput="onSearchInput"
+        />
+        <text class="search-icon">🔍</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 页面内容 -->
+  <view class="content">
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 活动列表 -->
+    <view class="activity-list" wx:else>
+      <view 
+        class="activity-card {{item.statusClass === 'ended' ? 'ended' : ''}}" 
+        wx:for="{{activities}}" 
+        wx:key="id"
+      >
+        <!-- 状态标签 -->
+        <view class="status-badge {{item.statusClass}}">
+          {{item.status}}
+        </view>
+        
+        <view class="card-header">
+          <text class="activity-title">{{item.title}}</text>
+          <text class="time-info">{{item.timeInfo}}</text>
+        </view>
+        
+        <text class="activity-theme">主题：{{item.theme}}</text>
+        <text class="activity-form">形式：{{item.formType}}</text>
+        <text class="activity-desc">{{item.description}}</text>
+        
+        <view class="activity-details">
+          <text class="detail-item">时间：{{item.startTime}} 至 {{item.endTime}}</text>
+          <text class="detail-item">主办：{{item.organizer}}</text>
+          <text class="detail-item">参与人数：{{item.participantCount}}人</text>
+        </view>
+        
+        <!-- 进度条 -->
+        <view class="progress-section">
+          <view class="progress-info">
+            <text>活动进度</text>
+            <text>{{item.progress}}%</text>
+          </view>
+          <view class="progress-bar">
+            <view class="progress-fill {{item.statusClass}}" style="{{'width: ' + item.progress + '%;'}}"></view>
+          </view>
+        </view>
+        
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button class="btn detail-btn" bindtap="onActivityDetail" data-activity="{{item}}">
+            查看详情
+          </button>
+          <button 
+            class="btn join-btn" 
+            bindtap="onJoinActivity" 
+            data-activity="{{item}}"
+            data-index="{{index}}"
+            wx:if="{{item.canJoin && !item.hasRegistered}}"
+          >
+            立即参与
+          </button>
+          <button 
+            class="btn joined-btn" 
+            disabled="true"
+            wx:if="{{item.hasRegistered}}"
+          >
+            已报名
+          </button>
+          <button 
+            class="btn disabled-btn" 
+            disabled="true"
+            wx:if="{{!item.canJoin && !item.hasRegistered}}"
+          >
+            {{item.status === '已结束' ? '已结束' : '暂不可参与'}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && activities.length === 0}}">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无活动</text>
+      <text class="empty-desc">当前没有可参与的活动</text>
+      <button class="refresh-btn" bindtap="onRefresh">刷新数据</button>
+    </view>
+  </view>
+</view>
