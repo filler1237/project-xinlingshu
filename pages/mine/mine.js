@@ -526,19 +526,38 @@ Page({
    * 活动系统点击处理
    */
   onActivitySystemTap: function () {
-    wx.showModal({
-      title: '提示',
-      content: '该功能正在开发中',
-      showCancel: false,
-      confirmText: '确定',
+    if (!this.data.isLogin || !this.data.userInfo) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const role = this.data.userInfo.role;
+    let targetUrl = '/competition/pages/studenthome/studenthome'; // 默认跳转学生页
+
+    if (role === 'admin') {
+      targetUrl = '/competition/pages/adminhome/adminhome';
+    } else if (role === 'judge') {
+      targetUrl = '/competition/pages/judgehome/judgehome';
+    }
+
+    console.log(`当前角色: ${role}, 准备跳转到: ${targetUrl}`);
+
+    wx.navigateTo({
+      url: targetUrl,
       success: (res) => {
-        if (res.confirm) {
-          wx.navigateBack({
-            delta: 1
-          });
-        }
+        console.log("跳转成功");
+      },
+      fail: (err) => {
+        console.error("跳转失败", err);
+        wx.showToast({
+          title: '页面无法访问',
+          icon: 'none'
+        });
       }
-    });
+    })
   },
 
   /**
