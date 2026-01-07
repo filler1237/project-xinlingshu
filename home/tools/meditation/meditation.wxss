@@ -9,6 +9,22 @@ page {
   padding: 40rpx;
   min-height: 100vh;
   background-color: #f7f8fa;
+  /* 确保相对定位，以便视频绝对定位 */
+  position: relative;
+  /* 确保内容在视频之上 */
+  z-index: 1;
+}
+
+/* Background Video */
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* 确保不响应点击事件 */
+  pointer-events: none;
 }
 
 /* Card Base Style */
@@ -229,24 +245,38 @@ page {
   margin-bottom: 0;
 }
 
+/* 确保内容在视频之上，解决点击穿透问题 */
+.setup-card,
+.meditation-main,
+.completion-card,
+.tips-card {
+  position: relative;
+  z-index: 10;
+}
+
 /* Background Image Text Color Adapt */
-.container[style*="url("] .card {
+.container[style*="url("] .card, .container .bg-video + .card {
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
 }
 
 .container[style*="url("] .card-title,
 .container[style*="url("] .selector-title,
-.container[style*="url("] .tip-item {
+.container[style*="url("] .tip-item,
+.container .bg-video ~ .card .card-title,
+.container .bg-video ~ .card .selector-title,
+.container .bg-video ~ .card .tip-item {
   color: #333;
 }
 
-.container[style*="url("] .option-btn {
+.container[style*="url("] .option-btn,
+.container .bg-video ~ .card .option-btn {
   background-color: rgba(255, 255, 255, 0.7);
   color: #333;
 }
 
-.container[style*="url("] .option-btn.selected {
+.container[style*="url("] .option-btn.selected,
+.container .bg-video ~ .card .option-btn.selected {
   background-color: #A899E2;
   color: #ffffff;
 }

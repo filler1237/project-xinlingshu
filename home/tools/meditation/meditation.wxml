@@ -1,6 +1,21 @@
 <!-- home/tools/meditation/meditation.wxml -->
 <navigation-bar title="正念冥想" back="{{true}}" background="#f7f8fa" color="black"></navigation-bar>
 <view class="container" style="background-image: {{selectedBackground ? 'url(' + selectedBackground + ')' : ''}}; background-color: #f7f8fa; background-size: cover; background-position: center; padding-top: {{navigationBarHeight}}px;">
+  <!-- 背景视频 -->
+  <video 
+    wx:if="{{currentVideoUrl && (status === 'meditating' || status === 'paused')}}" 
+    class="bg-video"
+    src="{{currentVideoUrl}}" 
+    autoplay="{{true}}" 
+    loop="{{true}}" 
+    muted="{{true}}" 
+    controls="{{false}}" 
+    show-play-btn="{{false}}" 
+    show-center-play-btn="{{false}}" 
+    enable-progress-gesture="{{false}}"
+    object-fit="cover"
+    binderror="onVideoError"
+  ></video>
 
   <!-- 设置区 -->
   <view class="card setup-card" wx:if="{{status === 'ready' || status === 'completed'}}">

@@ -13,10 +13,21 @@ Page({
     selectedMusic: 'rain', // 默认雨声
     selectedBackground: '', // 背景图片路径
     selectedBackgroundType: 'none', // 背景类型: forest, ocean, mountain, none
+    currentVideoUrl: '', // 当前视频路径
+    videoMap: {
+      // ----------------------------------------------------------------------------------
+      // 【真实风光模式】
+      // 尝试使用 Videezy 的真实自然风光直链。
+      // 注意：如果遇到网络限制或解码失败，系统将自动降级为高清背景图。
+      // ----------------------------------------------------------------------------------
+      forest: 'https://static.videezy.com/system/resources/previews/000/005/030/original/Forest_1.mp4', // 真实森林
+      ocean: 'http://vjs.zencdn.net/v/oceans.mp4', // 真实海洋
+      mountain: 'https://static.videezy.com/system/resources/previews/000/000/168/original/Mountain.mp4' // 真实山脉
+    },
     backgroundImages: {
-      forest: '/image/TreeBack.jpg',
-      ocean: '/image/QingTan-con.png',
-      mountain: '/image/QingSu-con.png'
+      forest: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', // 高清森林图片
+      ocean: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80', // 示例海洋图片
+      mountain: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' // 示例山脉图片
     },
     totalSeconds: 0,
     remainingSeconds: 0,
@@ -127,6 +138,20 @@ Page({
     }
   },
   
+  // 视频播放错误处理
+  onVideoError(e) {
+    console.error('视频播放失败:', e.detail.errMsg);
+    // 播放失败时，清空视频链接，自动回退到显示背景图片
+    this.setData({
+      currentVideoUrl: ''
+    });
+    wx.showToast({
+      title: '视频无法播放，已切换背景图',
+      icon: 'none',
+      duration: 2000
+    });
+  },
+
   // 选择冥想时长
   selectDuration(e) {
     const duration = parseInt(e.currentTarget.dataset.duration);
@@ -146,15 +171,20 @@ Page({
   // 选择背景
   selectBackground(e) {
     const type = e.currentTarget.dataset.type;
+    const bg = this.data.backgroundImages || {};
+    const vm = this.data.videoMap || {};
     let backgroundPath = '';
+    let videoUrl = '';
     
-    if (type !== 'none' && this.data.backgroundImages[type]) {
-      backgroundPath = this.data.backgroundImages[type];
+    if (type !== 'none') {
+      backgroundPath = bg[type] || '';
+      videoUrl = vm[type] || '';
     }
     
     this.setData({
       selectedBackgroundType: type,
-      selectedBackground: backgroundPath
+      selectedBackground: backgroundPath,
+      currentVideoUrl: videoUrl
     });
   },
   
