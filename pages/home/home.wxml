@@ -17,7 +17,7 @@
         <view class="ZiXun">
           <text class="Font">心理咨询</text>
           <text class="Font_s">psychological counseling</text>
-          <image style="height: 275rpx;" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/ZiXun.png" mode="heightFix"/>
+          <image style="height: 275rpx;" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/心理医生.png" mode="heightFix"/>
         </view>
       </view>
     </view>
@@ -42,7 +42,7 @@
           <text class="Font_s">Mental Health Community</text>
         </view>
         <view class="Mid_i">
-          <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/SheQu.png" mode="widthFix"/>
+          <image src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/心里社区.png" mode="widthFix"/>
         </view>
       </view>
     </view>
