@@ -1,4 +1,11 @@
-<view class="page-container">
+<view class="page-container" style="padding-top: calc({{statusBarHeight + headerHeight}}px + 32rpx);">
+
+<!-- 自定义导航栏 -->
+<view class="nav-header" style="padding-top: {{statusBarHeight}}px; height: {{headerHeight}}px;">
+  <view class="back-button" bindtap="onBackTap" style="height: {{headerHeight}}px;">
+    <image class="back-icon" src="cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/back.svg"></image>
+  </view>
+</view>
 
 <!-- 标题区域 -->
 <view class="header">
@@ -20,7 +27,7 @@
   </text>
 
   <text class="paragraph">
-    我们希望通过「日记记录」「情绪分析」「心灵树成长」「塔罗探索」等功能，
+    我们希望通过「日记记录」「情绪分析」「心理树成长」「塔罗探索」等功能，
     为大学生提供一个可以放慢脚步、与自己对话的空间。
     在面对学业压力、生活节奏以及未来选择时，
     如果它能够带来哪怕一点点陪伴与安慰，

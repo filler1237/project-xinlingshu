@@ -38,10 +38,17 @@
   transform: translateX(-50%);
 }
 
-.floating-menu-btn {
+.floating-area {
   position: fixed;
-  left: 24rpx;
-  z-index: 101; /* 确保在最上层，方便点击 */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 101;
+}
+
+.floating-menu-btn {
   background-color: #ffffff;
   width: 80rpx;
   height: 80rpx;

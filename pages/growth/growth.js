@@ -12,7 +12,7 @@ const BADGE_METADATA = {
   'badge_watering_30': { name: '深根固柢', desc: '累计浇水30次，你的坚持让大树根深叶茂。', iconUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png' },
   'badge_mind_3': { name: '内观者', desc: '完成3次正念练习，开始向内探索内心世界。', iconUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png' },
   // 如果有旧的ID，也在这里添加配置
-  'badge_001': { name: '新绿之芽', desc: '拥有第一颗心灵树。', iconUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png' }
+  'badge_001': { name: '新绿之芽', desc: '拥有第一颗心理树。', iconUrl: 'cloud://cloud1-2gxal8as6b6bfe21.636c-cloud1-2gxal8as6b6bfe21-1378381651/image/水滴-copy.png' }
 };
 
 Page({

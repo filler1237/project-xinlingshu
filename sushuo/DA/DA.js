@@ -42,72 +42,54 @@ Page({
   // --- 核心：话题管理 ---
 
   loadUserTopics: function () {
-    db.collection('chatTopics').where({ userId: this.data.userId }).orderBy('lastUpdated', 'desc').get().then(res => {
-      if (res.data && res.data.length > 0) {
-        // 如果有历史话题，加载它们
-        this.setData({ topics: res.data });
-        const latestTopicId = res.data[0]._id; // 默认加载最新的话题
-        this.switchTopic({ currentTarget: { dataset: { topicId: latestTopicId } } });
-      } else {
-        // 如果没有历史话题，创建一个新的
-        this.createNewTopic();
-      }
-    }).catch(err => {
-      console.error("加载话题列表失败:", err);
-      wx.showToast({ title: '加载话题失败', icon: 'none' });
-    });
+    db.collection('chatTopics').where({ _openid: '{openid}' }).orderBy('lastUpdated', 'desc').get()
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          // 如果有历史话题，加载它们
+          this.setData({ topics: res.data });
+          const latestTopicId = res.data[0]._id; // 默认加载最新的话题
+          this.switchTopic({ currentTarget: { dataset: { topicId: latestTopicId } } });
+        } else {
+          // 如果没有历史话题，创建一个新的
+          this.createNewTopic();
+        }
+      }).catch(err => {
+        console.error("加载话题列表失败:", err);
+        wx.showToast({ title: '加载话题失败', icon: 'none' });
+      });
   },
 
   createNewTopic: function () {
     wx.showLoading({ title: '创建中...' });
 
-    // 1. 先调用云函数创建 Coze 会话
-    wx.cloud.callFunction({
-      name: 'createConversation',
-      success: res => {
-        wx.hideLoading();
+    // 直接创建话题，不需要提前调用 Coze 接口
+    // 当发送第一条消息时，xinlixuejia 云函数会自动创建会话并返回 conversationId
+    const newTopicId = 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9);
+    const newTopic = {
+      _id: newTopicId,
+      name: `新话题 ${new Date().toLocaleDateString()}`,
+      content: [{
+        text: '你好！我是你的朋友云舒，有什么想要跟我分享的吗？',
+        isUser: false,
+        type: 'text'
+      }],
+      cozeConversationId: null,  // 初始为空
+      lastUpdated: db.serverDate()
+    };
 
-        if (res.result && res.result.code === 0) {
-          const cozeConversationId = res.result.conversationId;
-          console.log('[新 Coze 会话已创建]', cozeConversationId);
-
-          // 2. 创建话题并保存 conversationId
-          const newTopicId = 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9);
-          const newTopic = {
-            _id: newTopicId,
-            name: `新话题 ${new Date().toLocaleDateString()}`,
-            content: [{
-              text: '你好！我是你的朋友云舒，有什么想要跟我分享的吗？',
-              isUser: false,
-              type: 'text'
-            }],
-            cozeConversationId: cozeConversationId,  // 保存 Coze 会话ID
-            lastUpdated: db.serverDate()
-          };
-
-          db.collection('chatTopics').add({ data: newTopic }).then(() => {
-            this.setData({
-              topics: [newTopic, ...this.data.topics],
-              content: newTopic.content,
-              currentTopicId: newTopic._id,
-              isTopicsPanelOpen: false
-            });
-            wx.showToast({ title: '新话题已创建', icon: 'success' });
-          }).catch(err => {
-            console.error("创建话题失败:", err);
-            wx.showToast({ title: '创建失败', icon: 'none' });
-          });
-
-        } else {
-          console.error("创建会话失败:", res.result);
-          wx.showToast({ title: '创建会话失败', icon: 'none' });
-        }
-      },
-      fail: err => {
-        wx.hideLoading();
-        console.error("调用创建会话云函数失败:", err);
-        wx.showToast({ title: '网络错误', icon: 'none' });
-      }
+    db.collection('chatTopics').add({ data: newTopic }).then(() => {
+      wx.hideLoading();
+      this.setData({
+        topics: [newTopic, ...this.data.topics],
+        content: newTopic.content,
+        currentTopicId: newTopic._id,
+        isTopicsPanelOpen: false
+      });
+      wx.showToast({ title: '新话题已创建', icon: 'success' });
+    }).catch(err => {
+      wx.hideLoading();
+      console.error("创建话题失败:", err);
+      wx.showToast({ title: '创建失败', icon: 'none' });
     });
   },
 
